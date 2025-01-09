@@ -1,5 +1,5 @@
 // project import
-import SiteLogo from 'assets/images/logo.png';
+import SiteLogo from 'assets/images/logo2.png';
 
 // ==============================|| LOGO SVG ||============================== //
 
