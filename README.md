@@ -16,7 +16,6 @@ This repository contains a base template for a CMS dashboard, designed to be a r
 10. Reusable Components: Buttons, modals, tables, and form elements included.
 11. API Integration: Example setup for dynamic API-driven content.
 
-
 ## Getting Started
 
 1. Clone from Github
