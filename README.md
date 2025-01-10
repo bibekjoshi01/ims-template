@@ -6,6 +6,10 @@ This repository contains a base template for a CMS dashboard, designed to be a r
 
 <br/>
 
+<img alt="Website Banner" src="./src/assets/images/website.png" width="700px"/>
+
+<br />
+
 ## Key Features
 
 1. React: Modern, declarative library for building user interfaces.
