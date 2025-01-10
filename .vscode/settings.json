@@ -1,0 +1,14 @@
+{
+  /* Sets the maximum line length for tokenization in the editor for the compitation*/
+  // "editor.maxTokenizationLineLength": 2000000,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  /* Formatting will only be applied to the entire file being saved */
+  "editor.formatOnSaveMode": "file",
+  "editor.codeActionsOnSave": {
+    /* ESLint will automatically fix all issues in the code on save */
+    "source.fixAll.eslint": "always",
+    /* Sorts and Removes unused imports */
+    "source.organizeImports": "always"
+  }
+}
