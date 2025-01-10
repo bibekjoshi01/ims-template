@@ -22,7 +22,7 @@ This repository contains a base template for a CMS dashboard, designed to be a r
 
 </br>
 
-# Contributing to NgoWorld 🔐
+# Contributing to Project 🔐
 
 Remember, Good PR makes you a Good contributor !
 
@@ -62,7 +62,7 @@ yarn start
 ## 2️. Contributing guidelines & more
 
 - [Contributing Guidelines](/CONTRIBUTING.md) to be followed.
-- [Proper API documentation](https://milan-server.onrender.com/docs/) for developers.
+- [Proper API documentation](https://ims-backend.bibekjoshi34.com.np/docs/) for developers.
 
 # License 👮
 
