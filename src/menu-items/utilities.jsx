@@ -1,7 +1,7 @@
 // assets
 import {
-  AppstoreAddOutlined,
   AntDesignOutlined,
+  AppstoreAddOutlined,
   BarcodeOutlined,
   BgColorsOutlined,
   FontSizeOutlined,

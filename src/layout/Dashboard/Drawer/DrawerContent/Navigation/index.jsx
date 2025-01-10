@@ -1,10 +1,10 @@
 // material-ui
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 // project import
-import NavGroup from './NavGroup';
 import menuItem from 'menu-items';
+import NavGroup from './NavGroup';
 
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 
