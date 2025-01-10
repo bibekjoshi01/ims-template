@@ -17,7 +17,7 @@
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@ant-design/colors": "^7.0.2",
