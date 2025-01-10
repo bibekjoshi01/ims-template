@@ -1,6 +1,10 @@
-# CMS Dashboard Template - React, MUI, Redux, Axios
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+# What is IMS ?
 
 This repository contains a base template for a CMS dashboard, designed to be a reusable starting point for other projects. Built with modern technologies, it incorporates essential tools and patterns for scalable and efficient development.
+
+<br/>
 
 ## Key Features
 
@@ -16,7 +20,15 @@ This repository contains a base template for a CMS dashboard, designed to be a r
 10. Reusable Components: Buttons, modals, tables, and form elements included.
 11. API Integration: Example setup for dynamic API-driven content.
 
-## Getting Started
+</br>
+
+# Contributing to NgoWorld 🔐
+
+Remember, Good PR makes you a Good contributor !
+
+We work hard to maintain the structure, and [use conventional Pull](https://github.com/bibekjoshi01/ims-template/blob/main/CONTRIBUTING.md#pull-request-title-format-) request titles and commits. Without a proper template for the PR, not following the guidelines and spam might get the pull request closed, or banned.
+
+## 1️. Setting up the project locally
 
 1. Clone from Github
 
@@ -36,7 +48,7 @@ yarn
 yarn start
 ```
 
-## Technology stack
+### Technology stack
 
 - [Material UI V5](https://mui.com/core/)
 - Built with React Hooks API.
@@ -46,3 +58,16 @@ yarn start
 - Support for Vite.
 - Code splitting.
 - CSS-in-JS.
+
+## 2️. Contributing guidelines & more
+
+- [Contributing Guidelines](/CONTRIBUTING.md) to be followed.
+- [Proper API documentation](https://milan-server.onrender.com/docs/) for developers.
+
+# License 👮
+
+This is Licensed under the <a href="./LICENSE">MIT License</a>. Please go through the License at least once before contributing.
+
+# Support 🙏
+
+**Don't forget to drop a star ⭐.** A heartfelt thank you to those who have contributed to this project. We are really grateful for your contribution. You all are amazing. Opensource for the win 🚀
