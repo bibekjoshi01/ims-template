@@ -6,7 +6,9 @@ This repository contains a base template for a CMS dashboard, designed to be a r
 
 <br/>
 
-<img alt="Website Banner" src="./src/assets/images/website.png" width="700px"/>
+<div align="center">
+<img alt="Website Banner" src="./src/assets/images/website.png" width="100%"/>
+</div>
 
 <br />
 
