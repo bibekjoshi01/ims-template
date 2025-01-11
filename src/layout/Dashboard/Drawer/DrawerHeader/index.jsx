@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 
 // project import
+import Logo from '@/components/logo';
 import DrawerHeaderStyled from './DrawerHeaderStyled';
-import Logo from 'components/logo';
 
 // ==============================|| DRAWER HEADER ||============================== //
 

@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 
 // project import
-import { useGetMenuMaster } from 'api/menu';
+import { useGetMenuMaster } from '@/api/menu';
 import NavItem from './NavItem';
 
 export default function NavGroup({ item }) {

@@ -1,12 +1,12 @@
 // material-ui
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 
 // project import
-import MainCard from 'components/MainCard';
-import AnalyticEcommerce from 'components/cards/statistics/AnalyticEcommerce';
+import MainCard from '@/components/MainCard';
+import AnalyticEcommerce from '@/components/cards/statistics/AnalyticEcommerce';
 import MonthlyBarChart from './MonthlyBarChart';
 import UniqueVisitorCard from './UniqueVisitorCard';
 

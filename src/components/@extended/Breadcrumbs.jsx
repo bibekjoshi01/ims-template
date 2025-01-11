@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 // material-ui
+import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 
 // project import
-import MainCard from 'components/MainCard';
+import MainCard from '@/components/MainCard';
 
 export default function Breadcrumbs({ navigation, title, ...others }) {
   const location = useLocation();
