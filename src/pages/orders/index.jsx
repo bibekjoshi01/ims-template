@@ -1,9 +1,9 @@
 import { lazy } from 'react';
 
 // project-import
-import Loadable from 'components/Loadable';
+import Loadable from '@/components/Loadable';
 
-const AppTable = Loadable(lazy(() => import('ui/app-table')));
+const AppTable = Loadable(lazy(() => import('@/ui/app-table')));
 
 const Orders = () => {
   const columns = [

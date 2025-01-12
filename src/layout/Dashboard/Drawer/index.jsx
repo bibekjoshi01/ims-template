@@ -1,17 +1,17 @@
 import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
-import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 // project import
-import DrawerHeader from './DrawerHeader';
 import DrawerContent from './DrawerContent';
+import DrawerHeader from './DrawerHeader';
 import MiniDrawerStyled from './MiniDrawerStyled';
 
-import { drawerWidth } from 'config';
-import { handlerDrawerOpen, useGetMenuMaster } from 'api/menu';
+import { handlerDrawerOpen, useGetMenuMaster } from '@/api/menu';
+import { drawerWidth } from '@/config';
 
 // ==============================|| MAIN LAYOUT - DRAWER ||============================== //
 

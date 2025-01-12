@@ -2,14 +2,14 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 
 // material-ui
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 
 // project import
-import MainCard from 'components/MainCard';
+import MainCard from '@/components/MainCard';
 import ComponentWrapper from './ComponentWrapper';
 
 // ===============================|| COMPONENT - SKELETON ||=============================== //
