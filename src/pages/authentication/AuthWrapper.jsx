@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
 // project import
-import AuthFooter from 'components/cards/AuthFooter';
-import Logo from 'components/logo';
+import AuthFooter from '@/components/cards/AuthFooter';
+import Logo from '@/components/logo';
 import AuthCard from './AuthCard';
 
 // assets
-import AuthBackground from 'assets/images/auth/AuthBackground';
+import AuthBackground from '@/assets/images/auth/AuthBackground';
 
 // ==============================|| AUTHENTICATION - WRAPPER ||============================== //
 

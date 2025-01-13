@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { styled, useTheme } from '@mui/material/styles';
 import MuiAvatar from '@mui/material/Avatar';
+import { styled, useTheme } from '@mui/material/styles';
 
 // project import
-import getColors from 'utils/getColors';
+import getColors from '@/utils/getColors';
 
 function getColorStyle({ theme, color, type }) {
   const colors = getColors(theme, color);
