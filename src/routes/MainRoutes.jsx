@@ -4,15 +4,15 @@ import { lazy } from 'react';
 import Loadable from '@/components/Loadable';
 import Dashboard from '@/layout/Dashboard';
 
-const Color = Loadable(lazy(() => import('pages/component-overview/color')));
-const Typography = Loadable(lazy(() => import('pages/component-overview/typography')));
-const Shadow = Loadable(lazy(() => import('pages/component-overview/shadows')));
-const DashboardDefault = Loadable(lazy(() => import('pages/dashboard/index')));
-const Orders = Loadable(lazy(() => import('pages/orders/index')));
+const Color = Loadable(lazy(() => import('@/pages/component-overview/color')));
+const Typography = Loadable(lazy(() => import('@/pages/component-overview/typography')));
+const Shadow = Loadable(lazy(() => import('@/pages/component-overview/shadows')));
+const DashboardDefault = Loadable(lazy(() => import('@/pages/dashboard/index')));
+const Orders = Loadable(lazy(() => import('@/pages/orders/index')));
 // Error Pages
-const NotFoundPage = Loadable(lazy(() => import('pages/errors/404Page')));
-const ServerErrorPage = Loadable(lazy(() => import('pages/errors/500Page')));
-const UnderConstructionPage = Loadable(lazy(() => import('pages/errors/UnderConstructionPage')));
+const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/404Page')));
+const ServerErrorPage = Loadable(lazy(() => import('@/pages/errors/500Page')));
+const UnderConstructionPage = Loadable(lazy(() => import('@/pages/errors/UnderConstructionPage')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 

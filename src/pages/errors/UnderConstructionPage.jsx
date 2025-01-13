@@ -1,5 +1,5 @@
+import PageImage from '@/components/@extended/PageImage';
 import { Box, Button } from '@mui/material';
-import PageImage from 'components/@extended/PageImage';
 import { Link } from 'react-router-dom';
 import UnderConstructionImage from '../../assets/images/error/constructionPage.svg';
 

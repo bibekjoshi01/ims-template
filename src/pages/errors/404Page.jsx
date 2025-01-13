@@ -1,6 +1,6 @@
 // pages/errors/404Page.jsx
+import PageImage from '@/components/@extended/PageImage';
 import { Box, Button } from '@mui/material';
-import PageImage from 'components/@extended/PageImage';
 import { Link } from 'react-router-dom';
 import PageNotFoundImage from '../../assets/images/error/404ErrorPage.svg';
 
