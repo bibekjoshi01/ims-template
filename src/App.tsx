@@ -1,7 +1,5 @@
-import { RouterProvider } from 'react-router-dom';
-
 // project import
-import router from '@/routes';
+import Routes from '@/routes';
 import ThemeCustomization from '@/themes';
 
 import ScrollTop from '@/components/ScrollTop';
@@ -14,7 +12,7 @@ export default function App() {
     <StoreProvider>
       <ThemeCustomization>
         <ScrollTop>
-          <RouterProvider router={router} />
+          <Routes />
         </ScrollTop>
       </ThemeCustomization>
     </StoreProvider>
