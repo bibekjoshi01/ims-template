@@ -12,7 +12,7 @@ const persistConfig = {
   key: 'root',
   storage,
   // reducer to store
-  whitelist: ['login']
+  whitelist: ['auth']
 };
 
 const combinedMiddleware = (

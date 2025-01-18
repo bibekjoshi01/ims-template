@@ -7,40 +7,45 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
-import InputAdornment from '@mui/material/InputAdornment';
 import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
+import Link from '@mui/material/Link';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 // third party
-import * as Yup from 'yup';
 import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 // assets
-import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
+import EyeOutlined from '@ant-design/icons/EyeOutlined';
 
-// ============================|| JWT - LOGIN ||============================ //
+// Project Imports
+import { useAppDispatch } from '@/libs/hooks';
+import { useLoginMutation } from '../redux/auth.api';
+import { loginSuccess } from '../redux/auth.slice';
+
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
 
 export default function AuthLogin() {
   const [checked, setChecked] = React.useState(false);
-
   const [showPassword, setShowPassword] = React.useState(false);
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => event.preventDefault();
 
-  const initialValues = {
+  const [login] = useLoginMutation();
+  const dispatch = useAppDispatch();
+
+  const initialValues: LoginFormValues = {
     email: '',
-    password: '',
-    submit: null
+    password: ''
   };
 
   const validationSchema = Yup.object().shape({
@@ -48,9 +53,19 @@ export default function AuthLogin() {
     password: Yup.string().max(255).required('Password is required')
   });
 
+  const onSubmit = async (values: LoginFormValues) => {
+    try {
+      const response = await login({ values }).unwrap();
+      dispatch(loginSuccess({ ...response }));
+      console.log('Login successful:', response);
+    } catch (err) {
+      console.error('Login failed:', err);
+    }
+  };
+
   return (
     <>
-      <Formik initialValues={initialValues} validationSchema={validationSchema}>
+      <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit}>
             <Grid container spacing={3}>
@@ -67,6 +82,7 @@ export default function AuthLogin() {
                     placeholder="Enter email address"
                     fullWidth
                     error={Boolean(touched.email && errors.email)}
+                    autoComplete="username"
                   />
                 </Stack>
                 {touched.email && errors.email && (
@@ -101,6 +117,7 @@ export default function AuthLogin() {
                       </InputAdornment>
                     }
                     placeholder="Enter password"
+                    autoComplete="current-password"
                   />
                 </Stack>
                 {touched.password && errors.password && (
@@ -124,16 +141,11 @@ export default function AuthLogin() {
                     }
                     label={<Typography variant="h6">Keep me sign in</Typography>}
                   />
-                  <Link variant="h6" component={RouterLink} color="primary">
+                  <Link to={'/forget-password'} variant="h6" component={RouterLink} color="primary">
                     Forgot Password?
                   </Link>
                 </Stack>
               </Grid>
-              {errors.submit && (
-                <Grid item xs={12}>
-                  <FormHelperText error>{errors.submit}</FormHelperText>
-                </Grid>
-              )}
               <Grid item xs={12}>
                 <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
                   Login
@@ -146,5 +158,3 @@ export default function AuthLogin() {
     </>
   );
 }
-
-AuthLogin.propTypes = {};
