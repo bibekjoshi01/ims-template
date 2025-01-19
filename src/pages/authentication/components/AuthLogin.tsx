@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 // material-ui
 import Button from '@mui/material/Button';
@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 
 // third party
 import { Formik } from 'formik';
+import { useSnackbar } from 'notistack';
 import * as Yup from 'yup';
 
 // assets
@@ -27,6 +28,7 @@ import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import { useAppDispatch } from '@/libs/hooks';
 import { useLoginMutation } from '../redux/auth.api';
 import { loginSuccess } from '../redux/auth.slice';
+import { BackendError } from '../redux/types';
 
 interface LoginFormValues {
   email: string;
@@ -42,6 +44,8 @@ export default function AuthLogin() {
 
   const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   const initialValues: LoginFormValues = {
     email: '',
@@ -53,13 +57,21 @@ export default function AuthLogin() {
     password: Yup.string().max(255).required('Password is required')
   });
 
-  const onSubmit = async (values: LoginFormValues) => {
+  const onSubmit = async (values: LoginFormValues, { setErrors }: { setErrors: (errors: Record<string, string>) => void }) => {
     try {
       const response = await login({ values }).unwrap();
+
+      // Change the login states
       dispatch(loginSuccess({ ...response }));
-      console.log('Login successful:', response);
-    } catch (err) {
-      console.error('Login failed:', err);
+      // show success notification
+      enqueueSnackbar(response?.message, { variant: 'success' });
+      // Redirect to homepage after successful login
+      navigate('/');
+    } catch (error) {
+      const err = error as BackendError;
+      if (err?.status == 400) {
+        setErrors(err.data);
+      }
     }
   };
 

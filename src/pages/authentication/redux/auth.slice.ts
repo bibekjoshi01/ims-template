@@ -11,7 +11,8 @@ const initialState: LoginState = {
   groups: [],
   photo: '',
   userPermissions: [],
-  isSuperuser: false
+  isSuperuser: false,
+  isAuthenticated: false
 };
 
 export const authSlice = createSlice({
@@ -30,6 +31,7 @@ export const authSlice = createSlice({
       state.isSuperuser = isSuperuser;
       state.groups = groups;
       state.userPermissions = userPermissions;
+      state.isAuthenticated = true;
       // Save access and refresh tokens in the cookies
       Cookies.set('access', tokens?.access as string, {
         path: '/',

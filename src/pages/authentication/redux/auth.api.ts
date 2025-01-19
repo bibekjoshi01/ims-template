@@ -6,10 +6,16 @@ export const authAPISlice = rootAPI.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: ({ values }) => {
+        const { email, password } = values;
+        const transformedValues = {
+          password: password,
+          persona: email
+        };
+
         return {
           url: `${authAPI}/login`,
           method: 'POST',
-          data: values
+          data: transformedValues
         };
       }
     }),

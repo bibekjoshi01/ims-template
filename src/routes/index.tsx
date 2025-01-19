@@ -1,10 +1,15 @@
 import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
 
+import { useAppSelector } from '@/libs/hooks';
+import { authState } from '@/pages/authentication/redux/selector';
+
 // ==============================|| ROUTING RENDER ||============================== //
 
-const isAuthenticated = false;
+const Routes = () => {
+  const { isAuthenticated } = useAppSelector(authState);
 
-const Routes = () => (isAuthenticated ? <PrivateRoutes /> : <PublicRoutes />);
+  return isAuthenticated ? <PrivateRoutes /> : <PublicRoutes />;
+};
 
 export default Routes;

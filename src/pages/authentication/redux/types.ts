@@ -26,4 +26,10 @@ export interface LoginState {
     refresh: string;
   };
   userPermissions: permission[];
+  isAuthenticated?: boolean;
 }
+
+export type BackendError = {
+  status: number;
+  data: Record<string, string>;
+};
