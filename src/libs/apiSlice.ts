@@ -4,12 +4,12 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { axiosInstance, baseURL } from './axios';
 
 const axiosBaseQuery =
-  ({ baseUrl } = { baseUrl: '' }) =>
+  ({ URL } = { URL: '' }) =>
   async (args: any, api: any, extraOptions: any) => {
     const { url, method, data, params, headers, signal } = args;
     try {
       const result = await axiosInstance({
-        url: baseUrl + url,
+        url: URL + url,
         method,
         data,
         params,
@@ -39,7 +39,7 @@ const axiosBaseQuery =
 export const rootAPI = createApi({
   reducerPath: 'rootAPI',
   baseQuery: axiosBaseQuery({
-    baseUrl: baseURL
+    URL: baseURL
   }),
   endpoints: (builder) => ({
     //create seperate endpoints for each files and inject with this one using injectEndpoints
