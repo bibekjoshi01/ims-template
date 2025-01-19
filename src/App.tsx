@@ -1,3 +1,5 @@
+import { SnackbarProvider } from 'notistack';
+
 // project import
 import Routes from '@/routes';
 import ThemeCustomization from '@/themes';
@@ -12,7 +14,9 @@ export default function App() {
     <StoreProvider>
       <ThemeCustomization>
         <ScrollTop>
-          <Routes />
+          <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+            <Routes />
+          </SnackbarProvider>
         </ScrollTop>
       </ThemeCustomization>
     </StoreProvider>
