@@ -1,26 +1,28 @@
-import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 
 // material-ui
-import { CssBaseline, StyledEngineProvider } from '@mui/material';
+import { CssBaseline, StyledEngineProvider, ThemeOptions } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // project import
-import Palette from './palette';
-import Typography from './typography';
-import CustomShadows from './shadows';
 import componentsOverride from './overrides';
+import Palette from './palette';
+import CustomShadows from './shadows';
+import Typography from './typography';
 
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
-export default function ThemeCustomization({ children }) {
-  const theme = Palette('light', 'default');
+interface ThemeCustomizationProps {
+  children: React.ReactNode;
+}
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+export default function ThemeCustomization({ children }: ThemeCustomizationProps) {
+  const theme = Palette('light');
+
   const themeTypography = Typography(`'Public Sans', sans-serif`);
   const themeCustomShadows = useMemo(() => CustomShadows(theme), [theme]);
 
-  const themeOptions = useMemo(
+  const themeOptions = useMemo<ThemeOptions>(
     () => ({
       breakpoints: {
         values: {
@@ -41,7 +43,7 @@ export default function ThemeCustomization({ children }) {
       },
       palette: theme.palette,
       customShadows: themeCustomShadows,
-      typography: themeTypography
+      typography: themeTypography as any
     }),
     [theme, themeTypography, themeCustomShadows]
   );
@@ -58,7 +60,3 @@ export default function ThemeCustomization({ children }) {
     </StyledEngineProvider>
   );
 }
-
-ThemeCustomization.propTypes = {
-  children: PropTypes.node
-};
