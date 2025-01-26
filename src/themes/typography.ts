@@ -1,6 +1,44 @@
 // ==============================|| DEFAULT THEME - TYPOGRAPHY ||============================== //
 
-export default function Typography(fontFamily) {
+interface Heading {
+  fontWeight?: number;
+  fontSize: string;
+  lineHeight: number;
+}
+
+interface TextStyle {
+  fontSize: string;
+  lineHeight: number;
+  fontWeight?: number;
+}
+
+interface ButtonStyle {
+  textTransform: string;
+}
+
+export interface TypographyReturn {
+  htmlFontSize: number;
+  fontFamily: string;
+  fontWeightLight: number;
+  fontWeightRegular: number;
+  fontWeightMedium: number;
+  fontWeightBold: number;
+  h1: Heading;
+  h2: Heading;
+  h3: Heading;
+  h4: Heading;
+  h5: Heading;
+  h6: Heading;
+  caption: TextStyle;
+  body1: TextStyle;
+  body2: TextStyle;
+  subtitle1: TextStyle;
+  subtitle2: TextStyle;
+  overline: Partial<TextStyle>;
+  button: ButtonStyle;
+}
+
+export default function Typography(fontFamily: string): TypographyReturn {
   return {
     htmlFontSize: 16,
     fontFamily,

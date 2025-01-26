@@ -1,6 +1,10 @@
 // ==============================|| PRESET THEME - THEME SELECTOR ||============================== //
 
-export default function Theme(colors) {
+type Colors = {
+  [key: string]: string[];
+};
+
+export default function Theme(colors: Colors) {
   const { blue, red, gold, cyan, green, grey } = colors;
   const greyColors = {
     0: grey[0],
