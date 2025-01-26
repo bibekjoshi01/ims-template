@@ -98,14 +98,15 @@
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint": "^9.13.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.14",
     "globals": "^15.11.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
     "prettier": "3.3.3",
     "typescript": "~5.6.2",
-    "typescript-eslint": "^8.11.0"
+    "typescript-eslint": "^8.11.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.33.2"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
