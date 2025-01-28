@@ -17,10 +17,19 @@ import Tabs from '@mui/material/Tabs';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
+// third party
+import Cookies from 'js-cookie';
+import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
+
 // project import
 import Avatar from '@/components/@extended/Avatar';
 import Transitions from '@/components/@extended/Transitions';
 import MainCard from '@/components/MainCard';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { useLogoutMutation } from '@/pages/authentication/redux/auth.api';
+import { logoutSuccess } from '@/pages/authentication/redux/auth.slice.ts';
+import { authState } from '@/pages/authentication/redux/selector';
 import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
 
@@ -50,6 +59,10 @@ function a11yProps(index) {
 
 export default function Profile() {
   const theme = useTheme();
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { fullName, photo } = useAppSelector(authState);
 
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -68,6 +81,23 @@ export default function Profile() {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const [logout] = useLogoutMutation();
+
+  const handleLogOut = async () => {
+    const refreshToken = Cookies.get('refresh');
+    try {
+      const response = await logout({ refresh: refreshToken }).unwrap();
+      console.log(response, 'resp');
+      dispatch(logoutSuccess());
+      enqueueSnackbar(response?.message, { variant: 'success' });
+      navigate.push('/login');
+    } catch (error) {
+      if (error.status === 400) {
+        enqueueSnackbar(error?.data?.refresh[0] || 'Invalid request. Please try again.', { variant: 'error' });
+      }
+    }
   };
 
   const iconBackColorOpen = 'grey.100';
@@ -89,9 +119,9 @@ export default function Profile() {
         onClick={handleToggle}
       >
         <Stack direction="row" spacing={1.25} alignItems="center" sx={{ p: 0.5 }}>
-          <Avatar alt="profile user" src={avatar1} size="sm" />
+          <Avatar alt="profile user" src={photo || avatar1} size="sm" />
           <Typography variant="subtitle1" sx={{ textTransform: 'capitalize' }}>
-            Bibek Joshi
+            {fullName || 'Anonymous'}
           </Typography>
         </Stack>
       </ButtonBase>
@@ -133,7 +163,7 @@ export default function Profile() {
                       </Grid>
                       <Grid item>
                         <Tooltip title="Logout">
-                          <IconButton size="large" sx={{ color: 'error.main' }}>
+                          <IconButton onClick={handleLogOut} size="large" sx={{ color: 'error.main' }}>
                             <LogoutOutlined />
                           </IconButton>
                         </Tooltip>
