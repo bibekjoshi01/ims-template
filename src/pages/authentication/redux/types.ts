@@ -14,6 +14,7 @@ export interface group {
 }
 
 export interface LoginState {
+  fullName: string;
   email: string;
   phoneNo: string;
   isEmailVerified: boolean;
