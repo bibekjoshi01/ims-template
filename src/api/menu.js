@@ -1,5 +1,5 @@
-import useSWR, { mutate } from 'swr';
 import { useMemo } from 'react';
+import useSWR, { mutate } from 'swr';
 
 const initialState = {
   openedItem: 'dashboard',

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 
 // material-ui
@@ -28,7 +27,7 @@ import Transitions from '@/components/@extended/Transitions';
 import MainCard from '@/components/MainCard';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useLogoutMutation } from '@/pages/authentication/redux/auth.api';
-import { logoutSuccess } from '@/pages/authentication/redux/auth.slice.ts';
+import { logoutSuccess } from '@/pages/authentication/redux/auth.slice';
 import { authState } from '@/pages/authentication/redux/selector';
 import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
@@ -39,8 +38,15 @@ import LogoutOutlined from '@ant-design/icons/LogoutOutlined';
 import SettingOutlined from '@ant-design/icons/SettingOutlined';
 import UserOutlined from '@ant-design/icons/UserOutlined';
 
+interface TabPanelProps {
+  children: React.ReactNode;
+  value: number;
+  index: number;
+  [key: string]: any;
+}
+
 // tab panel wrapper
-function TabPanel({ children, value, index, ...other }) {
+function TabPanel({ children, value, index, ...other }: TabPanelProps) {
   return (
     <div role="tabpanel" hidden={value !== index} id={`profile-tabpanel-${index}`} aria-labelledby={`profile-tab-${index}`} {...other}>
       {value === index && children}
@@ -48,7 +54,7 @@ function TabPanel({ children, value, index, ...other }) {
   );
 }
 
-function a11yProps(index) {
+function a11yProps(index: number) {
   return {
     id: `profile-tab-${index}`,
     'aria-controls': `profile-tabpanel-${index}`
@@ -64,22 +70,22 @@ export default function Profile() {
   const dispatch = useAppDispatch();
   const { fullName, photo } = useAppSelector(authState);
 
-  const anchorRef = useRef(null);
+  const anchorRef: React.Ref<any> = useRef(null);
   const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(0);
+
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
+  const handleClose = (event: MouseEvent | TouchEvent) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
     setOpen(false);
   };
 
-  const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: any): void => {
     setValue(newValue);
   };
 
@@ -89,11 +95,10 @@ export default function Profile() {
     const refreshToken = Cookies.get('refresh');
     try {
       const response = await logout({ refresh: refreshToken }).unwrap();
-      console.log(response, 'resp');
       dispatch(logoutSuccess());
       enqueueSnackbar(response?.message, { variant: 'success' });
-      navigate.push('/login');
-    } catch (error) {
+      navigate('/login');
+    } catch (error: any) {
       if (error.status === 400) {
         enqueueSnackbar(error?.data?.refresh[0] || 'Invalid request. Please try again.', { variant: 'error' });
       }
@@ -152,7 +157,7 @@ export default function Profile() {
                     <Grid container justifyContent="space-between" alignItems="center">
                       <Grid item>
                         <Stack direction="row" spacing={1.25} alignItems="center">
-                          <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
+                          <Avatar alt="profile user" src={photo || avatar1} sx={{ width: 32, height: 32 }} />
                           <Stack>
                             <Typography variant="h6">John Doe</Typography>
                             <Typography variant="body2" color="text.secondary">
@@ -214,5 +219,3 @@ export default function Profile() {
     </Box>
   );
 }
-
-TabPanel.propTypes = { children: PropTypes.node, value: PropTypes.number, index: PropTypes.number, other: PropTypes.any };

@@ -1,22 +1,23 @@
 import { useState } from 'react';
 
 // material-ui
-import useMediaQuery from '@mui/material/useMediaQuery';
-import IconButton from '@mui/material/IconButton';
 import Box from '@mui/material/Box';
+import IconButton from '@mui/material/IconButton';
+import { Theme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 // project import
-import Search from './Search';
-import Profile from './Profile';
-import Notification from './Notification';
 import MobileSection from './MobileSection';
+import Notification from './Notification';
+import Profile from './Profile';
+import Search from './Search';
 
-import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons';
+import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
 export default function HeaderContent() {
-  const downLG = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+  const downLG = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
 
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -24,6 +25,7 @@ export default function HeaderContent() {
     if (!document.fullscreenElement) {
       // Enter fullscreen mode
       const elem = document.documentElement; // Entire document
+
       if (elem.requestFullscreen) {
         elem.requestFullscreen();
       } else if (elem.webkitRequestFullscreen) {
@@ -55,7 +57,7 @@ export default function HeaderContent() {
       {downLG && <Box sx={{ width: '100%', ml: 1 }} />}
       <IconButton
         onClick={handleFullscreenToggle}
-        target="_blank"
+        // target="_blank"
         disableRipple
         color="secondary"
         title="Enter full screen"

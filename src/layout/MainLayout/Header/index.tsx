@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
 // material-ui
-import AppBar from '@mui/material/AppBar';
+import AppBar, { AppBarProps } from '@mui/material/AppBar';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
@@ -41,7 +41,6 @@ export default function Header() {
         onClick={() => handlerDrawerOpen(!drawerOpen)}
         edge="start"
         color="secondary"
-        variant="light"
         sx={{ color: 'text.primary', bgcolor: drawerOpen ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
       >
         {!drawerOpen ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -51,20 +50,20 @@ export default function Header() {
   );
 
   // app-bar params
-  const appBar = {
+  const appBar: AppBarProps = {
+    component: 'header',
     position: 'fixed',
     color: 'inherit',
     elevation: 0,
     sx: {
       borderBottom: `1px solid ${theme.palette.divider}`
-      // boxShadow: theme.customShadows.z1
     }
   };
 
   return (
     <>
       {!downLG ? (
-        <AppBarStyled open={!!drawerOpen} {...appBar}>
+        <AppBarStyled {...appBar} open={!!drawerOpen}>
           {mainHeader}
         </AppBarStyled>
       ) : (
