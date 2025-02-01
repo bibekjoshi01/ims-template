@@ -19,11 +19,10 @@ import { handlerDrawerOpen, useGetMenuMaster } from '@/api/menu';
 
 export default function MainLayout() {
   const { menuMasterLoading } = useGetMenuMaster();
-  const downXL = useMediaQuery((theme) => theme.breakpoints.down('xl'));
+  const downXL = useMediaQuery((theme: any) => theme.breakpoints.down('xl'));
 
   useEffect(() => {
     handlerDrawerOpen(!downXL);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [downXL]);
 
   if (menuMasterLoading) return <Loader />;

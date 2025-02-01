@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 // material-ui
@@ -16,19 +15,19 @@ import UserOutlined from '@ant-design/icons/UserOutlined';
 export default function ProfileTab() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const handleListItemClick = (index) => {
+  const handleListItemClick = (index: number) => {
     setSelectedIndex(index);
   };
 
   return (
     <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32 } }}>
-      <ListItemButton selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0, '/apps/profiles/user/personal')}>
+      <ListItemButton selected={selectedIndex === 0} onClick={() => handleListItemClick(0)}>
         <ListItemIcon>
           <EditOutlined />
         </ListItemIcon>
         <ListItemText primary="Edit Profile" />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1, '/apps/profiles/account/basic')}>
+      <ListItemButton selected={selectedIndex === 1} onClick={() => handleListItemClick(1)}>
         <ListItemIcon>
           <UserOutlined />
         </ListItemIcon>
@@ -37,5 +36,3 @@ export default function ProfileTab() {
     </List>
   );
 }
-
-ProfileTab.propTypes = { handleLogout: PropTypes.func };

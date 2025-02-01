@@ -24,13 +24,14 @@ export default function MobileSection() {
   const theme = useTheme();
 
   const [open, setOpen] = useState(false);
-  const anchorRef = useRef(null);
+
+  const anchorRef: React.Ref<any> = useRef(null);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
+  const handleClose = (event: MouseEvent | TouchEvent) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -61,7 +62,6 @@ export default function MobileSection() {
           aria-haspopup="true"
           onClick={handleToggle}
           color="secondary"
-          variant="light"
         >
           <MoreOutlined />
         </IconButton>

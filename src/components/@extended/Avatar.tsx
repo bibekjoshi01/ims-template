@@ -1,13 +1,18 @@
-import PropTypes from 'prop-types';
-
 // material-ui
-import MuiAvatar from '@mui/material/Avatar';
+import MuiAvatar, { AvatarProps as MuiAvatarProps } from '@mui/material/Avatar';
 import { styled, useTheme } from '@mui/material/styles';
 
 // project import
 import getColors from '@/utils/getColors';
 
-function getColorStyle({ theme, color, type }) {
+interface colorStyleProps {
+  theme: any;
+  color: string;
+  type: string;
+  size?: string;
+}
+
+function getColorStyle({ theme, color, type }: colorStyleProps) {
   const colors = getColors(theme, color);
   const { lighter, light, main, contrastText } = colors;
 
@@ -41,7 +46,14 @@ function getColorStyle({ theme, color, type }) {
 
 // ==============================|| AVATAR - SIZE STYLE ||============================== //
 
-function getSizeStyle(size) {
+interface AvatarProps extends MuiAvatarProps {
+  children?: React.ReactNode;
+  color?: string;
+  type?: string;
+  size?: 'sm' | 'md' | 'lg' | 'badge' | string;
+}
+
+function getSizeStyle(size: string) {
   switch (size) {
     case 'badge':
       return {
@@ -84,17 +96,17 @@ function getSizeStyle(size) {
   }
 }
 
-const AvatarStyle = styled(MuiAvatar, { shouldForwardProp: (prop) => prop !== 'color' && prop !== 'type' && prop !== 'size' })(
-  ({ theme, color, type, size }) => ({
-    ...getSizeStyle(size),
-    ...getColorStyle({ theme, color, type }),
-    ...(size === 'badge' && {
-      borderColor: theme.palette.background.default
-    })
+const AvatarStyle = styled(MuiAvatar, {
+  shouldForwardProp: (prop) => prop !== 'color' && prop !== 'type' && prop !== 'size'
+})<AvatarProps>(({ theme, color, type, size }: any) => ({
+  ...getSizeStyle(size),
+  ...getColorStyle({ theme, color, type }),
+  ...(size === 'badge' && {
+    borderColor: theme.palette.background.default
   })
-);
+}));
 
-export default function Avatar({ children, color = 'primary', type, size = 'md', ...others }) {
+export default function Avatar({ children, color = 'primary', type = 'filled', size = 'md', ...others }: AvatarProps) {
   const theme = useTheme();
 
   return (
@@ -103,13 +115,3 @@ export default function Avatar({ children, color = 'primary', type, size = 'md',
     </AvatarStyle>
   );
 }
-
-getColorStyle.propTypes = { theme: PropTypes.any, color: PropTypes.any, type: PropTypes.any };
-
-Avatar.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-  color: PropTypes.string,
-  type: PropTypes.any,
-  size: PropTypes.string,
-  others: PropTypes.any
-};
