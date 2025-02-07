@@ -1,5 +1,5 @@
 // action - state management
-import { REGISTER, LOGIN, LOGOUT } from './actions';
+import { LOGIN, LOGOUT, REGISTER } from './actions';
 
 // initial state
 export const initialState = {
