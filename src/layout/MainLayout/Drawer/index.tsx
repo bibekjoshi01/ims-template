@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useMemo } from 'react';
 
 import Box from '@mui/material/Box';
@@ -15,7 +14,11 @@ import { drawerWidth } from '@/config';
 
 // ==============================|| MAIN LAYOUT - DRAWER ||============================== //
 
-export default function MainDrawer({ window }) {
+interface MainDrawerProps {
+  window?: () => Window;
+}
+
+export default function MainDrawer({ window }: MainDrawerProps) {
   const { menuMaster } = useGetMenuMaster();
   const drawerOpen = menuMaster.isDashboardDrawerOpened;
   const matchDownMD = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -60,5 +63,3 @@ export default function MainDrawer({ window }) {
     </Box>
   );
 }
-
-MainDrawer.propTypes = { window: PropTypes.func };

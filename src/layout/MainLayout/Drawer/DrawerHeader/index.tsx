@@ -1,5 +1,3 @@
-import PropTypes from 'prop-types';
-
 // material-ui
 import { useTheme } from '@mui/material/styles';
 
@@ -9,14 +7,12 @@ import DrawerHeaderStyled from './DrawerHeaderStyled';
 
 // ==============================|| DRAWER HEADER ||============================== //
 
-export default function DrawerHeader({ open }) {
+export default function DrawerHeader({ open }: { open: boolean }) {
   const theme = useTheme();
 
   return (
     <DrawerHeaderStyled theme={theme} open={!!open}>
-      <Logo isIcon={!open} sx={{ width: open ? 'auto' : 35, height: 35 }} />
+      <Logo sx={{ width: open ? 'auto' : 35, height: 35 }} />
     </DrawerHeaderStyled>
   );
 }
-
-DrawerHeader.propTypes = { open: PropTypes.bool };
