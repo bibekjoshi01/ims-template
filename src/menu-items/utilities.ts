@@ -1,21 +1,11 @@
-// assets
-import {
-  AntDesignOutlined,
-  AppstoreAddOutlined,
-  BarcodeOutlined,
-  BgColorsOutlined,
-  FontSizeOutlined,
-  LoadingOutlined
-} from '@ant-design/icons';
+// mui-icons imports
+import { FormatColorFill, FormatSize, QrCode } from '@mui/icons-material';
 
 // icons
 const icons = {
-  FontSizeOutlined,
-  BgColorsOutlined,
-  BarcodeOutlined,
-  AntDesignOutlined,
-  LoadingOutlined,
-  AppstoreAddOutlined
+  FormatSize,
+  FormatColorFill,
+  QrCode
 };
 
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
@@ -30,21 +20,21 @@ const utilities = {
       title: 'Typography',
       type: 'item',
       url: '/typography',
-      icon: icons.FontSizeOutlined
+      icon: icons.FormatSize
     },
     {
       id: 'util-color',
       title: 'Color',
       type: 'item',
       url: '/color',
-      icon: icons.BgColorsOutlined
+      icon: icons.FormatColorFill
     },
     {
       id: 'util-shadow',
       title: 'Shadow',
       type: 'item',
       url: '/shadow',
-      icon: icons.BarcodeOutlined
+      icon: icons.QrCode
     }
   ]
 };

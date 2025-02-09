@@ -62,6 +62,18 @@ We value collaboration, respect, and quality contributions. This code of conduct
    - Write unit tests for new components and features.
    - Ensure changes don't break existing functionality.
 
+## **📁 Folder & File Naming Conventions**
+
+### ✅ General Rule:
+
+1.  Folders: 🔹 All lowercase, use kebab-case (hyphen-separated)
+2.  Files: 🔹 Use PascalCase for components, camelCase for everything else
+3.  Components → PascalCase (Button.tsx, UserCard.tsx)
+4.  Hooks → camelCase (useAuth.ts, useFetch.ts)
+5.  Utils → camelCase (formatDate.ts, calculateTotal.ts)
+6.  Constants → UPPER_CASE (API_ENDPOINTS.ts, ERROR_MESSAGES.ts)
+7.  Styles → kebab-case (button.module.scss, header.module.css
+
 ## **Communication**
 
 - Use the project's communication channels (e.g., Slack, Discord, GitHub Discussions) for questions or updates.

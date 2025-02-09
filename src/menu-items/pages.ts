@@ -1,17 +1,18 @@
-// assets
-import { DashboardOutlined, PlusOutlined, ShopFilled, ShoppingCartOutlined } from '@ant-design/icons';
+// mui-icons imports
+import { AddCircleOutline, DashboardOutlined, ShoppingCartOutlined, Store } from '@mui/icons-material';
+import { MenuItem } from './types';
 
 // icons
 const icons = {
   DashboardOutlined,
-  PlusOutlined,
-  ShopFilled,
+  AddCircleOutline,
+  Store,
   ShoppingCartOutlined
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
 
-const pages = {
+const pages: MenuItem = {
   id: 'pages',
   title: 'Pages',
   type: 'group',
@@ -30,7 +31,7 @@ const pages = {
       type: 'item',
       url: '/orders',
       icon: icons.ShoppingCartOutlined,
-      target: false,
+      target: '_self',
       breadcrumbs: false
     }
   ]

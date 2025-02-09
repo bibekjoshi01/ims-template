@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { forwardRef, useEffect } from 'react';
 import { Link, matchPath, useLocation } from 'react-router-dom';
 
@@ -13,28 +12,45 @@ import Typography from '@mui/material/Typography';
 
 // project import
 import { handlerActiveItem, useGetMenuMaster } from '@/api/menu';
+import { MenuItem } from '@/menu-items/types';
 
-export default function NavItem({ item, level }) {
+type ListItemProps =
+  | { component: keyof JSX.IntrinsicElements; href: string; target?: string }
+  | {
+      component: React.ForwardRefExoticComponent<
+        Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'ref'> & React.RefAttributes<HTMLAnchorElement>
+      >;
+    };
+
+export default function NavItem({ item, level }: { item: MenuItem; level: number }) {
   const theme = useTheme();
 
   const { menuMaster } = useGetMenuMaster();
-  const drawerOpen = menuMaster.isDashboardDrawerOpened;
-  const openItem = menuMaster.openedItem;
+  const drawerOpen = menuMaster?.isDashboardDrawerOpened;
+  const openItem = menuMaster?.openedItem;
 
   let itemTarget = '_self';
   if (item.target) {
     itemTarget = '_blank';
   }
-  let listItemProps = { component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url} target={itemTarget} />) };
+
+  let listItemProps: ListItemProps;
+
   if (item?.external) {
-    listItemProps = { component: 'a', href: item.url, target: itemTarget };
+    listItemProps = { component: 'a', href: item.url!, target: itemTarget };
+  } else {
+    listItemProps = {
+      component: forwardRef<HTMLAnchorElement, Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'ref'>>((props, ref) => (
+        <Link ref={ref} {...props} to={item?.url!} target={itemTarget} />
+      ))
+    };
   }
 
   const Icon = item.icon;
-  const itemIcon = item.icon ? <Icon style={{ fontSize: drawerOpen ? '1rem' : '1.25rem' }} /> : false;
+  const itemIcon = Icon ? <Icon style={{ fontSize: drawerOpen ? '1rem' : '1.25rem' }} /> : null;
 
   const { pathname } = useLocation();
-  const isSelected = !!matchPath({ path: item.url, end: false }, pathname) || openItem === item.id;
+  const isSelected = !!matchPath({ path: item?.url ?? '', end: false }, pathname) || openItem === item.id;
 
   // active menu item on page load
   useEffect(() => {
@@ -48,7 +64,7 @@ export default function NavItem({ item, level }) {
   return (
     <ListItemButton
       {...listItemProps}
-      disabled={item.disabled}
+      disabled={item?.disabled || false}
       onClick={() => handlerActiveItem(item.id)}
       selected={isSelected}
       sx={{
@@ -118,17 +134,15 @@ export default function NavItem({ item, level }) {
           }
         />
       )}
-      {(drawerOpen || (!drawerOpen && level !== 1)) && item.chip && (
+      {(drawerOpen || (!drawerOpen && level !== 1)) && item?.chip && (
         <Chip
-          color={item.chip.color}
-          variant={item.chip.variant}
-          size={item.chip.size}
-          label={item.chip.label}
-          avatar={item.chip.avatar && <Avatar>{item.chip.avatar}</Avatar>}
+          color={item?.chip.color}
+          variant={item?.chip.variant}
+          size={item?.chip.size}
+          label={item?.chip.label}
+          avatar={item?.chip.avatar && <Avatar>{item?.chip.avatar}</Avatar>}
         />
       )}
     </ListItemButton>
   );
 }
-
-NavItem.propTypes = { item: PropTypes.object, level: PropTypes.number };
