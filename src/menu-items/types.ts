@@ -27,3 +27,11 @@ export interface MenuItem {
 export interface MenuItems {
   items: MenuItem[];
 }
+
+export interface TabItem {
+  id: string;
+  title: string;
+  url?: string;
+  tabPanel?: React.ElementType;
+  icon?: OverridableComponent<SvgIconTypeMap<{}, 'svg'>>;
+}

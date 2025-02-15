@@ -7,6 +7,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
+import { Divider } from '@mui/material';
 
 // header style
 const headerSX = {
@@ -25,6 +26,7 @@ function MainCard(
     elevation,
     secondary,
     shadow,
+    divider = false,
     sx = {},
     title,
     ...others
@@ -59,7 +61,8 @@ function MainCard(
       {/* card header and action */}
       {!darkTitle && title && <CardHeader sx={headerSX} titleTypographyProps={{ variant: 'subtitle1' }} title={title} action={secondary} />}
       {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />}
-
+      {/* card divider */}
+      {divider && <Divider />}
       {/* card content */}
       {content && <CardContent sx={contentSX}>{children}</CardContent>}
       {!content && children}

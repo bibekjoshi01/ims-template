@@ -84,8 +84,8 @@ export default function Breadcrumbs({ navigation, title, ...others }) {
               </MuiBreadcrumbs>
             </Grid>
             {title && (
-              <Grid item sx={{ mt: 2 }}>
-                <Typography variant="h5">{item.title}</Typography>
+              <Grid item>
+                <Typography variant="h2">{item.title}</Typography>
               </Grid>
             )}
           </Grid>
