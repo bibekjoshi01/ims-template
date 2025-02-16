@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 // material-ui imports
-import { LockOutlined, PersonOutline, SettingsOutlined } from '@mui/icons-material';
 import { Grid } from '@mui/material';
 
 // components
@@ -10,29 +9,8 @@ import MainCard from '@/components/MainCard';
 
 // project imports
 import { TabItem } from '@/menu-items/types';
+import { TabItems } from '../common';
 import SettingsTab from './settingsTab';
-
-const TabItems: TabItem[] = [
-  {
-    id: 'personal',
-    title: 'Personal',
-    icon: PersonOutline,
-    url: '/profiles/account/personal'
-  },
-  {
-    id: 'change-password',
-    title: 'Change Password',
-    icon: LockOutlined,
-    url: '/profiles/account/change-password'
-  },
-  {
-    id: 'setting',
-    title: 'Setting',
-    icon: SettingsOutlined,
-    url: '/profiles/account/settings',
-    tabPanel: SettingsTab
-  }
-];
 
 export default function Settings() {
   const [value, setValue] = useState(2);
@@ -41,12 +19,14 @@ export default function Settings() {
     setValue(newValue);
   };
 
+  const updatedTabItems: TabItem[] = TabItems?.map((tab) => (tab?.id === 'setting' ? { ...tab, tabPanel: SettingsTab } : tab));
+
   return (
     <>
       <Grid container spacing={3}>
         <Grid item sx={{ width: '100%' }}>
           <MainCard sx={{ marginTop: 1 }}>
-            <TABS tabItems={TabItems} value={value} handleChange={handleChange} />
+            <TABS tabItems={updatedTabItems} value={value} handleChange={handleChange} />
           </MainCard>
         </Grid>
       </Grid>

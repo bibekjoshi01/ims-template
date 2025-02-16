@@ -59,9 +59,10 @@ export default function TABS({ tabItems, value, handleChange, variant }: TabsPro
                 flexDirection: 'row',
                 justifyContent: 'center',
                 alignItems: 'center',
-                textTransform: 'capitalize'
+                textTransform: 'capitalize',
+                gap: '5px'
               }}
-              icon={item.icon ? <item.icon style={{ height: '1.2rem', marginBottom: 0, marginRight: '10px' }} /> : undefined}
+              icon={item?.icon ? <item.icon style={{ height: '1.2rem', marginBottom: 0 }} /> : undefined}
               label={item.title}
               {...a11yProps(index)}
             />
