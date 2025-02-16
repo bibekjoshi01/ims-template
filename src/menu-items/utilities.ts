@@ -1,5 +1,6 @@
 // mui-icons imports
 import { FormatColorFill, FormatSize, QrCode } from '@mui/icons-material';
+import { MenuItem } from './types';
 
 // icons
 const icons = {
@@ -10,7 +11,7 @@ const icons = {
 
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
 
-const utilities = {
+const utilities: MenuItem = {
   id: 'utilities',
   title: 'Utilities',
   type: 'group',

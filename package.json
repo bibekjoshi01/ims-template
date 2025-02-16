@@ -29,6 +29,7 @@
     "@fontsource/poppins": "^5.0.12",
     "@fontsource/public-sans": "^5.0.17",
     "@fontsource/roboto": "^5.0.12",
+    "@hookform/resolvers": "^4.0.0",
     "@mui/base": "^5.0.0-beta.38",
     "@mui/icons-material": "^6.4.3",
     "@mui/lab": "^5.0.0-alpha.167",
@@ -55,6 +56,7 @@
     "react-copy-to-clipboard": "^5.1.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.54.2",
     "react-number-format": "^5.3.3",
     "react-redux": "^9.2.0",
     "react-router": "^6.22.3",
@@ -68,7 +70,8 @@
     "vite": "^5.2.10",
     "vite-jsconfig-paths": "^2.0.1",
     "web-vitals": "^3.5.2",
-    "yup": "^1.4.0"
+    "yup": "^1.4.0",
+    "zod": "^3.24.2"
   },
   "babel": {
     "presets": [
