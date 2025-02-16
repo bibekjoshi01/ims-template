@@ -1,14 +1,19 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Grid, List, ListItem, ListItemText, ListItemIcon, Button, Typography, Divider } from '@mui/material';
-import { CheckCircleOutline, CancelOutlined } from '@mui/icons-material';
 
-import MainCard from '@/components/MainCard';
+// material-ui imports
+import { CancelOutlined, CheckCircleOutline } from '@mui/icons-material';
+import { Box, Button, Divider, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
+
+// components
 import FormSection from '@/components/FormSection';
-import PasswordStrengthCapsules from '@/components/passwordStrengthCapsules';
-import { ChangePasswordFormDataType, changePasswordSchema, defaultValues, passwordFields, ReqObj } from './data';
+import MainCard from '@/components/MainCard';
 import MatchIndicator from '@/components/PasswordMatchIndicator';
+import PasswordStrengthCapsules from '@/components/PasswordStrengthCapsules';
+
+// project imports
+import { ChangePasswordFormDataType, changePasswordSchema, defaultValues, passwordFields, ReqObj } from './data';
 
 export default function ChangePasswordTab() {
   // state to toggle password visibility
