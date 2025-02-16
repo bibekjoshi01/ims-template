@@ -15,28 +15,28 @@ const applications: MenuItem = {
   type: 'group',
   children: [
     {
-      id: 'account-profile',
-      title: 'Account Profile',
+      id: 'account-settings',
+      title: 'Account Settings',
       type: 'collapse',
       icon: icons.Person,
       children: [
         {
-          id: 'personal',
-          title: 'Personal',
+          id: 'profile',
+          title: 'Profile',
           type: 'item',
-          url: '/profiles/account/personal'
+          url: '/account/profile'
         },
         {
           id: 'change-password',
           title: 'Change Password',
           type: 'item',
-          url: '/profiles/account/change-password'
+          url: '/account/change-password'
         },
         {
           id: 'settings',
           title: 'Settings',
           type: 'item',
-          url: '/profiles/account/settings'
+          url: '/account/settings'
         }
       ]
     }

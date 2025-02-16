@@ -1,15 +1,15 @@
-import { Box, Grid, Button } from '@mui/material';
-import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Box, Button, Grid } from '@mui/material';
+import { useForm, useWatch } from 'react-hook-form';
 
-import SocailNetwork from './socialNetwork';
 import FormSection from '@/components/FormSection';
-import ProfileUploader from './profileUploader';
 import MainCard from '@/components/MainCard';
+import ProfileUploader from './profileUploader';
+import SocailNetwork from './socialNetwork';
 
-import { UserProfileFormDataType, userProfileSchema, defaultValues, personalInfoFields, contactInfoFields } from './data';
+import { contactInfoFields, defaultValues, personalInfoFields, UserProfileFormDataType, userProfileSchema } from './data';
 
-export default function PersonalTab() {
+export default function ProfileTab() {
   /* ----------------- Setup React Hook Form ----------------- */
   const {
     control,

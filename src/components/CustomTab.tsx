@@ -1,9 +1,9 @@
+import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
-import Box from '@mui/material/Box';
 
-import { useTheme } from '@mui/material/styles';
 import { TabItem } from '@/menu-items/types';
+import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
 function a11yProps(index: number) {

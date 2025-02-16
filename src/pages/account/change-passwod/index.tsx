@@ -1,12 +1,14 @@
-import { Grid } from '@mui/material';
 import { useState } from 'react';
 
-// assets
+// material-ui imports
 import { LockOutlined, PersonOutline, SettingsOutlined } from '@mui/icons-material';
+import { Grid } from '@mui/material';
 
-// tabs
+// components
 import TABS from '@/components/CustomTab';
 import MainCard from '@/components/MainCard';
+
+// project imports
 import { TabItem } from '@/menu-items/types';
 import ChangePasswordTab from './changePasswordTab';
 

@@ -12,9 +12,9 @@ const Shadow = Loadable(lazy(() => import('@/pages/component-overview/shadows'))
 const DashboardDefault = Loadable(lazy(() => import('@/pages/dashboard/index')));
 const Orders = Loadable(lazy(() => import('@/pages/orders/index')));
 const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/404Page')));
-const Personal = Loadable(lazy(() => import('@/pages/profiles/personal')));
-const ChangePassword = Loadable(lazy(() => import('@/pages/profiles/change-passwod')));
-const Settings = Loadable(lazy(() => import('@/pages/profiles/settings')));
+const Profile = Loadable(lazy(() => import('@/pages/account/profile')));
+const ChangePassword = Loadable(lazy(() => import('@/pages/account/change-passwod')));
+const Settings = Loadable(lazy(() => import('@/pages/account/settings')));
 
 // ==============================|| PRIVATE ROUTES ||============================== //
 
@@ -31,9 +31,9 @@ const PrivateRoutes = () => (
         <Route path="shadow" element={<Shadow />} />
         <Route path="typography" element={<Typography />} />
         {/* Account Profile */}
-        <Route path="profiles/account">
-          <Route index element={<Navigate to="personal" replace />} /> // Redirect to personal page
-          <Route path="personal" element={<Personal />} />
+        <Route path="/account">
+          <Route index element={<Navigate to="profile" replace />} /> // Redirect to personal page
+          <Route path="profile" element={<Profile />} />
           <Route path="change-password" element={<ChangePassword />} />
           <Route path="settings" element={<Settings />} />
         </Route>

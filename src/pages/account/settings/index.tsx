@@ -1,22 +1,23 @@
-// assets
-import { LockOutlined, PersonOutline, SettingsOutlined } from '@mui/icons-material';
+import { useState } from 'react';
 
-// tabs
-import MainCard from '@/components/MainCard';
+// material-ui imports
+import { LockOutlined, PersonOutline, SettingsOutlined } from '@mui/icons-material';
 import { Grid } from '@mui/material';
 
+// components
 import TABS from '@/components/CustomTab';
+import MainCard from '@/components/MainCard';
+
+// project imports
 import { TabItem } from '@/menu-items/types';
-import { useState } from 'react';
-import PersonalTab from './personalTab';
+import SettingsTab from './settingsTab';
 
 const TabItems: TabItem[] = [
   {
     id: 'personal',
     title: 'Personal',
     icon: PersonOutline,
-    url: '/profiles/account/personal',
-    tabPanel: PersonalTab
+    url: '/profiles/account/personal'
   },
   {
     id: 'change-password',
@@ -28,12 +29,13 @@ const TabItems: TabItem[] = [
     id: 'setting',
     title: 'Setting',
     icon: SettingsOutlined,
-    url: '/profiles/account/settings'
+    url: '/profiles/account/settings',
+    tabPanel: SettingsTab
   }
 ];
 
-export default function Personal() {
-  const [value, setValue] = useState(0);
+export default function Settings() {
+  const [value, setValue] = useState(2);
 
   const handleChange = (event: React.SyntheticEvent, newValue: any): void => {
     setValue(newValue);
