@@ -32,12 +32,11 @@ export default function SettingsTab() {
           <Grid item xs={12} sm={6} key={group.id}>
             <MainCard divider title={group.cardTitle}>
               <Box sx={{ mb: 3 }}>
-                <Typography variant="h6">{group.cardTitle}</Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="h6">
                   {group.cardDescription}
                 </Typography>
               </Box>
-              <FormSection<SettingsFormDataType> fields={group.fields} control={control} errors={errors} defaultValue={defaultValues} />
+              <FormSection<SettingsFormDataType> fields={group.fields} control={control} errors={errors} defaultValue={defaultValues} sx={{ display: "flex", justifyContent: "space-between", color: theme.palette.grey[500] }} />
             </MainCard>
           </Grid>
         ))}
