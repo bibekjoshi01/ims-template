@@ -16,6 +16,7 @@ export type FormField<T> = {
   xs?: number; // Grid size for extra small screens.
   sm?: number; // Grid size for small screens.
   defaultValue?: any; // Default value for the field.
+  sx?: any; // Style object for the field.
 };
 
 interface FormSectionProps<T extends FieldValues> {
@@ -42,6 +43,9 @@ interface FormSectionProps<T extends FieldValues> {
 
   /** Default value for the field. */
   defaultValue?: any;
+
+  /** sx . */
+  sx?: any;
 }
 
 /**
@@ -55,7 +59,8 @@ export default function FormSection<T extends Record<string, any>>({
   childrenForInput,
   showPassword,
   handleToggleVisibility,
-  defaultValue
+  defaultValue,
+  sx
 }: FormSectionProps<T>) {
   return (
     <>
@@ -80,6 +85,7 @@ export default function FormSection<T extends Record<string, any>>({
                   showPassword={showPassword}
                   handleToggleVisibility={handleToggleVisibility}
                   defaultValue={defaultValue}
+                  sx={sx}
                 >
                   {/* Render the specific component for specific field */}
                   {(childrenForInput && childrenForInput[field.name]) || null}

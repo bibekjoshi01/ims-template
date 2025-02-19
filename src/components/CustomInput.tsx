@@ -121,11 +121,17 @@ const CustomInput: React.FC<CustomInputProps> = ({
             aria-describedby={errorId}
             {...(fullwidth ? { fullWidth: true } : {})}
             {...inputProps}
+            sx={{
+              '.MuiSelect-select': {
+                display: "flex",
+                alignItems: "center",
+              }
+            }}
           >
             {options?.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.src && (
-                  <img loading="lazy" width="20" src={option.src} srcSet={`${option.src} 2x`} alt="flag" style={{ marginRight: 8 }} />
+                  <img loading="lazy" src={option.src} srcSet={`${option.src} 2x`} alt="flag" style={{ height: "14px", aspectRatio: 1, objectFit: "fill", marginRight: "4px"}} />
                 )}
                 {option.label}
               </MenuItem>
