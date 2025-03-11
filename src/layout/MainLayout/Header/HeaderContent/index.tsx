@@ -7,6 +7,7 @@ import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // project import
+import { useFullscreen } from '@/hooks/useFullscreen';
 import MobileSection from './MobileSection';
 import Notification from './Notification';
 import Profile from './Profile';
@@ -19,37 +20,7 @@ import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 export default function HeaderContent() {
   const downLG = useMediaQuery((theme: Theme) => theme.breakpoints.down('lg'));
 
-  const [isFullscreen, setIsFullscreen] = useState(false);
-
-  const handleFullscreenToggle = () => {
-    if (!document.fullscreenElement) {
-      // Enter fullscreen mode
-      const elem = document.documentElement; // Entire document
-
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.webkitRequestFullscreen) {
-        // Safari
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) {
-        // IE/Edge
-        elem.msRequestFullscreen();
-      }
-      setIsFullscreen(true);
-    } else {
-      // Exit fullscreen mode
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) {
-        // Safari
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) {
-        // IE/Edge
-        document.msExitFullscreen();
-      }
-      setIsFullscreen(false);
-    }
-  };
+  const { isFullscreen, handleFullscreenToggle } = useFullscreen();
 
   return (
     <>

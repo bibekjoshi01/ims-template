@@ -15,6 +15,10 @@ const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/404Page')));
 const Profile = Loadable(lazy(() => import('@/pages/account/profile')));
 const ChangePassword = Loadable(lazy(() => import('@/pages/account/change-passwod')));
 const Settings = Loadable(lazy(() => import('@/pages/account/settings')));
+const Table1 = Loadable(lazy(() => import('@/pages/tables/table1')));
+const Table2 = Loadable(lazy(() => import('@/pages/tables/table2')));
+const Table3 = Loadable(lazy(() => import('@/pages/tables/table3')));
+const Table4 = Loadable(lazy(() => import('@/pages/tables/table4')));
 
 // ==============================|| PRIVATE ROUTES ||============================== //
 
@@ -25,13 +29,21 @@ const PrivateRoutes = () => (
         {/* Dashboard */}
         <Route index element={<Navigate to="dashboard/default" replace />} /> // Redirect to dashboard/default page
         <Route path="dashboard/default" element={<DashboardDefault />} />
+        {/* table  */}
+        <Route path="tables">
+          <Route index element={<Navigate to="table1" replace />} />
+          <Route path="table1" element={<Table1 />} />
+          <Route path="table2" element={<Table2 />} />
+          <Route path="table3" element={<Table3 />} />
+          <Route path="table4" element={<Table4 />} />
+        </Route>
         {/* Pages */}
         <Route path="orders" element={<Orders />} />
         <Route path="color" element={<Color />} />
         <Route path="shadow" element={<Shadow />} />
         <Route path="typography" element={<Typography />} />
         {/* Account Profile */}
-        <Route path="/account">
+        <Route path="account">
           <Route index element={<Navigate to="profile" replace />} /> // Redirect to personal page
           <Route path="profile" element={<Profile />} />
           <Route path="change-password" element={<ChangePassword />} />
