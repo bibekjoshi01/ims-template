@@ -1,21 +1,15 @@
-import {
-  DataGridProps,
-  GridColDef,
-  GridPaginationModel,
-  GridRowEditStopParams,
-  GridRowId,
-  GridRowModesModel,
-  MuiEvent
-} from '@mui/x-data-grid';
+import { Theme } from '@mui/material/styles';
+import { DataGridProps, GridPaginationModel, GridRowId, GridRowModesModel } from '@mui/x-data-grid';
+import { ColumnConfig } from './columns';
 
 /**
  * AppTableProps defines the expected properties for the AppTable component.
  *
- * @template T - Type of the row data object
+ * @template T - Type of the row data object this is something you'll define as TableData and pass it to Apptable
  */
 // ===========================|| AppTable - COMPONENT INTERFACE ||=========================== //
 
-export interface AppTableProps<T extends object> extends DataGridProps {
+export interface AppTableProps<T extends object> {
   /**
    * Title of the table.
    * Default is undefined.
@@ -23,16 +17,28 @@ export interface AppTableProps<T extends object> extends DataGridProps {
   title?: string;
 
   /**
-   * Array of column definitions for the DataGrid.
-   * (Required, no default value)
+   * Array of rows to be displayed in the table.
+   * (Default is []).
    */
-  columns: GridColDef<T>[];
+  initialRows?: T[];
 
   /**
-   * Array of rows to be displayed in the table.
-   * (Required, no default value)
+   * Function to get the column configuration.
+   * Required`.
    */
-  rows: T[];
+  getColumnConfig: (theme: Theme) => ColumnConfig<T>[];
+
+  /**
+   * Function to handle saving an updated row.
+   * Default is `undefined`.
+   */
+  onSaveRow?: (updatedRow: T) => Promise<T | void>;
+
+  /**
+   * Function to handle deleting a row.
+   * Default is `undefined`.
+   */
+  onDeleteRow?: (id: GridRowId) => Promise<GridRowId | void>;
 
   /**
    * Boolean to indicate if the table is in a loading state.
@@ -41,40 +47,10 @@ export interface AppTableProps<T extends object> extends DataGridProps {
   loading?: boolean;
 
   /**
-   * Additional styles for the container.
-   * Default is `undefined`.
-   */
-  containerSx?: any;
-
-  /**
-   * State that holds rows that are in edit mode.
-   * Default is `undefined`.
-   */
-  rowModesModel?: GridRowModesModel;
-
-  /**
-   * Function to change rows in edit mode.
-   * Default is `undefined`.
-   */
-  onRowModesModelChange?: (model: GridRowModesModel) => void;
-
-  /**
-   * Function to process updates to a row.
-   * Default is `undefined`.
-   */
-  processRowUpdate?: (newRow: T, oldRow: T) => T | Promise<T>;
-
-  /**
    * Function to process updates to a row.
    * Default is `undefined`.
    */
   handleRowUpdateError?: (error: any) => void;
-
-  /**
-   * Function to handle row editing commit.
-   * Default is `undefined`.
-   */
-  onRowEditCommit?: (newRow: T, oldRow: T, params: { rowId: GridRowId }) => T | Promise<T>;
 
   /**
    * Boolean to show or hide vertical cell borders.
@@ -161,12 +137,6 @@ export interface AppTableProps<T extends object> extends DataGridProps {
   totalRows?: number;
 
   /**
-   * Function to handle pagination changes.
-   * Default is `undefined`.
-   */
-  onPaginationChange?: (model: GridPaginationModel) => void;
-
-  /**
    * The default file name for exported data.
    * Default is `'table_data'`.
    */
@@ -177,6 +147,12 @@ export interface AppTableProps<T extends object> extends DataGridProps {
    * Default is `undefined`.
    */
   getRowId?: (row: T) => string | number;
+
+  /**
+   * Additional styles for the container.
+   * Default is `undefined`.
+   */
+  containerSx?: any;
 
   /**
    * Any additional props that can be passed to the DataGrid.

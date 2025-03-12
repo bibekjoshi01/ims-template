@@ -1,9 +1,18 @@
-import { GridColDef, GridRowModesModel, GridRowId } from '@mui/x-data-grid';
-import { Box, Link, Tooltip } from '@mui/material';
+// MUI IMPORTS
+import { GridColDef, GridRowModesModel } from '@mui/x-data-grid';
 import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
-import CustomInput from '@/components/CustomInput';
+import { Box, Link, Tooltip } from '@mui/material';
 
-export const createLinkColumn = <T extends object>(baseCol: GridColDef<T>, rowModesModel?: GridRowModesModel): GridColDef<T> => {
+// PROJECT IMPORTS
+import CustomInput from '@/components/CustomInput';
+import useFocus from '@/hooks/useFocus';
+import { ColumnConfig } from '../types';
+
+export const createLinkColumn = <T extends object>(
+  config: ColumnConfig<T>,
+  baseCol: GridColDef<T>,
+  rowModesModel?: GridRowModesModel
+): GridColDef<T> => {
   // Check if any row has mode value set
   const hasMode = Object.values(rowModesModel || {}).some((mode) => mode.mode);
 
@@ -27,27 +36,35 @@ export const createLinkColumn = <T extends object>(baseCol: GridColDef<T>, rowMo
       </Box>
     ),
 
-    renderEditCell: (params) => (
-      <Box
-        sx={{
-          width: '100%',
-          minWidth: 140,
-          pr: 1
-        }}
-      >
-        <CustomInput
-          type="text"
-          fullWidth
-          value={params.value || ''}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            params.api.setEditCellValue({
-              id: params.id,
-              field: params.field,
-              value: e.target.value
-            })
-          }
-        />
-      </Box>
-    )
+    renderEditCell: (params) => {
+      const LinkCellEdit = () => {
+        const inputRef = useFocus(params);
+        return (
+          <Box
+            sx={{
+              width: '100%',
+              minWidth: 140,
+              pr: 1
+            }}
+          >
+            <CustomInput
+              type="text"
+              name={String(config.field)}
+              inputRef={inputRef}
+              value={params.value || ''}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                params.api.setEditCellValue({
+                  id: params.id,
+                  field: params.field,
+                  value: e.target.value
+                })
+              }
+            />
+          </Box>
+        );
+      };
+
+      return <LinkCellEdit />;
+    }
   };
 };

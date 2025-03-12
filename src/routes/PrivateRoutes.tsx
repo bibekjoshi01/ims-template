@@ -19,6 +19,7 @@ const Table1 = Loadable(lazy(() => import('@/pages/tables/table1')));
 const Table2 = Loadable(lazy(() => import('@/pages/tables/table2')));
 const Table3 = Loadable(lazy(() => import('@/pages/tables/table3')));
 const Table4 = Loadable(lazy(() => import('@/pages/tables/table4')));
+const Table5 = Loadable(lazy(() => import('@/pages/tables/table5')));
 
 // ==============================|| PRIVATE ROUTES ||============================== //
 
@@ -36,6 +37,7 @@ const PrivateRoutes = () => (
           <Route path="table2" element={<Table2 />} />
           <Route path="table3" element={<Table3 />} />
           <Route path="table4" element={<Table4 />} />
+          <Route path="table5" element={<Table5 />} />
         </Route>
         {/* Pages */}
         <Route path="orders" element={<Orders />} />

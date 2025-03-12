@@ -14,6 +14,7 @@ import { createLinkColumn } from './LinkColumn';
 
 // TYPES
 import { ColumnConfig, ColumnHandlers } from '../types';
+import { createBooleanColumn } from './BooleanColumn';
 
 /**
  * Generates column definitions for MUI DataGrid based on the provided configuration.
@@ -54,7 +55,9 @@ const createColumnDefs = <T extends object>(
       case 'date':
         return createDateColumn<T>(config, baseCol);
       case 'link':
-        return createLinkColumn<T>(baseCol, rowModesModel);
+        return createLinkColumn<T>(config, baseCol, rowModesModel);
+      case 'boolean':
+        return createBooleanColumn<T>(config, baseCol);
       case 'actions':
         return createActionsColumn<T>(config, theme, baseCol, handlers, rowModesModel, savingRows);
       default:

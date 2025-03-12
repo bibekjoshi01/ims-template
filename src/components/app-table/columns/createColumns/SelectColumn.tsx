@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef } from 'react';
+import { ChangeEvent } from 'react';
 
 // MUI IMPORTS
 import { Theme } from '@mui/material/styles';
@@ -7,9 +7,8 @@ import { GridColDef, GridSingleSelectColDef } from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
 import CustomInput from '@/components/CustomInput';
-
-// TYPES
 import { ColumnConfig } from '../types';
+import useFocus from '@/hooks/useFocus';
 
 export const createSelectColumn = <T extends object>(config: ColumnConfig<T>, theme: Theme, baseCol: GridColDef<T>): GridColDef<T> => {
   // Create a properly typed select column definition
@@ -44,14 +43,7 @@ export const createSelectColumn = <T extends object>(config: ColumnConfig<T>, th
     renderEditCell: (params) => {
       // Use React hooks to manage the select ref and focus
       const SelectCellEdit = () => {
-        const selectRef = useRef<HTMLSelectElement>(null);
-
-        // Focus the select when hasFocus is true
-        useEffect(() => {
-          if (params.hasFocus && selectRef.current) {
-            selectRef.current.focus();
-          }
-        }, [params.hasFocus]);
+        const selectRef = useFocus(params);
 
         const options =
           config.valueOptions?.map((option) => ({

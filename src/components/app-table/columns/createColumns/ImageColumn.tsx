@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 // MUI IMPORTS
 import { Theme } from '@mui/material/styles';
@@ -9,6 +9,7 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 // PROJECT IMPORTS
 import CustomInput from '@/components/CustomInput';
 import DefaultImage from '@/assets/images/website.png';
+import useFocus from '@/hooks/useFocus';
 
 export const createImageColumn = <T extends object>(theme: Theme, baseCol: GridColDef<T>): GridColDef<T> => {
   return {
@@ -40,7 +41,7 @@ export const createImageColumn = <T extends object>(theme: Theme, baseCol: GridC
     },
     renderEditCell: (params) => {
       const ImageCellEdit = () => {
-        const inputRef = useRef<HTMLInputElement>(null);
+        const inputRef = useFocus(params);
         const [imagePreview, setImagePreview] = useState<string>(params.value || DefaultImage);
 
         // Handle the image change
@@ -57,13 +58,8 @@ export const createImageColumn = <T extends object>(theme: Theme, baseCol: GridC
           }
         };
 
-        // Handle Enter key press
-        const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-          if (e.key === 'Enter' && inputRef.current) {
-            inputRef.current.click(); // Trigger input click on Enter
-          }
-        };
-
+        // NOTE - I think For security reasons, you cant programmatically open file picker on enter key pressed
+        // FIXME - try it yourself and see if it works
         return (
           <Box
             sx={{
@@ -75,14 +71,7 @@ export const createImageColumn = <T extends object>(theme: Theme, baseCol: GridC
               pr: 2
             }}
           >
-            <CustomInput
-              type="file"
-              accept="image/*"
-              style={{ display: 'none' }}
-              ref={inputRef}
-              onChange={handleImageChange}
-              onKeyDown={handleKeyDown} // Listen for the Enter key press
-            />
+            <CustomInput type="file" accept="image/*" style={{ display: 'none' }} ref={inputRef} onChange={handleImageChange} />
             <IconButton onClick={() => inputRef.current?.click()} color="primary" sx={{ p: 0 }}>
               <PhotoCameraIcon />
             </IconButton>

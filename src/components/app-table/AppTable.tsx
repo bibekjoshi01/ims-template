@@ -2,28 +2,32 @@
 import SaveAlt from '@mui/icons-material/SaveAlt';
 import { Box } from '@mui/material';
 import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, MuiEvent } from '@mui/x-data-grid';
+import { useTheme } from '@mui/material/styles';
 
 //  Project Imports
 import { AppTableProps } from './types';
 import { BoxStyles, TableStyles } from './styles';
 import Toolbar, { CustomColumnsPanel, CustomFilterPanel } from './toolbar';
 import { usePagination } from '@/hooks/usePagination';
+import { createColumnDefs } from './columns';
+import { useTableHandlers } from '@/hooks/useTableHandlers';
+import { useMemo } from 'react';
 
 // ===========================|| AppTable - MAIN COMPONENT ||=========================== //
 const AppTable = <T extends object>({
   // Table metadata
   title,
 
-  // Data handling
-  columns,
-  rows,
-  loading = false,
-  containerSx,
+  // Column configuration
+  initialRows = [],
+  getColumnConfig,
 
-  // Editing functionalities
-  rowModesModel,
-  onRowModesModelChange,
-  processRowUpdate,
+  // Handlers
+  onSaveRow,
+  onDeleteRow,
+
+  // loading state
+  loading = false,
   handleRowUpdateError,
 
   // Display options
@@ -35,17 +39,15 @@ const AppTable = <T extends object>({
   showExport = true,
 
   // Table functionalities
+  allowSorting = true,
   allowEditing = false,
   editMode = 'row',
-  allowSorting = true,
-  enableRowSelection = false,
   enableColumnResizing = false,
+  enableRowSelection = false,
 
   // Pagination
   pageSizeOptions = [5, 10, 15, 20],
   serverPagination = false,
-  totalRows = rows.length,
-  onPaginationChange,
 
   // Exporting
   exportFileName = 'table_data',
@@ -53,14 +55,33 @@ const AppTable = <T extends object>({
   // Row identification
   getRowId,
 
+  // container styles
+  containerSx,
+
   ...dataGridProps
 }: AppTableProps<T>) => {
+  const theme = useTheme();
   // Pagination hook
-  const { paginationModel, handlePaginationChange } = usePagination(pageSizeOptions, onPaginationChange);
+  const { paginationModel, handlePaginationChange } = usePagination(pageSizeOptions);
+
+  // Manage table state and handlers
+  const { rows, rowModesModel, setRowModesModel, savingRows, handlers } = useTableHandlers<T>(initialRows, onSaveRow, onDeleteRow);
+
+  // Generate column configuration using provided function and theme
+  const columnConfig = useMemo(() => getColumnConfig(theme), [getColumnConfig, theme]);
+
+  // Generate columns using provided createColumns function
+  const columns = useMemo(
+    () => createColumnDefs<T>(columnConfig, theme, handlers, rowModesModel, savingRows),
+    [columnConfig, theme, handlers, rowModesModel, savingRows]
+  );
 
   return (
     <Box sx={{ ...BoxStyles, ...containerSx }}>
       <DataGrid
+        // rest props
+        {...dataGridProps}
+        // Table metadata
         sx={TableStyles}
         columns={columns}
         rows={rows}
@@ -68,8 +89,8 @@ const AppTable = <T extends object>({
         // Editing functionalities
         editMode={allowEditing ? editMode : undefined}
         rowModesModel={rowModesModel}
-        onRowModesModelChange={onRowModesModelChange}
-        processRowUpdate={processRowUpdate}
+        onRowModesModelChange={setRowModesModel}
+        processRowUpdate={handlers.processRowUpdate}
         onProcessRowUpdateError={handleRowUpdateError}
         // Display options
         showCellVerticalBorder={showCellVerticalBorder}
@@ -79,7 +100,7 @@ const AppTable = <T extends object>({
         paginationModel={paginationModel}
         onPaginationModelChange={handlePaginationChange}
         pageSizeOptions={pageSizeOptions}
-        rowCount={serverPagination ? totalRows : undefined}
+        rowCount={serverPagination ? rows?.length : undefined}
         // Sorting and filtering
         sortingMode={allowSorting ? 'client' : undefined}
         getRowId={getRowId || ((row: T) => (row as any).id)}
@@ -141,6 +162,11 @@ const AppTable = <T extends object>({
         // prevent enter key from triggering save while editing
         onCellKeyDown={(params, event) => {
           if (params.cellMode === 'edit' && event.key === 'Enter') {
+            // const activeElement = document.activeElement as HTMLElement;
+            // Allow Enter key if focus is on the file input element
+            // if (activeElement && (activeElement as HTMLInputElement).type === "file") return;
+
+            // Block Enter only for other
             event.preventDefault();
             event.stopPropagation();
           }
@@ -151,8 +177,6 @@ const AppTable = <T extends object>({
             event.defaultMuiPrevented = true;
           }
         }}
-        // Additional props
-        {...dataGridProps}
       />
     </Box>
   );

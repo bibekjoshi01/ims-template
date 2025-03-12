@@ -47,6 +47,13 @@ const tables: MenuItem = {
           type: 'item',
           url: '/tables/table4',
           breadcrumbs: false
+        },
+        {
+          id: 'Table-api',
+          title: 'Table-API',
+          type: 'item',
+          url: '/tables/table5',
+          breadcrumbs: false
         }
       ]
     }

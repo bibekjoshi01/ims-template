@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef } from 'react';
+import { ChangeEvent } from 'react';
 
 // MUI IMPORTS
 import { Theme } from '@mui/material/styles';
@@ -9,22 +9,14 @@ import CustomInput from '@/components/CustomInput';
 
 // TYPES
 import { ColumnConfig } from '../types';
+import useFocus from '@/hooks/useFocus';
 
 export const createTextColumn = <T extends object>(config: ColumnConfig<T>, theme: Theme, baseCol: GridColDef<T>): GridColDef<T> => {
   return {
     ...baseCol,
     renderEditCell: (params) => {
-      // Use React hooks to manage the input ref and focus
       const TextCellEdit = () => {
-        const inputRef = useRef<HTMLInputElement>(null);
-
-        // Focus the input when hasFocus is true
-        useEffect(() => {
-          if (params.hasFocus && inputRef.current) {
-            inputRef.current.focus();
-          }
-        }, [params.hasFocus]);
-
+        const inputRef = useFocus(params);
         return (
           <CustomInput
             type="text"

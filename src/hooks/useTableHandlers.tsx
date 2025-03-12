@@ -1,9 +1,9 @@
 import { GridRowId, GridRowModes, GridRowModesModel } from '@mui/x-data-grid';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 // ========================= Types & Interfaces =========================
 interface TableDataBase {
-  id: GridRowId;
+  id?: GridRowId;
 }
 
 // ========================= Custom Hook: useTableHandlers =========================
@@ -42,6 +42,13 @@ export const useTableHandlers = <T extends TableDataBase>(
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
   // state to track saving status of row
   const [savingRows, setSavingRows] = useState<Record<GridRowId, boolean>>({});
+
+  // Listen for changes in initialData
+  useEffect(() => {
+    if (initialData && initialData.length > 0) {
+      setRows(initialData);
+    }
+  }, [initialData]);
 
   // ========================= Handlers =========================
   const handleEditClick = useCallback((id: GridRowId) => {
@@ -114,7 +121,7 @@ export const useTableHandlers = <T extends TableDataBase>(
         return originalRow || updatedRow;
       } finally {
         // Clear saving state for the row
-        setSavingRows((prev) => ({ ...prev, [updatedRow.id]: false }));
+        setSavingRows((prev) => ({ ...prev, [updatedRow.id as number]: false }));
       }
     },
     [onSave]

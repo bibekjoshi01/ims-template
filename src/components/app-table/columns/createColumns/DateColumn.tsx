@@ -6,7 +6,7 @@ import { GridColDef } from '@mui/x-data-grid';
 // PROJECT IMPORTS
 import { ColumnConfig } from '../types';
 import CustomInput from '@/components/CustomInput';
-import { useEffect, useRef } from 'react';
+import useFocus from '@/hooks/useFocus';
 
 // Define the createDateColumn function
 export const createDateColumn = <T extends object>(config: ColumnConfig<T>, baseCol: GridColDef<T>): GridColDef<T> => ({
@@ -17,14 +17,7 @@ export const createDateColumn = <T extends object>(config: ColumnConfig<T>, base
   },
   renderEditCell: (params) => {
     const DateCellEdit = () => {
-      const inputRef = useRef<any>(null);
-
-      // Focus the input when hasFocus is true
-      useEffect(() => {
-        if (params.hasFocus && inputRef.current) {
-          inputRef.current.focus();
-        }
-      }, [params.hasFocus]);
+      const inputRef = useFocus(params);
       return (
         <CustomInput
           type="date"

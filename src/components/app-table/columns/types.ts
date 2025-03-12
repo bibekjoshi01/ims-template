@@ -12,11 +12,13 @@ export interface ColumnConfig<T extends object> {
   field: keyof T;
   headerName: string;
   width?: number;
-  type?: 'text' | 'number' | 'select' | 'actions' | 'progress' | 'image' | 'date' | 'link';
+  type?: 'text' | 'number' | 'select' | 'actions' | 'progress' | 'image' | 'date' | 'link' | 'boolean';
   editable?: boolean;
   valueOptions?: string[];
   renderCell?: GridColDef<T>['renderCell'];
-  colorMap?: BadgeColorMap;
+  colorMap?: BadgeColorMap; // only for 'select' type
+  trueLabel?: string; // only for 'boolean' type
+  falseLabel?: string; // only for 'boolean' type
   handlers?: {
     delete?: (id: GridRowId) => Promise<Boolean>;
     copy?: (id: GridRowId) => void;
