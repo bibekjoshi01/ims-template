@@ -270,20 +270,19 @@ const getAvailabilityColorMap = (theme: Theme): AvailabilityColorMap => ({
 
 // This defines column configurations for the table
 export const getColumnConfig = (theme: Theme): ColumnConfig<TableData>[] => [
-  { field: 'image', headerName: 'IMAGE', width: 100, type: 'image' },
-  { field: 'name', headerName: 'PRODUCT NAME', width: 170, type: 'text' },
-  { field: 'category', headerName: 'CATEGORY', width: 150, type: 'text' },
-  { field: 'price', headerName: 'PRICE ($)', width: 100, type: 'number' },
-  { field: 'stock', headerName: 'STOCK', width: 120, type: 'number' },
-  { field: 'rating', headerName: 'RATING', width: 120, type: 'number' },
+  { field: 'image', headerName: 'IMAGE', type: 'image' },
+  { field: 'name', headerName: 'PRODUCT NAME', type: 'text' },
+  { field: 'category', headerName: 'CATEGORY', type: 'text' },
+  { field: 'price', headerName: 'PRICE ($)', type: 'number' },
+  { field: 'stock', headerName: 'STOCK', type: 'number' },
+  { field: 'rating', headerName: 'RATING', type: 'number' },
   {
     field: 'availability',
     headerName: 'AVAILABILITY',
-    width: 140,
     type: 'select',
     valueOptions: Object.values(Availability),
     colorMap: getAvailabilityColorMap(theme)
   },
-  { field: 'addedDate', headerName: 'ADDED DATE', width: 140, type: 'date' },
-  { field: 'actions', headerName: '', width: 100, type: 'actions' }
+  { field: 'addedDate', headerName: 'ADDED DATE', type: 'date' },
+  { field: 'actions', headerName: '', type: 'actions' }
 ];

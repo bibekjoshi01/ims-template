@@ -11,7 +11,7 @@ export type BadgeColorMap = Record<string, { backgroundColor: string; color: str
 export interface ColumnConfig<T extends object> {
   field: keyof T;
   headerName: string;
-  width?: number;
+  maxWidth?: number;
   type?: 'text' | 'number' | 'select' | 'actions' | 'progress' | 'image' | 'date' | 'link' | 'boolean';
   editable?: boolean;
   valueOptions?: string[];

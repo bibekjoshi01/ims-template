@@ -37,7 +37,8 @@ const createColumnDefs = <T extends object>(
     const baseCol: GridColDef<T> = {
       field: config?.field as string,
       headerName: config?.headerName,
-      width: config?.width || 150,
+      flex: 1, // fill the available space
+      maxWidth: config?.maxWidth, // restrict the width if needed
       editable: config?.editable ?? true,
       renderCell: config?.renderCell
     };
