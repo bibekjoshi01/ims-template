@@ -43,17 +43,16 @@ export const fetchInitialRows = async (): Promise<TableData[]> => {
 };
 
 export const getColumnConfig = (theme: Theme): ColumnConfig<TableData>[] => [
-  { field: 'author', headerName: 'AUTHOR', width: 120, type: 'text' },
-  { field: 'title', headerName: 'POST TITLE', width: 320, type: 'text' },
-  { field: 'content', headerName: 'CONTENT', width: 320, type: 'text' },
+  { field: 'author', headerName: 'AUTHOR', type: 'text' },
+  { field: 'title', headerName: 'POST TITLE', type: 'text' },
+  { field: 'content', headerName: 'CONTENT', type: 'text' },
   {
     field: 'published',
     headerName: 'STATUS',
-    width: 160,
     type: 'boolean',
     trueLabel: 'Published',
     falseLabel: 'Draft'
   },
-  { field: 'createdAt', headerName: 'CREATED AT', width: 160, type: 'date' },
-  { field: 'actions', headerName: '', width: 100, type: 'actions' }
+  { field: 'createdAt', headerName: 'CREATED AT', type: 'date' },
+  { field: 'actions', headerName: '', type: 'actions' }
 ];

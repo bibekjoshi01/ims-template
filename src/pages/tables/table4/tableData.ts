@@ -138,25 +138,24 @@ const getAvailabilityColorMap = (theme: Theme): AvailabilityColorMap => ({
 
 // This defines column configurations for the table
 export const getColumnConfig = (theme: Theme): ColumnConfig<TableData>[] => [
-  { field: 'title', headerName: 'BOOK TITLE', width: 180, type: 'text' },
-  { field: 'author', headerName: 'AUTHOR', width: 180, type: 'text' },
-  { field: 'genre', headerName: 'GENRE', width: 120, type: 'text' },
-  { field: 'price', headerName: 'PRICE ($)', width: 100, type: 'number' },
-  { field: 'rating', headerName: 'RATING', width: 100, type: 'number' },
+  { field: 'title', headerName: 'BOOK TITLE', type: 'text' },
+  { field: 'author', headerName: 'AUTHOR', type: 'text' },
+  { field: 'genre', headerName: 'GENRE', type: 'text' },
+  { field: 'price', headerName: 'PRICE ($)', type: 'number' },
+  { field: 'rating', headerName: 'RATING', type: 'number' },
   {
     field: 'availability',
     headerName: 'AVAILABILITY',
-    width: 150,
     type: 'select',
     valueOptions: Object.values(Availability),
     colorMap: getAvailabilityColorMap(theme)
   },
-  { field: 'releaseDate', headerName: 'RELEASE DATE', width: 150, type: 'date' },
+  { field: 'releaseDate', headerName: 'RELEASE DATE', type: 'date' },
   {
     field: 'purchaseLink',
     headerName: 'LINK',
-    width: 40,
-    type: 'link'
+    type: 'link',
+    maxWidth: 60
   },
-  { field: 'actions', headerName: '', width: 100, type: 'actions' }
+  { field: 'actions', headerName: '', type: 'actions' }
 ];
