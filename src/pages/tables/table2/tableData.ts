@@ -291,26 +291,26 @@ const getDepartmentColorMap = (theme: Theme): DepartmentColorMap => ({
 
 // Employee Table Column Config
 export const getColumnConfig = (theme: Theme): ColumnConfig<TableData>[] => [
-  { field: 'name', headerName: 'NAME', width: 120, type: 'text' },
-  { field: 'email', headerName: 'EMAIL', width: 180, type: 'text' },
+  { field: 'name', headerName: 'NAME', type: 'text' },
+  { field: 'email', headerName: 'EMAIL', type: 'text' },
   {
     field: 'department',
     headerName: 'DEPARTMENT',
-    width: 180,
+
     type: 'select',
     valueOptions: Object.values(Department),
     colorMap: getDepartmentColorMap(theme)
   },
-  { field: 'position', headerName: 'POSITION', width: 150, type: 'text' },
-  { field: 'salary', headerName: 'SALARY ($)', width: 100, type: 'number' },
+  { field: 'position', headerName: 'POSITION', type: 'text' },
+  { field: 'salary', headerName: 'SALARY ($)', type: 'number' },
   {
     field: 'status',
     headerName: 'STATUS',
-    width: 150,
+
     type: 'select',
     valueOptions: Object.values(EmploymentStatus),
     colorMap: getEmployeeStatusColorMap(theme)
   },
-  { field: 'dateJoined', headerName: 'DATE JOINED', width: 170, type: 'date' },
-  { field: 'actions', headerName: '', width: 100, type: 'actions' }
+  { field: 'dateJoined', headerName: 'DATE JOINED', type: 'date' },
+  { field: 'actions', headerName: '', type: 'actions' }
 ];
