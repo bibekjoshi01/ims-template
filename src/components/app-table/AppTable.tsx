@@ -1,17 +1,17 @@
 // MUI IMPORTS
 import SaveAlt from '@mui/icons-material/SaveAlt';
 import { Box } from '@mui/material';
-import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, MuiEvent } from '@mui/x-data-grid';
 import { useTheme } from '@mui/material/styles';
+import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, MuiEvent } from '@mui/x-data-grid';
 
 //  Project Imports
-import { AppTableProps } from './types';
-import { BoxStyles, TableStyles } from './styles';
-import Toolbar, { CustomColumnsPanel, CustomFilterPanel } from './toolbar';
 import { usePagination } from '@/hooks/usePagination';
-import { createColumnDefs } from './columns';
 import { useTableHandlers } from '@/hooks/useTableHandlers';
 import { useMemo } from 'react';
+import { createColumnDefs } from './columns';
+import { BoxStyles, TableStyles } from './styles';
+import Toolbar, { CustomColumnsPanel, CustomFilterPanel } from './toolbar';
+import { AppTableProps } from './types';
 
 // ===========================|| AppTable - MAIN COMPONENT ||=========================== //
 const AppTable = <T extends object>({
@@ -33,10 +33,10 @@ const AppTable = <T extends object>({
   // Display options
   showCellVerticalBorder = false,
   showSearch = true,
-  showColumnFilter = true,
-  showFilter = true,
-  showDensitySelector = true,
-  showExport = true,
+  showColumnFilter = false,
+  showFilter = false,
+  showDensitySelector = false,
+  showExport = false,
 
   // Table functionalities
   allowSorting = true,

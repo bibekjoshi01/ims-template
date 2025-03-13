@@ -35,7 +35,7 @@ const modules: MenuItem = {
           id: 'categories',
           title: 'Categories',
           type: 'item',
-          url: '/typography',
+          url: '/blog/category',
           breadcrumbs: false
         },
         {
