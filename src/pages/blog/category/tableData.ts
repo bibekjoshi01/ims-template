@@ -32,10 +32,9 @@ export const rowValues: BlogCategoryItem[] = [
 
 // Employee Table Column Config
 export const getColumnConfig = (theme: Theme): ColumnConfig<any>[] => [
-  { field: 'name', headerName: 'NAME', width: 120, type: 'text' },
-  { field: 'description', headerName: 'DESCRIPTION', width: 120, type: 'text' },
-  { field: 'slug', headerName: 'SLUG', width: 120, type: 'text' },
-  { field: 'postCount', headerName: 'POST COUNT', width: 120, type: 'number' },
-
-  { field: 'actions', headerName: '', width: 100, type: 'actions' }
+  { field: 'name', headerName: 'NAME', type: 'text' },
+  { field: 'description', headerName: 'DESCRIPTION', type: 'text' },
+  { field: 'slug', headerName: 'SLUG', type: 'text' },
+  { field: 'postCount', headerName: 'POST COUNT', type: 'number' },
+  { field: 'actions', headerName: '', type: 'actions' }
 ];
