@@ -249,15 +249,14 @@ const getStatusColorMap = (theme: Theme): StatusColorMap => ({
 
 // This defines column configurations for the table
 export const getColumnConfig = (theme: Theme): ColumnConfig<TableData>[] => [
-  { field: 'name', headerName: 'NAME', width: 170, type: 'text' },
-  { field: 'email', headerName: 'EMAIL', width: 170, type: 'text' },
-  { field: 'role', headerName: 'ROLE', width: 170, type: 'text' },
-  { field: 'age', headerName: 'AGE', width: 100, type: 'number' },
-  { field: 'visits', headerName: 'VISITS', width: 110, type: 'number' },
+  { field: 'name', headerName: 'NAME', type: 'text' },
+  { field: 'email', headerName: 'EMAIL', type: 'text' },
+  { field: 'role', headerName: 'ROLE', type: 'text' },
+  { field: 'age', headerName: 'AGE', type: 'number' },
+  { field: 'visits', headerName: 'VISITS', maxWidth: 100, type: 'number' },
   {
     field: 'status',
     headerName: 'STATUS',
-    width: 150,
     type: 'select',
     valueOptions: Object.values(Status),
     colorMap: getStatusColorMap(theme)
@@ -265,13 +264,11 @@ export const getColumnConfig = (theme: Theme): ColumnConfig<TableData>[] => [
   {
     field: 'profileProgress',
     headerName: 'PROFILE PROGRESS',
-    width: 170,
     type: 'progress'
   },
   {
     field: 'actions',
     headerName: '',
-    width: 100,
     type: 'actions'
   }
 ];
