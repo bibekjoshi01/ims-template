@@ -20,6 +20,8 @@ const Table2 = Loadable(lazy(() => import('@/pages/tables/table2')));
 const Table3 = Loadable(lazy(() => import('@/pages/tables/table3')));
 const Table4 = Loadable(lazy(() => import('@/pages/tables/table4')));
 const Table5 = Loadable(lazy(() => import('@/pages/tables/table5')));
+// Blog Pages
+const BlogCategory = Loadable(lazy(() => import('@/pages/blog/category')));
 
 // ==============================|| PRIVATE ROUTES ||============================== //
 
@@ -50,6 +52,9 @@ const PrivateRoutes = () => (
           <Route path="profile" element={<Profile />} />
           <Route path="change-password" element={<ChangePassword />} />
           <Route path="settings" element={<Settings />} />
+        </Route>
+        <Route path="blog">
+          <Route path="category" element={<BlogCategory />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />

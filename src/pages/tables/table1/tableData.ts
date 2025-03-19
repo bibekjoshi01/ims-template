@@ -30,7 +30,7 @@ export const initialRows: TableData[] = [
     role: 'Teacher',
     visits: 3710,
     status: Status.RELATIONSHIP,
-    profileProgress: 75,
+    profileProgress: 75
   },
   {
     id: 2,
@@ -40,7 +40,7 @@ export const initialRows: TableData[] = [
     role: 'Radiology Manager',
     visits: 420,
     status: Status.RELATIONSHIP,
-    profileProgress: 96,
+    profileProgress: 96
   },
   {
     id: 3,
@@ -50,7 +50,7 @@ export const initialRows: TableData[] = [
     role: 'Organizational Development Manager',
     visits: 3227,
     status: Status.COMPLICATED,
-    profileProgress: 26,
+    profileProgress: 26
   },
   {
     id: 4,
@@ -60,7 +60,7 @@ export const initialRows: TableData[] = [
     role: 'Forestry Technician',
     visits: 6204,
     status: Status.SINGLE,
-    profileProgress: 88,
+    profileProgress: 88
   },
   {
     id: 5,
@@ -70,7 +70,7 @@ export const initialRows: TableData[] = [
     role: 'Maintenance Manager',
     visits: 7612,
     status: Status.RELATIONSHIP,
-    profileProgress: 12,
+    profileProgress: 12
   },
   {
     id: 6,
@@ -80,7 +80,7 @@ export const initialRows: TableData[] = [
     role: 'Hazardous Waste Manager',
     visits: 1173,
     status: Status.RELATIONSHIP,
-    profileProgress: 31,
+    profileProgress: 31
   },
   {
     id: 7,
@@ -90,7 +90,7 @@ export const initialRows: TableData[] = [
     role: 'Bankruptcy Attorney',
     visits: 7823,
     status: Status.SINGLE,
-    profileProgress: 19,
+    profileProgress: 19
   },
   {
     id: 8,
@@ -100,7 +100,7 @@ export const initialRows: TableData[] = [
     role: 'Financial Analyst',
     visits: 2177,
     status: Status.SINGLE,
-    profileProgress: 12,
+    profileProgress: 12
   },
   {
     id: 9,
@@ -110,7 +110,7 @@ export const initialRows: TableData[] = [
     role: 'Accountant',
     visits: 9009,
     status: Status.COMPLICATED,
-    profileProgress: 13,
+    profileProgress: 13
   },
   {
     id: 10,
@@ -120,7 +120,7 @@ export const initialRows: TableData[] = [
     role: 'Software Developer',
     visits: 3578,
     status: Status.RELATIONSHIP,
-    profileProgress: 37,
+    profileProgress: 37
   },
   {
     id: 11,
@@ -130,7 +130,7 @@ export const initialRows: TableData[] = [
     role: 'Project Manager',
     visits: 1500,
     status: Status.SINGLE,
-    profileProgress: 45,
+    profileProgress: 45
   },
   {
     id: 12,
@@ -140,7 +140,7 @@ export const initialRows: TableData[] = [
     role: 'Designer',
     visits: 2300,
     status: Status.RELATIONSHIP,
-    profileProgress: 60,
+    profileProgress: 60
   },
   {
     id: 13,
@@ -150,7 +150,7 @@ export const initialRows: TableData[] = [
     role: 'Engineer',
     visits: 3200,
     status: Status.COMPLICATED,
-    profileProgress: 80,
+    profileProgress: 80
   },
   {
     id: 14,
@@ -160,7 +160,7 @@ export const initialRows: TableData[] = [
     role: 'Marketing Manager',
     visits: 4100,
     status: Status.SINGLE,
-    profileProgress: 50,
+    profileProgress: 50
   },
   {
     id: 15,
@@ -170,7 +170,7 @@ export const initialRows: TableData[] = [
     role: 'Sales Manager',
     visits: 5000,
     status: Status.RELATIONSHIP,
-    profileProgress: 70,
+    profileProgress: 70
   },
   {
     id: 16,
@@ -180,7 +180,7 @@ export const initialRows: TableData[] = [
     role: 'HR Manager',
     visits: 6000,
     status: Status.COMPLICATED,
-    profileProgress: 90,
+    profileProgress: 90
   },
   {
     id: 17,
@@ -190,7 +190,7 @@ export const initialRows: TableData[] = [
     role: 'Developer',
     visits: 7000,
     status: Status.SINGLE,
-    profileProgress: 40,
+    profileProgress: 40
   },
   {
     id: 18,
@@ -200,7 +200,7 @@ export const initialRows: TableData[] = [
     role: 'Product Manager',
     visits: 8000,
     status: Status.RELATIONSHIP,
-    profileProgress: 65,
+    profileProgress: 65
   },
   {
     id: 19,
@@ -210,7 +210,7 @@ export const initialRows: TableData[] = [
     role: 'Consultant',
     visits: 9000,
     status: Status.COMPLICATED,
-    profileProgress: 85,
+    profileProgress: 85
   },
   {
     id: 20,
@@ -220,7 +220,7 @@ export const initialRows: TableData[] = [
     role: 'Analyst',
     visits: 10000,
     status: Status.SINGLE,
-    profileProgress: 55,
+    profileProgress: 55
   }
 ];
 
