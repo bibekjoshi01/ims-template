@@ -2,12 +2,12 @@ import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
+import { Divider } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
+import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { Divider } from '@mui/material';
 
 // header style
 const headerSX = {
@@ -44,7 +44,8 @@ function MainCard(
       sx={{
         border: border ? '1px solid' : 'none',
         borderRadius: 2,
-        borderColor: theme.palette.mode === 'dark' ? theme.palette.divider : theme.palette.grey.A800,
+        color: theme.palette.text.primary,
+        borderColor: theme.palette.mode === 'dark' ? theme.palette.divider : theme.palette.secondary.divider,
         boxShadow: boxShadow && (!border || theme.palette.mode === 'dark') ? shadow || theme.customShadows.z1 : 'inherit',
         ':hover': {
           boxShadow: boxShadow ? shadow || theme.customShadows.z1 : 'inherit'
@@ -62,7 +63,7 @@ function MainCard(
       {!darkTitle && title && <CardHeader sx={headerSX} titleTypographyProps={{ variant: 'subtitle1' }} title={title} action={secondary} />}
       {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />}
       {/* card divider */}
-      {divider && <Divider />}
+      {divider && <Divider sx={{ borderColor: theme.palette.divider }} />}
       {/* card content */}
       {content && <CardContent sx={contentSX}>{children}</CardContent>}
       {!content && children}

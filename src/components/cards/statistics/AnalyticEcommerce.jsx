@@ -25,18 +25,15 @@ export default function AnalyticEcommerce({ color = 'primary', title, count, per
         </Typography>
         <Grid container alignItems="center">
           <Grid item>
-            <Typography variant="h4" color="inherit">
-              {count}
-            </Typography>
+            <Typography variant="h4">{count}</Typography>
           </Grid>
           {percentage && (
             <Grid item>
               <Chip
                 variant="combined"
-                color={color}
                 icon={isLoss ? <FallOutlined style={iconSX} /> : <RiseOutlined style={iconSX} />}
                 label={`${percentage}%`}
-                sx={{ ml: 1.25, pl: 1 }}
+                sx={{ ml: 1.25, pl: 1, color: `${color || 'primary'}.dark` }}
                 size="small"
               />
             </Grid>

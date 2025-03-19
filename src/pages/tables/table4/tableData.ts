@@ -114,23 +114,19 @@ export const initialRows: TableData[] = [
 ];
 
 // Interface for color mapping
-export type AvailabilityColorMap = Record<Availability, { backgroundColor: string; color: string }>;
+export type AvailabilityColorMap = Record<Availability, { backgroundColor: string | undefined; color: string }>;
 
 // This defines what color to be used for each status
 const getAvailabilityColorMap = (theme: Theme): AvailabilityColorMap => ({
-  // FIXME - Handle Theme properly
   [Availability.IN_STOCK]: {
-    // @ts-ignore
     backgroundColor: theme.palette.success.lighter,
     color: theme.palette.success.main
   },
   [Availability.OUT_OF_STOCK]: {
-    // @ts-ignore
     backgroundColor: theme.palette.error.lighter,
     color: theme.palette.error.main
   },
   [Availability.LIMITED]: {
-    // @ts-ignore
     backgroundColor: theme.palette.warning.lighter,
     color: theme.palette.warning.main
   }

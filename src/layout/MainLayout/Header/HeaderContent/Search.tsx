@@ -26,6 +26,13 @@ export default function Search() {
             'aria-label': 'weight'
           }}
           placeholder="Search"
+          sx={{
+            '& .MuiOutlinedInput-input': {
+              color: 'text.secondary',
+              borderColor: 'theme.palette.divider',
+              outlineColor: 'theme.palette.divider'
+            }
+          }}
         />
       </FormControl>
     </Box>

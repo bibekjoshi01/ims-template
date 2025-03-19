@@ -72,9 +72,6 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
         pl: drawerOpen ? `${level * 28}px` : 1.5,
         py: !drawerOpen && level === 1 ? 1.25 : 1,
         ...(drawerOpen && {
-          '&:hover': {
-            bgcolor: 'primary.lighter'
-          },
           '&.Mui-selected': {
             bgcolor: 'primary.lighter',
             borderRight: `2px solid ${theme.palette.primary.main}`,

@@ -3,7 +3,7 @@ import { GridColDef, GridRowId } from '@mui/x-data-grid';
 /**
  * BadgeColorMap defines color configurations for badge-style columns.
  */
-export type BadgeColorMap = Record<string, { backgroundColor: string; color: string }>;
+export type BadgeColorMap = Record<string, { backgroundColor: string | undefined; color: string }>;
 
 /**
  * ColumnConfig defines the structure of a single column in the data grid.
