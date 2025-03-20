@@ -4,8 +4,6 @@ import { SxProps, Theme } from '@mui/material/styles';
  * Returns table styles based on the MUI theme.
  */
 export const TableStyles: SxProps<Theme> = {
-  backgroundColor: '#fff',
-
   // Sorting icon visibility
   '& .MuiDataGrid-sortIcon': {
     opacity: '1 !important'
@@ -14,10 +12,9 @@ export const TableStyles: SxProps<Theme> = {
   // Column header styles
   '& .MuiDataGrid-columnHeaders': (theme) => ({
     '--unstable_DataGrid-headWeight': 900,
-    color: theme.palette.grey[800],
-    borderBottom: '2px solid var(--divider, #f0f0f0)',
-    borderTop: '2px solid var(--divider, #f0f0f0)',
-    '--DataGrid-containerBackground': theme.palette.grey[50]
+    borderBottom: '1.5px solid' + theme.palette.divider,
+    borderTop: '1.5px solid' + theme.palette.divider,
+    '--DataGrid-containerBackground': theme.palette.mode == 'light' ? theme.palette.primary.lighter : theme.palette.primary.darker
   }),
 
   '& .MuiDataGrid-columnHeader': {
@@ -25,13 +22,16 @@ export const TableStyles: SxProps<Theme> = {
     '& .MuiDataGrid-menuIcon': {
       marginLeft: 'auto',
       justifyContent: 'flex-end'
+    },
+    '& .MuiDataGrid-columnSeparator': {
+      color: (theme) => (theme.palette.mode == 'dark' ? theme.palette.secondary.lighter : 'auto')
     }
   },
 
   // Row styles
   '& .MuiDataGrid-row': (theme) => ({
     fontSize: theme.typography.h6.fontSize,
-    '--DataGrid-rowBorderColor': theme.palette.grey[100],
+    '--DataGrid-rowBorderColor': theme.palette.divider,
 
     // Cell styles
     '& .MuiDataGrid-cell': {
@@ -53,7 +53,6 @@ export const TableStyles: SxProps<Theme> = {
     }
   })
 };
-
 /**
  * Box styles for table container
  */
@@ -61,9 +60,7 @@ export const BoxStyles: SxProps<Theme> = {
   overflowX: 'auto',
   border: '1px solid',
   borderRadius: 2,
-  // FIXME - Handle theme issue
-  //@ts-ignore
-  borderColor: (theme) => theme.palette.grey.A800,
-  backgroundColor: '#fff',
+  borderColor: (theme) => theme.palette.divider,
+  backgroundColor: (theme) => theme.palette.background.paper,
   height: '100%'
 };

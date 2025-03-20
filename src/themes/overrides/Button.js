@@ -28,6 +28,8 @@ function getColorStyle({ variant, color, theme }) {
   switch (variant) {
     case 'contained':
       return {
+        color: contrastText,
+        backgroundColor: main,
         '&:hover': {
           backgroundColor: dark
         },

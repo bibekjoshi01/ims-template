@@ -29,19 +29,17 @@ export default function Header() {
   // header content
   const headerContent = useMemo(() => <HeaderContent />, []);
 
-  const iconBackColor = 'grey.100';
-  const iconBackColorOpen = 'grey.200';
-
   // common header
   const mainHeader = (
     <Toolbar>
       <IconButton
-        disableRipple
         aria-label="open drawer"
         onClick={() => handlerDrawerOpen(!drawerOpen)}
         edge="start"
-        color="secondary"
-        sx={{ color: 'text.primary', bgcolor: drawerOpen ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
+        sx={{
+          bgcolor: drawerOpen ? 'transparent' : 'secondary.hover',
+          ml: { xs: 0, lg: -2 }
+        }}
       >
         {!drawerOpen ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </IconButton>

@@ -1,10 +1,12 @@
-import { useMemo } from 'react';
+import isEqual from 'fast-deep-equal';
+import { useEffect, useMemo } from 'react';
 
 // material-ui
 import { CssBaseline, StyledEngineProvider, ThemeOptions } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-// project import
+// project imports
+import { useThemeMode } from '@/contexts/theme-context';
 import componentsOverride from './overrides';
 import Palette from './palette';
 import CustomShadows from './shadows';
@@ -17,7 +19,15 @@ interface ThemeCustomizationProps {
 }
 
 export default function ThemeCustomization({ children }: ThemeCustomizationProps) {
-  const theme = Palette('light');
+  const { mode, colorValues, setThemeSettings } = useThemeMode();
+  const [theme, generatedPaletteColors] = useMemo(() => Palette(mode, colorValues), [mode, colorValues]);
+
+  // Update colorValues only when the generated colors differ from current values
+  useEffect(() => {
+    if (!isEqual(colorValues, generatedPaletteColors)) {
+      setThemeSettings((cur) => ({ ...cur, colorValues: generatedPaletteColors }));
+    }
+  }, [generatedPaletteColors, colorValues, setThemeSettings]);
 
   const themeTypography = Typography(`'Public Sans', sans-serif`);
   const themeCustomShadows = useMemo(() => CustomShadows(theme), [theme]);
@@ -43,13 +53,16 @@ export default function ThemeCustomization({ children }: ThemeCustomizationProps
       },
       palette: theme.palette,
       customShadows: themeCustomShadows,
-      typography: themeTypography as any
+      typography: themeTypography
     }),
     [theme, themeTypography, themeCustomShadows]
   );
 
-  const themes = createTheme(themeOptions);
-  themes.components = componentsOverride(themes);
+  const themes = useMemo(() => {
+    const createdTheme = createTheme(themeOptions);
+    createdTheme.components = componentsOverride(createdTheme);
+    return createdTheme;
+  }, [themeOptions]);
 
   return (
     <StyledEngineProvider injectFirst>

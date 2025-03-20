@@ -258,34 +258,23 @@ export const initialRows: TableData[] = [
 ];
 
 // Employee Status Colors
-export type EmployeeStatusColorMap = Record<EmploymentStatus, { backgroundColor: string; color: string }>;
+export type EmployeeStatusColorMap = Record<EmploymentStatus, { backgroundColor: string | undefined; color: string }>;
 
 const getEmployeeStatusColorMap = (theme: Theme): EmployeeStatusColorMap => ({
-  // FIXME - Handle Theme properly
-  // @ts-ignore
   [EmploymentStatus.FULL_TIME]: { backgroundColor: theme.palette.success.lighter, color: theme.palette.success.main },
-  // @ts-ignore
   [EmploymentStatus.PART_TIME]: { backgroundColor: theme.palette.warning.lighter, color: theme.palette.warning.main },
-  // @ts-ignore
   [EmploymentStatus.CONTRACT]: { backgroundColor: theme.palette.info.lighter, color: theme.palette.info.main },
-  // @ts-ignore
   [EmploymentStatus.INTERN]: { backgroundColor: theme.palette.secondary.lighter, color: theme.palette.secondary.main }
 });
 
-export type DepartmentColorMap = Record<Department, { backgroundColor: string; color: string }>;
+export type DepartmentColorMap = Record<Department, { backgroundColor: string | undefined; color: string }>;
 
 const getDepartmentColorMap = (theme: Theme): DepartmentColorMap => ({
-  // @ts-ignore
   [Department.HR]: { backgroundColor: theme.palette.primary.lighter, color: theme.palette.primary.main },
-  // @ts-ignore
   [Department.ENGINEERING]: { backgroundColor: theme.palette.secondary.lighter, color: theme.palette.secondary.main },
-  // @ts-ignore
   [Department.MARKETING]: { backgroundColor: theme.palette.error.lighter, color: theme.palette.error.main },
-  // @ts-ignore
   [Department.SALES]: { backgroundColor: theme.palette.warning.lighter, color: theme.palette.warning.main },
-  // @ts-ignore
   [Department.FINANCE]: { backgroundColor: theme.palette.info.lighter, color: theme.palette.info.main },
-  // @ts-ignore
   [Department.IT]: { backgroundColor: theme.palette.success.lighter, color: theme.palette.success.main }
 });
 

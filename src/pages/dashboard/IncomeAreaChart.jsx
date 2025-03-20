@@ -33,15 +33,17 @@ const areaChartOptions = {
 export default function IncomeAreaChart({ slot }) {
   const theme = useTheme();
 
-  const { primary, secondary } = theme.palette.text;
   const line = theme.palette.divider;
+  const secondaryText = theme.palette.text.secondary;
+  const primary = theme.palette.primary.main;
+  const secondary = theme.palette.secondary.main;
 
   const [options, setOptions] = useState(areaChartOptions);
 
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      colors: [theme.palette.primary.main, theme.palette.primary[700]],
+      colors: [primary, secondary],
       xaxis: {
         categories:
           slot === 'month'
@@ -50,18 +52,18 @@ export default function IncomeAreaChart({ slot }) {
         labels: {
           style: {
             colors: [
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary,
-              secondary
+              secondaryText,
+              secondaryText,
+              secondaryText,
+              secondaryText,
+              secondaryText,
+              secondaryText,
+              secondaryText,
+              secondaryText,
+              secondaryText,
+              secondaryText,
+              secondaryText,
+              secondaryText
             ]
           }
         },
@@ -74,15 +76,24 @@ export default function IncomeAreaChart({ slot }) {
       yaxis: {
         labels: {
           style: {
-            colors: [secondary]
+            colors: [secondaryText]
           }
         }
       },
       grid: {
         borderColor: line
+      },
+      legend: {
+        labels: {
+          colors: [primary, secondary],
+          useSeriesColors: false
+        }
+      },
+      tooltip: {
+        theme: theme.palette.mode
       }
     }));
-  }, [primary, secondary, line, theme, slot]);
+  }, [secondaryText, primary, secondary, line, theme, slot]);
 
   const [series, setSeries] = useState([
     {

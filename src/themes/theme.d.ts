@@ -9,6 +9,25 @@ declare module '@mui/material/styles' {
     };
   }
 
+  interface PaletteColor {
+    lighter: string;
+    100: string;
+    200: string;
+    light: string;
+    400: string;
+    main: string;
+    dark: string;
+    700: string;
+    darker: string;
+    900: string;
+    primaryText: string;
+    secondaryText: string;
+    divider: string;
+    paper: string;
+    default: string;
+    hover: string;
+  }
+
   interface ThemeOptions {
     customShadows?: {
       button: string;

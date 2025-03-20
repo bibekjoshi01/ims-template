@@ -68,13 +68,13 @@ export default function Notification() {
     setOpen(false);
   };
 
-  const iconBackColorOpen = 'grey.100';
-
   return (
-    <Box sx={{ flexShrink: 0, ml: 0.75 }}>
+    <Box sx={{ flexShrink: 0 }}>
       <IconButton
-        color="secondary"
-        sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : 'transparent' }}
+        sx={{
+          bgcolor: open ? 'secondary.hover' : 'transparent',
+          mr: 0.25
+        }}
         aria-label="open profile"
         ref={anchorRef}
         aria-controls={open ? 'profile-grow' : undefined}
@@ -121,7 +121,7 @@ export default function Notification() {
                       p: 0,
                       '& .MuiListItemButton-root': {
                         py: 0.5,
-                        '&.Mui-selected': { bgcolor: 'grey.50', color: 'text.primary' },
+                        '& .Mui-selected': { bgcolor: 'grey.50', color: 'text.primary' },
                         '& .MuiAvatar-root': avatarSX,
                         '& .MuiListItemSecondaryAction-root': { ...actionSX, position: 'relative' }
                       }

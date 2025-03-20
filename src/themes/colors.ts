@@ -1,94 +1,51 @@
-// ==============================|| PRESET THEME - THEME SELECTOR ||============================== //
+// MUI Imports
+import { generate, presetDarkPalettes, presetPalettes } from '@ant-design/colors';
+import { PaletteMode } from '@mui/material';
 
-type Colors = {
-  [key: string]: string[];
-};
+// Project Imports
+import { ColorValues, ColorVariants } from '@/contexts/theme-context/types';
+import { THEME_PRESETS } from '@/utils/constants';
 
-export default function Theme(colors: Colors) {
-  const { blue, red, gold, cyan, green, grey } = colors;
-  const greyColors = {
-    0: grey[0],
-    50: grey[1],
-    100: grey[2],
-    200: grey[3],
-    300: grey[4],
-    400: grey[5],
-    500: grey[6],
-    600: grey[7],
-    700: grey[8],
-    800: grey[9],
-    900: grey[10],
-    A50: grey[15],
-    A100: grey[11],
-    A200: grey[12],
-    A400: grey[13],
-    A700: grey[14],
-    A800: grey[16]
+// Function to generate color variants
+const createColorVariants = (colors: string[], mainColor: string): Partial<ColorVariants> => ({
+  lighter: colors[0],
+  100: colors[1],
+  200: colors[2],
+  light: colors[3],
+  400: colors[4],
+  main: mainColor, // do not change main color as it was already updated by the user
+  dark: colors[6],
+  700: colors[7],
+  darker: colors[8],
+  900: colors[9]
+});
+
+export default function Theme(mode: PaletteMode, colorValues: ColorValues): ColorValues {
+  const isDarkMode = mode === 'dark';
+  const colors = colorValues || THEME_PRESETS[0][mode];
+
+  // choose which palette to use based on mode(light/dark)
+  const palettes = isDarkMode ? presetDarkPalettes : presetPalettes;
+
+  // get the main color
+  const primaryColor = colors.primary?.main || palettes.blue[5];
+  const secondaryColor = colors.secondary?.main || palettes.purple[5];
+  const successColor = colors.success?.main || palettes.green[5];
+  const warningColor = colors.warning?.main || palettes.gold[5];
+  const errorColor = colors.error?.main || palettes.red[5];
+  const infoColor = colors.info?.main || palettes.cyan[5];
+  const greyColor = colors.grey?.main || palettes.grey[5];
+
+  // Generate the color palette based on the main color
+  const generatedPalette = {
+    primary: { ...colors?.primary, ...createColorVariants(generate(primaryColor), primaryColor) },
+    secondary: { ...colors?.secondary, ...createColorVariants(generate(secondaryColor), secondaryColor) },
+    success: { ...colors?.success, ...createColorVariants(generate(successColor), successColor) },
+    warning: { ...colors?.warning, ...createColorVariants(generate(warningColor), warningColor) },
+    error: { ...colors?.error, ...createColorVariants(generate(errorColor), errorColor) },
+    info: { ...colors?.info, ...createColorVariants(generate(infoColor), infoColor) },
+    grey: { ...colors?.grey, ...createColorVariants(generate(greyColor), greyColor) }
   };
-  const contrastText = '#fff';
 
-  return {
-    primary: {
-      lighter: blue[0],
-      100: blue[1],
-      200: blue[2],
-      light: blue[3],
-      400: blue[4],
-      main: blue[5],
-      dark: blue[6],
-      700: blue[7],
-      darker: blue[8],
-      900: blue[9],
-      contrastText
-    },
-    secondary: {
-      lighter: greyColors[100],
-      100: greyColors[100],
-      200: greyColors[200],
-      light: greyColors[300],
-      400: greyColors[400],
-      main: greyColors[500],
-      600: greyColors[600],
-      dark: greyColors[700],
-      800: greyColors[800],
-      darker: greyColors[900],
-      A100: greyColors[0],
-      A200: greyColors.A400,
-      A300: greyColors.A700,
-      contrastText: greyColors[0]
-    },
-    error: {
-      lighter: red[0],
-      light: red[2],
-      main: red[4],
-      dark: red[7],
-      darker: red[9],
-      contrastText
-    },
-    warning: {
-      lighter: gold[0],
-      light: gold[3],
-      main: gold[5],
-      dark: gold[7],
-      darker: gold[9],
-      contrastText: greyColors[100]
-    },
-    info: {
-      lighter: cyan[0],
-      light: cyan[3],
-      main: cyan[5],
-      dark: cyan[7],
-      darker: cyan[9],
-      contrastText
-    },
-    success: {
-      lighter: green[0],
-      light: green[3],
-      main: green[5],
-      dark: green[7],
-      darker: green[9],
-      contrastText
-    },
-    grey: greyColors
-  };
+  return generatedPalette;
 }
