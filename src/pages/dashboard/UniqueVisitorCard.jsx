@@ -23,7 +23,7 @@ export default function UniqueVisitorCard() {
           <Typography variant="h5">Unique Visitor</Typography>
         </Grid>
         <Grid item>
-          <Stack direction="row" alignItems="center" spacing={0}>
+          <Stack direction="row" alignItems="center" spacing={1}>
             <Button
               size="small"
               onClick={() => setSlot('month')}

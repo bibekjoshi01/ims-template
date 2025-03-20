@@ -5,10 +5,10 @@ import getColors from '@/utils/getColors';
 
 function getColorStyle({ color, theme }) {
   const colors = getColors(theme, color);
-  const { lighter, main } = colors;
+  const { lighter, dark } = colors;
 
   return {
-    color: main,
+    color: dark,
     backgroundColor: lighter
   };
 }

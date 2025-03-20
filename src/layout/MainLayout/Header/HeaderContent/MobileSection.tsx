@@ -48,14 +48,13 @@ export default function MobileSection() {
     prevOpen.current = open;
   }, [open]);
 
-  const iconBackColorOpen = 'grey.300';
-  const iconBackColor = 'grey.100';
-
   return (
     <>
       <Box sx={{ flexShrink: 0, ml: 0.75 }}>
         <IconButton
-          sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor }}
+          sx={{
+            bgcolor: open ? 'secondary.hover' : 'transparent'
+          }}
           aria-label="open more menu"
           ref={anchorRef}
           aria-controls={open ? 'menu-list-grow' : undefined}
@@ -89,7 +88,7 @@ export default function MobileSection() {
           <Transitions type="fade" in={open} {...TransitionProps}>
             <Paper sx={{ boxShadow: theme.customShadows.z1 }}>
               <ClickAwayListener onClickAway={handleClose}>
-                <AppBar color="inherit">
+                <AppBar>
                   <Toolbar>
                     <Search />
                     <Profile />

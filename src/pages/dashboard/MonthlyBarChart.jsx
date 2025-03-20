@@ -47,8 +47,8 @@ const barChartOptions = {
 export default function MonthlyBarChart() {
   const theme = useTheme();
 
-  const { primary, secondary } = theme.palette.text;
-  const info = theme.palette.info.light;
+  const infoColor = theme.palette.info.light;
+  const secondaryText = theme.palette.text.secondary;
 
   const [series] = useState([
     {
@@ -61,16 +61,25 @@ export default function MonthlyBarChart() {
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      colors: [info],
+      colors: [infoColor],
       xaxis: {
         labels: {
           style: {
-            colors: [secondary, secondary, secondary, secondary, secondary, secondary, secondary]
+            colors: [secondaryText, secondaryText, secondaryText, secondaryText, secondaryText, secondaryText, secondaryText]
           }
         }
+      },
+      legend: {
+        labels: {
+          colors: [infoColor],
+          useSeriesColors: false
+        }
+      },
+      tooltip: {
+        theme: theme.palette.mode
       }
     }));
-  }, [primary, info, secondary]);
+  }, [secondaryText, infoColor]);
 
   return (
     <Box id="chart" sx={{ bgcolor: 'transparent' }}>

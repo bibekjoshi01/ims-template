@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography, useTheme } from '@mui/material';
 import { Facebook, Twitter, LinkedIn } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import MainCard from '@/components/MainCard';
@@ -7,6 +7,8 @@ import MainCard from '@/components/MainCard';
  * Renders a card with connected social network information.
  */
 export default function SocailNetwork() {
+  const theme = useTheme();
+
   const socialAccounts = [
     {
       name: 'Twitter',
@@ -39,12 +41,12 @@ export default function SocailNetwork() {
             <Grid item xs={12} key={account.name} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 {account.icon}
-                <Link to={account.url || '#'} style={{ textDecoration: 'none' }}>
+                <Link to={account.url || '#'} style={{ color: theme.palette.text.primary, textDecoration: 'none' }}>
                   {account.name}
                 </Link>
               </Box>
               {account.username ? (
-                <Typography variant="body1" sx={{ color: 'primary.main', fontWeight: 500 }}>
+                <Typography variant="body1" sx={{ color: 'text.primary', fontWeight: 500 }}>
                   {account.username}
                 </Typography>
               ) : (

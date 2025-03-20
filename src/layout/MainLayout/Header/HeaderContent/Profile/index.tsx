@@ -98,16 +98,15 @@ export default function Profile() {
     }
   };
 
-  const iconBackColorOpen = 'grey.100';
-
   return (
-    <Box sx={{ flexShrink: 0, ml: 0.75 }}>
-      <ButtonBase
+    <Box sx={{ flexShrink: 0 }}>
+      <IconButton
+        size="large"
         sx={{
           p: 0.25,
-          bgcolor: open ? iconBackColorOpen : 'transparent',
+          width: '100%',
+          bgcolor: open ? 'secondary.hover' : 'transparent',
           borderRadius: 1,
-          '&:hover': { bgcolor: 'secondary.lighter' },
           '&:focus-visible': { outline: `2px solid ${theme.palette.secondary.dark}`, outlineOffset: 2 }
         }}
         aria-label="open profile"
@@ -122,7 +121,7 @@ export default function Profile() {
             {fullName || 'Anonymous'}
           </Typography>
         </Stack>
-      </ButtonBase>
+      </IconButton>
       <Popper
         placement="bottom-end"
         open={open}

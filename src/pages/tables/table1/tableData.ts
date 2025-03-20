@@ -225,23 +225,19 @@ export const initialRows: TableData[] = [
 ];
 
 // Interface for color mapping
-export type StatusColorMap = Record<Status, { backgroundColor: string; color: string }>;
+export type StatusColorMap = Record<Status, { backgroundColor: string | undefined; color: string }>;
 
 // This defines what color to be used for each status
 const getStatusColorMap = (theme: Theme): StatusColorMap => ({
   [Status.RELATIONSHIP]: {
-    // FIXME - Handle Theme properly
-    // @ts-ignore
     backgroundColor: theme.palette.success.lighter,
     color: theme.palette.success.main
   },
   [Status.SINGLE]: {
-    // @ts-ignore
     backgroundColor: theme.palette.info.lighter,
     color: theme.palette.info.main
   },
   [Status.COMPLICATED]: {
-    // @ts-ignore
     backgroundColor: theme.palette.error.lighter,
     color: theme.palette.error.main
   }
