@@ -1,5 +1,5 @@
 // MUI Imports
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Grid, Tooltip, Typography } from '@mui/material';
 
 // Project Imports
 import { useThemeMode } from '@/contexts/theme-context';
@@ -55,17 +55,18 @@ export default function ThemesTab() {
                 borderRadius: 1
               }}
             >
-              {Object.values(preset[mode]).map((colorValues, i) => (
-                <Box
-                  key={i}
-                  sx={{
-                    width: 12,
-                    height: 12,
-                    bgcolor: colorValues.main,
-                    borderRadius: '4px',
-                    flexShrink: 0
-                  }}
-                />
+              {Object.values(preset[mode]).map((colorValues) => (
+                <Tooltip title={colorValues.main} key={colorValues.main}>
+                  <Box
+                    sx={{
+                      width: 12,
+                      height: 12,
+                      bgcolor: colorValues.main,
+                      borderRadius: '4px',
+                      flexShrink: 0
+                    }}
+                  />
+                </Tooltip>
               ))}
             </Box>
           </Grid>

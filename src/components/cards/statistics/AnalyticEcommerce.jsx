@@ -33,8 +33,16 @@ export default function AnalyticEcommerce({ color = 'primary', title, count, per
                 variant="combined"
                 icon={isLoss ? <FallOutlined style={iconSX} /> : <RiseOutlined style={iconSX} />}
                 label={`${percentage}%`}
-                sx={{ ml: 1.25, pl: 1, color: `${color || 'primary'}.dark` }}
+                sx={{
+                  ml: 1.25,
+                  pl: 1,
+                  color: `${color || 'primary'}.dark`,
+                  bgcolor: `${color || 'primary'}.lighter`,
+                  // border: '1px solid',
+                  borderColor: `${color || 'primary'}.main`
+                }}
                 size="small"
+                // bgcolor={`${color || 'primary'}.lighter`}
               />
             </Grid>
           )}

@@ -35,15 +35,15 @@ export default function IncomeAreaChart({ slot }) {
 
   const line = theme.palette.divider;
   const secondaryText = theme.palette.text.secondary;
-  const primary = theme.palette.primary.main;
-  const secondary = theme.palette.secondary.main;
+  const color1 = theme.palette.primary.main;
+  const color2 = theme.palette.primary.darker;
 
   const [options, setOptions] = useState(areaChartOptions);
 
   useEffect(() => {
     setOptions((prevState) => ({
       ...prevState,
-      colors: [primary, secondary],
+      colors: [color1, color2],
       xaxis: {
         categories:
           slot === 'month'
@@ -85,7 +85,7 @@ export default function IncomeAreaChart({ slot }) {
       },
       legend: {
         labels: {
-          colors: [primary, secondary],
+          colors: [color1, color2],
           useSeriesColors: false
         }
       },
@@ -93,7 +93,7 @@ export default function IncomeAreaChart({ slot }) {
         theme: theme.palette.mode
       }
     }));
-  }, [secondaryText, primary, secondary, line, theme, slot]);
+  }, [secondaryText, color1, color2, line, theme, slot]);
 
   const [series, setSeries] = useState([
     {

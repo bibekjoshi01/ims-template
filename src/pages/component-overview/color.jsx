@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import MainCard from '@/components/MainCard';
 import ComponentSkeleton from './ComponentSkeleton';
 
-function ColorBox({ bgcolor, title, data, dark, main }) {
+function ColorBox({ bgcolor, title, data, dark, main, color }) {
   return (
     <Card sx={{ '&.MuiPaper-root': { borderRadius: '0px' } }}>
       <Box
@@ -20,7 +20,7 @@ function ColorBox({ bgcolor, title, data, dark, main }) {
           alignItems: 'center',
           py: 2.5,
           bgcolor,
-          color: dark ? 'grey.800' : '#ffffff',
+          color: color || (dark ? 'secondary.700' : '#ffffff'),
           border: main ? '1px dashed' : '1px solid transparent'
         }}
       >
@@ -55,11 +55,11 @@ export default function ComponentColor() {
         <Grid item xs={12} sm={6} md={4}>
           <MainCard title="Primary Color" divider={true}>
             <Stack>
-              <ColorBox bgcolor="primary.lighter" data={{ label: 'Blue-1' }} title="primary.lighter" />
-              <ColorBox bgcolor="primary.100" data={{ label: 'Blue-2' }} title="primary[100]" />
-              <ColorBox bgcolor="primary.200" data={{ label: 'Blue-3' }} title="primary[200]" />
-              <ColorBox bgcolor="primary.light" data={{ label: 'Blue-4' }} title="primary.light" />
-              <ColorBox bgcolor="primary.400" data={{ label: 'Blue-5' }} title="primary[400]" />
+              <ColorBox bgcolor="primary.lighter" data={{ label: 'Blue-1' }} title="primary.lighter" dark />
+              <ColorBox bgcolor="primary.100" data={{ label: 'Blue-2' }} title="primary[100]" dark />
+              <ColorBox bgcolor="primary.200" data={{ label: 'Blue-3' }} title="primary[200]" dark />
+              <ColorBox bgcolor="primary.light" data={{ label: 'Blue-4' }} title="primary.light" dark />
+              <ColorBox bgcolor="primary.400" data={{ label: 'Blue-5' }} title="primary[400]" dark />
               <ColorBox bgcolor="primary.main" data={{ label: 'Blue-6' }} title="primary.main" main />
               <ColorBox bgcolor="primary.dark" data={{ label: 'Blue-7' }} title="primary.dark" />
               <ColorBox bgcolor="primary.700" data={{ label: 'Blue-8' }} title="primary[700]" />
@@ -71,11 +71,11 @@ export default function ComponentColor() {
         <Grid item xs={12} sm={6} md={4}>
           <MainCard title="Secondary Color" divider={true}>
             <Stack>
-              <ColorBox bgcolor="secondary.lighter" data={{ label: 'Grey-1' }} title="secondary.lighter" />
-              <ColorBox bgcolor="secondary.100" data={{ label: 'Grey-2' }} title="secondary[100]" />
-              <ColorBox bgcolor="secondary.200" data={{ label: 'Grey-3' }} title="secondary[200]" />
-              <ColorBox bgcolor="secondary.light" data={{ label: 'Grey-4' }} title="secondary.light" />
-              <ColorBox bgcolor="secondary.400" data={{ label: 'Grey-5' }} title="secondary[400]" />
+              <ColorBox bgcolor="secondary.lighter" data={{ label: 'Grey-1' }} title="secondary.lighter" dark />
+              <ColorBox bgcolor="secondary.100" data={{ label: 'Grey-2' }} title="secondary[100]" dark />
+              <ColorBox bgcolor="secondary.200" data={{ label: 'Grey-3' }} title="secondary[200]" dark />
+              <ColorBox bgcolor="secondary.light" data={{ label: 'Grey-4' }} title="secondary.light" dark />
+              <ColorBox bgcolor="secondary.400" data={{ label: 'Grey-5' }} title="secondary[400]" dark />
               <ColorBox bgcolor="secondary.main" data={{ label: 'Grey-6' }} title="secondary.main" main />
               <ColorBox bgcolor="secondary.dark" data={{ label: 'Grey-8' }} title="secondary.dark" />
               <ColorBox bgcolor="secondary.700" data={{ label: 'Grey-7' }} title="secondary.700" />
@@ -87,11 +87,11 @@ export default function ComponentColor() {
         <Grid item xs={12} sm={6} md={4}>
           <MainCard title="Other Color" divider={true}>
             <Stack>
-              <ColorBox bgcolor="secondary.secondary" data={{ label: 'Grey-A0' }} title="secondary.secondary" />
-              <ColorBox bgcolor="secondary.primary" data={{ label: 'Grey-A1' }} title="secondary.primary" />
-              <ColorBox bgcolor="secondary.divider" data={{ label: 'Grey-A2' }} title="secondary.divider" />
-              <ColorBox bgcolor="secondary.paper" data={{ label: 'Grey-A3' }} title="secondary.paper" />
-              <ColorBox bgcolor="secondary.default" data={{ label: 'Grey-A4' }} title="secondary.default" />
+              <ColorBox bgcolor="text.primary" color="secondary.paper" data={{ label: 'Primary text' }} title="text.primary" />
+              <ColorBox bgcolor="text.secondary" color="secondary.paper" data={{ label: 'Secondary text' }} title="text.secondary" />
+              <ColorBox bgcolor="secondary.divider" color="text.primary" data={{ label: 'Divider' }} title="secondary.divider" />
+              <ColorBox bgcolor="secondary.paper" color="text.primary" data={{ label: 'Paper' }} title="secondary.paper" />
+              <ColorBox bgcolor="secondary.default" color="text.primary" data={{ label: 'Default' }} title="secondary.default" />
             </Stack>
           </MainCard>
         </Grid>
