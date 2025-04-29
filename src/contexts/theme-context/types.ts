@@ -1,6 +1,7 @@
 import { PaletteMode } from '@mui/material';
 
 export interface ColorVariants {
+  // these colors can be used as (keyof ColorValues).name example primary.main
   lighter: string;
   100: string;
   200: string;
@@ -11,13 +12,14 @@ export interface ColorVariants {
   700: string;
   darker: string;
   900: string;
-  primaryText: string; // used for secondary color in dark mode
-  secondaryText: string; // used for primary color in dark mode
-  divider: string; // used for divider color in dark mode
-  paper: string; // used for paper background color in dark mode
-  default: string; // used for default background color in dark mode
-  hover: string; // used for hover color(less used)
-  contrastText: string;
+  contrastText: string; // used for texts inside some colored boxes
+
+  primaryText: string; // used for main text color can be used as text.primary
+  secondaryText: string; // used for secondary text color can be used as text.secondary
+  divider: string; // used for divider color can be used as secondary.divider
+  paper: string; // used for paper background color can be used as secondary.paper
+  default: string; // used for default background color can be used as secondary.default
+  hover: string; // used for hover color can be used as can be used as secondary.hover
 }
 
 // Color value interface for advanced color customization

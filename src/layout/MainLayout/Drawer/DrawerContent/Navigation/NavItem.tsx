@@ -107,7 +107,7 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
               alignItems: 'center',
               justifyContent: 'center',
               '&:hover': {
-                bgcolor: 'secondary.lighter'
+                bgcolor: 'primary.lighter'
               }
             }),
             ...(!drawerOpen &&
