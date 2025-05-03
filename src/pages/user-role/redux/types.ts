@@ -3,20 +3,20 @@ import { Dispatch, SetStateAction } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 
 export interface Permission {
-  id: number;
+  id?: number;
   name: string;
-  codeName: string;
+  codename: string;
   isActive: boolean;
 }
 
 export interface UserRole {
   id?: number;
   name: string;
-  codeName: string;
+  codename: string;
   isActive: boolean;
-  permissions: Permission[] | [];
-  mainModules: Permission | null;
-  subModules: Permission | null;
+  permissions?: Permission[] | [];
+  mainModules?: Permission | null;
+  subModules?: Permission | null;
 }
 
 export interface UserRoleListQueryParams {

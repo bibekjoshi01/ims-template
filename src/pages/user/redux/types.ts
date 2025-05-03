@@ -3,7 +3,7 @@ import { PaginationParams } from '@/pages/common/redux/types';
 export interface UserRole {
   id: number;
   name: string;
-  codeName: string;
+  codename: string;
   isActive: boolean;
 }
 
