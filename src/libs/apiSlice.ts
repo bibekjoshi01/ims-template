@@ -45,5 +45,5 @@ export const rootAPI = createApi({
     //create seperate endpoints for each files and inject with this one using injectEndpoints
   }),
 
-  tagTypes: ['BlogCategory']
+  tagTypes: ['BlogCategory', 'User']
 });

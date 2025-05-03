@@ -20,6 +20,7 @@ const Table2 = Loadable(lazy(() => import('@/pages/tables/table2')));
 const Table3 = Loadable(lazy(() => import('@/pages/tables/table3')));
 const Table4 = Loadable(lazy(() => import('@/pages/tables/table4')));
 const Table5 = Loadable(lazy(() => import('@/pages/tables/table5')));
+const User = Loadable(lazy(() => import('@/pages/user')));
 // Blog Pages
 const BlogCategory = Loadable(lazy(() => import('@/pages/blog/category')));
 
@@ -55,6 +56,9 @@ const PrivateRoutes = () => (
         </Route>
         <Route path="blog">
           <Route path="category" element={<BlogCategory />} />
+        </Route>
+        <Route path="user-setup">
+          <Route path="users" element={<User />} />
         </Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />
