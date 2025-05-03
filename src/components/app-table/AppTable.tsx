@@ -61,6 +61,7 @@ const AppTable = <T extends object>({
   ...dataGridProps
 }: AppTableProps<T>) => {
   const theme = useTheme();
+  console.log(theme);
   // Pagination hook
   const { paginationModel, handlePaginationChange } = usePagination(pageSizeOptions);
 

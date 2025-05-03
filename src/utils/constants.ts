@@ -1,5 +1,81 @@
 import { ColorValues, ColorVariants } from '@/contexts/theme-context/types';
 
+const mantisColorObj = {
+  name: 'Mantis',
+  light: {
+    primary: {
+      main: '#1890ff',
+      primaryText: '#1f1f1f',
+      contrastText: '#ffffff'
+    },
+    secondary: {
+      main: '#8c8c8c',
+      secondaryText: '#8c8c8c',
+      contrastText: '#ffffff',
+      paper: '#ffffff',
+      default: '#fafafb',
+      divider: '#e4e4e7',
+      hover: '#0000000a'
+    },
+    success: {
+      main: '#52c41a',
+      contrastText: '#000000'
+    },
+    info: {
+      main: '#00b5ff',
+      contrastText: '#000000'
+    },
+    error: {
+      main: '#f5222d',
+      contrastText: '#000000'
+    },
+    warning: {
+      main: '#faad14',
+      contrastText: '#000000'
+    },
+    grey: {
+      main: '#8c8c8c',
+      contrastText: '#e9e7e7'
+    }
+  },
+  dark: {
+    primary: {
+      main: '#1890ff',
+      primaryText: '#ffffff',
+      contrastText: '#f4f4f4'
+    },
+    secondary: {
+      main: '#8c8c8c',
+      secondaryText: '#ffffff73',
+      contrastText: '#ffffff73',
+      paper: '#1e1e1e',
+      default: '#030712',
+      divider: '#51515c',
+      hover: '#1a273a'
+    },
+    success: {
+      main: '#52c41a',
+      contrastText: '#022d14'
+    },
+    info: {
+      main: '#00b6d9',
+      contrastText: '#053344'
+    },
+    error: {
+      main: '#f5222d',
+      contrastText: '#4d0218'
+    },
+    warning: {
+      main: '#faad14',
+      contrastText: '#411e03'
+    },
+    grey: {
+      main: '#8c8c8c',
+      contrastText: '#e9e7e7'
+    }
+  }
+};
+
 const defaultColor: ColorVariants = {
   lighter: '#e3f2fd',
   100: '#bbdefb',
@@ -11,7 +87,7 @@ const defaultColor: ColorVariants = {
   700: '#1976d2',
   darker: '#1565c0',
   900: '#0d47a1',
-  secondaryText: '#ffffffde',
+  secondaryText: '#ffffde',
   primaryText: '#bfbfbf',
   divider: '#404040',
   paper: '#1e1e1e',
@@ -27,6 +103,7 @@ interface ITHEME_PRESETS {
 }
 
 let THEME_PRESETS = [
+  mantisColorObj,
   {
     name: 'Harmony',
     light: {
