@@ -1,3 +1,5 @@
+import { PaginationParams } from '@/pages/common/redux/types';
+
 export interface UserRole {
   id: number;
   name: string;
@@ -45,11 +47,6 @@ export interface UserDetails extends UserItem {
 export interface UserSliceState {
   edit: boolean;
   currentId: number | null;
-}
-
-export interface PaginationParams {
-  page: number;
-  pageSize: number;
 }
 
 export interface UserListQueryParams {
