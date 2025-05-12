@@ -105,7 +105,7 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3} sx={{ my: 1 }}>
         <Grid item xs={12}>
-          <MainCard divider title={userData ? 'Update User' : 'Create New User'}>
+          <MainCard divider title={'Update User'}>
             <FormSection<UserInfoUpdateFormDataType> fields={formFields} control={control} errors={errors} />
           </MainCard>
         </Grid>
@@ -115,7 +115,7 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
             Cancel
           </Button>
           <Button variant="contained" type="submit">
-            {userData ? 'Update User' : 'Add User'}
+            Update User
           </Button>
         </Grid>
       </Grid>

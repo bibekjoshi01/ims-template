@@ -7,10 +7,22 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
   endpoints: (builder) => ({
     // Get User Roles
     getUserRoles: builder.query<UserRoleList, UserRoleListQueryParams>({
-      query: ({ search, paginationDetail }) => {
-        const { page, pageSize } = paginationDetail!;
+      query: ({ search, paginationModel, sortModel, filterModel }) => {
+        // pagination
+        const { page, pageSize } = paginationModel!;
+
+        // ordering
+        const ordering = sortModel?.[0]?.field; // name of the field to sort by
+        const direction = sortModel?.[0]?.sort === 'asc' ? '-' : ''; // 'asc' or 'desc'
+        const orderingString = ordering ? `${direction}${ordering}` : ''; // complete ordering string
+
+        // filtering
+        const filterField = filterModel?.items?.[0]?.field; // field to filter by
+        const filterValue = filterModel?.items?.[0]?.value; // value of the filter
+        const filterString = filterField && filterValue ? `${filterField}=${filterValue}` : ''; // complete filter string
+
         return {
-          url: `${userRoleAPI}?offset=${page * pageSize}&limit=${pageSize}&search=${search ?? ''}`,
+          url: `${userRoleAPI}?offset=${page * pageSize}&limit=${pageSize}&search=${search ?? ''}&ordering=${orderingString}&${filterString}`,
           method: 'GET'
         };
       },
@@ -81,7 +93,7 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
     getUserRoleUserPermissions: builder.query({
       query: ({ mainModule, subModule }) => {
         return {
-          url: `${userRoleAPI}/user-permissions?main_module=${mainModule ?? ''}&permission_category=${subModule}`,
+          url: `${userRoleAPI}/permissions`,
           method: 'GET'
         };
       },

@@ -1,4 +1,5 @@
 import { PaginationParams } from '@/pages/common/redux/types';
+import { GridFilterModel, GridPaginationModel, GridSortModel } from '@mui/x-data-grid';
 import { Dispatch, SetStateAction } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
 
@@ -19,14 +20,34 @@ export interface UserRole {
   subModules?: Permission | null;
 }
 
+export interface UserRoleInputPost {
+  name: string;
+  permissions: number[];
+  isActive: boolean;
+}
+
+export interface UserRoleInputPatch {
+  name: string;
+  permissions: number[];
+  isActive: boolean;
+  remarks: string;
+}
+
 export interface UserRoleListQueryParams {
   search: string;
-  paginationDetail?: PaginationParams;
+  paginationModel?: GridPaginationModel;
+  sortModel?: GridSortModel;
+  filterModel?: GridFilterModel;
 }
 
 export interface UserRoleList {
   count: number;
   results: UserRole[] | [];
+}
+
+export interface UserRoleMainModules {
+  count: number;
+  results: Permission[] | [];
 }
 
 export interface UserPermissionItem {

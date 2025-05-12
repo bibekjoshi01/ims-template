@@ -98,7 +98,8 @@ const Toolbar = ({
   showFilter,
   showDensitySelector,
   showExport,
-  createNewForm
+  createNewForm,
+  createButtonTitle
 }: {
   title?: string;
   showSearch: boolean;
@@ -109,6 +110,7 @@ const Toolbar = ({
   showDensitySelector: boolean;
   showExport: boolean;
   createNewForm?: (onClose: () => void) => React.ReactNode;
+  createButtonTitle?: string;
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [searchText, setSearchText] = useState<string>('');
@@ -196,7 +198,7 @@ const Toolbar = ({
           {createNewForm && (
             <>
               <Button onClick={handleOpenForm} variant="contained">
-                Create User
+                {createButtonTitle ?? 'Create New'}
               </Button>
               <AppDialog open={showForm} onClose={handleCloseForm} content={createNewForm(handleCloseForm)} fullWidth maxWidth="lg" />
             </>

@@ -244,6 +244,12 @@ export interface AppTableProps<T extends object> {
   createNewForm?: (onClose: () => void) => React.ReactNode;
 
   /**
+   * Title of the button to create a new row.
+   * Default is 'Create New'.
+   */
+  createButtonTitle?: string;
+
+  /**
    * Additional styles to apply to the container Box component.
    * Default is undefined.
    */
