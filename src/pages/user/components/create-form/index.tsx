@@ -1,30 +1,30 @@
-import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { Button, Grid } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Grid } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 // UI Components
-import MainCard from '@/components/MainCard';
 import FormSection from '@/components/FormSection';
+import MainCard from '@/components/MainCard';
 import MatchIndicator from '@/components/PasswordMatchIndicator';
 import PasswordStrengthCapsules from '@/components/PasswordStrengthCapsules';
 
 // Utilities & API
 import { useAppDispatch } from '@/libs/hooks';
-import { splitName } from '@/utils/splitCombineName';
 import { setMessage } from '@/pages/common/redux/common.slice';
+import { splitName } from '@/utils/splitCombineName';
 import { useCreateUserMutation, useGetUserRolesQuery } from '../../redux/user.api';
 
 // Form Schema, Defaults, Types
-import { userInfoFormSchema, defaultValues, userInfoFields, UserInfoFormDataType } from './data';
 import { SelectOption } from '@/components/CustomInput';
 import { UserInput, UserRole } from '../../redux/types';
+import { defaultValues, userInfoFields, UserInfoFormDataType, userInfoFormSchema } from './userCreateForm.config';
 
-interface UserFormProps {
+interface UserCreateFormProps {
   onClose?: () => void;
 }
 
-export default function UserForm({ onClose }: UserFormProps) {
+export default function UserCreateForm({ onClose }: UserCreateFormProps) {
   const dispatch = useAppDispatch();
   const [createUser] = useCreateUserMutation();
   const { data: rolesData } = useGetUserRolesQuery({
@@ -42,8 +42,7 @@ export default function UserForm({ onClose }: UserFormProps) {
     control,
     handleSubmit,
     watch,
-    formState: { errors },
-    reset
+    formState: { errors }
   } = useForm<UserInfoFormDataType>({
     resolver: zodResolver(userInfoFormSchema),
     defaultValues
@@ -64,7 +63,6 @@ export default function UserForm({ onClose }: UserFormProps) {
       const res = await createUser(payload).unwrap();
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
-      // reset(); // optional
     } catch (error) {
       console.error('Error creating user:', error);
     }
@@ -104,7 +102,7 @@ export default function UserForm({ onClose }: UserFormProps) {
         </Grid>
 
         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-          <Button variant="outlined" color="secondary" onClick={onClose}>
+          <Button variant="outlined" color="error" onClick={onClose}>
             Cancel
           </Button>
           <Button variant="contained" type="submit">

@@ -22,6 +22,5 @@ export const getColumnConfig = (theme: Theme): ColumnConfig<TableData>[] => [
     filterable: false
   },
   { field: 'dateJoined', headerName: 'CREATED AT', type: 'date', editable: false, filterable: false },
-  // { field: 'updatedAt', headerName: 'UPDATED AT', type: 'date', editable: false, filterable: false, },
   { field: 'actions', headerName: '', type: 'actions', deletable: false }
 ];

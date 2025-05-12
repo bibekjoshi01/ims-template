@@ -1,10 +1,10 @@
 import { createTableDataHook } from '@/hooks/createTableDataHook';
-import { useGetUsersQuery, usePatchUserMutation } from '../redux/user.api';
-import { UserItem } from '../redux/types';
-import { TableData } from '../table/tableData';
-import { splitName, combineName } from '@/utils/splitCombineName';
 import { useAppDispatch } from '@/libs/hooks';
-import { setEdit, currentUserId } from '../redux/user.slice';
+import { combineName, splitName } from '@/utils/splitCombineName';
+import { TableData } from '../components/userListingTable.config';
+import { UserItem } from '../redux/types';
+import { useGetUsersQuery, usePatchUserMutation } from '../redux/user.api';
+import { currentUserId, setEdit } from '../redux/user.slice';
 
 /**
  * Custom hook for User table Fetching and updating

@@ -1,15 +1,12 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { CircularProgress } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import AppDialog from '@/components/app-dialog';
-import { clearUserData, setEdit } from '../../redux/user.slice';
-import { userState } from '../../redux/user.selector';
 import { useRetrieveUserQuery } from '../../redux/user.api';
-import UserUpdateForm from '../updateForm';
-
-// RTK Query
+import { userState } from '../../redux/user.selector';
+import { clearUserData, setEdit } from '../../redux/user.slice';
+import UserUpdateForm from './Form';
 
 const UserEditModal = () => {
   const dispatch = useDispatch();

@@ -1,26 +1,25 @@
-import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { Button, Grid } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Grid } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 // UI Components
-import MainCard from '@/components/MainCard';
 import FormSection from '@/components/FormSection';
+import MainCard from '@/components/MainCard';
 
 // Utilities & API
 import { useAppDispatch } from '@/libs/hooks';
-import { splitName } from '@/utils/splitCombineName';
 import { setMessage } from '@/pages/common/redux/common.slice';
+import { splitName } from '@/utils/splitCombineName';
 import { useGetUserRolesQuery, usePatchUserMutation } from '../../redux/user.api';
-import fetchFileFromUrl from '@/utils/createFile';
 
 // Form Schema, Defaults, Types
-import { userInfoUpdateFormSchema, defaultValues, userInfoUpdateFields, UserInfoUpdateFormDataType } from './data';
 import { SelectOption } from '@/components/CustomInput';
 import { UserRole } from '../../redux/types';
+import { defaultValues, userInfoUpdateFields, UserInfoUpdateFormDataType, userInfoUpdateFormSchema } from './userUpdateForm.config';
 
 interface UserFormProps {
-  userData?: any; // User data from API
+  userData?: any;
   onClose?: () => void;
 }
 
@@ -83,7 +82,6 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
     } catch (error) {
-      console.error('Error updating user:', error);
       dispatch(
         setMessage({
           message: 'Failed to update user. Please try again.',
@@ -93,7 +91,6 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
     }
   };
 
-  console.log('image: ', watch('photo'));
   // Dynamically update role options once loaded
   useEffect(() => {
     if (rolesData?.count) {
@@ -115,9 +112,8 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
           </MainCard>
         </Grid>
 
-        {/* <img src={userData.photo} alt="Profile" style={{ width: 120, height: 120 }} /> */}
         <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-          <Button variant="outlined" color="secondary" onClick={onClose}>
+          <Button variant="outlined" color="error" onClick={onClose}>
             Cancel
           </Button>
           <Button variant="contained" type="submit">
