@@ -14,6 +14,7 @@ import useFocus from '@/hooks/useFocus';
 export const createNumberColumn = <T extends object>(config: ColumnConfig<T>, theme: Theme, baseCol: GridColDef<T>): GridColDef<T> => {
   return {
     ...baseCol,
+    minWidth: 120,
     headerAlign: 'right',
     align: 'right',
     renderEditCell: (params) => {

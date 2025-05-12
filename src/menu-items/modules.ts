@@ -1,6 +1,7 @@
 // mui-icons
 import FeedIcon from '@mui/icons-material/Feed';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 // project-imports
 import { MenuItem } from './types';
@@ -8,7 +9,8 @@ import { MenuItem } from './types';
 // icons
 const icons = {
   FeedIcon,
-  InventoryIcon
+  InventoryIcon,
+  SupervisedUserCircleIcon
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -43,6 +45,28 @@ const modules: MenuItem = {
           title: 'Tags',
           type: 'item',
           url: '/blog/tags',
+          breadcrumbs: false
+        }
+      ]
+    },
+    {
+      id: 'user-role',
+      title: 'User Setup',
+      type: 'collapse',
+      icon: icons.SupervisedUserCircleIcon,
+      children: [
+        {
+          id: 'users',
+          title: 'Users',
+          type: 'item',
+          url: '/user-setup/users',
+          breadcrumbs: false
+        },
+        {
+          id: 'user-roles',
+          title: 'User Roles',
+          type: 'item',
+          url: '/user-setup/user-roles',
           breadcrumbs: false
         }
       ]

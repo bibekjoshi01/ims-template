@@ -3,7 +3,9 @@ import Cookies from 'js-cookie';
 import { noAuthRoutes } from './routes';
 
 // Constructing the base URL dynamically using environment variables.
-export const baseURL = `${import.meta.env.VITE_PUBLIC_APP_HTTP_SCHEME}${import.meta.env.VITE_PUBLIC_APP_BASE_URL}${import.meta.env.VITE_PUBLIC_APP_API_VERSION}/`;
+// export const baseURL = `${import.meta.env.VITE_PUBLIC_APP_HTTP_SCHEME}${import.meta.env.VITE_PUBLIC_APP_BASE_URL}${import.meta.env.VITE_PUBLIC_APP_API_VERSION}/`;
+
+export const baseURL = 'http://localhost:8000/api/v1/'; // For local development
 
 /* Replace `showToast` with your actual toast notification method. */
 const showToast = console.log;

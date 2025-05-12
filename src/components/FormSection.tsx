@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Grid, SxProps } from '@mui/material';
 import { Control, Controller, FieldValues, FieldErrors, Path } from 'react-hook-form';
 import CustomInput from '@/components/CustomInput';
 
@@ -10,13 +10,18 @@ export type FormField<T> = {
   label: string; // Label for the field.
   name: keyof T; // Name of the field.
   type?: string; // Type of the field.
-  options?: { label: string; src: string; value: string | number }[]; // Options for select inputs.
+  options?: { value: string | number; label: string; src?: string; sx?: SxProps }[]; // Options for select inputs.
   multiline?: boolean; // Renders a multiline input if true.
   rows?: number; // Number of rows to display if multiline is true.
   xs?: number; // Grid size for extra small screens.
   sm?: number; // Grid size for small screens.
   defaultValue?: any; // Default value for the field.
   sx?: any; // Style object for the field.
+  imageSize?: number; // Size of the image for image inputs.
+  required?: boolean; // Whether the field is required. default is true.
+  trueLabel?: string; // Label for the true value of a checkbox.
+  multipleChips?: boolean; // Whether the field allows multiple chip selections.
+  falseLabel?: string; // Label for the false value of a checkbox.
 };
 
 interface FormSectionProps<T extends FieldValues> {
@@ -85,6 +90,11 @@ export default function FormSection<T extends Record<string, any>>({
                   showPassword={showPassword}
                   handleToggleVisibility={handleToggleVisibility}
                   defaultValue={defaultValue}
+                  imageSize={field?.imageSize}
+                  required={field?.required}
+                  trueLabel={field?.trueLabel}
+                  falseLabel={field?.falseLabel}
+                  multipleChips={field?.multipleChips}
                   sx={sx}
                 >
                   {/* Render the specific component for specific field */}

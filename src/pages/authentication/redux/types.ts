@@ -1,5 +1,7 @@
 export interface permission {
+  id: number;
   name: string;
+  codename: string;
 }
 
 export interface group {

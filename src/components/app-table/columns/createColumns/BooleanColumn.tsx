@@ -72,7 +72,13 @@ const RenderValue: React.FC<RenderValueProps> = ({ params, trueLabel, falseLabel
       }}
     >
       <Tooltip title={trueLabel || 'True'}>
-        <DoneOutlined color="success" />
+        <DoneOutlined
+          color="success"
+          sx={{
+            position: 'relative',
+            top: '5px'
+          }}
+        />
       </Tooltip>
       {trueLabel}
     </Typography>

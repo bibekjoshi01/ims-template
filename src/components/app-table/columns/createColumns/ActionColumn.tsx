@@ -11,7 +11,7 @@ export const createActionsColumn = <T extends object>(
   config: ColumnConfig<T>,
   theme: Theme,
   baseCol: GridColDef<T>,
-  handlers?: ColumnHandlers,
+  handlers?: ColumnHandlers<T>,
   rowModesModel?: GridRowModesModel,
   savingRows?: Record<GridRowId, boolean>
 ): GridActionsColDef<T> => {
@@ -31,7 +31,6 @@ export const createActionsColumn = <T extends object>(
             key="cancel"
             component="button"
             sx={{
-              // @ts-ignore
               ':hover': { backgroundColor: theme.palette.error.lighter }
             }}
             icon={
@@ -63,7 +62,6 @@ export const createActionsColumn = <T extends object>(
             key="save"
             component="button"
             sx={{
-              // @ts-ignore - Handle Theme
               ':hover': { backgroundColor: theme.palette.success.lighter }
             }}
             icon={
@@ -96,7 +94,6 @@ export const createActionsColumn = <T extends object>(
         <GridActionsCellItem
           component="button"
           sx={{
-            // @ts-ignore - Handle Theme
             ':hover': { backgroundColor: theme.palette.primary.lighter }
           }}
           icon={
@@ -107,32 +104,31 @@ export const createActionsColumn = <T extends object>(
             </Tooltip>
           }
           label="Edit"
-          onClick={() => handlers?.edit?.(params.id)}
+          onClick={() => handlers?.editForm?.(params.id)}
         />,
-        <GridActionsCellItem
-          key="delete"
-          showInMenu
-          sx={{
-            // @ts-ignore - Handle Theme
-            ':hover': { backgroundColor: theme.palette.error.lighter }
-          }}
-          icon={<DeleteOutlined color="error" sx={{ height: '20px' }} />}
-          label="Delete"
-          onClick={() => handlers?.delete?.(params.id)}
-        />,
-
+        config.deletable && (
+          <GridActionsCellItem
+            key="delete"
+            showInMenu
+            sx={{
+              ':hover': { backgroundColor: theme.palette.error.lighter }
+            }}
+            icon={<DeleteOutlined color="error" sx={{ height: '20px' }} />}
+            label="Delete"
+            onClick={() => handlers?.delete?.(params.id)}
+          />
+        ),
         <GridActionsCellItem
           key="copy"
           showInMenu
           sx={{
-            // @ts-ignore - Handle Theme
             ':hover': { backgroundColor: theme.palette.success.lighter }
           }}
           icon={<FileCopy color="success" sx={{ height: '20px' }} />}
           label="Copy"
           onClick={() => handlers?.copy?.(params.id)}
         />
-      ];
+      ].filter(Boolean) as JSX.Element[];
     }
   };
 };

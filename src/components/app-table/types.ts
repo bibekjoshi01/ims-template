@@ -1,161 +1,257 @@
 import { Theme } from '@mui/material/styles';
-import { DataGridProps, GridPaginationModel, GridRowId, GridRowModesModel } from '@mui/x-data-grid';
+import { DataGridProps, GridFilterModel, GridPaginationModel, GridRowId, GridSortModel } from '@mui/x-data-grid';
 import { ColumnConfig } from './columns';
 
 /**
  * AppTableProps defines the expected properties for the AppTable component.
  *
- * @template T - Type of the row data object this is something you'll define as TableData and pass it to Apptable
+ * @template T - Type of the row data object. This should be defined as a generic type (e.g., TableData)
+ * when using AppTable.
  */
 // ===========================|| AppTable - COMPONENT INTERFACE ||=========================== //
 
 export interface AppTableProps<T extends object> {
   /**
-   * Title of the table.
+   * Title displayed at the top of the table.
    * Default is undefined.
    */
   title?: string;
 
   /**
    * Array of rows to be displayed in the table.
-   * (Default is []).
+   * Default is [].
    */
   initialRows?: T[];
 
   /**
-   * Function to get the column configuration.
-   * Required`.
+   * Function that returns column configuration based on the current theme.
+   * Required.
+   *
+   * @param theme - The current MUI theme object
+   * @returns Array of column configurations for the table
    */
   getColumnConfig: (theme: Theme) => ColumnConfig<T>[];
 
   /**
    * Function to handle saving an updated row.
-   * Default is `undefined`.
+   * Called when a row edit is committed.
+   * Default is undefined.
+   *
+   * @param updatedRow - The row data after edits
+   * @returns Promise that resolves when the save operation completes
    */
-  onSaveRow?: (updatedRow: T) => Promise<T | void>;
+  onSaveRow?: (updatedRow: T) => Promise<void> | undefined;
 
   /**
    * Function to handle deleting a row.
-   * Default is `undefined`.
+   * Called when a row deletion is requested.
+   * Default is undefined.
+   *
+   * @param id - The ID of the row to delete
+   * @returns Promise that resolves when the delete operation completes
    */
-  onDeleteRow?: (id: GridRowId) => Promise<GridRowId | void>;
+  onDeleteRow?: (id: GridRowId) => Promise<void> | undefined;
 
   /**
-   * Boolean to indicate if the table is in a loading state.
-   * Default is `false`.
+   * Function to handle row edit button click.
+   * Default is undefined.
+   *
+   * @param id - The ID of the row to edit
+   */
+  handleEditClick: ((id: number | string | GridRowId) => void) | undefined;
+
+  /**
+   * Indicates if the table is in a loading state.
+   * When true, displays a skeleton loader.
+   * Default is false.
    */
   loading?: boolean;
 
   /**
-   * Function to process updates to a row.
-   * Default is `undefined`.
+   * Function to handle errors during row update operations.
+   * Default is undefined.
+   *
+   * @param error - The error that occurred during the update
    */
   handleRowUpdateError?: (error: any) => void;
 
   /**
-   * Boolean to show or hide vertical cell borders.
-   * Default is `false`.
+   * Shows vertical borders between cells when true.
+   * Default is false.
    */
   showCellVerticalBorder?: boolean;
 
   /**
-   * Boolean to show or hide the search option.
-   * Default is `true`.
+   * Shows the search input in the toolbar when true.
+   * Default is true.
    */
   showSearch?: boolean;
 
   /**
-   * Boolean to show or hide the column filter option.
-   * Default is `true`.
+   * Shows the column selector button in the toolbar when true.
+   * Default is false.
    */
   showColumnFilter?: boolean;
 
   /**
-   * Boolean to show or hide the filter option.
-   * Default is `true`.
+   * Shows the filter button in the toolbar when true.
+   * Default is false.
    */
   showFilter?: boolean;
 
   /**
-   * Boolean to show or hide the density selector.
-   * Default is `true`.
+   * Shows the density selector in the toolbar when true.
+   * Default is false.
    */
   showDensitySelector?: boolean;
 
   /**
-   * Boolean to show or hide the export option.
-   * Default is `true`.
+   * Shows the export button in the toolbar when true.
+   * Default is false.
    */
   showExport?: boolean;
 
   /**
-   * Boolean to enable sorting in the table.
-   * Default is `true`.
+   * Enables column sorting functionality when true.
+   * Default is true.
    */
   allowSorting?: boolean;
 
   /**
-   * Boolean to enable editing in the table.
-   * Default is `false`.
+   * Enables row editing functionality when true.
+   * Default is false.
    */
   allowEditing?: boolean;
 
   /**
-   * The edit mode of the table, either "row" or "cell".
-   * Default is `'row'`.
+   * Specifies the edit mode of the table: 'row' or 'cell'.
+   * Only applicable when allowEditing is true.
+   * Default is 'row'.
    */
   editMode?: 'row' | 'cell';
 
   /**
-   * Boolean to enable column resizing.
-   * Default is `false`.
+   * Enables column resizing functionality when true.
+   * Default is false.
    */
   enableColumnResizing?: boolean;
 
   /**
-   * Boolean to enable row selection.
-   * Default is `false`.
+   * Enables row selection (checkboxes) when true.
+   * Default is false.
    */
   enableRowSelection?: boolean;
 
   /**
-   * Options for the page size dropdown in pagination.
-   * Default is `[5, 10, 15, 20]`.
+   * Specifies the pagination mode: 'client' or 'server'.
+   * Default is 'server'.
+   */
+  paginationMode?: 'client' | 'server';
+
+  /**
+   * Specifies the sorting mode: 'client' or 'server'.
+   * Default is 'server'.
+   */
+  sortingMode?: 'client' | 'server';
+
+  /**
+   * Specifies the filtering mode: 'client' or 'server'.
+   * Default is 'server'.
+   */
+  filterMode?: 'client' | 'server';
+
+  /**
+   * Current pagination state of the table.
+   * Default is { page: 0, pageSize: 10 }.
+   */
+  paginationModel?: GridPaginationModel;
+
+  /**
+   * Current filter state of the table.
+   * Default is { items: [] }.
+   */
+  filterModel?: GridFilterModel;
+
+  /**
+   * Current sort state of the table.
+   * Default is [].
+   */
+  sortModel?: GridSortModel;
+
+  /**
+   * Available page size options for the pagination dropdown.
+   * Default is [3, 5, 10, 20, 50, 100].
    */
   pageSizeOptions?: number[];
 
   /**
-   * Boolean to indicate whether pagination is server-side.
-   * Default is `false`.
+   * Function called when sort model changes.
+   * Required when sortingMode is 'server'.
+   *
+   * @param sortModel - The new sort model
    */
-  serverPagination?: boolean;
+  handleSortChange?: (sortModel: GridSortModel) => void;
 
   /**
-   * Total number of rows for pagination.
-   * Default is the length of the `rows` array.
+   * Function called when filter model changes.
+   * Required when filterMode is 'server'.
+   *
+   * @param filterModel - The new filter model
+   */
+  handleFilterChange?: (filterModel: GridFilterModel) => void;
+
+  /**
+   * Function called when pagination model changes.
+   * Required when paginationMode is 'server'.
+   *
+   * @param paginationModel - The new pagination model
+   */
+  handlePaginationChange?: (paginationModel: GridPaginationModel) => void;
+
+  /**
+   * Function called when search input changes.
+   *
+   * @param searchText - The current search text
+   */
+  handleSearchChange?: (searchText: string) => void;
+
+  /**
+   * Total number of rows for server-side pagination.
+   * Required when paginationMode is 'server'.
+   * Default is 0.
    */
   totalRows?: number;
 
   /**
-   * The default file name for exported data.
-   * Default is `'table_data'`.
+   * Default filename when exporting table data.
+   * Default is 'table_data'.
    */
   exportFileName?: string;
 
   /**
-   * Function to get the row id from row data.
-   * Default is `undefined`.
+   * Function to extract row ID from row data.
+   * Default uses row.id if not provided.
+   *
+   * @param row - The row data
+   * @returns Unique identifier for the row
    */
   getRowId?: (row: T) => string | number;
 
   /**
-   * Additional styles for the container.
-   * Default is `undefined`.
+   * Form to be displayed when creating a new row.
+   *
    */
-  containerSx?: any;
+  createNewForm?: (onClose: () => void) => React.ReactNode;
 
   /**
-   * Any additional props that can be passed to the DataGrid.
+   * Additional styles to apply to the container Box component.
+   * Default is undefined.
+   */
+  containerSx?: object;
+
+  /**
+   * Any additional props that can be passed to the MUI DataGrid.
+   * These will be spread to the underlying DataGrid component.
    */
   [key: string]: any;
 }
