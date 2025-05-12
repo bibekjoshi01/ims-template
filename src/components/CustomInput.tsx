@@ -16,8 +16,8 @@ import {
   Switch,
   Typography
 } from '@mui/material';
-import { padding, useTheme } from '@mui/system';
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useTheme } from '@mui/system';
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -163,7 +163,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
     const theme = useTheme();
 
     // State for image preview
-    const [imagePreview, setImagePreview] = useState<string | null>(value || null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
 
     // Handle image change
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -394,11 +394,11 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                 }}
                 onClick={() => internalRef.current?.click()}
               >
-                {imagePreview ? (
+                {imagePreview || value ? (
                   <>
                     {/* Image Preview */}
                     <img
-                      src={imagePreview}
+                      src={imagePreview || value}
                       alt="Preview"
                       style={{
                         width: '100%',

@@ -8,19 +8,7 @@ export const userInfoUpdateFormSchema = z.object({
   phoneNo: z.string().min(10, 'Phone No. must be at least 10 characters').optional(),
   isActive: z.boolean().optional(),
   roles: z.array(z.number()).min(1, 'At least one role is required'),
-  photo: z
-    .any()
-    .refine(
-      (file) => {
-        if (!file) return true;
-        const f = file instanceof FileList ? file[0] : file;
-        return f instanceof File && f.type.startsWith('image/');
-      },
-      {
-        message: 'Only image files are allowed'
-      }
-    )
-    .optional()
+  photo: z.any().optional()
 });
 
 // NOTE - Generate a type from the schema

@@ -35,7 +35,6 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors },
     reset
   } = useForm<UserInfoUpdateFormDataType>({
@@ -46,7 +45,6 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
   // Reset form with user data when it's available
   useEffect(() => {
     if (userData) {
-      console.log('User Data:', userData);
       const userFormData = {
         id: userData.id,
         name: `${userData.firstName} ${userData.lastName}`,
@@ -65,7 +63,7 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
     try {
       const { id, name, phoneNo, roles, isActive, photo } = data;
       const { firstName, lastName } = splitName(name);
-
+      // const file = await fetchFileFromUrl(photo, name);
       const payload = {
         id,
         values: {
