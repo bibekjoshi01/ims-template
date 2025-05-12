@@ -21,20 +21,22 @@ interface TableDataBase {
  *   setRowModesModel: React.Dispatch<React.SetStateAction<GridRowModesModel>>,
  *   savingRows: Record<GridRowId, boolean>,
  *   handlers: {
- *     delete: (id: GridRowId) => void,
+ *     delete: (id: GridRowId) => Promise<void>,
  *     copy: (id: GridRowId) => void,
- *     edit: (id: GridRowId) => void,
+ *     editInline: (id: GridRowId) => void,
+ *     editForm: (id: GridRowId) => void,
  *     save: (id: GridRowId) => void,
  *     cancel: (id: GridRowId) => void,
- *     processRowUpdate: (updatedRow: T) => void,
+ *     processRowUpdate: (updatedRow: T) => Promise<T>,
  *   }
  * }} An object containing the row data, state setters, and handler functions.
  */
 
 export const useTableHandlers = <T extends TableDataBase>(
   initialData: T[],
-  onSave?: (updatedRow: T) => Promise<T | void>,
-  onDelete?: (id: GridRowId) => Promise<GridRowId | void>
+  onSave?: (updatedRow: T) => Promise<void> | undefined,
+  onDelete?: (id: GridRowId) => Promise<void> | undefined,
+  handleEditClick?: (id: number | GridRowId | string) => void | undefined
 ) => {
   // ========================= State =========================
   const [rows, setRows] = useState<T[]>(initialData);
@@ -51,12 +53,21 @@ export const useTableHandlers = <T extends TableDataBase>(
   }, [initialData]);
 
   // ========================= Handlers =========================
-  const handleEditClick = useCallback((id: GridRowId) => {
+  const handleEditInline = useCallback((id: GridRowId) => {
     setRowModesModel((prev) => ({
       ...prev,
       [id]: { mode: GridRowModes.Edit }
     }));
+
+    console.log('handleEditClick called with', id);
   }, []);
+
+  const handleEditForm = useCallback(
+    (id: GridRowId) => {
+      handleEditClick?.(id);
+    },
+    [handleEditClick]
+  );
 
   const handleSave = useCallback(async (id: GridRowId) => {
     setSavingRows((prev) => ({ ...prev, [id]: true }));
@@ -103,6 +114,8 @@ export const useTableHandlers = <T extends TableDataBase>(
       // Capture original row from current state
       let originalRow: T | undefined;
 
+      console.log('processRowUpdate called with', updatedRow);
+
       setRows((prev) => {
         // Capture original row from current state
         originalRow = prev.find((row) => row.id === updatedRow.id);
@@ -144,7 +157,8 @@ export const useTableHandlers = <T extends TableDataBase>(
     () => ({
       delete: handleDelete,
       copy: handleCopy,
-      edit: handleEditClick,
+      editInline: handleEditInline,
+      editForm: handleEditForm,
       save: handleSave,
       cancel: handleCancel,
       processRowUpdate

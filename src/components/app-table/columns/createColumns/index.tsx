@@ -29,7 +29,7 @@ import { createBooleanColumn } from './BooleanColumn';
 const createColumnDefs = <T extends object>(
   columnConfig: ColumnConfig<T>[],
   theme: Theme,
-  handlers?: ColumnHandlers,
+  handlers?: ColumnHandlers<T>,
   rowModesModel?: GridRowModesModel,
   savingRows?: Record<GridRowId, boolean>
 ): GridColDef<T>[] => {
@@ -40,6 +40,7 @@ const createColumnDefs = <T extends object>(
       flex: 1, // fill the available space
       maxWidth: config?.maxWidth, // restrict the width if needed
       editable: config?.editable ?? true,
+      filterable: config?.filterable ?? true,
       renderCell: config?.renderCell
     };
     switch (config.type) {

@@ -7,7 +7,7 @@ import { validatePermissions } from '@/utils/permissions/validate_permissions';
 import { setPermissions } from '../common/redux/common.slice';
 import { userPermissions } from './constants/permissions';
 
-const UserListing = lazy(() => import('./UserListing'));
+const UserListing = lazy(() => import('./table'));
 
 const User = () => {
   const dispatch = useAppDispatch();

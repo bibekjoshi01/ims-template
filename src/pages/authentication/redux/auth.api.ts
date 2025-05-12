@@ -1,6 +1,6 @@
 import { rootAPI } from '../../../libs/apiSlice';
 
-export const authAPI = 'admin/user-app/users';
+export const authAPI = 'admin/user-app/account';
 
 export const authAPISlice = rootAPI.injectEndpoints({
   endpoints: (builder) => ({

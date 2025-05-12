@@ -2,10 +2,9 @@
 import SaveAlt from '@mui/icons-material/SaveAlt';
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, MuiEvent } from '@mui/x-data-grid';
+import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, GridRowParams, MuiEvent } from '@mui/x-data-grid';
 
 //  Project Imports
-import { usePagination } from '@/hooks/usePagination';
 import { useTableHandlers } from '@/hooks/useTableHandlers';
 import { useMemo } from 'react';
 import { createColumnDefs } from './columns';
@@ -20,11 +19,13 @@ const AppTable = <T extends object>({
 
   // Column configuration
   initialRows = [],
+  totalRows = 0,
   getColumnConfig,
 
   // Handlers
   onSaveRow,
   onDeleteRow,
+  handleEditClick,
 
   // loading state
   loading = false,
@@ -45,9 +46,28 @@ const AppTable = <T extends object>({
   enableColumnResizing = false,
   enableRowSelection = false,
 
-  // Pagination
-  pageSizeOptions = [5, 10, 15, 20],
-  serverPagination = false,
+  // Pagination, Sorting and filtering
+  paginationMode = 'server',
+  sortingMode = 'server',
+  filterMode = 'server',
+
+  // Models
+  paginationModel = { page: 0, pageSize: 10 },
+  sortModel = [],
+  filterModel = {
+    items: []
+  },
+
+  // Pagination options
+  pageSizeOptions = [3, 5, 10, 20, 50, 100],
+
+  // Handlers
+  handleSortChange,
+  handleFilterChange,
+  handlePaginationChange,
+
+  // Search
+  handleSearchChange,
 
   // Exporting
   exportFileName = 'table_data',
@@ -55,18 +75,23 @@ const AppTable = <T extends object>({
   // Row identification
   getRowId,
 
+  // create new user form
+  createNewForm,
+
   // container styles
   containerSx,
 
   ...dataGridProps
 }: AppTableProps<T>) => {
   const theme = useTheme();
-  console.log(theme);
-  // Pagination hook
-  const { paginationModel, handlePaginationChange } = usePagination(pageSizeOptions);
 
   // Manage table state and handlers
-  const { rows, rowModesModel, setRowModesModel, savingRows, handlers } = useTableHandlers<T>(initialRows, onSaveRow, onDeleteRow);
+  const { rows, rowModesModel, setRowModesModel, savingRows, handlers } = useTableHandlers<T>(
+    initialRows,
+    onSaveRow,
+    onDeleteRow,
+    handleEditClick
+  );
 
   // Generate column configuration using provided function and theme
   const columnConfig = useMemo(() => getColumnConfig(theme), [getColumnConfig, theme]);
@@ -76,6 +101,27 @@ const AppTable = <T extends object>({
     () => createColumnDefs<T>(columnConfig, theme, handlers, rowModesModel, savingRows),
     [columnConfig, theme, handlers, rowModesModel, savingRows]
   );
+
+  const memoizedToolbar = useMemo(
+    () => () => (
+      <Toolbar
+        title={title}
+        showSearch={showSearch}
+        filterMode={filterMode}
+        handleSearchChange={handleSearchChange}
+        showColumnFilter={showColumnFilter}
+        showFilter={showFilter}
+        showDensitySelector={showDensitySelector}
+        showExport={showExport}
+        createNewForm={createNewForm}
+      />
+    ),
+    [title, showSearch, filterMode, handleSearchChange, showColumnFilter, showFilter, showDensitySelector, showExport, createNewForm]
+  );
+
+  const handleRowDoubleClick = (params: GridRowParams) => {
+    handlers.editInline(params.id);
+  };
 
   return (
     <Box sx={{ ...BoxStyles, ...containerSx }}>
@@ -93,30 +139,30 @@ const AppTable = <T extends object>({
         onRowModesModelChange={setRowModesModel}
         processRowUpdate={handlers.processRowUpdate}
         onProcessRowUpdateError={handleRowUpdateError}
+        onRowDoubleClick={handleRowDoubleClick}
         // Display options
         showCellVerticalBorder={showCellVerticalBorder}
         checkboxSelection={enableRowSelection}
-        // Pagination
-        paginationMode={serverPagination ? 'server' : 'client'}
-        paginationModel={paginationModel}
+        // Pagination Sorting and filtering
+        // Mode
+        paginationMode={paginationMode}
+        sortingMode={sortingMode}
+        filterMode={filterMode}
+        // Models
+        paginationModel={paginationMode === 'server' ? paginationModel : undefined}
+        filterModel={filterMode === 'server' ? filterModel : undefined}
+        sortModel={sortingMode === 'server' ? sortModel : undefined}
+        // Handlers
+        onSortModelChange={handleSortChange}
+        onFilterModelChange={handleFilterChange}
         onPaginationModelChange={handlePaginationChange}
+        // options
         pageSizeOptions={pageSizeOptions}
-        rowCount={serverPagination ? rows?.length : undefined}
-        // Sorting and filtering
-        sortingMode={allowSorting ? 'client' : undefined}
+        rowCount={paginationMode == 'server' ? totalRows : rows?.length}
         getRowId={getRowId || ((row: T) => (row as any).id)}
         // Toolbar
         slots={{
-          toolbar: () => (
-            <Toolbar
-              title={title}
-              showSearch={showSearch}
-              showColumnFilter={showColumnFilter}
-              showFilter={showFilter}
-              showDensitySelector={showDensitySelector}
-              showExport={showExport}
-            />
-          ),
+          toolbar: memoizedToolbar,
           filterPanel: CustomFilterPanel,
           columnsPanel: CustomColumnsPanel,
           exportIcon: SaveAlt
@@ -146,7 +192,7 @@ const AppTable = <T extends object>({
               operatorInputProps: {
                 variant: 'outlined',
                 size: 'small',
-                sx: { width: 120 }
+                sx: { width: 120, display: 'none' }
               }
             },
             sx: {
@@ -159,7 +205,14 @@ const AppTable = <T extends object>({
           }
         }}
         // Density selector
-        initialState={{ density: 'comfortable' }}
+        initialState={{
+          ...dataGridProps.initialState,
+          filter: {
+            ...dataGridProps.initialState?.filter,
+            quickFilterValues: []
+          },
+          density: 'comfortable'
+        }}
         // prevent enter key from triggering save while editing
         onCellKeyDown={(params, event) => {
           if (params.cellMode === 'edit' && event.key === 'Enter') {

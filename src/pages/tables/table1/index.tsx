@@ -50,10 +50,13 @@ const Tables = () => {
       onDeleteRow={handleDelete}
       getColumnConfig={getColumnConfig}
       handleRowUpdateError={handleRowUpdateError}
-      allowEditing
-      editMode="row"
       getRowId={(row) => row.id}
+      allowEditing
       enableRowSelection
+      editMode="row"
+      paginationMode="client"
+      sortingMode="client"
+      filterMode="client"
 
       // if you want to disable pass false to the following props
       // check all other props too

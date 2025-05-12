@@ -1,5 +1,14 @@
 import { rootAPI } from '@/libs/apiSlice';
-import { UserDetails, UserList, UserListQueryParams, UserRole } from './types';
+import {
+  UserDetails,
+  UserInput,
+  UserList,
+  UserListQueryParams,
+  UseRoleList,
+  UserRole,
+  UserRolesListQueryParams,
+  UserUpdateInput
+} from './types';
 
 export const userAPI = 'admin/user-app/users';
 
@@ -7,10 +16,22 @@ export const userAPISlice = rootAPI.injectEndpoints({
   endpoints: (builder) => ({
     //Get Users
     getUsers: builder.query<UserList, UserListQueryParams>({
-      query: ({ search, paginationDetail }) => {
-        const { page, pageSize } = paginationDetail!;
+      query: ({ search, paginationModel, sortModel, filterModel }) => {
+        // pagination
+        const { page, pageSize } = paginationModel!;
+
+        // ordering
+        const ordering = sortModel?.[0]?.field; // name of the field to sort by
+        const direction = sortModel?.[0]?.sort === 'asc' ? '-' : ''; // 'asc' or 'desc'
+        const orderingString = ordering ? `${direction}${ordering}` : ''; // complete ordering string
+
+        // filtering
+        const filterField = filterModel?.items?.[0]?.field; // field to filter by
+        const filterValue = filterModel?.items?.[0]?.value; // value of the filter
+        const filterString = filterField && filterValue ? `${filterField}=${filterValue}` : ''; // complete filter string
+
         return {
-          url: `${userAPI}?offset=${page * pageSize}&limit=${pageSize}&search=${search ?? ''}`,
+          url: `${userAPI}?offset=${page * pageSize}&limit=${pageSize}&search=${search ?? ''}&ordering=${orderingString}&${filterString}`,
           method: 'GET'
         };
       },
@@ -32,7 +53,7 @@ export const userAPISlice = rootAPI.injectEndpoints({
 
     // Create User
     createUser: builder.mutation({
-      query: (values) => {
+      query: (values: UserInput) => {
         const { roles, ...rest } = values;
         const body = new FormData();
         for (const [key, value] of Object.entries(rest)) {
@@ -57,7 +78,7 @@ export const userAPISlice = rootAPI.injectEndpoints({
 
     // Update User
     patchUser: builder.mutation({
-      query: ({ id, values }) => {
+      query: ({ id, values }: { id: number; values: UserUpdateInput }) => {
         const { roles, photo, ...rest } = values;
         const body = new FormData();
         for (const [key, value] of Object.entries(rest)) {
@@ -71,9 +92,6 @@ export const userAPISlice = rootAPI.injectEndpoints({
             body.append(`roles[${index}]`, roleId.toString());
           });
         }
-        if (typeof photo !== 'string' && photo !== null) {
-          body.append('photo', photo);
-        }
         return {
           url: `${userAPI}/${id}`,
           method: 'PATCH',
@@ -84,7 +102,7 @@ export const userAPISlice = rootAPI.injectEndpoints({
     }),
 
     // Get User Roles
-    getUserRoles: builder.query<UserRole[], UserListQueryParams>({
+    getUserRoles: builder.query<UseRoleList, UserRolesListQueryParams>({
       query: () => {
         return {
           url: `${userAPI}/roles`,
@@ -97,4 +115,11 @@ export const userAPISlice = rootAPI.injectEndpoints({
   })
 });
 
-export const { useGetUsersQuery, useRetrieveUserQuery, useCreateUserMutation, usePatchUserMutation, useGetUserRolesQuery } = userAPISlice;
+export const {
+  useGetUsersQuery,
+  useRetrieveUserQuery,
+  useLazyRetrieveUserQuery,
+  useCreateUserMutation,
+  usePatchUserMutation,
+  useGetUserRolesQuery
+} = userAPISlice;

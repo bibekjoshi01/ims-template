@@ -6,12 +6,13 @@ import defaultImage from '@/assets/images/users/avatar-1.png';
 interface ProfileUploaderProps {
   image: File | null;
   setImage: (image: File) => void;
+  sx?: object;
 }
 
 /**
  * A component for uploading and previewing a profile image.
  */
-export default function ProfileUploader({ image, setImage }: ProfileUploaderProps) {
+export default function ProfileUploader({ image, setImage, sx }: ProfileUploaderProps) {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [preview, setPreview] = useState<string | null>(() => (image ? URL.createObjectURL(image) : null));
 
@@ -33,7 +34,8 @@ export default function ProfileUploader({ image, setImage }: ProfileUploaderProp
         borderRadius: '50%',
         overflow: 'hidden',
         mb: 4,
-        boxShadow: 2
+        boxShadow: 2,
+        ...sx
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

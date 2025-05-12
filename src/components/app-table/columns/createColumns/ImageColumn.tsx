@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 // MUI IMPORTS
 import { Theme } from '@mui/material/styles';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridRowModesModel } from '@mui/x-data-grid';
 import { Box, IconButton } from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
@@ -14,8 +14,11 @@ import useFocus from '@/hooks/useFocus';
 export const createImageColumn = <T extends object>(theme: Theme, baseCol: GridColDef<T>): GridColDef<T> => {
   return {
     ...baseCol,
+    filterable: false,
+    sortable: false,
     renderCell: (params) => {
-      const value = params.value as string;
+      const value = params.value;
+      let imageUrl = value instanceof File || value instanceof Blob ? URL.createObjectURL(value) : value;
       return (
         <Box
           sx={{
@@ -27,39 +30,60 @@ export const createImageColumn = <T extends object>(theme: Theme, baseCol: GridC
           }}
         >
           <img
-            src={value || DefaultImage}
+            src={imageUrl || DefaultImage}
             alt="Product"
             style={{
-              maxWidth: '100%',
-              maxHeight: 40,
-              objectFit: 'contain',
+              width: 40,
+              height: 40,
+              objectFit: 'cover',
               borderRadius: theme.shape.borderRadius
             }}
           />
         </Box>
       );
     },
+
     renderEditCell: (params) => {
       const ImageCellEdit = () => {
         const inputRef = useFocus(params);
-        const [imagePreview, setImagePreview] = useState<string>(params.value || DefaultImage);
+        const oldUrlRef = useRef<string | null>(null);
+        const [imagePreview, setImagePreview] = useState<string>(() => {
+          const val = params.value;
+          if (val instanceof File || val instanceof Blob) {
+            const url = URL.createObjectURL(val);
+            oldUrlRef.current = url;
+            return url;
+          }
+          return typeof val === 'string' ? val : DefaultImage;
+        });
 
-        // Handle the image change
+        useEffect(() => {
+          return () => {
+            if (oldUrlRef.current) {
+              URL.revokeObjectURL(oldUrlRef.current);
+            }
+          };
+        }, []);
+
         const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
           const file = e.target.files?.[0];
           if (file) {
+            if (oldUrlRef.current) {
+              URL.revokeObjectURL(oldUrlRef.current);
+            }
             const imageUrl = URL.createObjectURL(file);
+            oldUrlRef.current = imageUrl;
+
             setImagePreview(imageUrl);
+
             params.api.setEditCellValue({
               id: params.id,
-              field: params.field,
-              value: imageUrl // Store file URL temporarily
+              value: file,
+              field: params.field
             });
           }
         };
 
-        // NOTE - I think For security reasons, you cant programmatically open file picker on enter key pressed
-        // FIXME - try it yourself and see if it works
         return (
           <Box
             sx={{

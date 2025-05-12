@@ -7,6 +7,7 @@ import storage from 'redux-persist/lib/storage';
 // project-imports
 import { rootAPI } from './apiSlice';
 import { rootReducer } from './reducers';
+import { snackbarListenerMiddleware } from '@/pages/common/redux/snackbarListenerMiddleware';
 
 const persistConfig = {
   key: 'root',
@@ -22,7 +23,7 @@ const combinedMiddleware = (
     serializableCheck: {
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
     }
-  }).concat(rootAPI.middleware);
+  }).concat(snackbarListenerMiddleware, rootAPI.middleware);
 };
 
 const persistedReducers = persistReducer(persistConfig, rootReducer);

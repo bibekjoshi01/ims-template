@@ -4,10 +4,12 @@ import { useState, useCallback } from 'react';
 /**
  * Hook to manage pagination state and changes of datagrid appTable.
  */
-export const usePagination = (pageSizeOptions: number[]) => {
+export const usePagination = () => {
+  const pageSizeOptions = [5, 10, 20];
+
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({
     page: 0,
-    pageSize: pageSizeOptions[1]
+    pageSize: pageSizeOptions[0]
   });
 
   const handlePaginationChange = useCallback((model: GridPaginationModel) => {

@@ -1,13 +1,20 @@
 import { PaginationParams } from '@/pages/common/redux/types';
+import { GridFilterModel, GridPaginationModel, GridSortModel } from '@mui/x-data-grid';
 
 export interface UserRole {
   id: number;
   name: string;
   codename: string;
-  isActive: boolean;
+  isActive?: boolean;
+}
+
+export interface UseRoleList {
+  count: number;
+  results: UserRole[];
 }
 
 export interface UserItem {
+  id: number;
   username: string;
   firstName: string;
   middleName: string;
@@ -27,16 +34,24 @@ export interface UserList {
 
 export interface UserInput {
   firstName: string;
-  username: string;
   middleName: string;
   lastName: string;
+  username: string;
   email: string;
   password: string;
-  confirmPassword: string;
-  photo: string | File | null;
-  phoneNo: string;
-  roles: UserRole[] | [];
-  isActive: boolean;
+  roles: number[];
+  phoneNo?: string;
+  isActive?: boolean;
+  photo?: File | null | undefined;
+}
+
+export interface UserUpdateInput {
+  firstName?: string;
+  lastName?: string;
+  roles?: number[];
+  phoneNo?: string;
+  isActive?: boolean;
+  photo?: File | null | undefined;
 }
 
 export interface UserDetails extends UserItem {
@@ -51,5 +66,13 @@ export interface UserSliceState {
 
 export interface UserListQueryParams {
   search: string;
-  paginationDetail?: PaginationParams;
+  paginationModel?: GridPaginationModel;
+  sortModel?: GridSortModel;
+  filterModel?: GridFilterModel;
+}
+
+export interface UserRolesListQueryParams {
+  search: string;
+  paginationModel?: GridPaginationModel;
+  sortModel?: GridSortModel;
 }

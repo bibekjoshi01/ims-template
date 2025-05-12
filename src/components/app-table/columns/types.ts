@@ -6,6 +6,19 @@ import { GridColDef, GridRowId } from '@mui/x-data-grid';
 export type BadgeColorMap = Record<string, { backgroundColor: string | undefined; color: string }>;
 
 /**
+ * Common handlers interface for column actions
+ */
+export interface ColumnHandlers<T> {
+  delete: (id: GridRowId) => Promise<void>;
+  copy: (id: GridRowId) => void;
+  editInline: (id: GridRowId) => void;
+  editForm: (id: GridRowId) => void;
+  save: (id: GridRowId) => void;
+  cancel: (id: GridRowId) => void;
+  processRowUpdate: (updatedRow: T) => Promise<T>;
+}
+
+/**
  * ColumnConfig defines the structure of a single column in the data grid.
  */
 export interface ColumnConfig<T extends object> {
@@ -14,27 +27,12 @@ export interface ColumnConfig<T extends object> {
   maxWidth?: number;
   type?: 'text' | 'number' | 'select' | 'actions' | 'progress' | 'image' | 'date' | 'link' | 'boolean';
   editable?: boolean;
+  filterable?: boolean;
   valueOptions?: string[];
   renderCell?: GridColDef<T>['renderCell'];
   colorMap?: BadgeColorMap; // only for 'select' type
   trueLabel?: string; // only for 'boolean' type
   falseLabel?: string; // only for 'boolean' type
-  handlers?: {
-    delete?: (id: GridRowId) => Promise<Boolean>;
-    copy?: (id: GridRowId) => void;
-    edit?: (id: GridRowId) => void;
-    save?: (id: GridRowId) => void;
-    cancel?: (id: GridRowId) => void;
-  };
-}
-
-/**
- * Common handlers interface for column actions
- */
-export interface ColumnHandlers {
-  delete: (id: GridRowId) => Promise<void>;
-  copy: (id: GridRowId) => void;
-  edit: (id: GridRowId) => void;
-  save: (id: GridRowId) => void;
-  cancel: (id: GridRowId) => void;
+  deletable?: boolean; // only for 'actions' type
+  handlers?: ColumnHandlers<T>;
 }

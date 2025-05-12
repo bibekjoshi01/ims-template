@@ -53,11 +53,23 @@ export const authSlice = createSlice({
       Cookies.remove('refresh', { path: '/' });
       Cookies.set('logout', 'true');
       // Reset the state to initialState
-      Object.assign(state, initialState);
+      return initialState;
+    },
+    checkAuthStatus: (state) => {
+      const accessToken = Cookies.get('access');
+      const logoutFlag = Cookies.get('logout');
+
+      if (!accessToken || logoutFlag === 'true') {
+        // No valid token, reset authentication state
+        return initialState;
+      }
+
+      // Keep the current state if token exists
+      return state;
     }
   }
 });
 
-export const { loginSuccess, logoutSuccess } = authSlice.actions;
+export const { loginSuccess, logoutSuccess, checkAuthStatus } = authSlice.actions;
 
 export default authSlice.reducer;
