@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 // MUI IMPORTS
+import { Search as SearchIcon } from '@mui/icons-material';
+import { Box, Button, GlobalStyles, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import {
   GridColumnsPanel,
   GridFilterPanel,
@@ -12,14 +14,12 @@ import {
   GridToolbarFilterButton,
   useGridApiContext
 } from '@mui/x-data-grid';
-import { Box, Button, GlobalStyles, IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
 import { GridFilterPanelProps } from '@mui/x-data-grid/components/panel/filterPanel/GridFilterPanel';
 
 // PROJECT IMPORTS
+import AppDialog from '@/components/app-dialog';
 import CustomInput from '@/components/CustomInput';
 import { debounce } from '@/utils/debounce';
-import AppDialog from '@/components/app-dialog';
 
 // ==============================
 // Custom Search Bar
@@ -98,7 +98,8 @@ const Toolbar = ({
   showFilter,
   showDensitySelector,
   showExport,
-  createNewForm
+  createNewForm,
+  createButtonTitle
 }: {
   title?: string;
   showSearch: boolean;
@@ -109,6 +110,7 @@ const Toolbar = ({
   showDensitySelector: boolean;
   showExport: boolean;
   createNewForm?: (onClose: () => void) => React.ReactNode;
+  createButtonTitle?: string;
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [searchText, setSearchText] = useState<string>('');
@@ -161,13 +163,13 @@ const Toolbar = ({
           justifyContent: 'space-between',
           flexDirection: { xs: 'column', sm: 'row' },
           alignItems: { xs: 'flex-start', sm: 'center' },
-          p: 1
+          px: 1
         }}
       >
         {/* Title */}
         {title && (
           <Typography
-            variant="h6"
+            variant="h4"
             sx={{
               displayPrint: 'none',
               px: 2,
@@ -196,7 +198,7 @@ const Toolbar = ({
           {createNewForm && (
             <>
               <Button onClick={handleOpenForm} variant="contained">
-                Create User
+                {createButtonTitle ?? 'Create New'}
               </Button>
               <AppDialog open={showForm} onClose={handleCloseForm} content={createNewForm(handleCloseForm)} fullWidth maxWidth="lg" />
             </>

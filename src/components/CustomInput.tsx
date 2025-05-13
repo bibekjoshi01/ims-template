@@ -10,14 +10,15 @@ import {
   FormHelperText,
   IconButton,
   InputAdornment,
+  ListSubheader,
   MenuItem,
   OutlinedInput,
   Select,
   Switch,
   Typography
 } from '@mui/material';
-import { padding, useTheme } from '@mui/system';
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { useTheme } from '@mui/system';
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -33,6 +34,7 @@ export interface SelectOption {
   value: any;
   src?: string;
   sx?: any;
+  groupName?: string;
 }
 
 export interface CustomInputProps {
@@ -163,7 +165,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
     const theme = useTheme();
 
     // State for image preview
-    const [imagePreview, setImagePreview] = useState<string | null>(value || null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
 
     // Handle image change
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -277,6 +279,8 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                 );
               }}
               sx={{
+                maxHeight: 300,
+                overflowY: 'auto',
                 '& .MuiSelect-select': {
                   display: 'flex',
                   alignItems: 'center',
@@ -286,37 +290,58 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               }}
               {...inputProps}
             >
-              {options?.map((option: SelectOption) => (
-                <MenuItem key={option.value} value={option.value} sx={option?.sx}>
-                  <Box
-                    sx={{
-                      width: '100%',
-                      ...(option?.sx
-                        ? {
-                            backgroundColor: option.sx['& .MuiBox-root']?.backgroundColor,
-                            color: option.sx['& .MuiBox-root']?.color
-                          }
-                        : {}),
-                      // @ts-ignore
-                      fontSize: theme.typography.body2.fontSize,
-                      maxWidth: 'fit-content',
-                      padding: '1px 10px',
-                      borderRadius: '4px'
-                    }}
-                  >
-                    {option?.src && (
-                      <img
-                        loading="lazy"
-                        src={option.src}
-                        srcSet={`${option.src} 2x`}
-                        alt="flag"
-                        style={{ height: '14px', aspectRatio: 1, objectFit: 'fill', marginRight: '4px' }}
-                      />
-                    )}
-                    {option.label}
-                  </Box>
-                </MenuItem>
-              ))}
+              {(() => {
+                const groupedOptions = new Map<string | undefined, SelectOption[]>();
+
+                options?.forEach((option: SelectOption) => {
+                  const group = option.groupName || '';
+                  if (!groupedOptions.has(group)) {
+                    groupedOptions.set(group, []);
+                  }
+                  groupedOptions.get(group)?.push(option);
+                });
+
+                const items: React.ReactNode[] = [];
+
+                groupedOptions.forEach((groupItems, groupName) => {
+                  if (groupName) {
+                    items.push(<ListSubheader key={`subheader-${groupName}`}>{groupName}</ListSubheader>);
+                  }
+                  groupItems.forEach((option) => {
+                    items.push(
+                      <MenuItem key={option.value} value={option.value} sx={option?.sx}>
+                        <Box
+                          sx={{
+                            width: '100%',
+                            ...(option?.sx
+                              ? {
+                                  backgroundColor: option.sx['& .MuiBox-root']?.backgroundColor,
+                                  color: option.sx['& .MuiBox-root']?.color
+                                }
+                              : {}),
+                            maxWidth: 'fit-content',
+                            padding: '1px 10px',
+                            borderRadius: '4px'
+                          }}
+                        >
+                          {option?.src && (
+                            <img
+                              loading="lazy"
+                              src={option.src}
+                              srcSet={`${option.src} 2x`}
+                              alt="flag"
+                              style={{ height: '14px', aspectRatio: 1, objectFit: 'fill', marginRight: '4px' }}
+                            />
+                          )}
+                          {option.label}
+                        </Box>
+                      </MenuItem>
+                    );
+                  });
+                });
+
+                return items;
+              })()}
             </Select>
             <ErrorForInput error={error} helperText={helperText} />
             {children}
@@ -394,11 +419,11 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                 }}
                 onClick={() => internalRef.current?.click()}
               >
-                {imagePreview ? (
+                {imagePreview || value ? (
                   <>
                     {/* Image Preview */}
                     <img
-                      src={imagePreview}
+                      src={imagePreview || value}
                       alt="Preview"
                       style={{
                         width: '100%',

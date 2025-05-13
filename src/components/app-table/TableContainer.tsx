@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material/styles';
-import { ColumnConfig } from './columns';
-import AppTable from './AppTable';
 import { GridRowId } from '@mui/x-data-grid';
+import AppTable from './AppTable';
+import { ColumnConfig } from './columns';
 
 /**
  * Props for the TableContainer component use this for tables that needs server-side features
@@ -44,6 +44,12 @@ export interface TableContainerProps<TData extends object> {
    * Create new form component to be displayed when creating a new row
    */
   createNewForm?: (onClose: () => void) => React.ReactNode;
+
+  /**
+   * Title for the create button
+   * @default 'Create New'
+   */
+  createButtonTitle?: string;
 
   /**
    * Whether to enable editing features
@@ -110,6 +116,7 @@ function TableContainer<TData extends object>({
   useTableHook,
   getColumnConfig,
   createNewForm,
+  createButtonTitle,
   allowEditing = false,
   showFilter = false,
   showSearch = true,
@@ -167,6 +174,7 @@ function TableContainer<TData extends object>({
       showCellVerticalBorder={showCellVerticalBorder}
       enableRowSelection={enableRowSelection}
       createNewForm={createNewForm}
+      createButtonTitle={createButtonTitle}
       {...otherProps}
     />
   );

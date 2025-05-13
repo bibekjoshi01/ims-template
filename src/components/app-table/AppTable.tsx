@@ -77,6 +77,7 @@ const AppTable = <T extends object>({
 
   // create new user form
   createNewForm,
+  createButtonTitle,
 
   // container styles
   containerSx,
@@ -114,6 +115,7 @@ const AppTable = <T extends object>({
         showDensitySelector={showDensitySelector}
         showExport={showExport}
         createNewForm={createNewForm}
+        createButtonTitle={createButtonTitle}
       />
     ),
     [title, showSearch, filterMode, handleSearchChange, showColumnFilter, showFilter, showDensitySelector, showExport, createNewForm]

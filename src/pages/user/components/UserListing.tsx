@@ -1,8 +1,11 @@
+import { lazy } from 'react';
+
 import TableContainer from '@/components/app-table/TableContainer';
 import { useUserTable } from '../hooks/useUserTable';
-import { TableData, getColumnConfig } from './tableData';
-import UserForm from './createForm';
-import UserEditModal from './modal/updateModal';
+import { TableData, getColumnConfig } from './userListingTable.config';
+
+const UserEditModal = lazy(() => import('./update-form'));
+const UserCreateForm = lazy(() => import('./create-form'));
 
 const UserListing = () => {
   const tableHooks = useUserTable();
@@ -13,7 +16,8 @@ const UserListing = () => {
         title="Users"
         useTableHook={tableHooks}
         getColumnConfig={getColumnConfig}
-        createNewForm={(onClose) => <UserForm onClose={onClose} />}
+        createNewForm={(onClose) => <UserCreateForm onClose={onClose} />}
+        createButtonTitle="Add User"
         allowEditing
         showFilter
         showSearch
