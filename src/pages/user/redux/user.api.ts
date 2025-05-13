@@ -1,5 +1,6 @@
 import { rootAPI } from '@/libs/apiSlice';
 import { UserDetails, UserInput, UserList, UserListQueryParams, UseRoleList, UserRolesListQueryParams, UserUpdateInput } from './types';
+import fetchFileFromUrl from '@/utils/createFile';
 
 export const userAPI = 'admin/user-app/users';
 
@@ -45,7 +46,7 @@ export const userAPISlice = rootAPI.injectEndpoints({
     // Create User
     createUser: builder.mutation({
       query: (values: UserInput) => {
-        const { roles, ...rest } = values;
+        const { roles, photo, ...rest } = values;
         const body = new FormData();
         for (const [key, value] of Object.entries(rest)) {
           if (value !== undefined && value !== null) {
@@ -57,6 +58,9 @@ export const userAPISlice = rootAPI.injectEndpoints({
           roles.forEach((roleId, index) => {
             body.append(`roles[${index}]`, roleId.toString());
           });
+        }
+        if (photo instanceof File) {
+          body.append('photo', photo);
         }
         return {
           url: `${userAPI}`,
@@ -72,17 +76,24 @@ export const userAPISlice = rootAPI.injectEndpoints({
       query: ({ id, values }: { id: number; values: UserUpdateInput }) => {
         const { roles, photo, ...rest } = values;
         const body = new FormData();
+
         for (const [key, value] of Object.entries(rest)) {
           if (value !== undefined && value !== null) {
             //@ts-ignore
             body.append(key, value);
           }
         }
+
         if (Array.isArray(roles)) {
           roles.forEach((roleId, index) => {
             body.append(`roles[${index}]`, roleId.toString());
           });
         }
+
+        if (photo instanceof File) {
+          body.append('photo', photo);
+        }
+
         return {
           url: `${userAPI}/${id}`,
           method: 'PATCH',

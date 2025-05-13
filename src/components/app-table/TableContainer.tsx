@@ -46,6 +46,12 @@ export interface TableContainerProps<TData extends object> {
   createNewForm?: (onClose: () => void) => React.ReactNode;
 
   /**
+   * Title for the create button
+   * @default 'Create New'
+   */
+  createButtonTitle?: string;
+
+  /**
    * Whether to enable editing features
    * @default false
    */
@@ -110,6 +116,7 @@ function TableContainer<TData extends object>({
   useTableHook,
   getColumnConfig,
   createNewForm,
+  createButtonTitle,
   allowEditing = false,
   showFilter = false,
   showSearch = true,
@@ -167,6 +174,7 @@ function TableContainer<TData extends object>({
       showCellVerticalBorder={showCellVerticalBorder}
       enableRowSelection={enableRowSelection}
       createNewForm={createNewForm}
+      createButtonTitle={createButtonTitle}
       {...otherProps}
     />
   );

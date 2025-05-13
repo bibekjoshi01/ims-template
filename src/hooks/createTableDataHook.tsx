@@ -230,7 +230,6 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
      */
     const handleEditClick = useCallback(
       (id: number | string | GridRowId) => {
-        console.log('Edit button clicked for ID:', id);
         if (setId) {
           setId(id);
         } else {

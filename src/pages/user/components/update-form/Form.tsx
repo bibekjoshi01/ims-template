@@ -35,7 +35,6 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors },
     reset
   } = useForm<UserInfoUpdateFormDataType>({
@@ -46,7 +45,6 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
   // Reset form with user data when it's available
   useEffect(() => {
     if (userData) {
-      console.log('User Data:', userData);
       const userFormData = {
         id: userData.id,
         name: `${userData.firstName} ${userData.lastName}`,
@@ -65,7 +63,7 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
     try {
       const { id, name, phoneNo, roles, isActive, photo } = data;
       const { firstName, lastName } = splitName(name);
-
+      // const file = await fetchFileFromUrl(photo, name);
       const payload = {
         id,
         values: {
@@ -107,7 +105,7 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3} sx={{ my: 1 }}>
         <Grid item xs={12}>
-          <MainCard divider title={userData ? 'Update User' : 'Create New User'}>
+          <MainCard divider title={'Update User'}>
             <FormSection<UserInfoUpdateFormDataType> fields={formFields} control={control} errors={errors} />
           </MainCard>
         </Grid>
@@ -117,7 +115,7 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
             Cancel
           </Button>
           <Button variant="contained" type="submit">
-            {userData ? 'Update User' : 'Add User'}
+            Update User
           </Button>
         </Grid>
       </Grid>

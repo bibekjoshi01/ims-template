@@ -58,8 +58,6 @@ export const useTableHandlers = <T extends TableDataBase>(
       ...prev,
       [id]: { mode: GridRowModes.Edit }
     }));
-
-    console.log('handleEditClick called with', id);
   }, []);
 
   const handleEditForm = useCallback(
@@ -113,9 +111,6 @@ export const useTableHandlers = <T extends TableDataBase>(
     async (updatedRow: T) => {
       // Capture original row from current state
       let originalRow: T | undefined;
-
-      console.log('processRowUpdate called with', updatedRow);
-
       setRows((prev) => {
         // Capture original row from current state
         originalRow = prev.find((row) => row.id === updatedRow.id);
