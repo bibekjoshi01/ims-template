@@ -169,7 +169,7 @@ const Toolbar = ({
         {/* Title */}
         {title && (
           <Typography
-            variant="h6"
+            variant="h4"
             sx={{
               displayPrint: 'none',
               px: 2,
@@ -197,7 +197,7 @@ const Toolbar = ({
           {/* Create New User Button */}
           {createNewForm && (
             <>
-              <Button onClick={handleOpenForm} variant="contained">
+              <Button onClick={handleOpenForm} variant="contained" sx={{ mx: 1 }}>
                 {createButtonTitle ?? 'Create New'}
               </Button>
               <AppDialog open={showForm} onClose={handleCloseForm} content={createNewForm(handleCloseForm)} fullWidth maxWidth="lg" />

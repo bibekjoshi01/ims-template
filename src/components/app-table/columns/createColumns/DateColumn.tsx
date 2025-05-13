@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 
 // MUI IMPORTS
 import { GridColDef } from '@mui/x-data-grid';
@@ -13,7 +14,8 @@ export const createDateColumn = <T extends object>(config: ColumnConfig<T>, base
   ...baseCol,
   // Use valueGetter to convert and format the value before rendering
   valueGetter: (value) => {
-    return dayjs(value).format('YYYY-MM-DD');
+    dayjs.extend(LocalizedFormat);
+    return dayjs(value).format('ll');
   },
   renderEditCell: (params) => {
     const DateCellEdit = () => {
