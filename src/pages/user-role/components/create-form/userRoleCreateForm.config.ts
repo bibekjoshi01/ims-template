@@ -27,8 +27,6 @@ export const userRoleCreateFormFields: FormField<UserRoleCreateFormDataType>[] =
     xs: 2,
     sm: 2,
     type: 'checkbox',
-    // trueLabel: 'Active',
-    // falseLabel: 'Inactive',
     required: false
   },
   { name: 'permissions', label: 'Permissions', xs: 6, sm: 7, type: 'select', options: [], multipleChips: true, required: false }

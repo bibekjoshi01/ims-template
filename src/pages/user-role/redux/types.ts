@@ -1,4 +1,3 @@
-import { PaginationParams } from '@/pages/common/redux/types';
 import { GridFilterModel, GridPaginationModel, GridSortModel } from '@mui/x-data-grid';
 import { Dispatch, SetStateAction } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
@@ -15,6 +14,7 @@ export interface UserRole {
   name: string;
   codename: string;
   isActive: boolean;
+  createdAt?: string;
   permissions?: Permission[] | [];
   mainModules?: Permission | null;
   subModules?: Permission | null;

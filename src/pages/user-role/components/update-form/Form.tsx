@@ -10,12 +10,12 @@ import MainCard from '@/components/MainCard';
 // Utilities & API
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
-import { useGetUserRoleMainModulesQuery, useGetUserRoleUserPermissionsQuery, usePatchUserRoleMutation } from '../../redux/user-role.api';
+import { useGetUserRoleUserPermissionsQuery, usePatchUserRoleMutation } from '../../redux/user-role.api';
 
 // Form Schema, Defaults, Types
 import { SelectOption } from '@/components/CustomInput';
 import { UserPermissionItem } from '../../redux/types';
-import { defaultValues, userRoleUpdateFormFields, UserRoleUpdateFormDataType, userRoleUpdateFormSchema } from './userRoleUpdateForm.config';
+import { defaultValues, UserRoleUpdateFormDataType, userRoleUpdateFormFields, userRoleUpdateFormSchema } from './userRoleUpdateForm.config';
 
 interface UserRoleUpdateFormProps {
   userRoleData?: any;
@@ -99,7 +99,7 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
             Cancel
           </Button>
           <Button variant="contained" type="submit">
-            Update User Role
+            Update
           </Button>
         </Grid>
       </Grid>
