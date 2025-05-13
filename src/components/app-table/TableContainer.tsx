@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material/styles';
-import { ColumnConfig } from './columns';
-import AppTable from './AppTable';
 import { GridRowId } from '@mui/x-data-grid';
+import AppTable from './AppTable';
+import { ColumnConfig } from './columns';
 
 /**
  * Props for the TableContainer component use this for tables that needs server-side features

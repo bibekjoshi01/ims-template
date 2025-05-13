@@ -15,7 +15,7 @@ import { useCreateUserRoleMutation, useGetUserRoleUserPermissionsQuery } from '.
 // Form Schema, Defaults, Types
 import { SelectOption } from '@/components/CustomInput';
 import { UserPermissionItem } from '../../redux/types';
-import { defaultValues, userRoleCreateFormFields, UserRoleCreateFormDataType, userRoleCreateFormSchema } from './userRoleCreateForm.config';
+import { defaultValues, UserRoleCreateFormDataType, userRoleCreateFormFields, userRoleCreateFormSchema } from './userRoleCreateForm.config';
 
 interface UserRoleCreateFormProps {
   onClose?: () => void;
@@ -67,7 +67,7 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3} sx={{ my: 1 }}>
         <Grid item xs={12}>
-          <MainCard divider title="Create New User Role">
+          <MainCard divider title="Add New User Role">
             <FormSection<UserRoleCreateFormDataType> fields={formFields} control={control} errors={errors} />
           </MainCard>
         </Grid>
@@ -77,7 +77,7 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
             Cancel
           </Button>
           <Button variant="contained" type="submit">
-            Add User Role
+            Add
           </Button>
         </Grid>
       </Grid>

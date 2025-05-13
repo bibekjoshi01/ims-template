@@ -17,7 +17,7 @@ const UserListing = () => {
         useTableHook={tableHooks}
         getColumnConfig={getColumnConfig}
         createNewForm={(onClose) => <UserCreateForm onClose={onClose} />}
-        createButtonTitle="Create User"
+        createButtonTitle="Add User"
         allowEditing
         showFilter
         showSearch

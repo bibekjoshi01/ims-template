@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 // MUI IMPORTS
+import { Search as SearchIcon } from '@mui/icons-material';
+import { Box, Button, GlobalStyles, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import {
   GridColumnsPanel,
   GridFilterPanel,
@@ -12,14 +14,12 @@ import {
   GridToolbarFilterButton,
   useGridApiContext
 } from '@mui/x-data-grid';
-import { Box, Button, GlobalStyles, IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
 import { GridFilterPanelProps } from '@mui/x-data-grid/components/panel/filterPanel/GridFilterPanel';
 
 // PROJECT IMPORTS
+import AppDialog from '@/components/app-dialog';
 import CustomInput from '@/components/CustomInput';
 import { debounce } from '@/utils/debounce';
-import AppDialog from '@/components/app-dialog';
 
 // ==============================
 // Custom Search Bar
@@ -163,7 +163,7 @@ const Toolbar = ({
           justifyContent: 'space-between',
           flexDirection: { xs: 'column', sm: 'row' },
           alignItems: { xs: 'flex-start', sm: 'center' },
-          p: 1
+          px: 1
         }}
       >
         {/* Title */}

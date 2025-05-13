@@ -1,7 +1,8 @@
 import { lazy } from 'react';
 
-import { useUserRoleTable } from '../hooks/useUserRoleTable';
+// PROJECT IMPORTS
 import TableContainer from '@/components/app-table/TableContainer';
+import { useUserRoleTable } from '../hooks/useUserRoleTable';
 import { TableData, getColumnConfig } from './userRoleListingTable.config';
 
 const UserRoleEditModal = lazy(() => import('./update-form'));
@@ -17,7 +18,7 @@ const UserRoleListing = () => {
         useTableHook={tableHooks}
         getColumnConfig={getColumnConfig}
         createNewForm={(onClose) => <UserRoleCreateForm onClose={onClose} />}
-        createButtonTitle="Create User Role"
+        createButtonTitle="Add User Role"
         allowEditing
         showFilter
         showSearch
