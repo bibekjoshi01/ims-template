@@ -106,7 +106,7 @@ axiosInstance.interceptors.response.use(
         if (!refreshToken) {
           showToast('Session expired. Please log in again.');
           Cookies.remove('access', { path: '/' });
-          window.location.href = '/login';
+          window.location.href = '/';
           return;
         }
 
@@ -133,7 +133,7 @@ axiosInstance.interceptors.response.use(
           } catch (refreshError) {
             showToast('Session expired. Please log in again.');
             Cookies.remove('access', { path: '/' });
-            window.location.href = '/login';
+            window.location.href = '/';
             isTokenRefreshInProgress = false;
             throw refreshError;
           }
@@ -149,7 +149,7 @@ axiosInstance.interceptors.response.use(
       } else {
         showToast('Session expired. Logging you out.');
         Cookies.remove('access', { path: '/' });
-        window.location.href = '/login';
+        window.location.href = '/';
       }
     }
     // Handle other error statuses

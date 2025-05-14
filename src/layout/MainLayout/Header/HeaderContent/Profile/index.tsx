@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 
 // material-ui
 import Box from '@mui/material/Box';
-import ButtonBase from '@mui/material/ButtonBase';
 import CardContent from '@mui/material/CardContent';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grid from '@mui/material/Grid';
@@ -90,7 +89,7 @@ export default function Profile() {
       const response = await logout({ refresh: refreshToken }).unwrap();
       dispatch(logoutSuccess());
       enqueueSnackbar(response?.message, { variant: 'success' });
-      navigate('/login');
+      navigate('/');
     } catch (error: any) {
       if (error.status === 400) {
         enqueueSnackbar(error?.data?.refresh[0] || 'Invalid request. Please try again.', { variant: 'error' });

@@ -22,7 +22,7 @@ const ForgotPassword = () => {
           </Typography>
 
           {/* Button */}
-          <Button disableElevation fullWidth size="large" variant="contained" color="primary" onClick={() => navigate('/login')}>
+          <Button disableElevation fullWidth size="large" variant="contained" color="primary" onClick={() => navigate('/')}>
             Sign In
           </Button>
         </Grid>

@@ -19,7 +19,7 @@ const PublicRoutes = () => (
   <>
     <Routes>
       <Route path="/" element={<MinimalLayout />}>
-        <Route path="login" element={<AuthLogin />} />
+        <Route path="" element={<AuthLogin />} />
         <Route path="forget-password" element={<ForgetPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
         <Route path="reset-password-success" element={<ResetPasswordSuccess />} />
