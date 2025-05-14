@@ -1,7 +1,7 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import {
   Box,
@@ -18,11 +18,11 @@ import {
   Typography
 } from '@mui/material';
 import { useTheme } from '@mui/system';
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 
 /* ------------------------------------------------------------------
    Types
@@ -128,7 +128,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
       handleToggleVisibility,
       defaultImage,
       imageSize = 100,
-      required = true,
+      required = false,
       trueLabel,
       falseLabel,
       multipleChips = false,

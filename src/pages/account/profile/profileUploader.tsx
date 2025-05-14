@@ -1,7 +1,7 @@
+import defaultImage from '@/assets/images/users/avatar-1.png';
+import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
 import { useState } from 'react';
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import defaultImage from '@/assets/images/users/avatar-1.png';
 
 interface ProfileUploaderProps {
   image: File | null;
