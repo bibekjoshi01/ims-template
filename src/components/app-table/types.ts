@@ -61,6 +61,14 @@ export interface AppTableProps<T extends object> {
   handleEditClick: ((id: number | string | GridRowId) => void) | undefined;
 
   /**
+   * Function to handle row view details button click.
+   * Default is undefined.
+   *
+   * @param id - The ID of the row to view details
+   */
+  onViewDetailsClick?: (id: GridRowId) => Promise<void> | undefined;
+
+  /**
    * Indicates if the table is in a loading state.
    * When true, displays a skeleton loader.
    * Default is false.

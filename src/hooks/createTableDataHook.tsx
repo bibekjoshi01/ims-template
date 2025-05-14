@@ -63,6 +63,11 @@ export interface CreateTableHookOptions<TData, TApiResponse, TUpdateInput = Part
    * Function to set the edit state
    */
   setEdit?: (value: boolean) => void;
+
+  /**
+   * Function to set the ID of the row being viewed
+   */
+  setViewId?: (id: number | GridRowId | string) => void;
 }
 
 /**
@@ -86,6 +91,7 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
     transformTableDataToUpdateInput,
     setId,
     setEdit,
+    setViewId,
     defaultPageSizeOptions = [3, 5, 10, 25, 50, 100],
     defaultPageSize = 5
   } = options;
@@ -256,6 +262,14 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
       [dispatch]
     );
 
+    const handleviewDetailsClick = useCallback(async (id: number | string | GridRowId) => {
+      if (setViewId) {
+        setViewId(id);
+      } else {
+        console.warn('setViewId function is not provided');
+      }
+    }, []);
+
     return {
       // Data
       rows,
@@ -272,6 +286,7 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
       handleSave,
       handleDelete,
       handleEditClick,
+      handleviewDetailsClick,
       handleRowUpdateError,
       handlePaginationChange,
       handleSortChange,

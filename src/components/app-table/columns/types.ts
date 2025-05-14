@@ -10,7 +10,7 @@ export type BadgeColorMap = Record<string, { backgroundColor: string | undefined
  */
 export interface ColumnHandlers<T> {
   delete: (id: GridRowId) => Promise<void>;
-  copy: (id: GridRowId) => void;
+  viewDetails: (id: GridRowId) => void;
   editInline: (id: GridRowId) => void;
   editForm: (id: GridRowId) => void;
   save: (id: GridRowId) => void;

@@ -47,6 +47,8 @@ export default function AppDialog({
   // Additional props
   transitionDirection = 'up'
 }: AppDialogProps) {
+  if (!open) return null;
+
   // Custom transition component based on the direction prop
   const CustomTransition = React.useCallback(
     React.forwardRef(function CustomTransition(

@@ -26,6 +26,7 @@ const AppTable = <T extends object>({
   onSaveRow,
   onDeleteRow,
   handleEditClick,
+  onViewDetailsClick,
 
   // loading state
   loading = false,
@@ -91,6 +92,7 @@ const AppTable = <T extends object>({
     initialRows,
     onSaveRow,
     onDeleteRow,
+    onViewDetailsClick,
     handleEditClick
   );
 

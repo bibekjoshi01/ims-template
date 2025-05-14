@@ -4,7 +4,7 @@ import * as z from 'zod';
 // NOTE - Define the schema for the form.
 export const userInfoFormSchema = z
   .object({
-    username: z.string().min(1, 'Username is required'),
+    username: z.string().optional(),
     name: z.string().min(1, 'Full Name is required'),
     phoneNo: z.string().min(10, 'Phone No. must be at least 10 characters').optional(),
     email: z.string().email('Invalid email address'),
@@ -55,8 +55,8 @@ export const defaultValues: UserInfoFormDataType = {
 
 // NOTE - Define the form fields
 export const userInfoFields: FormField<UserInfoFormDataType>[] = [
-  { name: 'username', label: 'Username', xs: 6, sm: 3, type: 'text' },
-  { name: 'name', label: 'Name', xs: 6, sm: 3, type: 'text' },
+  { name: 'username', label: 'Username', xs: 6, sm: 3, type: 'text', required: false },
+  { name: 'name', label: 'Full Name', xs: 6, sm: 3, type: 'text' },
   { name: 'phoneNo', label: 'Phone No', xs: 6, sm: 3, type: 'text', required: false },
   { name: 'email', label: 'Email', xs: 6, sm: 3, type: 'email' },
   { name: 'password', label: 'Password', xs: 6, sm: 3, type: 'password' },
@@ -83,3 +83,15 @@ export const ReqObj = [
   { text: 'At least 1 number (0-9)', test: (pw: string) => /[0-9]/.test(pw) },
   { text: 'At least 1 special character', test: (pw: string) => /[!#@$%^&*)(+=._-]/.test(pw) }
 ];
+
+export const uniqueFieldNames = ['username', 'email', 'phoneNo'] as const;
+
+// when user is typing in unique fiels i want to call an api with currently typed value
+// if i got data.count > 0 then i will show error message in respective field
+export const uniqueFieldErrorMessages = {
+  username: 'Username already exists',
+  email: 'Email already exists',
+  phoneNo: 'Phone No. already exists'
+} as const;
+
+export type UniqueFieldName = (typeof uniqueFieldNames)[number];

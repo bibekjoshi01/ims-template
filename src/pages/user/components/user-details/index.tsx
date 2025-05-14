@@ -5,29 +5,29 @@ import { useDispatch, useSelector } from 'react-redux';
 import AppDialog from '@/components/app-dialog';
 import { useRetrieveUserQuery } from '../../redux/user.api';
 import { userState } from '../../redux/user.selector';
-import { clearUserData, setEdit } from '../../redux/user.slice';
-import UserUpdateForm from './Form';
+import { clearViewId } from '../../redux/user.slice';
+import UserDetails from './UserDetails';
 
-const UserEditModal = () => {
+const UserDetailsModal = () => {
   const dispatch = useDispatch();
-  const { edit, currentId } = useSelector(userState);
+  const { viewId } = useSelector(userState);
 
-  // Only fetch when we have a valid ID and are in edit mode
-  const { data: userData, isLoading } = useRetrieveUserQuery(currentId, { skip: !currentId || !edit });
+  // Only fetch when we have a valid ID of user
+  const { data: userData, isLoading } = useRetrieveUserQuery(viewId, { skip: !viewId });
 
-  // If the either of value is not set, we don't need to show the modal
-  if (!currentId || !edit) {
+  if (!viewId) {
     return null;
   }
 
   const handleClose = () => {
-    dispatch(setEdit(false));
-    dispatch(clearUserData());
+    dispatch(clearViewId());
   };
+
+  // If the viewId is not set, we don't need to show the modal
 
   return (
     <AppDialog
-      open={edit}
+      open={!!viewId}
       onClose={handleClose}
       fullWidth
       maxWidth="lg"
@@ -37,11 +37,11 @@ const UserEditModal = () => {
             <CircularProgress />
           </div>
         ) : (
-          <UserUpdateForm userData={userData} onClose={handleClose} />
+          <UserDetails userData={userData} onClose={handleClose} />
         )
       }
     />
   );
 };
 
-export default UserEditModal;
+export default UserDetailsModal;

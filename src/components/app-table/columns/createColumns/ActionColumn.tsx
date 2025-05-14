@@ -1,8 +1,9 @@
 // MUI IMPORTS
 import { Theme } from '@mui/material/styles';
 import { CircularProgress, Tooltip } from '@mui/material';
-import { BorderColorOutlined, CloseOutlined, DeleteOutlined, FileCopy, SendOutlined } from '@mui/icons-material';
+import { BorderColorOutlined, CloseOutlined, DeleteOutlined, SendOutlined } from '@mui/icons-material';
 import { GridActionsColDef, GridActionsCellItem, GridRowId, GridRowModesModel, GridColDef } from '@mui/x-data-grid';
+import ArticleIcon from '@mui/icons-material/Article';
 
 // TYPES
 import { ColumnConfig, ColumnHandlers } from '../types';
@@ -119,14 +120,14 @@ export const createActionsColumn = <T extends object>(
           />
         ),
         <GridActionsCellItem
-          key="copy"
+          key="viewDetails"
           showInMenu
           sx={{
-            ':hover': { backgroundColor: theme.palette.success.lighter }
+            ':hover': { backgroundColor: theme.palette.primary.lighter }
           }}
-          icon={<FileCopy color="success" sx={{ height: '20px' }} />}
-          label="Copy"
-          onClick={() => handlers?.copy?.(params.id)}
+          icon={<ArticleIcon color="primary" sx={{ height: '20px' }} />}
+          label="View Details"
+          onClick={() => handlers?.viewDetails?.(params.id)}
         />
       ].filter(Boolean) as JSX.Element[];
     }

@@ -68,7 +68,7 @@ export default function Checkbox(theme) {
       styleOverrides: {
         root: {
           borderRadius: 0,
-          color: palette.secondary[300],
+          color: palette.grey.light || palette.secondary.light,
           '&.size-small': {
             ...checkboxStyle('small')
           },
