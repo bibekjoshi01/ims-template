@@ -10,13 +10,15 @@ import Popper from '@mui/material/Popper';
 import { useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 
+// icons
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 // project import
 import Transitions from '@/components/@extended/Transitions';
-import Profile from './Profile';
+import Profile from './profile';
 import Search from './Search';
 
 // assets
-import MoreOutlined from '@ant-design/icons/MoreOutlined';
 
 // ==============================|| HEADER CONTENT - MOBILE ||============================== //
 
@@ -50,7 +52,7 @@ export default function MobileSection() {
 
   return (
     <>
-      <Box sx={{ flexShrink: 0, ml: 0.75 }}>
+      <Box sx={{ flexShrink: 0 }}>
         <IconButton
           sx={{
             bgcolor: open ? 'secondary.hover' : 'transparent'
@@ -62,7 +64,7 @@ export default function MobileSection() {
           onClick={handleToggle}
           color="secondary"
         >
-          <MoreOutlined />
+          <MoreVertIcon />
         </IconButton>
       </Box>
       <Popper

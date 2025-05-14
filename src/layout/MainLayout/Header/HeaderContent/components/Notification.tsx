@@ -69,7 +69,7 @@ export default function Notification() {
   };
 
   return (
-    <Box sx={{ flexShrink: 0 }}>
+    <Box sx={{ flexShrink: 0, ml: 0.5 }}>
       <IconButton
         sx={{
           bgcolor: open ? 'secondary.hover' : 'transparent',
@@ -77,6 +77,7 @@ export default function Notification() {
         }}
         aria-label="open profile"
         ref={anchorRef}
+        title="Notifications"
         aria-controls={open ? 'profile-grow' : undefined}
         aria-haspopup="true"
         onClick={handleToggle}

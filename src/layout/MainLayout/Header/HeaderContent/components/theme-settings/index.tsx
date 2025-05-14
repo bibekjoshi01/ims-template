@@ -1,15 +1,16 @@
 import { useState } from 'react';
 
 // Mui imports
-import { Drawer, IconButton, Box, useTheme, Typography } from '@mui/material';
+import { Box, Drawer, IconButton, Typography, useTheme } from '@mui/material';
 
-import { SettingsOutlined, FormatColorFillOutlined, StyleOutlined } from '@mui/icons-material';
+import { CloseOutlined, SettingOutlined } from '@ant-design/icons';
+import { FormatColorFillOutlined, StyleOutlined } from '@mui/icons-material';
 
 // Project imports
-import { TabItem } from '@/menu-items/types';
 import TABS from '@/components/CustomTab';
-import ThemesTab from './ThemesTab';
+import { TabItem } from '@/menu-items/types';
 import ColorsTab from './ColorsTab';
+import ThemesTab from './ThemesTab';
 
 const TabItems: TabItem[] = [
   {
@@ -40,17 +41,18 @@ export default function ThemeSettings() {
   return (
     <>
       {/* Settings Trigger Button */}
-      <IconButton
-        onClick={toggleDrawer(true)}
-        title="Theme Settings"
-        sx={{
-          bgcolor: openDrawer ? 'secondary.hover' : 'transparent',
-          mr: 0.25
-        }}
-      >
-        <SettingsOutlined sx={{ color: 'text.primary' }} />
-      </IconButton>
-
+      <Box sx={{ flexShrink: 0, ml: 0.5 }}>
+        <IconButton
+          onClick={toggleDrawer(true)}
+          title="Theme Settings"
+          sx={{
+            bgcolor: openDrawer ? 'secondary.hover' : 'transparent',
+            mr: 0.25
+          }}
+        >
+          <SettingOutlined />
+        </IconButton>
+      </Box>
       {/* Settings Drawer */}
       <Drawer
         anchor="right"
@@ -79,7 +81,7 @@ export default function ThemeSettings() {
             Theme Customization
           </Typography>
           <IconButton onClick={toggleDrawer(false)} size="small">
-            <SettingsOutlined fontSize="small" />
+            <CloseOutlined />
           </IconButton>
         </Box>
 

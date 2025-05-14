@@ -31,7 +31,7 @@ export default function MainLayout() {
     <Box sx={{ display: 'flex', width: '100%' }}>
       <Header />
       <Drawer />
-      <Box component="main" sx={{ width: 'calc(100% - 260px)', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
+      <Box component="mNain" sx={{ width: 'calc(100% - 260px)', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
         <Toolbar />
         <Box sx={{ maxWidth: '1400px', margin: '0 auto' }}>
           <Breadcrumbs navigation={navigation} title />

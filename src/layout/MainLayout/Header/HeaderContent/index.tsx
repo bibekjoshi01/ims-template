@@ -4,13 +4,13 @@ import { Theme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // project import
-import MobileSection from './MobileSection';
-import Notification from './Notification';
-import Profile from './Profile';
-import Search from './Search';
+import MobileSection from './components/MobileSection';
+import Notification from './components/Notification';
+import Profile from './components/profile';
+import Search from './components/Search';
 
-import FullScreenButton from './FullScreen';
-import ThemeSettings from './ThemeSettings';
+import FullScreenButton from './components/FullScreen';
+import ThemeSettings from './components/theme-settings';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 

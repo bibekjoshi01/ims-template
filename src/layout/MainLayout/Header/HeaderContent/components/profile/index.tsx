@@ -26,8 +26,6 @@ import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useLogoutMutation } from '@/pages/authentication/redux/auth.api';
 import { logoutSuccess } from '@/pages/authentication/redux/auth.slice';
 import { authState } from '@/pages/authentication/redux/selector';
-import ProfileTab from './ProfileTab';
-import SettingTab from './SettingTab';
 
 // assets
 import avatar1 from '@/assets/images/users/avatar-1.png';
@@ -37,6 +35,8 @@ import { PersonOutline, SettingsOutlined } from '@mui/icons-material';
 // tabs
 import TABS from '@/components/CustomTab';
 import { TabItem } from '@/menu-items/types';
+import ProfileTab from './ProfileTab';
+import SettingTab from './SettingTab';
 
 const TabItems: TabItem[] = [
   {
