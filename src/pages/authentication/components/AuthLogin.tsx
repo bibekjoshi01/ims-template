@@ -64,7 +64,13 @@ export default function AuthLogin() {
       // Change the login states
       dispatch(loginSuccess({ ...response }));
       // show success notification
-      enqueueSnackbar(response?.message, { variant: 'success' });
+      enqueueSnackbar(response?.message, {
+        variant: 'success',
+        anchorOrigin: {
+          vertical: 'top',
+          horizontal: 'center'
+        }
+      });
       // Redirect to homepage after successful login
       navigate('/');
     } catch (error) {
