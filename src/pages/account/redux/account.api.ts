@@ -1,8 +1,8 @@
 import { rootAPI } from '../../../libs/apiSlice';
 
-export const authAPI = 'admin/user-app/auth';
+export const accountAPI = 'admin/user-app/account';
 
-export const authAPISlice = rootAPI.injectEndpoints({
+export const accountAPISlice = rootAPI.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: ({ values }) => {
@@ -13,7 +13,7 @@ export const authAPISlice = rootAPI.injectEndpoints({
         };
 
         return {
-          url: `${authAPI}/login`,
+          url: `${accountAPI}/login`,
           method: 'POST',
           data: transformedValues
         };
@@ -22,7 +22,7 @@ export const authAPISlice = rootAPI.injectEndpoints({
     logout: builder.mutation({
       query: (values) => {
         return {
-          url: `${authAPI}/logout`,
+          url: `${accountAPI}/logout`,
           method: 'POST',
           data: values
         };
@@ -31,4 +31,4 @@ export const authAPISlice = rootAPI.injectEndpoints({
   })
 });
 
-export const { useLoginMutation, useLogoutMutation } = authAPISlice;
+export const { useLoginMutation, useLogoutMutation } = accountAPISlice;
