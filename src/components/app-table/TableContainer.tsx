@@ -24,6 +24,7 @@ export interface TableContainerProps<TData extends object> {
     handleSave: (updatedRow: TData) => Promise<void>;
     handleDelete?: (id: string | number) => Promise<void>;
     handleEditClick?: (id: number | string | GridRowId) => void;
+    handleviewDetailsClick?: (id: number | string | GridRowId) => Promise<void>;
     handleRowUpdateError: (error: any) => void;
     handlePaginationChange: (model: any) => void;
     handleSortChange: (model: any) => void;
@@ -135,6 +136,7 @@ function TableContainer<TData extends object>({
     handleSave,
     handleDelete,
     handleEditClick,
+    handleviewDetailsClick,
     handleRowUpdateError,
     handlePaginationChange,
     handleSortChange,
@@ -156,6 +158,7 @@ function TableContainer<TData extends object>({
       onSaveRow={handleSave}
       onDeleteRow={handleDelete}
       handleEditClick={handleEditClick}
+      onViewDetailsClick={handleviewDetailsClick}
       handleRowUpdateError={handleRowUpdateError}
       handlePaginationChange={handlePaginationChange}
       handleSortChange={handleSortChange}

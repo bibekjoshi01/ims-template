@@ -72,7 +72,7 @@ export default function FormSection<T extends Record<string, any>>({
       {children}
       <Grid container spacing={2}>
         {fields.map((field) => (
-          <Grid item xs={field.xs || 12} sm={field.sm || 12} key={field.name as string} sx={{ mt: 1 }}>
+          <Grid item xs={field.xs || 12} sm={field.sm || 12} key={field.name as string}>
             <Controller
               name={field.name as Path<T>}
               control={control}

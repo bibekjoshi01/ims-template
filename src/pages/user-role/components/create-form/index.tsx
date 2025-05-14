@@ -65,8 +65,8 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3} sx={{ my: 1 }}>
-        <Grid item xs={12}>
+      <Grid container spacing={3} sx={{ my: '1px' }}>
+        <Grid item xs={12} sx={{ py: '10px' }}>
           <MainCard divider title="Add New User Role">
             <FormSection<UserRoleCreateFormDataType> fields={formFields} control={control} errors={errors} />
           </MainCard>

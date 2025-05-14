@@ -87,7 +87,7 @@ export default function UserCreateForm({ onClose }: UserCreateFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3} sx={{ my: 1 }}>
+      <Grid container spacing={3}>
         <Grid item xs={12}>
           <MainCard divider title="Create New User">
             <FormSection<UserInfoFormDataType>

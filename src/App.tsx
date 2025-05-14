@@ -7,6 +7,7 @@ import ThemeCustomization from '@/themes';
 import ScrollTop from '@/components/ScrollTop';
 import StoreProvider from '@/libs/StoreProvider';
 import { ThemeProviderComponent } from './contexts/theme-context';
+import './globals.css';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
 

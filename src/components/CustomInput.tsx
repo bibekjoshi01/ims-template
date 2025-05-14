@@ -531,7 +531,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               checked={Boolean(value)}
               onChange={onChange}
               aria-describedby={errorId}
-              sx={{ ...inputStyle }}
+              sx={{ ...inputStyle, scale: 0.85 }}
               inputRef={setRef}
               {...inputProps}
             />

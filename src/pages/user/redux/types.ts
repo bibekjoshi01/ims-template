@@ -36,7 +36,7 @@ export interface UserInput {
   firstName: string;
   middleName: string;
   lastName: string;
-  username: string;
+  username?: string;
   email: string;
   password: string;
   roles: number[];
@@ -55,13 +55,19 @@ export interface UserUpdateInput {
 }
 
 export interface UserDetails extends UserItem {
+  isEmailVerified: boolean;
+  isPhoneVerified: boolean;
+  lastLogin: string;
+  createdByUsername: string;
+  createdBy: number;
   roles: { id: number; name: string }[];
-  userPermissions: UserRole[] | [];
+  permissions: number[];
 }
 
 export interface UserSliceState {
   edit: boolean;
   currentId: number | null;
+  viewId: number | null;
 }
 
 export interface UserListQueryParams {

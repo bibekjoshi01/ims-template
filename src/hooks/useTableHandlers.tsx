@@ -22,7 +22,7 @@ interface TableDataBase {
  *   savingRows: Record<GridRowId, boolean>,
  *   handlers: {
  *     delete: (id: GridRowId) => Promise<void>,
- *     copy: (id: GridRowId) => void,
+ *     viewDetails: (id: GridRowId) => void,
  *     editInline: (id: GridRowId) => void,
  *     editForm: (id: GridRowId) => void,
  *     save: (id: GridRowId) => void,
@@ -36,6 +36,7 @@ export const useTableHandlers = <T extends TableDataBase>(
   initialData: T[],
   onSave?: (updatedRow: T) => Promise<void> | undefined,
   onDelete?: (id: GridRowId) => Promise<void> | undefined,
+  onViewDetailsClick?: (id: GridRowId) => Promise<void> | undefined,
   handleEditClick?: (id: number | GridRowId | string) => void | undefined
 ) => {
   // ========================= State =========================
@@ -135,30 +136,23 @@ export const useTableHandlers = <T extends TableDataBase>(
     [onSave]
   );
 
-  const handleCopy = useCallback(
-    (id: GridRowId) =>
-      navigator.clipboard.writeText(
-        JSON.stringify(
-          rows.find((row) => row.id === id),
-          null,
-          2
-        )
-      ),
-    []
-  );
+  const handleViewDetails = useCallback(async (id: GridRowId) => {
+    console.log(`View details for rowId(${id})`);
+    await onViewDetailsClick?.(id);
+  }, []);
 
   // ========================= Return Values =========================
   const handlers = useMemo(
     () => ({
       delete: handleDelete,
-      copy: handleCopy,
+      viewDetails: handleViewDetails,
       editInline: handleEditInline,
       editForm: handleEditForm,
       save: handleSave,
       cancel: handleCancel,
       processRowUpdate
     }),
-    [handleDelete, handleCopy, handleEditClick, handleSave, handleCancel, processRowUpdate]
+    [handleDelete, handleViewDetails, handleEditClick, handleSave, handleCancel, processRowUpdate]
   );
 
   return {
