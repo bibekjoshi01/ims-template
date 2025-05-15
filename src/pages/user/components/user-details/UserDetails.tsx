@@ -54,41 +54,7 @@ interface InfoCardProps {
 
 // Component
 const UserDetails: React.FC<UserDetailsProps> = ({ userData, onClose }) => {
-  const [userPermissions, setUserPermissions] = useState<{ label: string; groupName: string }[]>([]);
-
-  const { data: permissionsData } = useGetUserRoleUserPermissionsQuery({
-    search: '',
-    paginationModel: { page: 0, pageSize: 100 },
-    sortModel: []
-  });
-
-  console.log('User Details:', userData);
-  console.log('Permissions Data:', permissionsData);
-
   const formatDate = (dateString?: string): string => (dateString ? dayjs(dateString).format('MMM D, YYYY h:mm A') : 'N/A');
-
-  useEffect(() => {
-    if (permissionsData?.count && userData?.permissions) {
-      interface PermissionMapItem {
-        label: string;
-        groupName: string;
-      }
-
-      const permissionsMap: Record<number, PermissionMapItem> = permissionsData.results.reduce(
-        (acc: Record<number, PermissionMapItem>, permission: UserPermissionItem) => {
-          acc[permission.id] = {
-            label: permission.name,
-            groupName: `${permission.permissionCategoryName} : ${permission.mainModuleName}`
-          };
-          return acc;
-        },
-        {} as Record<number, PermissionMapItem>
-      );
-
-      const mappedPermissions = userData.permissions.map((id) => permissionsMap[id]).filter(Boolean);
-      setUserPermissions(mappedPermissions);
-    }
-  }, [permissionsData, userData]);
 
   if (!userData) {
     return (
@@ -151,18 +117,18 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userData, onClose }) => {
       <Box sx={{ p: 3 }}>
         <Grid container spacing={3}>
           {/* Left Column - Basic Info */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12}>
             <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'medium' }}>
               Basic Information
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item xs={3}>
                 <InfoCard icon={<PersonOutline />} title="Username" value={userData.username || ''} />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={3}>
                 <InfoCard icon={<EmailOutlined />} title="Email" value={userData.email || ''} verified={userData.isEmailVerified} />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={3}>
                 <InfoCard
                   icon={<PhoneOutlined />}
                   title="Phone Number"
@@ -170,57 +136,10 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userData, onClose }) => {
                   verified={userData.isPhoneVerified}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={3}>
                 <InfoCard icon={<CalendarToday />} title="Last Login" value={formatDate(userData.lastLogin)} />
               </Grid>
             </Grid>
-          </Grid>
-
-          {/* Right Column - Roles & Permissions */}
-          <Grid item xs={12} md={6}>
-            <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'medium' }}>
-              Roles & Permissions
-            </Typography>
-
-            {/* Roles */}
-            <Card variant="outlined" sx={{ mb: 2 }}>
-              <CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                  <Shield sx={{ mr: 1, color: 'primary.main' }} />
-                  <Typography variant="subtitle2">Roles</Typography>
-                </Box>
-                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
-                  {userData.roles?.length > 0 ? (
-                    userData.roles.map((role, index) => <Chip key={index} label={role.name} size="small" sx={{ m: 0.5 }} />)
-                  ) : (
-                    <Typography variant="body2" color="text.secondary">
-                      No roles assigned
-                    </Typography>
-                  )}
-                </Stack>
-              </CardContent>
-            </Card>
-
-            {/* Permissions */}
-            <Card variant="outlined">
-              <CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                  <VpnKey sx={{ mr: 1, color: 'primary.main' }} />
-                  <Typography variant="subtitle2">Permissions</Typography>
-                </Box>
-                <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
-                  {userPermissions.length > 0 ? (
-                    userPermissions.map((permission, index) => (
-                      <Chip key={index} label={permission.label} title={permission.groupName} size="small" sx={{ m: 0.5 }} />
-                    ))
-                  ) : (
-                    <Typography variant="body2" color="text.secondary">
-                      No specific permissions assigned
-                    </Typography>
-                  )}
-                </Stack>
-              </CardContent>
-            </Card>
           </Grid>
         </Grid>
       </Box>
