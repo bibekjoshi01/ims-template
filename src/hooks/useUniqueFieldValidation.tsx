@@ -1,7 +1,7 @@
 import isEqual from 'fast-deep-equal';
-import { debounce } from '@/utils/debounce';
+import { debounce } from '@/utils/functions/debounce';
 import { useEffect, useRef, useCallback } from 'react';
-import { camelCaseToNormal } from '@/utils/formatString';
+import { camelCaseToNormal } from '@/utils/functions/formatString';
 
 interface UseUniqueFieldValidationProps<T> {
   fields: (keyof T)[];

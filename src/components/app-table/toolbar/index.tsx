@@ -19,7 +19,7 @@ import { GridFilterPanelProps } from '@mui/x-data-grid/components/panel/filterPa
 // PROJECT IMPORTS
 import AppDialog from '@/components/app-dialog';
 import CustomInput from '@/components/CustomInput';
-import { debounce } from '@/utils/debounce';
+import { debounce } from '@/utils/functions/debounce';
 
 // ==============================
 // Custom Search Bar

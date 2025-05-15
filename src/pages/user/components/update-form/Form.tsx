@@ -10,7 +10,7 @@ import MainCard from '@/components/MainCard';
 // Utilities & API
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
-import { splitName } from '@/utils/splitCombineName';
+import { splitName } from '@/utils/functions/splitCombineName';
 import { useGetUserRolesQuery, usePatchUserMutation } from '../../redux/user.api';
 
 // Form Schema, Defaults, Types

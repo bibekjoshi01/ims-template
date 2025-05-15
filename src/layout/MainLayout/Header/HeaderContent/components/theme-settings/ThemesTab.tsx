@@ -3,7 +3,7 @@ import { Box, Button, Grid, Tooltip, Typography } from '@mui/material';
 
 // Project Imports
 import { useThemeMode } from '@/contexts/theme-context';
-import { THEME_PRESETS } from '@/utils/constants';
+import { THEME_PRESETS } from '@/utils/constants/colors';
 import ThemeModeChanger from './ThemeModeChanger';
 
 // ==============================|| Themes TAB ||============================== //

@@ -1,6 +1,6 @@
 import { rootAPI } from '@/libs/apiSlice';
 import { UserDetails, UserInput, UserList, UserListQueryParams, UseRoleList, UserRolesListQueryParams, UserUpdateInput } from './types';
-import { getQueryParams } from '@/utils/queryBuilder';
+import { getQueryParams } from '@/utils/functions/queryBuilder';
 
 export const userAPI = 'admin/user-app/users';
 

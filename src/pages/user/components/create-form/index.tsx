@@ -10,7 +10,7 @@ import PasswordStrengthCapsules from '@/components/PasswordStrengthCapsules';
 
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
-import { splitName } from '@/utils/splitCombineName';
+import { splitName } from '@/utils/functions/splitCombineName';
 import { useCreateUserMutation, useGetUserRolesQuery, useLazyGetUsersQuery } from '../../redux/user.api';
 
 import { SelectOption } from '@/components/CustomInput';

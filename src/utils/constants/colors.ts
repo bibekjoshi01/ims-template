@@ -367,8 +367,3 @@ export const COLOR_SCHEMES = [
   { name: 'Amber', light: { main: '#FF5722' }, dark: { main: '#ff8a65' } },
   { name: 'Grey', light: { main: '#607D8B' }, dark: { main: '#90a4ae' } }
 ];
-
-export const defaultPaginationDetail = {
-  page: 0,
-  pageSize: 10
-};

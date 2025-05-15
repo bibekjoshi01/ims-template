@@ -4,7 +4,7 @@ import { PaletteMode } from '@mui/material';
 
 // Project Imports
 import { ColorValues, ColorVariants } from '@/contexts/theme-context/types';
-import { THEME_PRESETS } from '@/utils/constants';
+import { THEME_PRESETS } from '@/utils/constants/colors';
 
 // Function to generate color variants
 const createColorVariants = (colors: string[], mainColor: string): Partial<ColorVariants> => ({

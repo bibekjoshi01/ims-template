@@ -1,6 +1,6 @@
 import { rootAPI } from '@/libs/apiSlice';
 import { UserRoleList, UserRoleListQueryParams } from './types';
-import { getQueryParams } from '@/utils/queryBuilder';
+import { getQueryParams } from '@/utils/functions/queryBuilder';
 
 export const userRoleAPI = 'admin/user-app/roles';
 

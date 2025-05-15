@@ -3,7 +3,7 @@ import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 
 // project imports
-import { handleClientError } from '@/utils/handleError';
+import { handleClientError } from '@/utils/functions/handleError';
 import { changePasswordSchema, defaultValues } from '../change-passwod/changePasssword.config';
 import { useChangePasswordMutation } from '../redux/account.api';
 import { ChangePasswordFormDataType } from '../redux/types';

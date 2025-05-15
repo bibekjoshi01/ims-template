@@ -1,7 +1,7 @@
 import { useThemeMode } from '@/contexts/theme-context';
 import { ColorValues } from '@/contexts/theme-context/types';
-import { COLOR_SCHEMES } from '@/utils/constants';
-import { getFirstLetterCapital } from '@/utils/getFirstLetterCapital';
+import { COLOR_SCHEMES } from '@/utils/constants/colors';
+import { getFirstLetterCapital } from '@/utils/functions/getFirstLetterCapital';
 import { CheckOutlined, PaletteOutlined } from '@mui/icons-material';
 import { Box, FormControlLabel, Grid, List, ListItem, ListItemText, Popover, Switch, Tooltip, Typography, useTheme } from '@mui/material';
 import { useState } from 'react';
