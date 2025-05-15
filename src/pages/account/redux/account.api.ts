@@ -1,5 +1,5 @@
 import { rootAPI } from '../../../libs/apiSlice';
-import { UserProfile } from './types';
+import { ChangePasswordFormDataType, UserProfile } from './types';
 
 export const accountAPI = 'admin/user-app/account';
 
@@ -12,8 +12,24 @@ export const accountAPISlice = rootAPI.injectEndpoints({
           method: 'GET'
         };
       }
+    }),
+
+    changePassword: builder.mutation({
+      query: ({ values }: { values: ChangePasswordFormDataType }) => {
+        const { currentPassword, ...rest } = values;
+        const updatedValues = {
+          oldPassword: currentPassword,
+          ...rest
+        };
+
+        return {
+          url: `${accountAPI}/change-password`,
+          method: 'POST',
+          data: updatedValues
+        };
+      }
     })
   })
 });
 
-export const { useGetProfileQuery } = accountAPISlice;
+export const { useGetProfileQuery, useChangePasswordMutation } = accountAPISlice;

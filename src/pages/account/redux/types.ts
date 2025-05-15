@@ -15,3 +15,9 @@ export interface UserProfile {
   isPhoneVerified: boolean;
   roles: string[];
 }
+
+export interface ChangePasswordFormDataType {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}

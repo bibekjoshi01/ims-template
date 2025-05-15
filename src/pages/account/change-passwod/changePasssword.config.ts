@@ -1,9 +1,8 @@
-import { FormField } from '@/components/FormSection';
 import * as z from 'zod';
 
-/* --------------------------------- || Steps ||  --------------------------------- */
+import { FormField } from '@/components/FormSection';
+import { ChangePasswordFormDataType } from '../redux/types';
 
-// 1. Define Schema and Types
 export const changePasswordSchema = z
   .object({
     currentPassword: z.string().min(1, 'Current password is required'),
@@ -21,17 +20,12 @@ export const changePasswordSchema = z
     path: ['confirmPassword']
   });
 
-// 2. Generate a type from the schema
-export type ChangePasswordFormDataType = z.infer<typeof changePasswordSchema>;
-
-// 3. Define default Values for the Form using the generated type
 export const defaultValues: ChangePasswordFormDataType = {
   currentPassword: '',
   newPassword: '',
   confirmPassword: ''
 };
 
-// 4. Define the form fields
 export const passwordFields: FormField<ChangePasswordFormDataType>[] = [
   { name: 'currentPassword', label: 'Current Password', xs: 12, type: 'password' },
   { name: 'newPassword', label: 'New Password', xs: 12, type: 'password' },
