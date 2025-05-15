@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, GridRowParams, MuiEvent } from '@mui/x-data-grid';
 
 //  Project Imports
+import { Empty } from 'antd';
 import { useTableHandlers } from '@/hooks/useTableHandlers';
 import { useMemo } from 'react';
 import { createColumnDefs } from './columns';
@@ -169,6 +170,8 @@ const AppTable = <T extends object>({
           toolbar: memoizedToolbar,
           filterPanel: CustomFilterPanel,
           columnsPanel: CustomColumnsPanel,
+          noRowsOverlay: CustomNoRowsOverlay,
+          noResultsOverlay: CustomNoResultsOverlay,
           exportIcon: SaveAlt
         }}
         slotProps={{
@@ -241,3 +244,19 @@ const AppTable = <T extends object>({
 };
 
 export default AppTable;
+
+function CustomNoRowsOverlay() {
+  return (
+    <Box sx={{ scale: 0.8, py: 1 }}>
+      <Empty description="No data available." />
+    </Box>
+  );
+}
+
+function CustomNoResultsOverlay() {
+  return (
+    <Box sx={{ scale: 0.8, py: 1 }}>
+      <Empty description="No results available." />
+    </Box>
+  );
+}

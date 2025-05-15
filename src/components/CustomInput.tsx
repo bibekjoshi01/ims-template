@@ -212,7 +212,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
       endAdornment: (
         <InputAdornment position="end">
           <IconButton onClick={() => handleToggleVisibility?.(field)} onMouseDown={(e) => e.preventDefault()}>
-            {showPassword && showPassword[field] ? <Visibility /> : <VisibilityOff />}
+            {showPassword && showPassword[field] ? <Visibility sx={{ fontSize: 16 }} /> : <VisibilityOff sx={{ fontSize: 16 }} />}
           </IconButton>
         </InputAdornment>
       )

@@ -8,7 +8,7 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 // PROJECT IMPORTS
 import CustomInput from '@/components/CustomInput';
-import DefaultImage from '@/assets/images/website.png';
+import DefaultImage from '@/assets/images/users/avatar-1.png';
 import useFocus from '@/hooks/useFocus';
 
 export const createImageColumn = <T extends object>(theme: Theme, baseCol: GridColDef<T>): GridColDef<T> => {

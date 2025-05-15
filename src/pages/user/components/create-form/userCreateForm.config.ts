@@ -85,13 +85,3 @@ export const ReqObj = [
 ];
 
 export const uniqueFieldNames = ['username', 'email', 'phoneNo'] as const;
-
-// when user is typing in unique fiels i want to call an api with currently typed value
-// if i got data.count > 0 then i will show error message in respective field
-export const uniqueFieldErrorMessages = {
-  username: 'Username already exists',
-  email: 'Email already exists',
-  phoneNo: 'Phone No. already exists'
-} as const;
-
-export type UniqueFieldName = (typeof uniqueFieldNames)[number];
