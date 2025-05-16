@@ -1,9 +1,9 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'js-cookie';
-import { LoginState } from './types';
+import { AuthState, LoginState } from './types';
 
-const initialState: LoginState = {
+const initialState: AuthState = {
   fullName: '',
   email: '',
   phoneNo: '',
@@ -14,7 +14,8 @@ const initialState: LoginState = {
   userPermissions: [],
   isSuperuser: false,
   isAuthenticated: false,
-  underVerification: false
+  authVerificationEmailSent: false,
+  forgetPasswordEmailSent: false
 };
 
 export const authSlice = createSlice({
@@ -68,12 +69,15 @@ export const authSlice = createSlice({
       // Keep the current state if token exists
       return state;
     },
-    setUnderVerification: (state) => {
-      state.underVerification = !state.underVerification;
+    setAuthVerificationEmailSent: (state) => {
+      state.authVerificationEmailSent = !state.authVerificationEmailSent;
+    },
+    setForgetPasswordEmailSent: (state) => {
+      state.forgetPasswordEmailSent = !state.forgetPasswordEmailSent;
     }
   }
 });
 
-export const { loginSuccess, logoutSuccess, checkAuthStatus, setUnderVerification } = authSlice.actions;
+export const { loginSuccess, logoutSuccess, checkAuthStatus, setAuthVerificationEmailSent, setForgetPasswordEmailSent } = authSlice.actions;
 
 export default authSlice.reducer;

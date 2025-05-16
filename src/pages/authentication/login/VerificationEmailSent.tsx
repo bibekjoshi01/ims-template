@@ -2,10 +2,10 @@
 import { Button, Grid, Typography } from '@mui/material';
 
 import { useAppDispatch } from '@/libs/hooks';
-import { setUnderVerification } from '../redux/auth.slice';
-import AuthWrapper from './AuthWrapper';
+import AuthWrapper from '../components/AuthWrapper';
+import { setAuthVerificationEmailSent } from '../redux/auth.slice';
 
-const AuthVerification = () => {
+const AuthVerificationEmailSentSuccess = () => {
   const dispatch = useAppDispatch();
 
   return (
@@ -32,7 +32,7 @@ const AuthVerification = () => {
             size="large"
             variant="contained"
             color="primary"
-            onClick={() => dispatch(setUnderVerification())}
+            onClick={() => dispatch(setAuthVerificationEmailSent())}
           >
             Sign In
           </Button>
@@ -42,4 +42,4 @@ const AuthVerification = () => {
   );
 };
 
-export default AuthVerification;
+export default AuthVerificationEmailSentSuccess;

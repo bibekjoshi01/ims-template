@@ -1,3 +1,5 @@
+import React from 'react';
+
 // material-ui
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -5,19 +7,19 @@ import Typography from '@mui/material/Typography';
 
 // project import
 import { useAppSelector } from '@/libs/hooks';
-import AuthLogin from './components/AuthLogin';
-import AuthVerification from './components/AuthVerification';
-import AuthWrapper from './components/AuthWrapper';
-import { authState } from './redux/selector';
+import AuthWrapper from '../components/AuthWrapper';
+import { authState } from '../redux/selector';
+import AuthLogin from './AuthLogin';
+import AuthVerificationEmailSentSuccess from './VerificationEmailSent';
 
 // ================================|| LOGIN ||================================ //
 
 export default function Login() {
-  const { underVerification } = useAppSelector(authState);
+  const { authVerificationEmailSent } = useAppSelector(authState);
 
   return (
-    <>
-      {!underVerification ? (
+    <React.Fragment>
+      {!authVerificationEmailSent ? (
         <AuthWrapper>
           <Grid container spacing={3}>
             <Grid item xs={12}>
@@ -31,8 +33,8 @@ export default function Login() {
           </Grid>
         </AuthWrapper>
       ) : (
-        <AuthVerification />
+        <AuthVerificationEmailSentSuccess />
       )}
-    </>
+    </React.Fragment>
   );
 }

@@ -7,3 +7,5 @@ export type BackendError = {
   status: number;
   data: Record<string, string>;
 };
+
+export const resetPasswordTokenLength = 32;

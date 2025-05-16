@@ -1,13 +1,14 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 // project imports
 import { useAppDispatch } from '@/libs/hooks';
 import { handleClientError } from '@/utils/functions/handleError';
-import { useNavigate } from 'react-router-dom';
-import { defaultValues } from '../components/login.config';
+import { defaultValues, loginSchema } from '../login/login.config';
 import { useLoginMutation } from '../redux/auth.api';
-import { loginSuccess, setUnderVerification } from '../redux/auth.slice';
+import { loginSuccess, setAuthVerificationEmailSent } from '../redux/auth.slice';
 import { LoginFormDataType } from '../redux/types';
 
 export const useLogin = () => {
@@ -23,14 +24,17 @@ export const useLogin = () => {
     setError,
     formState: { errors },
     reset
-  } = useForm({ defaultValues });
+  } = useForm<LoginFormDataType>({
+    resolver: zodResolver(loginSchema),
+    defaultValues
+  });
 
   const onSubmit = async (values: LoginFormDataType) => {
     try {
       const response = await login({ values }).unwrap();
 
       if (response?.status === 'verify_email') {
-        dispatch(setUnderVerification());
+        dispatch(setAuthVerificationEmailSent());
         return;
       }
 
