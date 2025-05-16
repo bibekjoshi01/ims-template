@@ -40,7 +40,7 @@ export default function AuthLogin() {
             />
           </Grid>
           <Grid item xs={12} sx={{ mt: -1 }}>
-            <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
               <FormControlLabel
                 control={
                   <Checkbox

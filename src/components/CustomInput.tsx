@@ -88,7 +88,7 @@ export interface CustomInputProps {
 ------------------------------------------------------------------ */
 const LabelForInput = React.memo(({ name, label, required }: { name: string; label?: string; required?: boolean }) =>
   label ? (
-    <Typography variant="body1" sx={{ mb: 1 }}>
+    <Typography variant="body1" sx={{ mb: 1, color: 'rgb(89, 89, 89)' }}>
       <label htmlFor={name}>
         {label}
         {required && (

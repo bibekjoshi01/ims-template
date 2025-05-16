@@ -23,6 +23,7 @@ export type FormField<T> = {
   multipleChips?: boolean; // Whether the field allows multiple chip selections.
   falseLabel?: string; // Label for the false value of a checkbox.
   disabled?: boolean;
+  placeholder?: string;
 };
 
 interface FormSectionProps<T extends FieldValues> {
@@ -83,6 +84,7 @@ export default function FormSection<T extends Record<string, any>>({
                   name={field.name as string}
                   type={field.type}
                   label={field.label}
+                  placeholder={field?.placeholder}
                   options={field.options}
                   multiline={field.multiline}
                   rows={field.rows}
