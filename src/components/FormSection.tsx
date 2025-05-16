@@ -98,6 +98,7 @@ export default function FormSection<T extends Record<string, any>>({
                   multipleChips={field?.multipleChips}
                   sx={sx}
                   disabled={field?.disabled}
+                  placehol
                 >
                   {/* Render the specific component for specific field */}
                   {(childrenForInput && childrenForInput[field.name]) || null}

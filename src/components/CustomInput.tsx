@@ -78,6 +78,7 @@ export interface CustomInputProps {
   children?: React.ReactNode;
   /** Reference to the input element */
   inputRef?: React.Ref<any>;
+  placeholder?: string;
   /** Additional props (will be split between container and input) */
   [key: string]: any;
 }
@@ -133,6 +134,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
       falseLabel,
       multipleChips = false,
       children,
+      placeholder,
       inputRef: externalRef,
       ...rest
     },
@@ -556,6 +558,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               autoComplete="password"
               {...renderPasswordVisibility(name as keyof typeof showPassword)}
               error={error}
+              placeholder={placeholder}
               inputRef={setRef}
               sx={{ ...inputStyle }}
               {...inputProps}
@@ -607,6 +610,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               rows={rows}
               error={error}
               aria-describedby={errorId}
+              placeholder={placeholder}
               inputRef={setRef}
               sx={{ ...inputStyle }}
               {...inputProps}

@@ -1,6 +1,5 @@
-import { UserListQueryParams } from '@/pages/user/redux/types';
-import { camelCaseToSnakeCase } from './functions/formatString';
 import { GridFilterModel, GridPaginationModel, GridSortModel } from '@mui/x-data-grid';
+import { camelCaseToSnakeCase } from './formatString';
 
 export interface QueryParams {
   search: string;
