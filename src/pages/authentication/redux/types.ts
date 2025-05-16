@@ -30,6 +30,7 @@ export interface LoginState {
   };
   userPermissions: permission[];
   isAuthenticated?: boolean;
+  underVerification?: boolean;
 }
 
 export interface UnverifiedLoginState {

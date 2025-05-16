@@ -9,7 +9,7 @@ import MainCard from '@/components/MainCard';
 
 // project imports
 import { TabItem } from '@/menu-items/types';
-import { TabItems } from '../common';
+import { TabItems } from '../config';
 import ChangePasswordTab from './changePasswordTab';
 
 export default function ChangePassword() {

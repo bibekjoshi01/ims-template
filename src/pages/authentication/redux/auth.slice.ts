@@ -13,7 +13,8 @@ const initialState: LoginState = {
   photo: '',
   userPermissions: [],
   isSuperuser: false,
-  isAuthenticated: false
+  isAuthenticated: false,
+  underVerification: false
 };
 
 export const authSlice = createSlice({
@@ -66,10 +67,13 @@ export const authSlice = createSlice({
 
       // Keep the current state if token exists
       return state;
+    },
+    setUnderVerification: (state) => {
+      state.underVerification = !state.underVerification;
     }
   }
 });
 
-export const { loginSuccess, logoutSuccess, checkAuthStatus } = authSlice.actions;
+export const { loginSuccess, logoutSuccess, checkAuthStatus, setUnderVerification } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -22,8 +22,17 @@ export const authAPISlice = rootAPI.injectEndpoints({
           data: values
         };
       }
+    }),
+    verify: builder.mutation({
+      query: (values) => {
+        return {
+          url: `${authAPI}/verify`,
+          method: 'POST',
+          data: values
+        };
+      }
     })
   })
 });
 
-export const { useLoginMutation, useLogoutMutation } = authAPISlice;
+export const { useLoginMutation, useLogoutMutation, useVerifyMutation } = authAPISlice;

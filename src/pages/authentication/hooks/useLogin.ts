@@ -7,7 +7,7 @@ import { handleClientError } from '@/utils/functions/handleError';
 import { useNavigate } from 'react-router-dom';
 import { defaultValues } from '../components/login.config';
 import { useLoginMutation } from '../redux/auth.api';
-import { loginSuccess } from '../redux/auth.slice';
+import { loginSuccess, setUnderVerification } from '../redux/auth.slice';
 import { LoginFormDataType } from '../redux/types';
 
 export const useLogin = () => {
@@ -28,6 +28,12 @@ export const useLogin = () => {
   const onSubmit = async (values: LoginFormDataType) => {
     try {
       const response = await login({ values }).unwrap();
+
+      if (response?.status === 'verify_email') {
+        dispatch(setUnderVerification());
+        return;
+      }
+
       dispatch(loginSuccess({ ...response }));
       enqueueSnackbar(response?.message, {
         variant: 'success',
