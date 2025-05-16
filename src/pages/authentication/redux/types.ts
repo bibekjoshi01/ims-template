@@ -32,7 +32,11 @@ export interface LoginState {
   isAuthenticated?: boolean;
 }
 
-export type BackendError = {
-  status: number;
-  data: Record<string, string>;
-};
+export interface UnverifiedLoginState {
+  message: string;
+}
+
+export interface LoginFormDataType {
+  persona: string;
+  password: string;
+}

@@ -553,6 +553,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               name={name}
               value={value}
               onChange={onChange}
+              autoComplete="password"
               {...renderPasswordVisibility(name as keyof typeof showPassword)}
               error={error}
               inputRef={setRef}

@@ -1,21 +1,16 @@
 import { rootAPI } from '../../../libs/apiSlice';
+import { LoginFormDataType } from './types';
 
 export const authAPI = 'admin/user-app/auth';
 
 export const authAPISlice = rootAPI.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
+    login: builder.mutation<any, { values: LoginFormDataType }>({
       query: ({ values }) => {
-        const { email, password } = values;
-        const transformedValues = {
-          password: password,
-          persona: email
-        };
-
         return {
           url: `${authAPI}/login`,
           method: 'POST',
-          data: transformedValues
+          data: values
         };
       }
     }),

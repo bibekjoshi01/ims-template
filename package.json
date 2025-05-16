@@ -77,7 +77,6 @@
     "vite": "^5.2.10",
     "vite-jsconfig-paths": "^2.0.1",
     "web-vitals": "^3.5.2",
-    "yup": "^1.4.0",
     "zod": "^3.24.2"
   },
   "babel": {
