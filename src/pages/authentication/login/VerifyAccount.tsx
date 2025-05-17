@@ -5,7 +5,7 @@ import { Alert, Box, Button, CircularProgress, Paper, Stack, Typography } from '
 import Grid from '@mui/material/Grid';
 
 // project imports
-import { useVerifyMutation } from './redux/auth.api';
+import { useVerifyMutation } from '../redux/auth.api';
 
 const alertStyle = {
   fontSize: '18px',
