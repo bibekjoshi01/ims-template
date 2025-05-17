@@ -10,7 +10,7 @@ import MainCard from '@/components/MainCard';
 // Utilities & API
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
-import { splitName } from '@/utils/splitCombineName';
+import { splitName } from '@/utils/functions/splitCombineName';
 import { useGetUserRolesQuery, usePatchUserMutation } from '../../redux/user.api';
 
 // Form Schema, Defaults, Types
@@ -103,7 +103,7 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3} sx={{ my: 1 }}>
+      <Grid container spacing={3} sx={{ pt: 1 }}>
         <Grid item xs={12}>
           <MainCard divider title={'Update User'}>
             <FormSection<UserInfoUpdateFormDataType> fields={formFields} control={control} errors={errors} />

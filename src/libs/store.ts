@@ -5,9 +5,9 @@ import persistReducer from 'redux-persist/es/persistReducer';
 import storage from 'redux-persist/lib/storage';
 
 // project-imports
+import { snackbarListenerMiddleware } from '@/pages/common/redux/snackbarListenerMiddleware';
 import { rootAPI } from './apiSlice';
 import { rootReducer } from './reducers';
-import { snackbarListenerMiddleware } from '@/pages/common/redux/snackbarListenerMiddleware';
 
 const persistConfig = {
   key: 'root',

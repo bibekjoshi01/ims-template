@@ -1,7 +1,7 @@
-import { Box, Button, Grid, Typography, useTheme } from '@mui/material';
-import { Facebook, Twitter, LinkedIn } from '@mui/icons-material';
-import { Link } from 'react-router-dom';
 import MainCard from '@/components/MainCard';
+import { Facebook, LinkedIn, Twitter } from '@mui/icons-material';
+import { Box, Button, Grid, Typography, useTheme } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 /**
  * Renders a card with connected social network information.

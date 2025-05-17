@@ -19,7 +19,7 @@ import { GridFilterPanelProps } from '@mui/x-data-grid/components/panel/filterPa
 // PROJECT IMPORTS
 import AppDialog from '@/components/app-dialog';
 import CustomInput from '@/components/CustomInput';
-import { debounce } from '@/utils/debounce';
+import { debounce } from '@/utils/functions/debounce';
 
 // ==============================
 // Custom Search Bar
@@ -197,7 +197,7 @@ const Toolbar = ({
           {/* Create New User Button */}
           {createNewForm && (
             <>
-              <Button onClick={handleOpenForm} variant="contained">
+              <Button onClick={handleOpenForm} variant="contained" sx={{ mx: 1 }}>
                 {createButtonTitle ?? 'Create New'}
               </Button>
               <AppDialog open={showForm} onClose={handleCloseForm} content={createNewForm(handleCloseForm)} fullWidth maxWidth="lg" />

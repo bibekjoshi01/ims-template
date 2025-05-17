@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 // project import
-import getColors from '@/utils/getColors';
+import getColors from '@/utils/functions/getColors';
 
 // assets
 import BorderOutlined from '@ant-design/icons/BorderOutlined';
@@ -68,7 +68,7 @@ export default function Checkbox(theme) {
       styleOverrides: {
         root: {
           borderRadius: 0,
-          color: palette.secondary[300],
+          color: palette.grey.light || palette.secondary.light,
           '&.size-small': {
             ...checkboxStyle('small')
           },

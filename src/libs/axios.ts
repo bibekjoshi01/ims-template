@@ -1,14 +1,10 @@
+import { showErrorToast } from '@/utils/notifier';
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 import { noAuthRoutes } from './routes';
 
 // Constructing the base URL dynamically using environment variables.
-// export const baseURL = `${import.meta.env.VITE_PUBLIC_APP_HTTP_SCHEME}${import.meta.env.VITE_PUBLIC_APP_BASE_URL}${import.meta.env.VITE_PUBLIC_APP_API_VERSION}/`;
-
-export const baseURL = 'http://localhost:8000/api/v1/'; // For local development
-
-/* Replace `showToast` with your actual toast notification method. */
-const showToast = console.log;
+export const baseURL = `${import.meta.env.VITE_PUBLIC_APP_HTTP_SCHEME}${import.meta.env.VITE_PUBLIC_APP_BASE_URL}${import.meta.env.VITE_PUBLIC_APP_API_VERSION}/`;
 
 // Main Axios instance
 export const axiosInstance = axios.create({
@@ -50,7 +46,7 @@ const notifyTokenRefreshed = (newToken: string) => {
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     if (!window.navigator.onLine) {
-      showToast('No internet connection available.');
+      showErrorToast('No internet connection available.');
     }
 
     config.headers = config.headers || {};
@@ -83,7 +79,7 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     if (response?.data?.message) {
-      showToast(response.data.message);
+      showErrorToast(response.data.message);
     }
     return response;
   },
@@ -91,11 +87,11 @@ axiosInstance.interceptors.response.use(
     const errorConfig = error?.config as AxiosRequestConfig & { _retry?: boolean };
 
     if (axios.isCancel(error)) {
-      showToast(`Request canceled: ${error.message}`);
+      showErrorToast(`Request canceled: ${error.message}`);
     } else if (error.message === 'No Internet') {
-      showToast('No internet connection available.');
+      showErrorToast('Please check your internet connection.');
     } else if (error.toJSON().message === 'Network Error') {
-      showToast('Network Error.');
+      showErrorToast('Network Error.');
     }
     // Handle 401 Unauthorized errors
     else if (error.response?.status === 401) {
@@ -104,9 +100,9 @@ axiosInstance.interceptors.response.use(
 
         const refreshToken = Cookies.get('refresh');
         if (!refreshToken) {
-          showToast('Session expired. Please log in again.');
+          showErrorToast('Session expired. Please log in again.');
           Cookies.remove('access', { path: '/' });
-          window.location.href = '/login';
+          window.location.href = '/';
           return;
         }
 
@@ -131,9 +127,9 @@ axiosInstance.interceptors.response.use(
               return axiosInstance(errorConfig);
             }
           } catch (refreshError) {
-            showToast('Session expired. Please log in again.');
+            showErrorToast('Session expired. Please log in again.');
             Cookies.remove('access', { path: '/' });
-            window.location.href = '/login';
+            window.location.href = '/';
             isTokenRefreshInProgress = false;
             throw refreshError;
           }
@@ -147,20 +143,20 @@ axiosInstance.interceptors.response.use(
           });
         });
       } else {
-        showToast('Session expired. Logging you out.');
+        showErrorToast('Session expired. Logging you out.');
         Cookies.remove('access', { path: '/' });
-        window.location.href = '/login';
+        window.location.href = '/';
       }
     }
     // Handle other error statuses
     else if (error.response?.status === 403) {
-      showToast('Permission denied.');
+      showErrorToast('Permission denied.');
     } else if (error.response?.status === 404) {
-      showToast('Resource not found.');
+      showErrorToast('Resource not found.');
     } else if (error.response?.status === 405) {
-      showToast('Method not allowed.');
+      showErrorToast('Method not allowed.');
     } else if (error.response?.status === 500 || error.response?.status > 500) {
-      showToast('Server error, try again later.');
+      showErrorToast('Server error, try again later.');
     }
 
     throw error;

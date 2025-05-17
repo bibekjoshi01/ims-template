@@ -6,7 +6,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 // PROJECT IMPORTS
 import { ColorValues, ThemeContextType } from './types';
-import { THEME_PRESETS } from '@/utils/constants';
+import { THEME_PRESETS } from '@/utils/constants/colors';
 
 // Create Theme context
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);

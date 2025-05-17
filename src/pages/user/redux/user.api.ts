@@ -1,6 +1,6 @@
 import { rootAPI } from '@/libs/apiSlice';
 import { UserDetails, UserInput, UserList, UserListQueryParams, UseRoleList, UserRolesListQueryParams, UserUpdateInput } from './types';
-import fetchFileFromUrl from '@/utils/createFile';
+import { getQueryParams } from '@/utils/functions/queryBuilder';
 
 export const userAPI = 'admin/user-app/users';
 
@@ -9,18 +9,13 @@ export const userAPISlice = rootAPI.injectEndpoints({
     //Get Users
     getUsers: builder.query<UserList, UserListQueryParams>({
       query: ({ search, paginationModel, sortModel, filterModel }) => {
-        // pagination
-        const { page, pageSize } = paginationModel!;
-
-        // ordering
-        const ordering = sortModel?.[0]?.field; // name of the field to sort by
-        const direction = sortModel?.[0]?.sort === 'asc' ? '-' : ''; // 'asc' or 'desc'
-        const orderingString = ordering ? `${direction}${ordering}` : ''; // complete ordering string
-
-        // filtering
-        const filterField = filterModel?.items?.[0]?.field; // field to filter by
-        const filterValue = filterModel?.items?.[0]?.value; // value of the filter
-        const filterString = filterField && filterValue ? `${filterField}=${filterValue}` : ''; // complete filter string
+        // build query params
+        const { page, pageSize, orderingString, filterString } = getQueryParams({
+          search,
+          paginationModel,
+          sortModel,
+          filterModel
+        });
 
         return {
           url: `${userAPI}?offset=${page * pageSize}&limit=${pageSize}&search=${search ?? ''}&ordering=${orderingString}&${filterString}`,
@@ -119,6 +114,7 @@ export const userAPISlice = rootAPI.injectEndpoints({
 
 export const {
   useGetUsersQuery,
+  useLazyGetUsersQuery,
   useRetrieveUserQuery,
   useLazyRetrieveUserQuery,
   useCreateUserMutation,

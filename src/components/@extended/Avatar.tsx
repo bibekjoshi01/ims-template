@@ -3,7 +3,7 @@ import MuiAvatar, { AvatarProps as MuiAvatarProps } from '@mui/material/Avatar';
 import { styled, useTheme } from '@mui/material/styles';
 
 // project import
-import getColors from '@/utils/getColors';
+import getColors from '@/utils/functions/getColors';
 
 interface colorStyleProps {
   theme: any;

@@ -1,6 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 // material-ui imports
 import { CancelOutlined, CheckCircleOutline } from '@mui/icons-material';
@@ -13,33 +11,21 @@ import MatchIndicator from '@/components/PasswordMatchIndicator';
 import PasswordStrengthCapsules from '@/components/PasswordStrengthCapsules';
 
 // project imports
-import { ChangePasswordFormDataType, changePasswordSchema, defaultValues, passwordFields, ReqObj } from './data';
+import { useChangePassword } from '../hooks/useChangePassword';
+import { ChangePasswordFormDataType } from '../redux/types';
+import { passwordFields, ReqObj } from './changePasssword.config';
 
 export default function ChangePasswordTab() {
-  // state to toggle password visibility
   const [showPassword, setShowPassword] = useState<Record<keyof ChangePasswordFormDataType, boolean>>({
     currentPassword: false,
     newPassword: false,
     confirmPassword: false
   });
 
-  const {
-    control,
-    handleSubmit,
-    watch,
-    formState: { errors }
-  } = useForm({
-    resolver: zodResolver(changePasswordSchema),
-    defaultValues
-  });
+  const { handleSubmit, onSubmit, loadingChangePassword, control, watch, errors } = useChangePassword();
 
   const newPasswordValue = watch('newPassword', '');
   const confirmPasswordValue = watch('confirmPassword', '');
-
-  /* ----------------- Setup Submit Handler ----------------- */
-  const onSubmit = (data: ChangePasswordFormDataType) => {
-    console.log('All validated data:', data);
-  };
 
   const handleToggleVisibility = (field: keyof ChangePasswordFormDataType) => {
     setShowPassword((prev) => ({
@@ -48,7 +34,6 @@ export default function ChangePasswordTab() {
     }));
   };
 
-  // Extra components for specific fields in the form
   const childrenForInput = {
     newPassword: newPasswordValue && <PasswordStrengthCapsules password={newPasswordValue} />,
     confirmPassword: confirmPasswordValue && (
@@ -73,6 +58,11 @@ export default function ChangePasswordTab() {
                     handleToggleVisibility={handleToggleVisibility}
                   />
                 </Box>
+                <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }}>
+                  <Button variant="contained" type="submit" disabled={loadingChangePassword}>
+                    Update Password
+                  </Button>
+                </Grid>
               </Grid>
 
               <Grid item xs={12} md={6}>
@@ -96,15 +86,6 @@ export default function ChangePasswordTab() {
                     </React.Fragment>
                   ))}
                 </List>
-              </Grid>
-
-              <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }}>
-                <Button variant="outlined" color="secondary">
-                  Cancel
-                </Button>
-                <Button variant="contained" type="submit">
-                  Update Password
-                </Button>
               </Grid>
             </Grid>
           </form>

@@ -15,6 +15,11 @@ const UserEditModal = () => {
   // Only fetch when we have a valid ID and are in edit mode
   const { data: userData, isLoading } = useRetrieveUserQuery(currentId, { skip: !currentId || !edit });
 
+  // If the either of value is not set, we don't need to show the modal
+  if (!currentId || !edit) {
+    return null;
+  }
+
   const handleClose = () => {
     dispatch(setEdit(false));
     dispatch(clearUserData());

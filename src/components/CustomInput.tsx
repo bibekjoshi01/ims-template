@@ -1,7 +1,7 @@
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 import {
   Box,
@@ -18,11 +18,11 @@ import {
   Typography
 } from '@mui/material';
 import { useTheme } from '@mui/system';
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 
 /* ------------------------------------------------------------------
    Types
@@ -78,6 +78,7 @@ export interface CustomInputProps {
   children?: React.ReactNode;
   /** Reference to the input element */
   inputRef?: React.Ref<any>;
+  placeholder?: string;
   /** Additional props (will be split between container and input) */
   [key: string]: any;
 }
@@ -87,7 +88,7 @@ export interface CustomInputProps {
 ------------------------------------------------------------------ */
 const LabelForInput = React.memo(({ name, label, required }: { name: string; label?: string; required?: boolean }) =>
   label ? (
-    <Typography variant="body1" sx={{ mb: 1 }}>
+    <Typography variant="body1" sx={{ mb: 1, color: 'rgb(89, 89, 89)' }}>
       <label htmlFor={name}>
         {label}
         {required && (
@@ -128,11 +129,12 @@ const CustomInput = forwardRef<any, CustomInputProps>(
       handleToggleVisibility,
       defaultImage,
       imageSize = 100,
-      required = true,
+      required = false,
       trueLabel,
       falseLabel,
       multipleChips = false,
       children,
+      placeholder,
       inputRef: externalRef,
       ...rest
     },
@@ -212,7 +214,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
       endAdornment: (
         <InputAdornment position="end">
           <IconButton onClick={() => handleToggleVisibility?.(field)} onMouseDown={(e) => e.preventDefault()}>
-            {showPassword && showPassword[field] ? <Visibility /> : <VisibilityOff />}
+            {showPassword && showPassword[field] ? <Visibility sx={{ fontSize: 16 }} /> : <VisibilityOff sx={{ fontSize: 16 }} />}
           </IconButton>
         </InputAdornment>
       )
@@ -531,7 +533,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               checked={Boolean(value)}
               onChange={onChange}
               aria-describedby={errorId}
-              sx={{ ...inputStyle }}
+              sx={{ ...inputStyle, scale: 0.85 }}
               inputRef={setRef}
               {...inputProps}
             />
@@ -553,8 +555,10 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               name={name}
               value={value}
               onChange={onChange}
+              autoComplete="password"
               {...renderPasswordVisibility(name as keyof typeof showPassword)}
               error={error}
+              placeholder={placeholder}
               inputRef={setRef}
               sx={{ ...inputStyle }}
               {...inputProps}
@@ -606,6 +610,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               rows={rows}
               error={error}
               aria-describedby={errorId}
+              placeholder={placeholder}
               inputRef={setRef}
               sx={{ ...inputStyle }}
               {...inputProps}

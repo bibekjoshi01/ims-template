@@ -3,7 +3,8 @@ import { UserSliceState } from './types';
 
 const initialState: UserSliceState = {
   edit: false,
-  currentId: null
+  currentId: null,
+  viewId: null
 };
 
 export const userSlice = createSlice({
@@ -19,10 +20,16 @@ export const userSlice = createSlice({
     clearUserData: (state) => {
       state.edit = false;
       state.currentId = null;
+    },
+    setViewId: (state, { payload }) => {
+      state.viewId = payload;
+    },
+    clearViewId: (state) => {
+      state.viewId = null;
     }
   }
 });
 
-export const { setEdit, currentUserId, clearUserData } = userSlice.actions;
+export const { setEdit, currentUserId, clearUserData, setViewId, clearViewId } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,5 +1,5 @@
 // project import
-import getColors from '@/utils/getColors';
+import getColors from '@/utils/functions/getColors';
 
 // ==============================|| CHIP - COLORS ||============================== //
 

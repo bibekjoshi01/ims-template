@@ -1,4 +1,4 @@
-import { strengthColor, strengthIndicator } from '@/utils/password-strength';
+import { strengthColor, strengthIndicator } from '@/utils/functions/password-strength';
 import { Box, Typography } from '@mui/material';
 
 const PasswordStrengthCapsules = ({ password }: { password: string }) => {

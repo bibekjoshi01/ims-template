@@ -11,6 +11,7 @@ import { ColumnConfig } from '../types';
 export const createBooleanColumn = <T extends object>(config: ColumnConfig<T>, baseCol: GridColDef<T>): GridColDef<T> => {
   return {
     ...baseCol,
+    align: 'center',
     renderCell: (params) => (
       <Box
         sx={{
@@ -67,18 +68,14 @@ const RenderValue: React.FC<RenderValueProps> = ({ params, trueLabel, falseLabel
       color="success"
       sx={{
         display: 'flex',
-        alignItems: 'baseline',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
         height: '100%'
       }}
     >
       <Tooltip title={trueLabel || 'True'}>
-        <DoneOutlined
-          color="success"
-          sx={{
-            position: 'relative',
-            top: '5px'
-          }}
-        />
+        <DoneOutlined color="success" />
       </Tooltip>
       {trueLabel}
     </Typography>
@@ -89,7 +86,9 @@ const RenderValue: React.FC<RenderValueProps> = ({ params, trueLabel, falseLabel
       sx={{
         display: 'flex',
         alignItems: 'center',
-        height: '100%'
+        justifyContent: 'center',
+        height: '100%',
+        width: '100%'
       }}
     >
       <Tooltip title={falseLabel || 'False'}>

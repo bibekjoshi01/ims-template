@@ -87,7 +87,7 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3} sx={{ my: 1 }}>
+      <Grid container spacing={3} sx={{ pt: 1 }}>
         <Grid item xs={12}>
           <MainCard divider title={'Update User Role'}>
             <FormSection<UserRoleUpdateFormDataType> fields={formFields} control={control} errors={errors} />

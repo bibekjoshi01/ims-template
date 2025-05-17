@@ -1,10 +1,10 @@
 import { createTableDataHook } from '@/hooks/createTableDataHook';
 import { useAppDispatch } from '@/libs/hooks';
-import { combineName, splitName } from '@/utils/splitCombineName';
+import { combineName, splitName } from '@/utils/functions/splitCombineName';
 import { TableData } from '../components/userListingTable.config';
 import { UserItem } from '../redux/types';
 import { useGetUsersQuery, usePatchUserMutation } from '../redux/user.api';
-import { currentUserId, setEdit } from '../redux/user.slice';
+import { currentUserId, setEdit, setViewId } from '../redux/user.slice';
 
 /**
  * Custom hook for User table Fetching and updating
@@ -27,6 +27,11 @@ export const useUserTable = () => {
     // set if edit mode is active
     setEdit: (value) => {
       dispatch(setEdit(value));
+    },
+
+    // set the id of the user being viewed
+    setViewId: (id) => {
+      dispatch(setViewId(id));
     },
 
     // NOTE - Data transformations api data to table data
