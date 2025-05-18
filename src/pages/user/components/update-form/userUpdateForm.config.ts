@@ -36,7 +36,7 @@ export const userInfoUpdateFields: FormField<UserInfoUpdateFormDataType>[] = [
     sm: 3,
     type: 'checkbox',
     trueLabel: 'Active',
-    falseLabel: 'Inactive',
+    falseLabel: 'Inactive'
   },
   { name: 'photo', label: 'Profile Photo', xs: 6, sm: 3, type: 'image', imageSize: 120 }
 ];

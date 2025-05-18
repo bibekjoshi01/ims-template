@@ -30,7 +30,7 @@ export const userRoleUpdateFormFields: FormField<UserRoleUpdateFormDataType>[] =
     label: 'Active Status',
     xs: 4,
     sm: 3,
-    type: 'checkbox',
+    type: 'checkbox'
   },
   { name: 'permissions', label: 'Permissions', xs: 12, type: 'select', options: [], multipleChips: true }
 ];

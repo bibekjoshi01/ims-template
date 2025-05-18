@@ -55,9 +55,9 @@ export const defaultValues: UserInfoFormDataType = {
 
 // NOTE - Define the form fields
 export const userInfoFields: FormField<UserInfoFormDataType>[] = [
-  { name: 'username', label: 'Username', xs: 6, sm: 3, type: 'text', },
+  { name: 'username', label: 'Username', xs: 6, sm: 3, type: 'text' },
   { name: 'name', label: 'Full Name', xs: 6, sm: 3, type: 'text', required: true },
-  { name: 'phoneNo', label: 'Phone No', xs: 6, sm: 3, type: 'text', },
+  { name: 'phoneNo', label: 'Phone No', xs: 6, sm: 3, type: 'text' },
   { name: 'email', label: 'Email', xs: 6, sm: 3, type: 'email', required: true },
   { name: 'password', label: 'Password', xs: 6, sm: 3, type: 'password', required: true },
   { name: 'confirmPassword', label: 'Confirm Password', xs: 6, sm: 3, type: 'password', required: true },
@@ -69,7 +69,7 @@ export const userInfoFields: FormField<UserInfoFormDataType>[] = [
     sm: 3,
     type: 'checkbox',
     trueLabel: 'Active',
-    falseLabel: 'Inactive',
+    falseLabel: 'Inactive'
   },
   { name: 'photo', label: 'Profile Photo', xs: 6, sm: 3, type: 'image', imageSize: 120 }
 ];
