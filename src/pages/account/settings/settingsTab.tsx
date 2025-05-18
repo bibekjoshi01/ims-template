@@ -1,10 +1,10 @@
-import { Grid, Box, Typography, Button } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import { settingsSchema, settings, defaultValues, SettingsFormDataType } from './data';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import MainCard from '@/components/MainCard';
 import FormSection from '@/components/FormSection';
+import MainCard from '@/components/MainCard';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Box, Button, Grid, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { useForm } from 'react-hook-form';
+import { defaultValues, settings, SettingsFormDataType, settingsSchema } from './data';
 
 export default function SettingsTab() {
   const theme = useTheme();
@@ -26,7 +26,7 @@ export default function SettingsTab() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3} sx={{ my: 1 }}>
+      <Grid container spacing={2} sx={{ my: 1 }}>
         {/* Loop through settings and create a Grid item for each group */}
         {settings.map((group) => (
           <Grid item xs={12} sm={6} key={group.id}>

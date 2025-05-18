@@ -42,7 +42,7 @@ export default function ChangePasswordTab() {
   };
 
   return (
-    <Grid container spacing={3} sx={{ my: 1 }}>
+    <Grid container spacing={2} sx={{ my: 1 }}>
       <Grid item xs={12}>
         <MainCard divider title="Change Password">
           <form onSubmit={handleSubmit(onSubmit)}>

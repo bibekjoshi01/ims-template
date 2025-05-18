@@ -22,14 +22,12 @@ export default function Personal() {
   const updatedTabItems: TabItem[] = TabItems?.map((tab) => (tab?.id === 'profile' ? { ...tab, tabPanel: ProfileTab } : tab));
 
   return (
-    <>
-      <Grid container spacing={3}>
-        <Grid item sx={{ width: '100%' }}>
-          <MainCard sx={{ marginTop: 1 }}>
-            <TABS tabItems={updatedTabItems} value={value} handleChange={handleChange} />
-          </MainCard>
-        </Grid>
+    <Grid container spacing={3}>
+      <Grid item sx={{ width: '100%' }}>
+        <MainCard sx={{ marginTop: 1 }}>
+          <TABS tabItems={updatedTabItems} value={value} handleChange={handleChange} />
+        </MainCard>
       </Grid>
-    </>
+    </Grid>
   );
 }
