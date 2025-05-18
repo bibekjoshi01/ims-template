@@ -4,10 +4,11 @@ import { useGetProfileQuery } from '../redux/account.api';
 import { UserProfile } from '../redux/types';
 
 export const useGetProfile = () => {
-  const { data: profileData, isSuccess, isLoading } = useGetProfileQuery();
+  const { data: profileData, isSuccess, isLoading, refetch } = useGetProfileQuery();
   const [formattedProfile, setFormattedProfile] = useState<UserProfile | null>(null);
 
   useEffect(() => {
+    refetch();
     if (isSuccess && profileData) {
       const { lastLogin, dateJoined, ...restValues } = profileData;
 
@@ -22,6 +23,7 @@ export const useGetProfile = () => {
   return {
     profileData: formattedProfile,
     isSuccess,
+    refetch,
     isLoading
   };
 };

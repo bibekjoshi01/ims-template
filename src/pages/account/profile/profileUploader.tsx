@@ -7,13 +7,14 @@ import defaultImage from '@/assets/images/users/avatar-1.png';
 interface ProfileUploaderProps {
   image: File | string | null;
   setImage: (image: File) => void;
+  defaultHovered?: boolean;
   sx?: object;
 }
 
 /**
  * A component for uploading and previewing a profile image.
  */
-export default function ProfileUploader({ image, setImage, sx }: ProfileUploaderProps) {
+export default function ProfileUploader({ image, setImage, defaultHovered, sx }: ProfileUploaderProps) {
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const [preview, setPreview] = useState<string | null>(() => {
@@ -21,6 +22,12 @@ export default function ProfileUploader({ image, setImage, sx }: ProfileUploader
     if (image instanceof File) return URL.createObjectURL(image);
     return null;
   });
+
+  useEffect(() => {
+    if (defaultHovered) {
+      setIsHovered(true);
+    }
+  }, [defaultHovered]);
 
   // Update preview when image prop changes
   useEffect(() => {

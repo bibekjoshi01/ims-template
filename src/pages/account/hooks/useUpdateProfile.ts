@@ -6,12 +6,13 @@ import { useForm } from 'react-hook-form';
 import { handleClientError } from '@/utils/functions/handleError';
 import { useEffect } from 'react';
 import { defaultValues, UpdateProfileFormDataType, updateProfileSchema } from '../profile/profile.config';
-import { useUpdateProfileMutation } from '../redux/account.api';
+import { useGetProfileQuery, useUpdateProfileMutation } from '../redux/account.api';
 
-export const useUpdateProfile = (initialData?: UpdateProfileFormDataType) => {
+export const useUpdateProfile = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [updateProfile, { isLoading: loadingUpdateProfile }] = useUpdateProfileMutation();
+  const { data: profileData, isSuccess, refetch: refetchProfile } = useGetProfileQuery();
 
   const {
     control,
@@ -26,14 +27,18 @@ export const useUpdateProfile = (initialData?: UpdateProfileFormDataType) => {
     defaultValues: defaultValues
   });
 
+  useEffect(() => {
+    refetchProfile();
+  }, []);
+
   // Set default values from profile data
   useEffect(() => {
-    if (initialData) {
-      reset({ ...initialData });
+    if (isSuccess && profileData) {
+      reset({ ...profileData });
     }
-  }, [initialData, reset]);
+  }, [isSuccess, profileData, reset]);
 
-  const onSubmit = async (values: UpdateProfileFormDataType, onSuccess?: () => void) => {
+  const onSubmit = async (values: UpdateProfileFormDataType, onSuccess: () => void) => {
     try {
       const formData = new FormData();
 
@@ -53,7 +58,7 @@ export const useUpdateProfile = (initialData?: UpdateProfileFormDataType) => {
 
       const response = await updateProfile({ values: formData }).unwrap();
       enqueueSnackbar(response?.message, { variant: 'success' });
-      if (onSuccess) onSuccess();
+      onSuccess();
     } catch (err: any) {
       handleClientError<UpdateProfileFormDataType>({
         error: err,
