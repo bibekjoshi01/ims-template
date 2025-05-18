@@ -23,15 +23,14 @@ export const defaultValues: UserRoleUpdateFormDataType = {
 
 // NOTE - Define the form fields
 export const userRoleUpdateFormFields: FormField<UserRoleUpdateFormDataType>[] = [
-  { name: 'name', label: 'Name', xs: 6, sm: 3, type: 'text', required: false },
-  { name: 'remarks', label: 'Remarks', xs: 6, sm: 3, type: 'text', required: false },
+  { name: 'name', label: 'Name', xs: 6, sm: 3, type: 'text' },
+  { name: 'remarks', label: 'Remarks', xs: 6, sm: 3, type: 'text' },
   {
     name: 'isActive',
     label: 'Active Status',
     xs: 4,
     sm: 3,
     type: 'checkbox',
-    required: false
   },
-  { name: 'permissions', label: 'Permissions', xs: 12, type: 'select', options: [], multipleChips: true, required: false }
+  { name: 'permissions', label: 'Permissions', xs: 12, type: 'select', options: [], multipleChips: true }
 ];

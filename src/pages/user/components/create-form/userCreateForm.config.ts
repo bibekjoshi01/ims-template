@@ -55,13 +55,13 @@ export const defaultValues: UserInfoFormDataType = {
 
 // NOTE - Define the form fields
 export const userInfoFields: FormField<UserInfoFormDataType>[] = [
-  { name: 'username', label: 'Username', xs: 6, sm: 3, type: 'text', required: false },
-  { name: 'name', label: 'Full Name', xs: 6, sm: 3, type: 'text' },
-  { name: 'phoneNo', label: 'Phone No', xs: 6, sm: 3, type: 'text', required: false },
-  { name: 'email', label: 'Email', xs: 6, sm: 3, type: 'email' },
-  { name: 'password', label: 'Password', xs: 6, sm: 3, type: 'password' },
-  { name: 'confirmPassword', label: 'Confirm Password', xs: 6, sm: 3, type: 'password' },
-  { name: 'roles', label: 'Roles', xs: 6, sm: 3, type: 'select', options: [], multipleChips: true },
+  { name: 'username', label: 'Username', xs: 6, sm: 3, type: 'text', },
+  { name: 'name', label: 'Full Name', xs: 6, sm: 3, type: 'text', required: true },
+  { name: 'phoneNo', label: 'Phone No', xs: 6, sm: 3, type: 'text', },
+  { name: 'email', label: 'Email', xs: 6, sm: 3, type: 'email', required: true },
+  { name: 'password', label: 'Password', xs: 6, sm: 3, type: 'password', required: true },
+  { name: 'confirmPassword', label: 'Confirm Password', xs: 6, sm: 3, type: 'password', required: true },
+  { name: 'roles', label: 'Roles', xs: 6, sm: 3, type: 'select', options: [], multipleChips: true, required: true },
   {
     name: 'isActive',
     label: 'Active Status',
@@ -70,9 +70,8 @@ export const userInfoFields: FormField<UserInfoFormDataType>[] = [
     type: 'checkbox',
     trueLabel: 'Active',
     falseLabel: 'Inactive',
-    required: false
   },
-  { name: 'photo', label: 'Profile Photo', xs: 6, sm: 3, type: 'image', imageSize: 120, required: false }
+  { name: 'photo', label: 'Profile Photo', xs: 6, sm: 3, type: 'image', imageSize: 120 }
 ];
 
 // NOTE - Define the password requirements

@@ -27,7 +27,7 @@ export const defaultValues: UserInfoUpdateFormDataType = {
 // NOTE - Define the form fields
 export const userInfoUpdateFields: FormField<UserInfoUpdateFormDataType>[] = [
   { name: 'name', label: 'Name', xs: 6, sm: 3, type: 'text' },
-  { name: 'phoneNo', label: 'Phone No', xs: 6, sm: 3, type: 'text', required: false },
+  { name: 'phoneNo', label: 'Phone No', xs: 6, sm: 3, type: 'text' },
   { name: 'roles', label: 'Roles', xs: 6, sm: 3, type: 'select', options: [], multipleChips: true },
   {
     name: 'isActive',
@@ -37,7 +37,6 @@ export const userInfoUpdateFields: FormField<UserInfoUpdateFormDataType>[] = [
     type: 'checkbox',
     trueLabel: 'Active',
     falseLabel: 'Inactive',
-    required: false
   },
-  { name: 'photo', label: 'Profile Photo', xs: 6, sm: 3, type: 'image', imageSize: 120, required: false }
+  { name: 'photo', label: 'Profile Photo', xs: 6, sm: 3, type: 'image', imageSize: 120 }
 ];
