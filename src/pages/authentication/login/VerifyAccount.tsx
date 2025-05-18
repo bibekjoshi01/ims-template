@@ -72,7 +72,7 @@ const VerifyAccount = () => {
           ) : message ? (
             <Stack sx={{ width: 'maxContent' }} spacing={2}>
               <Alert sx={alertStyle} severity="success">
-                {error}
+                {message}
               </Alert>
             </Stack>
           ) : error ? (
