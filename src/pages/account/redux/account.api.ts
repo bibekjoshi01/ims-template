@@ -13,7 +13,15 @@ export const accountAPISlice = rootAPI.injectEndpoints({
         };
       }
     }),
-
+    updateProfile: builder.mutation({
+      query: ({ values }: { values: FormData }) => {
+        return {
+          url: `${accountAPI}/profile/update`,
+          method: 'PATCH',
+          data: values
+        };
+      }
+    }),
     changePassword: builder.mutation({
       query: ({ values }: { values: ChangePasswordFormDataType }) => {
         const { currentPassword, ...rest } = values;
@@ -32,4 +40,4 @@ export const accountAPISlice = rootAPI.injectEndpoints({
   })
 });
 
-export const { useGetProfileQuery, useChangePasswordMutation } = accountAPISlice;
+export const { useGetProfileQuery, useChangePasswordMutation, useUpdateProfileMutation } = accountAPISlice;

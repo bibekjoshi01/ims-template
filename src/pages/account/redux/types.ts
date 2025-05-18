@@ -1,5 +1,5 @@
 export interface UserProfile {
-  id: number;
+  id?: number;
   photo: string;
   username: string;
   firstName: string;
@@ -7,12 +7,9 @@ export interface UserProfile {
   fullName: string;
   phoneNo: string;
   email: string;
-  isSuperuser: boolean;
   dateJoined: string;
   lastLogin: string;
-  isActive: boolean;
   isEmailVerified: boolean;
-  isPhoneVerified: boolean;
   roles: string[];
 }
 

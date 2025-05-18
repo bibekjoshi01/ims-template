@@ -1,10 +1,11 @@
-import defaultImage from '@/assets/images/users/avatar-1.png';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import { Avatar, Box, IconButton, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import defaultImage from '@/assets/images/users/avatar-1.png';
 
 interface ProfileUploaderProps {
-  image: File | null;
+  image: File | string | null;
   setImage: (image: File) => void;
   sx?: object;
 }
@@ -14,7 +15,28 @@ interface ProfileUploaderProps {
  */
 export default function ProfileUploader({ image, setImage, sx }: ProfileUploaderProps) {
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [preview, setPreview] = useState<string | null>(() => (image ? URL.createObjectURL(image) : null));
+
+  const [preview, setPreview] = useState<string | null>(() => {
+    if (typeof image === 'string') return image;
+    if (image instanceof File) return URL.createObjectURL(image);
+    return null;
+  });
+
+  // Update preview when image prop changes
+  useEffect(() => {
+    if (!image) {
+      setPreview(null);
+      return;
+    }
+
+    if (typeof image === 'string') {
+      setPreview(image);
+    } else if (image instanceof File) {
+      const objectUrl = URL.createObjectURL(image);
+      setPreview(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    }
+  }, [image]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
