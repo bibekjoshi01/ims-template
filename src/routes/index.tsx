@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
+
+// Project Imports
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { checkAuthStatus } from '@/pages/authentication/redux/auth.slice';
-import { useEffect } from 'react';
 import PrivateRoutes from './PrivateRoutes';
 import PublicRoutes from './PublicRoutes';
 

@@ -6,9 +6,9 @@ import MinimalLayout from '@/layout/MinimalLayout';
 
 // Lazy-loaded components
 const AuthLogin = Loadable(lazy(() => import('@/pages/authentication/login')));
-const ForgetPassword = Loadable(lazy(() => import('@/pages/authentication/ForgetPassword')));
-const ResetPassword = Loadable(lazy(() => import('@/pages/authentication/ResetPassword')));
-const ResetPasswordSuccess = Loadable(lazy(() => import('@/pages/authentication/ResetPasswordSuccess')));
+const VerifyAccount = Loadable(lazy(() => import('@/pages/authentication/login/VerifyAccount')));
+const ForgetPasswordReqeust = Loadable(lazy(() => import('@/pages/authentication/forget-password/ForgetPasswordReqeust')));
+const ResetPassword = Loadable(lazy(() => import('@/pages/authentication/forget-password/ResetPassword')));
 const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/404Page')));
 const PrivacyPolicy = Loadable(lazy(() => import('@/pages/legal/PrivacyPolicies')));
 const TermsAndConditions = Loadable(lazy(() => import('@/pages/legal/TermsAndConditions')));
@@ -20,9 +20,9 @@ const PublicRoutes = () => (
     <Routes>
       <Route path="/" element={<MinimalLayout />}>
         <Route path="" element={<AuthLogin />} />
-        <Route path="forget-password" element={<ForgetPassword />} />
-        <Route path="reset-password" element={<ResetPassword />} />
-        <Route path="reset-password-success" element={<ResetPasswordSuccess />} />
+        <Route path="/verify-account/:token" element={<VerifyAccount />} />
+        <Route path="/forget-password" element={<ForgetPasswordReqeust />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
       <Route path="privacy-policy" element={<PrivacyPolicy />} />

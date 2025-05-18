@@ -1,5 +1,11 @@
 import { FormField } from '@/components/FormSection';
+import { z } from 'zod';
 import { LoginFormDataType } from '../redux/types';
+
+export const loginSchema = z.object({
+  persona: z.string().min(1, 'Persona is required'),
+  password: z.string().min(1, 'Password is required')
+});
 
 export const defaultValues: LoginFormDataType = { persona: '', password: '' };
 
