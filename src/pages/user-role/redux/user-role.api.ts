@@ -87,9 +87,9 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
 
     // Ger User Permissions
     getUserRoleUserPermissions: builder.query({
-      query: ({ mainModule, subModule }) => {
+      query: ({ mainModule, subModule }: { mainModule?: string, subModule?: string }) => {
         return {
-          url: `${userRoleAPI}/permissions`,
+          url: `${userRoleAPI}/permissions?main_module=${mainModule ?? ''}&permission_category=${subModule}`,
           method: 'GET'
         };
       },

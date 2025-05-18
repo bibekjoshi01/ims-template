@@ -24,20 +24,26 @@ interface UserRoleCreateFormProps {
 export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps) {
   const dispatch = useAppDispatch();
   const [createUserRole] = useCreateUserRoleMutation();
-  const { data: permissionsData } = useGetUserRoleUserPermissionsQuery({
-    search: '',
-    paginationModel: { page: 0, pageSize: 100 },
-    sortModel: []
-  });
   const [formFields, setFormFields] = useState(userRoleCreateFormFields);
 
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors }
   } = useForm<UserRoleCreateFormDataType>({
     resolver: zodResolver(userRoleCreateFormSchema),
     defaultValues
+  });
+
+  // Watch for changes in the main module and sub module fields
+  const mainModule = watch('mainModule');
+  const subModule = watch('subModule');
+
+  // Fetch permissions based on selected main module and sub module
+  const { data: permissionsData } = useGetUserRoleUserPermissionsQuery({
+    mainModule,
+    subModule
   });
 
   const onSubmit = async (data: UserRoleCreateFormDataType) => {
@@ -59,7 +65,7 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
         groupName: permission.permissionCategoryName + ' : ' + permission.mainModuleName
       }));
 
-      setFormFields((prev) => prev.map((field) => (field.name === 'permissions' ? { ...field, options: permissionOptions } : field)));
+      setFormFields((prev) => prev.map((field) => (field.name === 'allPermissions' ? { ...field, options: permissionOptions } : field)));
     }
   }, [permissionsData]);
 

@@ -4,7 +4,10 @@ import * as z from 'zod';
 // NOTE - Define the schema for the form.
 export const userRoleCreateFormSchema = z.object({
   name: z.string().min(1, 'Full Name is required'),
-  permissions: z.array(z.number()).optional(),
+  mainModule: z.string().optional(),
+  subModule: z.string().optional(),
+  allPermissions: z.array(z.number()).optional(),
+  selectedPermissions: z.array(z.number()).optional(),
   isActive: z.boolean().optional()
 });
 
@@ -14,8 +17,11 @@ export type UserRoleCreateFormDataType = z.infer<typeof userRoleCreateFormSchema
 // NOTE -  Define default Values for the Form using the generated type
 export const defaultValues: UserRoleCreateFormDataType = {
   name: '',
-  permissions: [],
-  isActive: true
+  mainModule: '',
+  subModule: '',
+  isActive: true,
+  allPermissions: [],
+  selectedPermissions: []
 };
 
 // NOTE - Define the form fields
@@ -29,5 +35,8 @@ export const userRoleCreateFormFields: FormField<UserRoleCreateFormDataType>[] =
     type: 'checkbox',
     required: false
   },
-  { name: 'permissions', label: 'Permissions', xs: 6, sm: 7, type: 'select', options: [], multipleChips: true, required: false }
+  { name: 'mainModule', label: 'Main Module', xs: 6, sm: 7, type: 'select', options: [], required: false },
+  { name: 'subModule', label: 'Sub Module', xs: 6, sm: 7, type: 'select', options: [], required: false },
+  { name: 'allPermissions', label: 'All Permissions', xs: 6, sm: 7, type: 'select', options: [], multipleChips: true, required: false },
+  { name: 'selectedPermissions', label: 'Selected Permissions', xs: 6, sm: 7, type: 'select', options: [], multipleChips: true, required: false }
 ];
