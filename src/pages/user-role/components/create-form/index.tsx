@@ -10,11 +10,16 @@ import MainCard from '@/components/MainCard';
 // Utilities & API
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
-import { useCreateUserRoleMutation, useGetUserRoleUserPermissionsQuery } from '../../redux/user-role.api';
+import {
+  useCreateUserRoleMutation,
+  useGetUserRoleMainModulesQuery,
+  useLazyGetUserRolePermissionCategoriesQuery,
+  useLazyGetUserRoleUserPermissionsQuery
+} from '../../redux/user-role.api';
 
 // Form Schema, Defaults, Types
 import { SelectOption } from '@/components/CustomInput';
-import { UserPermissionItem } from '../../redux/types';
+import { UserRoleMainModules, UserRoleSubModules } from '../../redux/types';
 import { defaultValues, UserRoleCreateFormDataType, userRoleCreateFormFields, userRoleCreateFormSchema } from './userRoleCreateForm.config';
 
 interface UserRoleCreateFormProps {
@@ -36,38 +41,81 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
     defaultValues
   });
 
+  // NOTE - Fetch main modules
+  const { data: mainModulesData } = useGetUserRoleMainModulesQuery();
+  // NOTE - and update mainModuleOptions in form fields
+  useEffect(() => {
+    if (mainModulesData?.count) {
+      const mainModuleOptions: SelectOption[] = mainModulesData.results.map((mainModule: UserRoleMainModules['results'][number]) => ({
+        label: mainModule.name,
+        value: mainModule.id
+      }));
+      setFormFields((prev) => prev.map((field) => (field.name === 'mainModule' ? { ...field, options: mainModuleOptions } : field)));
+    }
+  }, [mainModulesData]);
+
   // Watch for changes in the main module and sub module fields
   const mainModule = watch('mainModule');
   const subModule = watch('subModule');
 
-  // Fetch permissions based on selected main module and sub module
-  const { data: permissionsData } = useGetUserRoleUserPermissionsQuery({
-    mainModule,
-    subModule
-  });
+  // NOTE - Fetch all permissions when mainModule and subModule are updated
+  const [fetchAllPermissions] = useLazyGetUserRoleUserPermissionsQuery();
+  useEffect(() => {
+    (async () => {
+      if (mainModule) {
+        // NOTE - Fetch all permissions based on mainModule and subModule
+        const res = await fetchAllPermissions({ mainModule, subModule }).unwrap();
+
+        // NOTE - Update allPermissionsOptions in form fields
+        if (res) {
+          const allPermissionsOptions: SelectOption[] = res.results.map((permission) => ({
+            label: permission.name,
+            value: permission.id,
+            groupName: permission.mainModuleName + ' ' + permission.permissionCategoryName
+          }));
+          setFormFields((prev) =>
+            prev.map((field) => (field.name === 'allPermissions' ? { ...field, options: allPermissionsOptions } : field))
+          );
+        }
+      }
+    })();
+  }, [mainModule, subModule, fetchAllPermissions]);
+
+  // NOTE - Fetch submodules when mainModule is updated
+  // and update subModuleOptions in form fields
+  const [fetchSubModules] = useLazyGetUserRolePermissionCategoriesQuery();
+  useEffect(() => {
+    (async () => {
+      if (mainModule) {
+        // NOTE - Fetch submodules based on mainModule
+        const res = await fetchSubModules({ mainModule }).unwrap();
+
+        // NOTE - Update subModuleOptions in form fields
+        if (res) {
+          const subModuleOptions: SelectOption[] = res.results.map((subModule: UserRoleSubModules['results'][number]) => ({
+            label: subModule.name,
+            value: subModule.id
+          }));
+          setFormFields((prev) => prev.map((field) => (field.name === 'subModule' ? { ...field, options: subModuleOptions } : field)));
+        }
+      }
+    })();
+  }, [mainModule, fetchSubModules]);
 
   const onSubmit = async (data: UserRoleCreateFormDataType) => {
     try {
-      const res = await createUserRole(data).unwrap();
+      const payload = {
+        name: data.name,
+        permissions: data.selectedPermissions,
+        isActive: data.isActive
+      };
+      const res = await createUserRole(payload).unwrap();
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
     } catch (error) {
       console.error('Error creating user role:', error);
     }
   };
-
-  // Dynamically update permissions options once loaded
-  useEffect(() => {
-    if (permissionsData?.count) {
-      const permissionOptions: SelectOption[] = permissionsData.results.map((permission: UserPermissionItem) => ({
-        label: permission.name,
-        value: permission.id,
-        groupName: permission.permissionCategoryName + ' : ' + permission.mainModuleName
-      }));
-
-      setFormFields((prev) => prev.map((field) => (field.name === 'allPermissions' ? { ...field, options: permissionOptions } : field)));
-    }
-  }, [permissionsData]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

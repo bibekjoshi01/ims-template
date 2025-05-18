@@ -14,11 +14,11 @@ import { useGetUserRoleUserPermissionsQuery, usePatchUserRoleMutation } from '..
 
 // Form Schema, Defaults, Types
 import { SelectOption } from '@/components/CustomInput';
-import { UserPermissionItem } from '../../redux/types';
+import { UserPermissionItem, UserRoleDetailed } from '../../redux/types';
 import { defaultValues, UserRoleUpdateFormDataType, userRoleUpdateFormFields, userRoleUpdateFormSchema } from './userRoleUpdateForm.config';
 
 interface UserRoleUpdateFormProps {
-  userRoleData?: any;
+  userRoleData?: UserRoleDetailed | undefined;
   onClose?: () => void;
 }
 
@@ -27,9 +27,8 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
   const [updateUserRole] = usePatchUserRoleMutation();
 
   const { data: permissionsData } = useGetUserRoleUserPermissionsQuery({
-    search: '',
-    paginationModel: { page: 0, pageSize: 100 },
-    sortModel: []
+    mainModule: userRoleData?.mainModule,
+    subModule: userRoleData?.subModule
   });
 
   const [formFields, setFormFields] = useState(userRoleUpdateFormFields);

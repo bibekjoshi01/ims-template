@@ -26,17 +26,24 @@ export const defaultValues: UserRoleCreateFormDataType = {
 
 // NOTE - Define the form fields
 export const userRoleCreateFormFields: FormField<UserRoleCreateFormDataType>[] = [
-  { name: 'name', label: 'Name', xs: 4, sm: 3, type: 'text' },
+  { name: 'name', label: 'Name', sm: 6, type: 'text' },
   {
     name: 'isActive',
     label: 'Active Status',
-    xs: 2,
-    sm: 2,
+    sm: 6,
     type: 'checkbox',
     required: false
   },
-  { name: 'mainModule', label: 'Main Module', xs: 6, sm: 7, type: 'select', options: [], required: false },
-  { name: 'subModule', label: 'Sub Module', xs: 6, sm: 7, type: 'select', options: [], required: false },
-  { name: 'allPermissions', label: 'All Permissions', xs: 6, sm: 7, type: 'select', options: [], multipleChips: true, required: false },
-  { name: 'selectedPermissions', label: 'Selected Permissions', xs: 6, sm: 7, type: 'select', options: [], multipleChips: true, required: false }
+  { name: 'mainModule', label: 'Main Module', sm: 6, type: 'select', options: [], required: false },
+  { name: 'subModule', label: 'Sub Module', sm: 6, type: 'select', options: [], required: false },
+  { name: 'allPermissions', label: 'All Permissions', sm: 6, type: 'select', options: [], multipleChips: true, required: false },
+  {
+    name: 'selectedPermissions',
+    label: 'Selected Permissions',
+    sm: 6,
+    type: 'select',
+    options: [],
+    multipleChips: true,
+    required: false
+  }
 ];

@@ -9,57 +9,60 @@ export interface Permission {
   isActive: boolean;
 }
 
-export interface UserRole {
-  id?: number;
-  name: string;
-  codename: string;
-  isActive: boolean;
-  createdAt?: string;
-  permissions?: Permission[] | [];
-  mainModules?: Permission | null;
-  subModules?: Permission | null;
-}
-
-export interface UserRoleInputPost {
-  name: string;
-  permissions: number[];
-  isActive: boolean;
-}
-
-export interface UserRoleInputPatch {
-  name: string;
-  permissions: number[];
-  isActive: boolean;
-  remarks: string;
-}
-
-export interface UserRoleListQueryParams {
-  search: string;
-  paginationModel?: GridPaginationModel;
-  sortModel?: GridSortModel;
-  filterModel?: GridFilterModel;
-}
-
-export interface UserRoleList {
-  count: number;
-  results: UserRole[] | [];
-}
-
-export interface UserRoleMainModules {
-  count: number;
-  results: Permission[] | [];
-}
-
-export interface UserPermissionItem {
-  id: number;
-  name: string;
-  codename: string;
-  isActive: boolean;
+export interface UserPermissionItem extends Permission {
   mainModule: number;
   mainModuleName: string;
   permissionCategory: number;
   permissionCategoryName: string;
 }
+
+export interface UserRole extends Permission {
+  createdAt?: string;
+}
+
+export interface MainModule extends Permission {}
+export interface SubModule extends Omit<MainModule, 'codename'> {
+  mainModule: number;
+  mainModuleName: string;
+}
+
+interface detaiPermission extends Omit<MainModule, 'isActive'> {
+  permissionCategory: number;
+}
+export interface UserRoleDetailed extends Permission {
+  permissions: detaiPermission[];
+  createdBy: number;
+  createdByUsername: string;
+  createdByFullName: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateUserRole {
+  name: string;
+  permissions?: number[];
+  isActive?: boolean;
+}
+
+export interface UpdateUserRole {
+  id: number;
+  values: {
+    name?: string;
+    permissions?: number[];
+    isActive?: boolean;
+    remarks?: string;
+  };
+}
+
+export interface Response<T> {
+  count: number;
+  results: T[] | [];
+}
+
+export interface UserRoleList extends Response<UserRole> {}
+export interface UserRoleMainModules extends Response<MainModule> {}
+export interface UserRoleSubModules extends Response<SubModule> {}
+export interface UserPermissionCategory extends Response<UserPermissionItem> {}
 
 export interface PermissionsProps {
   allUserPermissions: UserPermissionItem[];
@@ -72,5 +75,12 @@ export interface PermissionsProps {
 
 export interface UserRoleSliceState {
   edit: boolean;
-  currentId: null | number;
+  currentId?: number;
+}
+
+export interface UserRoleListQueryParams {
+  search: string;
+  paginationModel?: GridPaginationModel;
+  sortModel?: GridSortModel;
+  filterModel?: GridFilterModel;
 }
