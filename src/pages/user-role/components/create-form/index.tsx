@@ -20,6 +20,8 @@ import { useCreateUserRoleMutation } from '../../redux/user-role.api';
 // Form Schema, Defaults, Types
 import { defaultValues, UserRoleCreateFormDataType, userRoleCreateFormFields, userRoleCreateFormSchema } from './userRoleCreateForm.config';
 import PermissionTransfer, { UserPermission } from '../PermissionTransfer';
+import { handleClientError } from '@/utils/functions/handleError';
+import { useSnackbar } from 'notistack';
 
 interface UserRoleCreateFormProps {
   onClose?: () => void;
@@ -27,6 +29,7 @@ interface UserRoleCreateFormProps {
 
 export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps) {
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const [createUserRole] = useCreateUserRoleMutation();
   const [formFields, setFormFields] = useState(userRoleCreateFormFields);
 
@@ -35,6 +38,7 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
     handleSubmit,
     watch,
     setValue,
+    setError,
     formState: { errors }
   } = useForm<UserRoleCreateFormDataType>({
     resolver: zodResolver(userRoleCreateFormSchema),
@@ -102,8 +106,16 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
     } catch (error) {
-      console.error('Error creating user role:', error);
-      dispatch(setMessage({ message: 'Failed to create user role.', variant: 'error' }));
+      handleClientError<UserRoleCreateFormDataType>({
+        error,
+        setError,
+        enqueueSnackbar,
+        fieldKeyMap: {
+          name: 'name',
+          permissions: 'selectedPermissions',
+          isActive: 'isActive'
+        }
+      });
     }
   };
 

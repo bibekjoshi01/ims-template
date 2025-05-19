@@ -17,6 +17,8 @@ import { useGetUserRolesQuery, usePatchUserMutation } from '../../redux/user.api
 import { SelectOption } from '@/components/CustomInput';
 import { UserRole } from '../../redux/types';
 import { defaultValues, userInfoUpdateFields, UserInfoUpdateFormDataType, userInfoUpdateFormSchema } from './userUpdateForm.config';
+import { handleClientError } from '@/utils/functions/handleError';
+import { useSnackbar } from 'notistack';
 
 interface UserFormProps {
   userData?: any;
@@ -25,6 +27,7 @@ interface UserFormProps {
 
 export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const [updateUser] = usePatchUserMutation();
   const { data: rolesData } = useGetUserRolesQuery({
     search: '',
@@ -35,6 +38,7 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
   const {
     control,
     handleSubmit,
+    setError,
     formState: { errors },
     reset
   } = useForm<UserInfoUpdateFormDataType>({
@@ -63,7 +67,6 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
     try {
       const { id, name, phoneNo, roles, isActive, photo } = data;
       const { firstName, lastName } = splitName(name);
-      // const file = await fetchFileFromUrl(photo, name);
       const payload = {
         id,
         values: {
@@ -80,12 +83,19 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
     } catch (error) {
-      dispatch(
-        setMessage({
-          message: 'Failed to update user. Please try again.',
-          variant: 'error'
-        })
-      );
+      handleClientError<UserInfoUpdateFormDataType>({
+        error,
+        setError,
+        enqueueSnackbar,
+        fieldKeyMap: {
+          firstName: 'name',
+          lastName: 'name',
+          roles: 'roles',
+          photo: 'photo',
+          phoneNo: 'phoneNo',
+          isActive: 'isActive'
+        }
+      });
     }
   };
 

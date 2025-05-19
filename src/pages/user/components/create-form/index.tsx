@@ -17,6 +17,8 @@ import { SelectOption } from '@/components/CustomInput';
 import { UserInput, UserRole } from '../../redux/types';
 import { defaultValues, uniqueFieldNames, userInfoFields, UserInfoFormDataType, userInfoFormSchema } from './userCreateForm.config';
 import useUniqueFieldValidation from '@/hooks/useUniqueFieldValidation';
+import { handleClientError } from '@/utils/functions/handleError';
+import { useSnackbar } from 'notistack';
 
 interface UserCreateFormProps {
   onClose?: () => void;
@@ -24,6 +26,7 @@ interface UserCreateFormProps {
 
 export default function UserCreateForm({ onClose }: UserCreateFormProps) {
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const [createUser] = useCreateUserMutation();
   const [triggerGetUsers] = useLazyGetUsersQuery();
   const { data: rolesData } = useGetUserRolesQuery({
@@ -79,7 +82,22 @@ export default function UserCreateForm({ onClose }: UserCreateFormProps) {
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
     } catch (error) {
-      console.error('Error creating user:', error);
+      handleClientError<UserInfoFormDataType>({
+        error,
+        setError,
+        enqueueSnackbar,
+        fieldKeyMap: {
+          firstName: 'name',
+          lastName: 'name',
+          username: 'username',
+          password: 'password',
+          email: 'email',
+          photo: 'photo',
+          phoneNo: 'phoneNo',
+          roles: 'roles',
+          isActive: 'isActive'
+        }
+      });
     }
   };
 
