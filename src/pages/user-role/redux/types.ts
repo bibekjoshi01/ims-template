@@ -27,9 +27,11 @@ export interface SubModule extends Omit<MainModule, 'codename'> {
 }
 
 interface detaiPermission extends Omit<MainModule, 'isActive'> {
+  id: number;
   permissionCategory: number;
 }
 export interface UserRoleDetailed extends Permission {
+  id: number;
   permissions: detaiPermission[];
   createdBy: number;
   createdByUsername: string;

@@ -1,7 +1,12 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+import React, { useMemo, useCallback, useState } from 'react';
 import { Button, Grid } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+// Custom Hooks
+import { useMainModules } from '../../hooks/useMainModules';
+import { useSubModules } from '../../hooks/useSubModules';
+import { usePermissions } from '../../hooks/usePermissions';
 
 // UI Components
 import FormSection from '@/components/FormSection';
@@ -10,17 +15,11 @@ import MainCard from '@/components/MainCard';
 // Utilities & API
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
-import {
-  useCreateUserRoleMutation,
-  useGetUserRoleMainModulesQuery,
-  useLazyGetUserRolePermissionCategoriesQuery,
-  useLazyGetUserRoleUserPermissionsQuery
-} from '../../redux/user-role.api';
+import { useCreateUserRoleMutation } from '../../redux/user-role.api';
 
 // Form Schema, Defaults, Types
-import { SelectOption } from '@/components/CustomInput';
-import { UserRoleMainModules, UserRoleSubModules } from '../../redux/types';
 import { defaultValues, UserRoleCreateFormDataType, userRoleCreateFormFields, userRoleCreateFormSchema } from './userRoleCreateForm.config';
+import PermissionTransfer, { UserPermission } from '../PermissionTransfer';
 
 interface UserRoleCreateFormProps {
   onClose?: () => void;
@@ -35,73 +34,63 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
     control,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors }
   } = useForm<UserRoleCreateFormDataType>({
     resolver: zodResolver(userRoleCreateFormSchema),
     defaultValues
   });
 
-  // NOTE - Fetch main modules
-  const { data: mainModulesData } = useGetUserRoleMainModulesQuery();
-  // NOTE - and update mainModuleOptions in form fields
-  useEffect(() => {
-    if (mainModulesData?.count) {
-      const mainModuleOptions: SelectOption[] = mainModulesData.results.map((mainModule: UserRoleMainModules['results'][number]) => ({
-        label: mainModule.name,
-        value: mainModule.id
-      }));
-      setFormFields((prev) => prev.map((field) => (field.name === 'mainModule' ? { ...field, options: mainModuleOptions } : field)));
-    }
-  }, [mainModulesData]);
-
-  // Watch for changes in the main module and sub module fields
+  // Watches the form fields for reactive data fetching.
   const mainModule = watch('mainModule');
   const subModule = watch('subModule');
+  const selectedPermissions = watch('selectedPermissions') || [];
 
-  // NOTE - Fetch all permissions when mainModule and subModule are updated
-  const [fetchAllPermissions] = useLazyGetUserRoleUserPermissionsQuery();
-  useEffect(() => {
-    (async () => {
-      if (mainModule) {
-        // NOTE - Fetch all permissions based on mainModule and subModule
-        const res = await fetchAllPermissions({ mainModule, subModule }).unwrap();
+  // Fetch data using custom hooks
+  const mainModuleOptions = useMainModules();
+  const subModuleOptions = useSubModules(mainModule);
+  const allPermissions = usePermissions(selectedPermissions, mainModule, subModule);
 
-        // NOTE - Update allPermissionsOptions in form fields
-        if (res) {
-          const allPermissionsOptions: SelectOption[] = res.results.map((permission) => ({
-            label: permission.name,
-            value: permission.id,
-            groupName: permission.mainModuleName + ' ' + permission.permissionCategoryName
-          }));
-          setFormFields((prev) =>
-            prev.map((field) => (field.name === 'allPermissions' ? { ...field, options: allPermissionsOptions } : field))
-          );
+  // Memoized formatted permissions
+  const formattedPermissions = useMemo(() => allPermissions.map((perm) => ({ id: perm.value, name: perm.label })), [allPermissions]);
+
+  // Convert selectedPermissions IDs to permission objects
+  const selectedUserPermissions = useMemo(
+    () => formattedPermissions.filter((perm) => selectedPermissions.includes(perm.id as number)),
+    [formattedPermissions, selectedPermissions]
+  );
+
+  /**
+   * Updates the selected permissions in the form state.
+   */
+  const handlePermissionsChange = useCallback(
+    (newSelected: UserPermission[]) => {
+      const selectedIds = newSelected.map((perm) => perm.id as number);
+      setValue('selectedPermissions', selectedIds, { shouldValidate: true });
+    },
+    [setValue]
+  );
+
+  /**
+   * Update form field options for mainModule and subModule.
+   */
+  useMemo(() => {
+    setFormFields((prev) =>
+      prev.map((field) => {
+        if (field.name === 'mainModule') {
+          return { ...field, options: mainModuleOptions };
         }
-      }
-    })();
-  }, [mainModule, subModule, fetchAllPermissions]);
-
-  // NOTE - Fetch submodules when mainModule is updated
-  // and update subModuleOptions in form fields
-  const [fetchSubModules] = useLazyGetUserRolePermissionCategoriesQuery();
-  useEffect(() => {
-    (async () => {
-      if (mainModule) {
-        // NOTE - Fetch submodules based on mainModule
-        const res = await fetchSubModules({ mainModule }).unwrap();
-
-        // NOTE - Update subModuleOptions in form fields
-        if (res) {
-          const subModuleOptions: SelectOption[] = res.results.map((subModule: UserRoleSubModules['results'][number]) => ({
-            label: subModule.name,
-            value: subModule.id
-          }));
-          setFormFields((prev) => prev.map((field) => (field.name === 'subModule' ? { ...field, options: subModuleOptions } : field)));
+        if (field.name === 'subModule') {
+          return { ...field, options: subModuleOptions };
         }
-      }
-    })();
-  }, [mainModule, fetchSubModules]);
+        return field;
+      })
+    );
+  }, [mainModuleOptions, subModuleOptions]);
 
+  /**
+   * Form submission handler.
+   */
   const onSubmit = async (data: UserRoleCreateFormDataType) => {
     try {
       const payload = {
@@ -114,15 +103,24 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
       onClose?.();
     } catch (error) {
       console.error('Error creating user role:', error);
+      dispatch(setMessage({ message: 'Failed to create user role.', variant: 'error' }));
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3} sx={{ my: '1px' }}>
-        <Grid item xs={12} sx={{ py: '10px' }}>
-          <MainCard divider title="Add New User Role">
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <MainCard divider title="Create User Role">
+            {/* Form Section with other fields */}
             <FormSection<UserRoleCreateFormDataType> fields={formFields} control={control} errors={errors} />
+
+            {/* Permission Transfer Component */}
+            <PermissionTransfer
+              allPermissions={formattedPermissions}
+              selectedPermissions={selectedUserPermissions}
+              onChange={handlePermissionsChange}
+            />
           </MainCard>
         </Grid>
 
@@ -131,7 +129,7 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
             Cancel
           </Button>
           <Button variant="contained" type="submit">
-            Add
+            Create
           </Button>
         </Grid>
       </Grid>

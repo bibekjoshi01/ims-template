@@ -82,8 +82,8 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
       providesTags: ['UserRole']
     }),
 
-    // Get Permission Categories
-    getUserRolePermissionCategories: builder.query<UserRoleSubModules, { mainModule?: string }>({
+    // Get Permission Categories OR Sub Modules
+    getUserRolePermissionCategories: builder.query<UserRoleSubModules, { mainModule?: number | string }>({
       query: ({ mainModule }) => {
         return {
           url: `${userRoleAPI}/permission-categories?main_module=${mainModule ?? ''}`,
@@ -95,10 +95,10 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
     }),
 
     // Ger User Permissions
-    getUserRoleUserPermissions: builder.query<UserPermissionCategory, { mainModule?: string; subModule?: string }>({
+    getUserRoleUserPermissions: builder.query<UserPermissionCategory, { mainModule?: number | string; subModule?: number | string }>({
       query: ({ mainModule, subModule }) => {
         return {
-          url: `${userRoleAPI}/permissions?main_module=${mainModule ?? ''}&permission_category=${subModule}`,
+          url: `${userRoleAPI}/permissions?main_module=${mainModule ?? ''}&permission_category=${subModule ?? ''}`,
           method: 'GET'
         };
       },

@@ -22,7 +22,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs from 'dayjs';
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 
 /* ------------------------------------------------------------------
    Types
@@ -220,18 +220,6 @@ const CustomInput = forwardRef<any, CustomInputProps>(
       )
     });
 
-    const [selectedOptions, setSelectedOptions] = useState<SelectOption | SelectOption[]>();
-    console.log(selectedOptions);
-    useEffect(() => {
-      if (multipleChips) {
-        const selectedOpts = options?.filter((opt: SelectOption) => value.includes(opt.value));
-        setSelectedOptions(selectedOpts);
-      } else {
-        const selectedOpt = options?.find((opt: SelectOption) => opt.value === value);
-        setSelectedOptions(selectedOpt);
-      }
-    }, [value, options, multipleChips]);
-
     switch (type) {
       case 'select':
         return (
@@ -248,16 +236,25 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               inputRef={setRef}
               multiple={multipleChips}
               renderValue={(selected) => {
+                const selectedOption = multipleChips
+                  ? options?.filter((opt: SelectOption) => selected.includes(opt.value))
+                  : options?.find((opt: SelectOption) => opt.value === selected);
                 return (
                   <>
-                    {!multipleChips && !Array.isArray(selectedOptions) ? (
+                    {multipleChips ? (
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                        {selected.map((value: any) => (
+                          <Chip key={value} label={options.find((opt: SelectOption) => opt.value === value)?.label} />
+                        ))}
+                      </Box>
+                    ) : (
                       <Box
                         sx={{
                           display: 'inline-flex',
-                          ...(selectedOptions?.sx
+                          ...(selectedOption?.sx
                             ? {
-                                backgroundColor: selectedOptions.sx['& .MuiBox-root']?.backgroundColor,
-                                color: selectedOptions.sx['& .MuiBox-root']?.color,
+                                backgroundColor: selectedOption.sx['& .MuiBox-root']?.backgroundColor,
+                                color: selectedOption.sx['& .MuiBox-root']?.color,
                                 // FIXME - Handle Theme properly
                                 //@ts-ignore
                                 fontSize: theme.typography.body2.fontSize,
@@ -268,22 +265,16 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                             : {})
                         }}
                       >
-                        {selectedOptions?.src && (
+                        {selectedOption?.src && (
                           <img
                             loading="lazy"
-                            src={selectedOptions.src}
-                            srcSet={`${selectedOptions.src} 2x`}
+                            src={selectedOption.src}
+                            srcSet={`${selectedOption.src} 2x`}
                             alt="flag"
                             style={{ height: '14px', aspectRatio: 1, objectFit: 'fill', marginRight: '4px' }}
                           />
                         )}
-                        {selectedOptions?.label}
-                      </Box>
-                    ) : (
-                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                        {selected.map((value: any) => (
-                          <Chip key={value} label={options.find((opt: SelectOption) => opt.value === value)?.label} />
-                        ))}
+                        {selectedOption?.label}
                       </Box>
                     )}
                   </>
@@ -344,37 +335,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                               style={{ height: '14px', aspectRatio: 1, objectFit: 'fill', marginRight: '4px' }}
                             />
                           )}
-                          <Checkbox
-                            name={option.label}
-                            checked={
-                              multipleChips
-                                ? Boolean(
-                                    Array.isArray(selectedOptions) &&
-                                      selectedOptions.find((opt: SelectOption) => opt.value === option.value)
-                                  )
-                                : (selectedOptions as SelectOption)?.value === option.value
-                            }
-                            onChange={(e) => {
-                              const isChecked = e.target.checked;
-                              if (multipleChips) {
-                                const currentSelections = Array.isArray(selectedOptions) ? selectedOptions : [];
-                                const updatedSelections = isChecked
-                                  ? [...currentSelections, option]
-                                  : currentSelections.filter((opt) => opt.value !== option.value);
-
-                                onChange({
-                                  target: { name, value: updatedSelections.map((opt) => opt.value) }
-                                });
-                              } else {
-                                onChange({ target: { name, value: isChecked ? option.value : '' } });
-                              }
-                            }}
-                            aria-describedby={errorId}
-                            sx={{ scale: 0.85 }}
-                          />
-                          <Typography variant="body1" sx={{ ml: 1, display: 'inline-flex' }}>
-                            {option.label}
-                          </Typography>
+                          {option.label}
                         </Box>
                       </MenuItem>
                     );
