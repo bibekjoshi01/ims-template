@@ -88,7 +88,7 @@ export default function Button(theme) {
 
   const disabledStyle = {
     '&.Mui-disabled': {
-      backgroundColor: theme.palette.grey.lighter
+      backgroundColor: theme.palette.secondary.divider
     }
   };
   const iconStyle = {

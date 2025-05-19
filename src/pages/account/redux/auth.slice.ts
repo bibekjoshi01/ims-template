@@ -10,12 +10,9 @@ const initialState: UserProfile = {
   fullName: '',
   phoneNo: '',
   email: '',
-  isSuperuser: false,
   dateJoined: '',
   lastLogin: '',
-  isActive: false,
   isEmailVerified: false,
-  isPhoneVerified: false,
   roles: [],
   photo: ''
 };

@@ -78,9 +78,6 @@ axiosInstance.interceptors.request.use(
  */
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
-    if (response?.data?.message) {
-      showErrorToast(response.data.message);
-    }
     return response;
   },
   async (error) => {
