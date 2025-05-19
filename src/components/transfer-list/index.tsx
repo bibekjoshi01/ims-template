@@ -97,11 +97,12 @@ export default function TransferList<T>({
   const renderList = (title: string, items: T[]) => (
     <MainCard
       sx={{
-        my: 4,
+        mt: 4,
+        mb:2,
         border: '1px solid',
         borderColor: 'secondary.divider',
         width: '100%',
-        height: 400,
+        height: 320,
         overflow: 'auto',
         position: 'relative'
       }}
