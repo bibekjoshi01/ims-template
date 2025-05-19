@@ -21,6 +21,8 @@ import { usePatchUserRoleMutation } from '../../redux/user-role.api';
 // Form Schema, Defaults, Types
 import { defaultValues, UserRoleUpdateFormDataType, userRoleUpdateFormFields, userRoleUpdateFormSchema } from './userRoleUpdateForm.config';
 import { UserRoleDetailed } from '../../redux/types';
+import { handleClientError } from '@/utils/functions/handleError';
+import { useSnackbar } from 'notistack';
 
 interface UserRoleUpdateFormProps {
   userRoleData?: UserRoleDetailed;
@@ -29,6 +31,7 @@ interface UserRoleUpdateFormProps {
 
 export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUpdateFormProps) {
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const [updateUserRole] = usePatchUserRoleMutation();
   const [formFields, setFormFields] = useState(userRoleUpdateFormFields);
 
@@ -37,6 +40,7 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
     handleSubmit,
     watch,
     setValue,
+    setError,
     reset,
     formState: { errors }
   } = useForm<UserRoleUpdateFormDataType>({
@@ -128,7 +132,16 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
     } catch (error) {
-      dispatch(setMessage({ message: 'Failed to update user role.', variant: 'error' }));
+      handleClientError<UserRoleUpdateFormDataType>({
+        error,
+        setError,
+        enqueueSnackbar,
+        fieldKeyMap: {
+          name: 'name',
+          permissions: 'selectedPermissions',
+          isActive: 'isActive'
+        }
+      });
     }
   };
 

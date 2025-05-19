@@ -98,7 +98,7 @@ export default function TransferList<T>({
     <MainCard
       sx={{
         mt: 4,
-        mb:2,
+        mb: 2,
         border: '1px solid',
         borderColor: 'secondary.divider',
         width: '100%',
