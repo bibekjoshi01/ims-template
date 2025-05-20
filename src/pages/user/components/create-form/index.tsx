@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Grid } from '@mui/material';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import FormSection from '@/components/FormSection';
@@ -14,11 +14,11 @@ import { splitName } from '@/utils/functions/splitCombineName';
 import { useCreateUserMutation, useGetUserRolesQuery, useLazyGetUsersQuery } from '../../redux/user.api';
 
 import { SelectOption } from '@/components/CustomInput';
-import { UserInput, UserRole } from '../../redux/types';
-import { defaultValues, uniqueFieldNames, userInfoFields, UserInfoFormDataType, userInfoFormSchema } from './userCreateForm.config';
 import useUniqueFieldValidation from '@/hooks/useUniqueFieldValidation';
 import { handleClientError } from '@/utils/functions/handleError';
 import { useSnackbar } from 'notistack';
+import { UserCreatePayload, UserRole } from '../../redux/types';
+import { defaultValues, uniqueFieldNames, userInfoFields, UserInfoFormDataType, userInfoFormSchema } from './userCreateForm.config';
 
 interface UserCreateFormProps {
   onClose?: () => void;
@@ -77,7 +77,7 @@ export default function UserCreateForm({ onClose }: UserCreateFormProps) {
     try {
       const { confirmPassword, name, ...rest } = data;
       const { firstName, middleName, lastName } = splitName(name);
-      const payload: UserInput = { firstName, middleName, lastName, ...rest };
+      const payload: UserCreatePayload = { firstName, middleName, lastName, ...rest };
       const res = await createUser(payload).unwrap();
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
