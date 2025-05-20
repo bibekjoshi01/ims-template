@@ -116,6 +116,16 @@ export const userAPISlice = rootAPI.injectEndpoints({
       },
       providesTags: ['User'],
       keepUnusedDataFor: 0.1
+    }),
+    // Archive User
+    archiveUser: builder.mutation<{ id: number; message: string }, number>({
+      query: (id) => {
+        return {
+          url: `${userAPI}/${id}/archive`,
+          method: 'DELETE'
+        };
+      },
+      invalidatesTags: ['User']
     })
   })
 });
@@ -127,5 +137,6 @@ export const {
   useLazyRetrieveUserQuery,
   useCreateUserMutation,
   usePatchUserMutation,
-  useGetUserRolesQuery
+  useGetUserRolesQuery,
+  useArchiveUserMutation
 } = userAPISlice;

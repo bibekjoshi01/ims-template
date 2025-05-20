@@ -16,6 +16,6 @@ export const getColumnConfig = (theme: Theme): ColumnConfig<TableData>[] => [
     type: 'boolean',
     filterable: false
   },
-  { field: 'createdAt', headerName: 'CREATED AT', type: 'date', editable: false, filterable: false },
-  { field: 'actions', headerName: '', type: 'actions', deletable: false }
+  { field: 'createdAt', headerName: 'CREATED AT', type: 'date', editable: false, filterable: false, sortable: false },
+  { field: 'actions', headerName: '', type: 'actions' }
 ];

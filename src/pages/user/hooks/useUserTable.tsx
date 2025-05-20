@@ -3,7 +3,7 @@ import { useAppDispatch } from '@/libs/hooks';
 import { combineName, splitName } from '@/utils/functions/splitCombineName';
 import { TableData } from '../components/userListingTable.config';
 import { UserItem } from '../redux/types';
-import { useGetUsersQuery, usePatchUserMutation } from '../redux/user.api';
+import { useArchiveUserMutation, useGetUsersQuery, usePatchUserMutation } from '../redux/user.api';
 import { currentUserId, setEdit, setViewId } from '../redux/user.slice';
 
 /**
@@ -18,6 +18,7 @@ export const useUserTable = () => {
     // RTK Query hooks
     useListQuery: useGetUsersQuery,
     useUpdateMutation: usePatchUserMutation,
+    useDeleteMutation: useArchiveUserMutation,
 
     // Set the id of the user being edited
     setId: (id) => {

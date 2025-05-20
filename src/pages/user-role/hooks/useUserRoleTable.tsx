@@ -1,7 +1,7 @@
 import { createTableDataHook } from '@/hooks/createTableDataHook';
 import { useAppDispatch } from '@/libs/hooks';
 import { TableData } from '../components/userRoleListingTable.config';
-import { useGetUserRolesQuery, usePatchUserRoleMutation } from '../redux/user-role.api';
+import { useArchiveUserRoleMutation, useGetUserRolesQuery, usePatchUserRoleMutation } from '../redux/user-role.api';
 import { currentUserRoleId, setEdit, setViewId } from '../redux/user-role.slice';
 
 /**
@@ -16,6 +16,7 @@ export const useUserRoleTable = () => {
     // RTK Query hooks
     useListQuery: useGetUserRolesQuery,
     useUpdateMutation: usePatchUserRoleMutation,
+    useDeleteMutation: useArchiveUserRoleMutation,
 
     // Set the id of the user being edited
     setId: (id) => {

@@ -39,6 +39,7 @@ const createColumnDefs = <T extends object>(
       headerName: config?.headerName,
       flex: 1, // fill the available space
       maxWidth: config?.maxWidth, // restrict the width if needed
+      sortable: config?.sortable ?? true,
       editable: config?.editable ?? true,
       filterable: config?.filterable ?? true,
       renderCell: config?.renderCell

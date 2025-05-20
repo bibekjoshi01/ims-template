@@ -43,7 +43,6 @@ const UserRoleDetails: React.FC<UserRoleDetailsProps> = ({ userRoleData, onClose
 
   return (
     <MainCard sx={{ p: 0, overflow: 'hidden', position: 'relative' }}>
-
       {/* Close Button */}
       <IconButton onClick={onClose} color="error" size="small" sx={{ position: 'absolute', top: 5, right: 5 }}>
         <Close />
