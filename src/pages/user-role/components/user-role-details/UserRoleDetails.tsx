@@ -5,8 +5,6 @@ import {
   AccordionSummary,
   Avatar,
   Box,
-  Card,
-  CardContent,
   Chip,
   CircularProgress,
   Grid,
@@ -14,42 +12,14 @@ import {
   Paper,
   Typography
 } from '@mui/material';
-
-import { CheckCircleOutline, Close, PersonOutline, CalendarToday, ExpandMore } from '@mui/icons-material';
+import { CheckCircleOutline, Close, PersonOutline, CalendarToday, ExpandMore, CancelOutlined } from '@mui/icons-material';
 
 // Project Imports
 import dayjs from 'dayjs';
-import { ReactNode } from 'react';
 import MainCard from '@/components/MainCard';
 import { UserRoleDetailed } from '../../redux/types';
 import { useGroupedPermissions } from '../../hooks/useGroupedPermissions';
-
-interface InfoCardProps {
-  icon: ReactNode;
-  title: string;
-  value: string;
-  chipColor?: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
-}
-
-const InfoCard: React.FC<InfoCardProps> = ({ icon, title, value, chipColor }) => (
-  <Card variant="outlined" sx={{ height: '100%' }}>
-    <CardContent>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-        <Box sx={{ color: 'primary.main', mr: 1 }}>{icon}</Box>
-        <Typography variant="subtitle2" color="text.secondary">
-          {title}
-        </Typography>
-      </Box>
-      {chipColor ? (
-        <Chip label={value} color={chipColor} sx={{ mt: 1 }} />
-      ) : (
-        <Typography variant="body1" sx={{ wordBreak: 'break-word' }}>
-          {value || 'N/A'}
-        </Typography>
-      )}
-    </CardContent>
-  </Card>
-);
+import InfoCard from '@/components/cards/Infocard';
 
 interface UserRoleDetailsProps {
   userRoleData?: UserRoleDetailed;
@@ -73,6 +43,8 @@ const UserRoleDetails: React.FC<UserRoleDetailsProps> = ({ userRoleData, onClose
 
   return (
     <MainCard sx={{ p: 0, overflow: 'hidden', position: 'relative' }}>
+
+      {/* Close Button */}
       <IconButton onClick={onClose} color="error" size="small" sx={{ position: 'absolute', top: 5, right: 5 }}>
         <Close />
       </IconButton>
@@ -88,9 +60,16 @@ const UserRoleDetails: React.FC<UserRoleDetailsProps> = ({ userRoleData, onClose
           <Box sx={{ mt: 1 }}>
             <Chip
               size="small"
+              variant="outlined"
               color={userRoleData.isActive ? 'success' : 'error'}
               label={userRoleData.isActive ? 'Active' : 'Inactive'}
-              icon={<CheckCircleOutline fontSize="small" />}
+              icon={userRoleData.isActive ? <CheckCircleOutline fontSize="small" /> : <CancelOutlined fontSize="small" />}
+              sx={{
+                mr: 1,
+                p: 1.5,
+                fontWeight: 500,
+                borderRadius: 1
+              }}
             />
           </Box>
         </Box>
