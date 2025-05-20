@@ -15,10 +15,10 @@ import { useGetUserRolesQuery, usePatchUserMutation } from '../../redux/user.api
 
 // Form Schema, Defaults, Types
 import { SelectOption } from '@/components/CustomInput';
-import { UserRole } from '../../redux/types';
-import { defaultValues, userInfoUpdateFields, UserInfoUpdateFormDataType, userInfoUpdateFormSchema } from './userUpdateForm.config';
 import { handleClientError } from '@/utils/functions/handleError';
 import { useSnackbar } from 'notistack';
+import { UserRole } from '../../redux/types';
+import { defaultValues, userInfoUpdateFields, UserInfoUpdateFormDataType, userInfoUpdateFormSchema } from './userUpdateForm.config';
 
 interface UserFormProps {
   userData?: any;

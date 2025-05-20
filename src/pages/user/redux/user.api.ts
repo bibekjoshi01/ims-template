@@ -1,6 +1,14 @@
 import { rootAPI } from '@/libs/apiSlice';
-import { UserDetails, UserInput, UserList, UserListQueryParams, UseRoleList, UserRolesListQueryParams, UserUpdateInput } from './types';
 import { getQueryParams } from '@/utils/functions/queryBuilder';
+import {
+  UserCreatePayload,
+  UserDetails,
+  UserList,
+  UserListQueryParams,
+  UseRoleList,
+  UserRolesListQueryParams,
+  UserUpdatePayload
+} from './types';
 
 export const userAPI = 'admin/user-app/users';
 
@@ -40,7 +48,7 @@ export const userAPISlice = rootAPI.injectEndpoints({
 
     // Create User
     createUser: builder.mutation({
-      query: (values: UserInput) => {
+      query: (values: UserCreatePayload) => {
         const { roles, photo, ...rest } = values;
         const body = new FormData();
         for (const [key, value] of Object.entries(rest)) {
@@ -68,7 +76,7 @@ export const userAPISlice = rootAPI.injectEndpoints({
 
     // Update User
     patchUser: builder.mutation({
-      query: ({ id, values }: { id: number; values: UserUpdateInput }) => {
+      query: ({ id, values }: { id: number; values: UserUpdatePayload }) => {
         const { roles, photo, ...rest } = values;
         const body = new FormData();
 

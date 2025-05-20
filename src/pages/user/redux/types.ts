@@ -1,4 +1,3 @@
-import { PaginationParams } from '@/pages/common/redux/types';
 import { GridFilterModel, GridPaginationModel, GridSortModel } from '@mui/x-data-grid';
 
 export interface UserRole {
@@ -32,7 +31,7 @@ export interface UserList {
   results: UserItem[];
 }
 
-export interface UserInput {
+export interface UserCreatePayload {
   firstName: string;
   middleName: string;
   lastName: string;
@@ -45,7 +44,7 @@ export interface UserInput {
   photo?: File | null | undefined;
 }
 
-export interface UserUpdateInput {
+export interface UserUpdatePayload {
   firstName?: string;
   lastName?: string;
   roles?: number[];
