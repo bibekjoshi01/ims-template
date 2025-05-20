@@ -3,7 +3,7 @@ import { UserRoleSliceState } from './types';
 
 const initialState: UserRoleSliceState = {
   edit: false,
-  currentId: null
+  currentId: undefined
 };
 
 export const userRoleSlice = createSlice({
@@ -18,7 +18,7 @@ export const userRoleSlice = createSlice({
     },
     clearUserRoleData: (state) => {
       state.edit = false;
-      state.currentId = null;
+      state.currentId = undefined;
     }
   }
 });

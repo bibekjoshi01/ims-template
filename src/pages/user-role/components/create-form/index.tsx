@@ -1,7 +1,12 @@
-import { zodResolver } from '@hookform/resolvers/zod';
+import React, { useMemo, useCallback, useState } from 'react';
 import { Button, Grid } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+// Custom Hooks
+import { useMainModules } from '../../hooks/useMainModules';
+import { useSubModules } from '../../hooks/useSubModules';
+import { usePermissions } from '../../hooks/usePermissions';
 
 // UI Components
 import FormSection from '@/components/FormSection';
@@ -10,12 +15,13 @@ import MainCard from '@/components/MainCard';
 // Utilities & API
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
-import { useCreateUserRoleMutation, useGetUserRoleUserPermissionsQuery } from '../../redux/user-role.api';
+import { useCreateUserRoleMutation } from '../../redux/user-role.api';
 
 // Form Schema, Defaults, Types
-import { SelectOption } from '@/components/CustomInput';
-import { UserPermissionItem } from '../../redux/types';
 import { defaultValues, UserRoleCreateFormDataType, userRoleCreateFormFields, userRoleCreateFormSchema } from './userRoleCreateForm.config';
+import PermissionTransfer, { UserPermission } from '../PermissionTransfer';
+import { handleClientError } from '@/utils/functions/handleError';
+import { useSnackbar } from 'notistack';
 
 interface UserRoleCreateFormProps {
   onClose?: () => void;
@@ -23,52 +29,110 @@ interface UserRoleCreateFormProps {
 
 export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps) {
   const dispatch = useAppDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const [createUserRole] = useCreateUserRoleMutation();
-  const { data: permissionsData } = useGetUserRoleUserPermissionsQuery({
-    search: '',
-    paginationModel: { page: 0, pageSize: 100 },
-    sortModel: []
-  });
   const [formFields, setFormFields] = useState(userRoleCreateFormFields);
 
   const {
     control,
     handleSubmit,
+    watch,
+    setValue,
+    setError,
     formState: { errors }
   } = useForm<UserRoleCreateFormDataType>({
     resolver: zodResolver(userRoleCreateFormSchema),
     defaultValues
   });
 
+  // Watches the form fields for reactive data fetching.
+  const mainModule = watch('mainModule');
+  const subModule = watch('subModule');
+  const selectedPermissions = watch('selectedPermissions') || [];
+
+  // Fetch data using custom hooks
+  const mainModuleOptions = useMainModules();
+  const subModuleOptions = useSubModules(mainModule);
+  const allPermissions = usePermissions(selectedPermissions, mainModule, subModule);
+
+  // Memoized formatted permissions
+  const formattedPermissions = useMemo(() => allPermissions.map((perm) => ({ id: perm.value, name: perm.label })), [allPermissions]);
+
+  // Convert selectedPermissions IDs to permission objects
+  const selectedUserPermissions = useMemo(
+    () => formattedPermissions.filter((perm) => selectedPermissions.includes(perm.id as number)),
+    [formattedPermissions, selectedPermissions]
+  );
+
+  /**
+   * Updates the selected permissions in the form state.
+   */
+  const handlePermissionsChange = useCallback(
+    (newSelected: UserPermission[]) => {
+      const selectedIds = newSelected.map((perm) => perm.id as number);
+      setValue('selectedPermissions', selectedIds, { shouldValidate: true });
+    },
+    [setValue]
+  );
+
+  /**
+   * Update form field options for mainModule and subModule.
+   */
+  useMemo(() => {
+    setFormFields((prev) =>
+      prev.map((field) => {
+        if (field.name === 'mainModule') {
+          return { ...field, options: mainModuleOptions };
+        }
+        if (field.name === 'subModule') {
+          return { ...field, options: subModuleOptions };
+        }
+        return field;
+      })
+    );
+  }, [mainModuleOptions, subModuleOptions]);
+
+  /**
+   * Form submission handler.
+   */
   const onSubmit = async (data: UserRoleCreateFormDataType) => {
     try {
-      const res = await createUserRole(data).unwrap();
+      const payload = {
+        name: data.name,
+        permissions: data.selectedPermissions,
+        isActive: data.isActive
+      };
+      const res = await createUserRole(payload).unwrap();
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
     } catch (error) {
-      console.error('Error creating user role:', error);
+      handleClientError<UserRoleCreateFormDataType>({
+        error,
+        setError,
+        enqueueSnackbar,
+        fieldKeyMap: {
+          name: 'name',
+          permissions: 'selectedPermissions',
+          isActive: 'isActive'
+        }
+      });
     }
   };
 
-  // Dynamically update permissions options once loaded
-  useEffect(() => {
-    if (permissionsData?.count) {
-      const permissionOptions: SelectOption[] = permissionsData.results.map((permission: UserPermissionItem) => ({
-        label: permission.name,
-        value: permission.id,
-        groupName: permission.permissionCategoryName + ' : ' + permission.mainModuleName
-      }));
-
-      setFormFields((prev) => prev.map((field) => (field.name === 'permissions' ? { ...field, options: permissionOptions } : field)));
-    }
-  }, [permissionsData]);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3} sx={{ my: '1px' }}>
-        <Grid item xs={12} sx={{ py: '10px' }}>
-          <MainCard divider title="Add New User Role">
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <MainCard divider title="Create User Role">
+            {/* Form Section with other fields */}
             <FormSection<UserRoleCreateFormDataType> fields={formFields} control={control} errors={errors} />
+
+            {/* Permission Transfer Component */}
+            <PermissionTransfer
+              allPermissions={formattedPermissions}
+              selectedPermissions={selectedUserPermissions}
+              onChange={handlePermissionsChange}
+            />
           </MainCard>
         </Grid>
 
@@ -77,7 +141,7 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
             Cancel
           </Button>
           <Button variant="contained" type="submit">
-            Add
+            Create
           </Button>
         </Grid>
       </Grid>
