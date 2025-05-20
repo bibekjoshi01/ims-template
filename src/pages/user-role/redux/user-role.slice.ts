@@ -3,7 +3,8 @@ import { UserRoleSliceState } from './types';
 
 const initialState: UserRoleSliceState = {
   edit: false,
-  currentId: undefined
+  currentId: null,
+  viewId: null
 };
 
 export const userRoleSlice = createSlice({
@@ -18,11 +19,17 @@ export const userRoleSlice = createSlice({
     },
     clearUserRoleData: (state) => {
       state.edit = false;
-      state.currentId = undefined;
+      state.currentId = null;
+    },
+    setViewId: (state, { payload }) => {
+      state.viewId = payload;
+    },
+    clearViewId: (state) => {
+      state.viewId = null;
     }
   }
 });
 
-export const { setEdit, currentUserRoleId, clearUserRoleData } = userRoleSlice.actions;
+export const { setEdit, currentUserRoleId, clearUserRoleData, setViewId, clearViewId } = userRoleSlice.actions;
 
 export default userRoleSlice.reducer;

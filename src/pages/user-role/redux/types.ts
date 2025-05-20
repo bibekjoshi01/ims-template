@@ -30,6 +30,7 @@ interface detaiPermission extends Omit<MainModule, 'isActive'> {
   id: number;
   permissionCategory: number;
 }
+
 export interface UserRoleDetailed extends Permission {
   id: number;
   permissions: detaiPermission[];
@@ -77,7 +78,8 @@ export interface PermissionsProps {
 
 export interface UserRoleSliceState {
   edit: boolean;
-  currentId?: number;
+  currentId: number | null;
+  viewId: number | null;
 }
 
 export interface UserRoleListQueryParams {

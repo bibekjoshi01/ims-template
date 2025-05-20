@@ -6,6 +6,7 @@ import { useUserRoleTable } from '../hooks/useUserRoleTable';
 import { TableData, getColumnConfig } from './userRoleListingTable.config';
 
 const UserRoleEditModal = lazy(() => import('./update-form'));
+const UserRoleDetailsModal = lazy(() => import('./user-role-details'));
 const UserRoleCreateForm = lazy(() => import('./create-form'));
 
 const UserRoleListing = () => {
@@ -27,6 +28,7 @@ const UserRoleListing = () => {
         enableRowSelection
       />
       <UserRoleEditModal />
+      <UserRoleDetailsModal />
     </>
   );
 };
