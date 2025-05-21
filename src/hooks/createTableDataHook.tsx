@@ -218,12 +218,12 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
 
         try {
           const res = await deleteItem(id).unwrap();
-          dispatch(setMessage({ message: res.message, variant: 'success' }));
+          dispatch(setMessage({ message: 'Deleted Successfully', variant: 'success' }));
           // NOTE - Refetch if needed
           // refetch();
         } catch (error) {
-          console.error('Error deleting user:', error);
-          dispatch(setMessage({ message: 'Failed to delete user', variant: 'error' }));
+          console.error('Error deleting:', error);
+          dispatch(setMessage({ message: 'Failed to delete', variant: 'error' }));
           throw error;
         }
       },

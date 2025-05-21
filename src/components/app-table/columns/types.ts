@@ -9,7 +9,7 @@ export type BadgeColorMap = Record<string, { backgroundColor: string | undefined
  * Common handlers interface for column actions
  */
 export interface ColumnHandlers<T> {
-  delete: (id: GridRowId) => Promise<void>;
+  delete: (id: GridRowId) => void;
   viewDetails: (id: GridRowId) => void;
   editInline: (id: GridRowId) => void;
   editForm: (id: GridRowId) => void;
@@ -28,11 +28,12 @@ export interface ColumnConfig<T extends object> {
   type?: 'text' | 'number' | 'select' | 'actions' | 'progress' | 'image' | 'date' | 'link' | 'boolean';
   editable?: boolean;
   filterable?: boolean;
+  sortable?: boolean;
+  deletable?: boolean; // only for 'actions' type
   valueOptions?: string[];
   renderCell?: GridColDef<T>['renderCell'];
   colorMap?: BadgeColorMap; // only for 'select' type
   trueLabel?: string; // only for 'boolean' type
   falseLabel?: string; // only for 'boolean' type
-  deletable?: boolean; // only for 'actions' type
   handlers?: ColumnHandlers<T>;
 }

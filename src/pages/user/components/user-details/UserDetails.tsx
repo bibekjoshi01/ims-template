@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { ReactNode } from 'react';
 
 // MUI Core Imports
-import { Avatar, Box, Card, CardContent, Chip, CircularProgress, Grid, IconButton, Paper, Typography } from '@mui/material';
+import { Avatar, Box, Chip, CircularProgress, Grid, IconButton, Paper, Typography } from '@mui/material';
 
 // MUI Icons
 import { CalendarToday, CancelOutlined, CheckCircleOutline, Close, EmailOutlined, PersonOutline, PhoneOutlined } from '@mui/icons-material';
@@ -11,19 +11,12 @@ import { CalendarToday, CancelOutlined, CheckCircleOutline, Close, EmailOutlined
 // Project Components & Types
 import MainCard from '@/components/MainCard';
 import { UserDetails as UserDetailsType } from '../../redux/types';
+import InfoCard from '@/components/cards/Infocard';
 
 // Component Props
 interface UserDetailsProps {
   userData: UserDetailsType | undefined;
   onClose: () => void;
-}
-
-interface InfoCardProps {
-  icon: ReactNode;
-  title: string;
-  value: string;
-  verified?: boolean;
-  chipColor?: 'default' | 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
 }
 
 // Component
@@ -112,41 +105,5 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userData, onClose }) => {
     </MainCard>
   );
 };
-
-// InfoCard Subcomponent
-const InfoCard: React.FC<InfoCardProps> = ({ icon, title, value, verified, chipColor }) => (
-  <Card variant="outlined" sx={{ height: '100%' }}>
-    <CardContent>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-        <Box sx={{ color: 'primary.main', mr: 1 }}>{icon}</Box>
-        <Typography variant="subtitle1" color="text.secondary">
-          {title}
-        </Typography>
-        {verified !== undefined && (
-          <Chip
-            size="small"
-            variant="outlined"
-            label={verified ? 'Verified' : 'Unverified'}
-            color={verified ? 'success' : 'default'}
-            icon={verified ? <CheckCircleOutline fontSize="small" /> : <CancelOutlined fontSize="small" />}
-            sx={{
-              ml: 'auto',
-              mr: 1,
-              fontWeight: 500,
-              borderRadius: 1
-            }}
-          />
-        )}
-      </Box>
-      {chipColor ? (
-        <Chip label={value} color={chipColor} sx={{ mt: 1 }} />
-      ) : (
-        <Typography variant="body1" sx={{ wordBreak: 'break-word' }}>
-          {value || 'N/A'}
-        </Typography>
-      )}
-    </CardContent>
-  </Card>
-);
 
 export default UserDetails;

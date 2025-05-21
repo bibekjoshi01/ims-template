@@ -103,6 +103,16 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
         };
       },
       keepUnusedDataFor: 0.01
+    }),
+    // Archive User Role
+    archiveUserRole: builder.mutation<{ id: number; message: string }, number>({
+      query: (id) => {
+        return {
+          url: `${userRoleAPI}/${id}/archive`,
+          method: 'DELETE'
+        };
+      },
+      invalidatesTags: ['UserRole']
     })
   })
 });
@@ -116,5 +126,6 @@ export const {
   useGetUserRolePermissionCategoriesQuery,
   useLazyGetUserRolePermissionCategoriesQuery,
   useGetUserRoleUserPermissionsQuery,
-  useLazyGetUserRoleUserPermissionsQuery
+  useLazyGetUserRoleUserPermissionsQuery,
+  useArchiveUserRoleMutation
 } = userRoleAPISlice;
