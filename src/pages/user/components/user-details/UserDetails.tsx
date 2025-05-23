@@ -1,6 +1,5 @@
 // React Imports
 import dayjs from 'dayjs';
-import { ReactNode } from 'react';
 
 // MUI Core Imports
 import { Avatar, Box, Chip, CircularProgress, Grid, IconButton, Paper, Typography } from '@mui/material';
@@ -9,9 +8,9 @@ import { Avatar, Box, Chip, CircularProgress, Grid, IconButton, Paper, Typograph
 import { CalendarToday, CancelOutlined, CheckCircleOutline, Close, EmailOutlined, PersonOutline, PhoneOutlined } from '@mui/icons-material';
 
 // Project Components & Types
+import InfoCard from '@/components/cards/Infocard';
 import MainCard from '@/components/MainCard';
 import { UserDetails as UserDetailsType } from '../../redux/types';
-import InfoCard from '@/components/cards/Infocard';
 
 // Component Props
 interface UserDetailsProps {
