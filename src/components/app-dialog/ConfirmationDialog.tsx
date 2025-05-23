@@ -1,6 +1,6 @@
+import { CheckCircleOutline, DeleteOutline, InfoOutlined, WarningAmber } from '@mui/icons-material';
+import { Avatar, Button, CircularProgress, Dialog, DialogActions, DialogContent, Typography } from '@mui/material';
 import React from 'react';
-import { Dialog, DialogContent, DialogActions, Typography, Button, CircularProgress, Avatar } from '@mui/material';
-import { DeleteOutline, WarningAmber, InfoOutlined, CheckCircleOutline } from '@mui/icons-material';
 
 interface ConfirmationModalProps {
   open: boolean;
@@ -58,8 +58,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       fullWidth
       PaperProps={{
         sx: {
-          borderRadius: 3,
-          padding: 2
+          borderRadius: 3
         }
       }}
     >
