@@ -16,6 +16,8 @@ export const createImageColumn = <T extends object>(theme: Theme, baseCol: GridC
     ...baseCol,
     filterable: false,
     sortable: false,
+    minWidth: 70,
+    flex: 0,
     renderCell: (params) => {
       const value = params.value;
       let imageUrl = value instanceof File || value instanceof Blob ? URL.createObjectURL(value) : value;

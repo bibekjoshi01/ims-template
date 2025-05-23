@@ -4,8 +4,8 @@ import TableContainer from '@/components/app-table/TableContainer';
 import { useUserTable } from '../hooks/useUserTable';
 import { TableData, getColumnConfig } from './userListingTable.config';
 
-const UserEditModal = lazy(() => import('./user-details'));
-const UserDetailsModal = lazy(() => import('./update-form'));
+const UserDetailsModal = lazy(() => import('./user-details'));
+const UserEditModal = lazy(() => import('./update-form'));
 const UserCreateForm = lazy(() => import('./create-form'));
 
 const UserListing = () => {

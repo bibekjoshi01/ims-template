@@ -13,8 +13,13 @@ export interface ColorVariants {
   darker: string;
   900: string;
   contrastText: string; // used for texts inside some colored boxes
+}
 
+export interface PrimaryColorVariants extends ColorVariants {
   primaryText: string; // used for main text color can be used as text.primary
+}
+
+export interface SecondaryColorVariants extends ColorVariants {
   secondaryText: string; // used for secondary text color can be used as text.secondary
   divider: string; // used for divider color can be used as secondary.divider
   paper: string; // used for paper background color can be used as secondary.paper
@@ -24,8 +29,8 @@ export interface ColorVariants {
 
 // Color value interface for advanced color customization
 export interface ColorValues {
-  primary: ColorVariants;
-  secondary: ColorVariants;
+  primary: PrimaryColorVariants;
+  secondary: SecondaryColorVariants;
   success: ColorVariants;
   warning: ColorVariants;
   error: ColorVariants;

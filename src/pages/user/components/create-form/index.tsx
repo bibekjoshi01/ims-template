@@ -142,7 +142,7 @@ export default function UserCreateForm({ onClose }: UserCreateFormProps) {
           </MainCard>
         </Grid>
 
-        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, flexWrap: 'wrap' }}>
           <Button variant="outlined" color="error" onClick={onClose}>
             Cancel
           </Button>

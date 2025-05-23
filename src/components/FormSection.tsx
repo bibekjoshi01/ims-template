@@ -13,6 +13,7 @@ export type FormField<T> = {
   options?: { value: string | number; label: string; src?: string; sx?: SxProps }[]; // Options for select inputs.
   multiline?: boolean; // Renders a multiline input if true.
   rows?: number; // Number of rows to display if multiline is true.
+  xxs?: number; // Grid size for extra extra small screens.
   xs?: number; // Grid size for extra small screens.
   sm?: number; // Grid size for small screens.
   defaultValue?: any; // Default value for the field.
@@ -74,7 +75,7 @@ export default function FormSection<T extends Record<string, any>>({
       {children}
       <Grid container spacing={2}>
         {fields.map((field) => (
-          <Grid item xs={field.xs || 12} sm={field.sm || 12} key={field.name as string}>
+          <Grid item xxs={field.xxs || 12} xs={field.xs || 12} sm={field.sm || 12} key={field.name as string}>
             <Controller
               name={field.name as Path<T>}
               control={control}

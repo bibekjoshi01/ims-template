@@ -168,23 +168,29 @@ export default function TransferList<T>({
 
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center">
-      <Grid item xs={5}>
+      <Grid item xs={12} sm={5}>
         {renderList(titleLeft, availableItems)}
       </Grid>
 
       {/* Transfer Buttons */}
-      <Grid item xs={2}>
+      <Grid item sm={2}>
         <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
           <Button variant="outlined" size="small" onClick={handleCheckedRight} disabled={leftChecked.length === 0}>
-            &gt;
+            <Typography variant="body2" sx={{ rotate: { xxs: '90deg', sm: '0deg' } }}>
+              {' '}
+              &gt;{' '}
+            </Typography>
           </Button>
           <Button variant="outlined" size="small" onClick={handleCheckedLeft} disabled={rightChecked.length === 0}>
-            &lt;
+            <Typography variant="body2" sx={{ rotate: { xxs: '-90deg', sm: '0deg' } }}>
+              {' '}
+              &gt;{' '}
+            </Typography>
           </Button>
         </Box>
       </Grid>
 
-      <Grid item xs={5}>
+      <Grid item xs={12} sm={5}>
         {renderList(titleRight, selectedItems)}
       </Grid>
     </Grid>

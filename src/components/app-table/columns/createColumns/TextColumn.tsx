@@ -14,7 +14,6 @@ import useFocus from '@/hooks/useFocus';
 export const createTextColumn = <T extends object>(config: ColumnConfig<T>, theme: Theme, baseCol: GridColDef<T>): GridColDef<T> => {
   return {
     ...baseCol,
-    minWidth: 120,
     renderEditCell: (params) => {
       const TextCellEdit = () => {
         const inputRef = useFocus(params);

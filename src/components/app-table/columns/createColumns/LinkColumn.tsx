@@ -20,7 +20,7 @@ export const createLinkColumn = <T extends object>(
     ...baseCol,
     // Change column maxWidth if any row has mode value set
     maxWidth: hasMode ? 140 : baseCol.maxWidth,
-
+    minWidth: 80,
     renderCell: (params) => (
       <Box
         sx={{

@@ -44,9 +44,11 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userData, onClose }) => {
       {/* User Header */}
       <Box
         sx={{
-          p: 3,
+          p: 2,
           display: 'flex',
+          gap: 1,
           alignItems: 'center',
+          flexDirection: { xxs: 'column', xs: 'row' },
           borderBottom: 1,
           borderColor: 'divider'
         }}
@@ -54,7 +56,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userData, onClose }) => {
         <Avatar src={userData.photo} alt={`${userData.firstName || ''} ${userData.lastName || ''}`} sx={{ width: 72, height: 72, mr: 3 }}>
           {userData.firstName?.charAt(0) || userData.username?.charAt(0) || 'U'}
         </Avatar>
-        <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Typography variant="h4">
             {userData.firstName && userData.lastName ? `${userData.firstName} ${userData.lastName}` : userData.username || 'Unknown User'}
           </Typography>
@@ -78,24 +80,24 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userData, onClose }) => {
       </Box>
 
       {/* Info Content */}
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ px: { xxs: 0, xs: 2 }, py: 1 }}>
         <Grid container spacing={3}>
           {/* Left Column - Basic Info */}
-          <Grid item xs={12}>
+          <Grid item xxs={12}>
             <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'medium' }}>
               Basic Information
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<PersonOutline />} title="Username" value={userData.username || ''} />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<EmailOutlined />} title="Email" value={userData.email || ''} verified={userData.isEmailVerified} />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<PhoneOutlined />} title="Phone No" value={userData.phoneNo || ''} verified={userData.isPhoneVerified} />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<CalendarToday />} title="Last Login" value={formatDate(userData.lastLogin)} />
               </Grid>
             </Grid>
