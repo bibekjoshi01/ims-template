@@ -49,9 +49,19 @@ const UserRoleDetails: React.FC<UserRoleDetailsProps> = ({ userRoleData, onClose
       </IconButton>
 
       {/* Header */}
-      <Box sx={{ p: 3, display: 'flex', alignItems: 'center', borderBottom: 1, borderColor: 'divider' }}>
+      <Box
+        sx={{
+          p: 2,
+          display: 'flex',
+          gap: 1,
+          alignItems: 'center',
+          flexDirection: { xxs: 'column', xs: 'row' },
+          borderBottom: 1,
+          borderColor: 'divider'
+        }}
+      >
         <Avatar sx={{ width: 72, height: 72, mr: 3 }}>{userRoleData.name.charAt(0)}</Avatar>
-        <Box>
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Typography variant="h5">{userRoleData.name}</Typography>
           <Typography variant="body2" color="text.secondary">
             ID: {userRoleData.id}
@@ -75,31 +85,31 @@ const UserRoleDetails: React.FC<UserRoleDetailsProps> = ({ userRoleData, onClose
       </Box>
 
       {/* Content */}
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ px: { xxs: 0, xs: 2 }, py: 1 }}>
         {/* Role Information */}
         <Grid container spacing={3}>
-          <Grid item xs={12}>
+          <Grid item xxs={12}>
             <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'medium' }}>
               Role Information
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<PersonOutline />} title="Codename" value={userRoleData.codename} />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<PersonOutline />} title="Created By" value={userRoleData.createdByUsername} />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<CalendarToday />} title="Created At" value={formatDate(userRoleData.createdAt)} />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<CalendarToday />} title="Updated At" value={formatDate(userRoleData.updatedAt)} />
               </Grid>
             </Grid>
           </Grid>
 
           {/* Permissions */}
-          <Grid item xs={12}>
+          <Grid item xxs={12}>
             <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'medium' }}>
               Permissions
             </Typography>

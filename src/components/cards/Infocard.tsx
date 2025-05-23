@@ -19,7 +19,7 @@ interface InfoCardProps {
 const InfoCard: React.FC<InfoCardProps> = ({ icon, title, value, verified, chipColor }) => (
   <Card variant="outlined" sx={{ height: '100%' }}>
     <CardContent>
-      <Box sx={{ display: 'flex', alignItems: { xxs: 'start', xs: 'start' }, mb: 1, flexDirection: { xxs: 'column', xs: 'row' } }}>
+      <Box sx={{ display: 'flex', mb: 1, flexWrap: 'wrap' }}>
         <Box sx={{ color: 'primary.main', mr: 1 }}>{icon}</Box>
         <Typography variant="subtitle1" color="text.secondary">
           {title}
@@ -32,7 +32,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ icon, title, value, verified, chipC
             color={verified ? 'success' : 'default'}
             icon={verified ? <CheckCircleOutline fontSize="small" /> : <CancelOutlined fontSize="small" />}
             sx={{
-              ml: 'auto',
+              ml: { xxs: 1, xs: 'auto' },
               mr: 1,
               fontWeight: 500,
               borderRadius: 1

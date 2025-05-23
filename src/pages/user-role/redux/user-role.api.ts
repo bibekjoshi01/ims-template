@@ -43,6 +43,7 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
           method: 'GET'
         };
       },
+      keepUnusedDataFor: 0.1,
       providesTags: ['UserRole']
     }),
 
@@ -79,7 +80,8 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags: ['UserRole']
+      providesTags: ['UserRole'],
+      keepUnusedDataFor: 0.1
     }),
 
     // Get Permission Categories OR Sub Modules
