@@ -161,8 +161,9 @@ const Toolbar = ({
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          flexDirection: { xs: 'column', sm: 'row' },
+          flexWrap: 'wrap',
           alignItems: { xs: 'flex-start', sm: 'center' },
+          pb: { xxs: 1, sm: 0 },
           px: 1
         }}
       >
@@ -186,6 +187,7 @@ const Toolbar = ({
           sx={{
             display: 'flex',
             gap: 1,
+            flexWrap: 'wrap',
             alignItems: { xs: 'flex-start', sm: 'center' },
             width: { xs: '100%', sm: 'auto' },
             displayPrint: 'none'

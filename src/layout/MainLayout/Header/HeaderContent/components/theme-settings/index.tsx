@@ -60,7 +60,7 @@ export default function ThemeSettings() {
         onClose={toggleDrawer(false)}
         PaperProps={{
           sx: {
-            width: 340,
+            maxWidth: 340,
             p: 2,
             bgcolor: 'background.paper',
             boxShadow: theme.shadows[16]
@@ -68,7 +68,7 @@ export default function ThemeSettings() {
         }}
       >
         {/* Drawer Header */}
-        {/* FIXME - this part is not visible, z-index not working  */}
+        {/* FIXME - this part is not visible sometimes  */}
         <Box
           sx={{
             mb: 2,

@@ -5,16 +5,17 @@ import { SxProps, Theme } from '@mui/material/styles';
  */
 export const TableStyles: SxProps<Theme> = {
   // Sorting icon visibility
-  '& .MuiDataGrid-sortIcon': {
-    opacity: '1 !important'
-  },
+  // '& .MuiDataGrid-sortIcon': {
+  //   opacity: '1 !important'
+  // },
 
   // Column header styles
   '& .MuiDataGrid-columnHeaders': (theme) => ({
     '--unstable_DataGrid-headWeight': 900,
+    '--unstable_DataGrid-radius': 0,
     borderBottom: '1.5px solid' + theme.palette.divider,
     borderTop: '1.5px solid' + theme.palette.divider,
-    '--DataGrid-containerBackground': theme.palette.mode == 'light' ? theme.palette.primary.lighter : theme.palette.primary.darker
+    '--DataGrid-containerBackground': theme.palette.secondary.hover
   }),
 
   '& .MuiDataGrid-columnHeader': {
@@ -24,7 +25,10 @@ export const TableStyles: SxProps<Theme> = {
       justifyContent: 'flex-end'
     },
     '& .MuiDataGrid-columnSeparator': {
-      color: (theme) => (theme.palette.mode == 'dark' ? theme.palette.secondary.lighter : 'auto')
+      color: (theme) => (theme.palette.mode == 'dark' ? theme.palette.secondary.lighter : theme.palette.grey[100])
+    },
+    '& .MuiDataGrid-checkboxInput': {
+      scale: 1.2
     }
   },
 
@@ -59,7 +63,7 @@ export const TableStyles: SxProps<Theme> = {
 export const BoxStyles: SxProps<Theme> = {
   overflowX: 'auto',
   border: '1px solid',
-  borderRadius: 2,
+  // borderRadius: 2,
   borderColor: (theme) => theme.palette.divider,
   backgroundColor: (theme) => theme.palette.background.paper,
   height: '100%'

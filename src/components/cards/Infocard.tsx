@@ -19,7 +19,7 @@ interface InfoCardProps {
 const InfoCard: React.FC<InfoCardProps> = ({ icon, title, value, verified, chipColor }) => (
   <Card variant="outlined" sx={{ height: '100%' }}>
     <CardContent>
-      <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
+      <Box sx={{ display: 'flex', alignItems: { xxs: 'start', xs: 'start' }, mb: 1, flexDirection: { xxs: 'column', xs: 'row' } }}>
         <Box sx={{ color: 'primary.main', mr: 1 }}>{icon}</Box>
         <Typography variant="subtitle1" color="text.secondary">
           {title}

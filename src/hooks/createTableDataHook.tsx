@@ -197,7 +197,7 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
           dispatch(setMessage({ message: res.message, variant: 'success' }));
 
           // NOTE - Refetch if needed
-          // refetch();
+          refetch();
         } catch (error) {
           console.error('Failed to update row:', error);
           throw error;
@@ -220,7 +220,7 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
           const res = await deleteItem(id).unwrap();
           dispatch(setMessage({ message: 'Deleted Successfully', variant: 'success' }));
           // NOTE - Refetch if needed
-          // refetch();
+          refetch();
         } catch (error) {
           console.error('Error deleting:', error);
           dispatch(setMessage({ message: 'Failed to delete', variant: 'error' }));

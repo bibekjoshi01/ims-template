@@ -81,21 +81,21 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userData, onClose }) => {
       <Box sx={{ p: 3 }}>
         <Grid container spacing={3}>
           {/* Left Column - Basic Info */}
-          <Grid item xs={12}>
+          <Grid item xxs={12}>
             <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'medium' }}>
               Basic Information
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<PersonOutline />} title="Username" value={userData.username || ''} />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<EmailOutlined />} title="Email" value={userData.email || ''} verified={userData.isEmailVerified} />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<PhoneOutlined />} title="Phone No" value={userData.phoneNo || ''} verified={userData.isPhoneVerified} />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xxs={12} sm={6} md={3}>
                 <InfoCard icon={<CalendarToday />} title="Last Login" value={formatDate(userData.lastLogin)} />
               </Grid>
             </Grid>

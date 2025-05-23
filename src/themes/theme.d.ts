@@ -35,6 +35,15 @@ declare module '@mui/material/styles' {
       z1: string;
     };
   }
+
+  interface BreakpointOverrides {
+    xxs: true; // 0
+    xs: true; // 480
+    sm: true; // 768
+    md: true; // 1024
+    lg: true; // 1266
+    xl: true; // 1440
+  }
 }
 
 declare global {
