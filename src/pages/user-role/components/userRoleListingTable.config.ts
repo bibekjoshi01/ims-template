@@ -15,6 +15,8 @@ export const getColumnConfig = (theme: Theme): ColumnConfig<TableData>[] => [
     headerName: 'ACTIVE STATUS',
     type: 'boolean',
     filterable: false
+    // trueLabel: 'Active',
+    // falseLabel: 'Inactive',
   },
   { field: 'createdAt', headerName: 'CREATED AT', type: 'date', editable: false, filterable: false, sortable: false },
   { field: 'actions', headerName: '', type: 'actions' }

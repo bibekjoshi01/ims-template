@@ -56,7 +56,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           {message}
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ mr: 1.2, mb: 1 }}>
         <Button onClick={onCancel} disabled={loading} color="inherit">
           {cancelButtonText}
         </Button>

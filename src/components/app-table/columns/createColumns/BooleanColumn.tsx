@@ -11,7 +11,6 @@ import { ColumnConfig } from '../types';
 export const createBooleanColumn = <T extends object>(config: ColumnConfig<T>, baseCol: GridColDef<T>): GridColDef<T> => {
   return {
     ...baseCol,
-    align: 'center',
     renderCell: (params) => (
       <Box
         sx={{
@@ -62,14 +61,13 @@ interface RenderValueProps {
 }
 
 const RenderValue: React.FC<RenderValueProps> = ({ params, trueLabel, falseLabel }) => {
-  return params.value ? (
+  return !!params.value ? (
     <Typography
       variant="inherit"
       color="success"
       sx={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
         width: '100%',
         height: '100%'
       }}
@@ -86,7 +84,6 @@ const RenderValue: React.FC<RenderValueProps> = ({ params, trueLabel, falseLabel
       sx={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
         height: '100%',
         width: '100%'
       }}
