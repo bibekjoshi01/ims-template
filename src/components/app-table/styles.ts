@@ -29,7 +29,7 @@ export const TableStyles: SxProps<Theme> = {
       justifyContent: 'flex-end'
     },
     '& .MuiDataGrid-columnSeparator': {
-      color: theme.palette.divider,
+      color: theme.palette.divider
     },
     '& .MuiDataGrid-checkboxInput': {
       scale: 1.2

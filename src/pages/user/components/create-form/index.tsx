@@ -147,7 +147,7 @@ export default function UserCreateForm({ onClose }: UserCreateFormProps) {
             Cancel
           </Button>
           <Button variant="contained" type="submit" disabled={Object.keys(errors).length > 0}>
-            Add User
+            Create
           </Button>
         </Grid>
       </Grid>

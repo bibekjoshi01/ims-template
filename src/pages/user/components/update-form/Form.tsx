@@ -125,7 +125,7 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
             Cancel
           </Button>
           <Button variant="contained" type="submit">
-            Update User
+            Update
           </Button>
         </Grid>
       </Grid>

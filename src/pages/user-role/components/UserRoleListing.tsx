@@ -19,7 +19,7 @@ const UserRoleListing = () => {
         useTableHook={tableHooks}
         getColumnConfig={getColumnConfig}
         createNewForm={(onClose) => <UserRoleCreateForm onClose={onClose} />}
-        createButtonTitle="Add User Role"
+        createButtonTitle="Add"
         allowEditing
         showFilter
         showSearch
