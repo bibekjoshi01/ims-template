@@ -15,11 +15,11 @@ export interface ColorVariants {
   contrastText: string; // used for texts inside some colored boxes
 }
 
-interface PrimaryColorVariants extends ColorVariants {
+export interface PrimaryColorVariants extends ColorVariants {
   primaryText: string; // used for main text color can be used as text.primary
 }
 
-interface SecondaryColorVariants extends ColorVariants {
+export interface SecondaryColorVariants extends ColorVariants {
   secondaryText: string; // used for secondary text color can be used as text.secondary
   divider: string; // used for divider color can be used as secondary.divider
   paper: string; // used for paper background color can be used as secondary.paper

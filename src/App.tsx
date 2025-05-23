@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { ThemeProviderComponent } from './contexts/theme-context';
 import './globals.css';
 import { setSnackbar } from './utils/notifier';
+import { ErrorBoundary } from './ErrorBoundary';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
 
@@ -27,14 +28,16 @@ export default function App() {
   return (
     <StoreProvider>
       <ThemeProviderComponent>
-        <ThemeCustomization>
-          <ScrollTop>
-            <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
-              <SnackbarInitializer />
-              <Routes />
-            </SnackbarProvider>
-          </ScrollTop>
-        </ThemeCustomization>
+        <ErrorBoundary>
+          <ThemeCustomization>
+            <ScrollTop>
+              <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+                <SnackbarInitializer />
+                <Routes />
+              </SnackbarProvider>
+            </ScrollTop>
+          </ThemeCustomization>
+        </ErrorBoundary>
       </ThemeProviderComponent>
     </StoreProvider>
   );
