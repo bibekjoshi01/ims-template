@@ -34,7 +34,7 @@ let THEME_PRESETS = [
 
         paper: '#FFFFFF',
         default: '#fafafb',
-        divider: '#e4e4e7',
+        divider: '#f0f0f0',
         hover: '#0000000a'
       },
       success: {
@@ -107,9 +107,9 @@ let THEME_PRESETS = [
         main: '#8c8c8c',
         secondaryText: '#ffffff73',
         contrastText: '#ffffff73',
-        paper: '#2a2a2a',
-        default: '#1F1F1F',
-        divider: '#51515c',
+        paper: '#1e1e1e',
+        default: '#121212',
+        divider: '#292929ed',
         hover: '#1a273a'
       },
       success: {

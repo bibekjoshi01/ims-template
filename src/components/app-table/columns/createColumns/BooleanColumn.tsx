@@ -34,6 +34,7 @@ export const createBooleanColumn = <T extends object>(config: ColumnConfig<T>, b
               name={String(config.field)}
               inputRef={inputRef}
               value={params?.value}
+              sx={{ display: 'grid' }}
               onChange={() =>
                 params.api.setEditCellValue({
                   id: params.id,

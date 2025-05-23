@@ -36,14 +36,14 @@ export default function ThemeSettings() {
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
-  const toggleDrawer = (open: boolean) => () => setOpenDrawer(open);
+  const toggleDrawer = () => setOpenDrawer((prev) => !prev);
 
   return (
     <>
       {/* Settings Trigger Button */}
       <Box sx={{ flexShrink: 0, ml: 0.5 }}>
         <IconButton
-          onClick={toggleDrawer(true)}
+          onClick={toggleDrawer}
           title="Theme Settings"
           sx={{
             bgcolor: openDrawer ? 'secondary.hover' : 'transparent',
@@ -57,7 +57,7 @@ export default function ThemeSettings() {
       <Drawer
         anchor="right"
         open={openDrawer}
-        onClose={toggleDrawer(false)}
+        onClose={toggleDrawer}
         PaperProps={{
           sx: {
             maxWidth: 340,
@@ -80,7 +80,7 @@ export default function ThemeSettings() {
           <Typography variant="h6" fontWeight={600} color="text.primary">
             Theme Customization
           </Typography>
-          <IconButton onClick={toggleDrawer(false)} size="small">
+          <IconButton onClick={toggleDrawer} size="small">
             <CloseOutlined />
           </IconButton>
         </Box>

@@ -1,6 +1,6 @@
 // MUI IMPORTS
 import SaveAlt from '@mui/icons-material/SaveAlt';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, GridRowParams, MuiEvent } from '@mui/x-data-grid';
 
@@ -90,8 +90,18 @@ const AppTable = <T extends object>({
   const theme = useTheme();
 
   // Manage table state and handlers
-  const { rows, rowModesModel, setRowModesModel, savingRows, handlers, deleteDialogOpen, confirmDelete, cancelDelete } =
-    useTableHandlers<T>(initialRows, onSaveRow, onDeleteRow, onViewDetailsClick, handleEditClick);
+  const {
+    rows,
+    rowModesModel,
+    setRowModesModel,
+    savingRows,
+    handlers,
+    deleteDialogOpen,
+    confirmDelete,
+    cancelDelete,
+    rowToDelete,
+    isDeleting
+  } = useTableHandlers<T>(initialRows, onSaveRow, onDeleteRow, onViewDetailsClick, handleEditClick);
 
   // Generate column configuration using provided function and theme
   const columnConfig = useMemo(() => getColumnConfig(theme), [getColumnConfig, theme]);
@@ -123,6 +133,12 @@ const AppTable = <T extends object>({
   const handleRowDoubleClick = (params: GridRowParams) => {
     handlers.editInline(params.id);
   };
+
+  const DELETE_MESSAGE = (
+    <Typography sx={{ fontSize: '1rem', fontWeight: 400 }}>
+      By deleting the {title} <strong>"{rowToDelete}"</strong>, all the associated data will also be deleted.
+    </Typography>
+  );
 
   return (
     <>
@@ -239,13 +255,14 @@ const AppTable = <T extends object>({
       </Box>
       <ConfirmationModal
         open={deleteDialogOpen}
-        title="Confirm Delete"
-        message="Are you sure you want to delete this record? This action cannot be undone."
+        title="Are you sure you want to delete?"
+        message={DELETE_MESSAGE}
         confirmButtonText="Delete"
         cancelButtonText="Cancel"
         onConfirm={confirmDelete}
         onCancel={cancelDelete}
         variant="error"
+        loading={isDeleting}
       />
     </>
   );

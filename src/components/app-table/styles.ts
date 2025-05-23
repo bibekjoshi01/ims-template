@@ -9,28 +9,32 @@ export const TableStyles: SxProps<Theme> = {
   //   opacity: '1 !important'
   // },
 
+  border: 'none',
   // Column header styles
   '& .MuiDataGrid-columnHeaders': (theme) => ({
     '--unstable_DataGrid-headWeight': 900,
     '--unstable_DataGrid-radius': 0,
-    borderBottom: '1.5px solid' + theme.palette.divider,
-    borderTop: '1.5px solid' + theme.palette.divider,
-    '--DataGrid-containerBackground': theme.palette.secondary.hover
+    borderBottom: '1.5px solid ',
+    borderTop: '1.5px solid',
+    borderBottomColor: theme.palette.divider,
+    borderTopColor: theme.palette.divider,
+    // @ts-ignore
+    '--DataGrid-containerBackground': theme.palette.default
   }),
 
-  '& .MuiDataGrid-columnHeader': {
+  '& .MuiDataGrid-columnHeader': (theme) => ({
     paddingInline: '10px',
     '& .MuiDataGrid-menuIcon': {
       marginLeft: 'auto',
       justifyContent: 'flex-end'
     },
     '& .MuiDataGrid-columnSeparator': {
-      color: (theme) => (theme.palette.mode == 'dark' ? theme.palette.secondary.lighter : theme.palette.grey[100])
+      color: theme.palette.divider
     },
     '& .MuiDataGrid-checkboxInput': {
       scale: 1.2
     }
-  },
+  }),
 
   // Row styles
   '& .MuiDataGrid-row': (theme) => ({
@@ -63,7 +67,7 @@ export const TableStyles: SxProps<Theme> = {
 export const BoxStyles: SxProps<Theme> = {
   overflowX: 'auto',
   border: '1px solid',
-  // borderRadius: 2,
+  borderRadius: 1,
   borderColor: (theme) => theme.palette.divider,
   backgroundColor: (theme) => theme.palette.background.paper,
   height: '100%'

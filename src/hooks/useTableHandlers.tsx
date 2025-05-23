@@ -48,6 +48,7 @@ export const useTableHandlers = <T extends TableDataBase>(
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [rowToDelete, setRowToDelete] = useState<GridRowId | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Listen for changes in initialData
   useEffect(() => {
@@ -106,6 +107,8 @@ export const useTableHandlers = <T extends TableDataBase>(
         console.error(`Delete failed for rowId(${id}):`, error);
         // Revert using captured previous state
         setRows(previousRows);
+      } finally {
+        setIsDeleting(false);
       }
     },
     [onDelete]
@@ -120,6 +123,7 @@ export const useTableHandlers = <T extends TableDataBase>(
   // Confirm from modal
   const confirmDelete = useCallback(async () => {
     if (rowToDelete !== null) {
+      setIsDeleting(true);
       await handleDelete(rowToDelete);
       setDeleteDialogOpen(false);
       setRowToDelete(null);
@@ -188,6 +192,8 @@ export const useTableHandlers = <T extends TableDataBase>(
     handlers,
     deleteDialogOpen,
     confirmDelete,
-    cancelDelete
+    cancelDelete,
+    rowToDelete,
+    isDeleting
   };
 };
