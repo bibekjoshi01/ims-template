@@ -182,9 +182,9 @@ export default function TransferList<T>({
             </Typography>
           </Button>
           <Button variant="outlined" size="small" onClick={handleCheckedLeft} disabled={rightChecked.length === 0}>
-            <Typography variant="body2" sx={{ rotate: { xxs: '-90deg', sm: '0deg' } }}>
+            <Typography variant="body2" sx={{ rotate: { xxs: '90deg', sm: '0deg' } }}>
               {' '}
-              &gt;{' '}
+              &lt;{' '}
             </Typography>
           </Button>
         </Box>
