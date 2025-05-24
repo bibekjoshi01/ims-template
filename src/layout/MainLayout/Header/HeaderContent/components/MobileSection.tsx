@@ -55,7 +55,7 @@ export default function MobileSection() {
       <Box sx={{ flexShrink: 0 }}>
         <IconButton
           sx={{
-            bgcolor: open ? 'secondary.hover' : 'transparent'
+            bgcolor: open ? 'action.hover' : 'transparent'
           }}
           aria-label="open more menu"
           ref={anchorRef}

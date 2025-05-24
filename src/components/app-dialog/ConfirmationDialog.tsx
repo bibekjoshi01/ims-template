@@ -102,8 +102,8 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
             borderColor: 'grey.300',
             color: 'text.secondary',
             '&:hover': {
-              borderColor: 'secondary.divider',
-              backgroundColor: 'secondary.hover',
+              borderColor: 'divider',
+              backgroundColor: 'action.hover',
               color: 'text.secondary'
             }
           }}

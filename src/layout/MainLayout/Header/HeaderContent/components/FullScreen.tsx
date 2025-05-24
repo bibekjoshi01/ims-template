@@ -17,7 +17,7 @@ export default function FullScreenButton() {
         onClick={handleFullscreenToggle}
         title="Enter full screen"
         sx={{
-          bgcolor: isFullscreen ? 'secondary.hover' : 'transparent',
+          bgcolor: isFullscreen ? 'action.hover' : 'transparent',
           mr: 0.2
         }}
       >

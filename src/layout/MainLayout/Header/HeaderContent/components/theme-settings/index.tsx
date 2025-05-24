@@ -46,7 +46,7 @@ export default function ThemeSettings() {
           onClick={toggleDrawer}
           title="Theme Settings"
           sx={{
-            bgcolor: openDrawer ? 'secondary.hover' : 'transparent',
+            bgcolor: openDrawer ? 'action.hover' : 'transparent',
             mr: 0.25
           }}
         >

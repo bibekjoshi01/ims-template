@@ -72,7 +72,7 @@ export default function Notification() {
     <Box sx={{ flexShrink: 0, ml: 0.5 }}>
       <IconButton
         sx={{
-          bgcolor: open ? 'secondary.hover' : 'transparent',
+          bgcolor: open ? 'action.hover' : 'transparent',
           mr: 0.25
         }}
         aria-label="open profile"

@@ -59,6 +59,7 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
   }, [pathname]);
 
   const textColor = 'text.primary';
+  const textSelectedColor = theme.palette.mode === 'dark' ? 'common.white' : 'common.black';
   const iconSelectedColor = 'primary.main';
 
   return (
@@ -71,26 +72,18 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
         zIndex: 1201,
         pl: drawerOpen ? `${level * 28}px` : 1.5,
         py: !drawerOpen && level === 1 ? 1.25 : 1,
+        '&:hover': {
+          bgcolor: 'action.hover'
+        },
         ...(drawerOpen && {
           '&.Mui-selected': {
-            bgcolor: 'primary.lighter',
+            bgcolor: 'action.hover',
             borderRight: `2px solid ${theme.palette.primary.main}`,
-            color: iconSelectedColor,
+            color: textSelectedColor,
             '&:hover': {
-              color: iconSelectedColor,
-              bgcolor: 'primary.lighter'
+              color: textSelectedColor,
+              bgcolor: 'action.hover'
             }
-          }
-        }),
-        ...(!drawerOpen && {
-          '&:hover': {
-            bgcolor: 'transparent'
-          },
-          '&.Mui-selected': {
-            '&:hover': {
-              bgcolor: 'transparent'
-            },
-            bgcolor: 'transparent'
           }
         })
       }}
@@ -99,24 +92,7 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
         <ListItemIcon
           sx={{
             minWidth: 28,
-            color: isSelected ? iconSelectedColor : textColor,
-            ...(!drawerOpen && {
-              borderRadius: 1.5,
-              width: 36,
-              height: 36,
-              alignItems: 'center',
-              justifyContent: 'center',
-              '&:hover': {
-                bgcolor: 'primary.lighter'
-              }
-            }),
-            ...(!drawerOpen &&
-              isSelected && {
-                bgcolor: 'primary.lighter',
-                '&:hover': {
-                  bgcolor: 'primary.lighter'
-                }
-              })
+            color: isSelected ? iconSelectedColor : textColor
           }}
         >
           {itemIcon}
@@ -125,7 +101,7 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
       {(drawerOpen || (!drawerOpen && level !== 1)) && (
         <ListItemText
           primary={
-            <Typography variant="h6" sx={{ color: isSelected ? iconSelectedColor : textColor }}>
+            <Typography variant="h6" sx={{ color: textColor }}>
               {item.title}
             </Typography>
           }

@@ -36,7 +36,10 @@ export default function CollapseItem({
       sx={{
         zIndex: 1201,
         pl: drawerOpen ? `${level * 28}px` : 1.5,
-        py: !drawerOpen && level === 1 ? 1.25 : 1
+        py: !drawerOpen && level === 1 ? 1.25 : 1,
+        '&:hover': {
+          backgroundColor: 'action.hover'
+        }
       }}
     >
       {itemIcon && (
