@@ -38,7 +38,7 @@ export default function Header() {
         onClick={() => handlerDrawerOpen(!drawerOpen)}
         edge="start"
         sx={{
-          bgcolor: drawerOpen ? 'transparent' : 'secondary.hover',
+          bgcolor: drawerOpen ? 'transparent' : 'action.hover',
           ml: { xs: 0, lg: -2 }
         }}
       >

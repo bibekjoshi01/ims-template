@@ -88,7 +88,7 @@ export interface CustomInputProps {
 ------------------------------------------------------------------ */
 const LabelForInput = React.memo(({ name, label, required }: { name: string; label?: string; required?: boolean }) =>
   label ? (
-    <Typography variant="body1" sx={{ mb: 1, color: 'rgb(89, 89, 89)' }}>
+    <Typography variant="body1" sx={{ mb: 1 }}>
       <label htmlFor={name}>
         {label}
         {required && (
@@ -411,7 +411,11 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                   position: 'relative',
                   borderRadius: theme.shape.borderRadius,
                   borderStyle: 'dashed',
-                  borderColor: error ? theme.palette.error.main : theme.palette.divider,
+                  borderColor: error
+                    ? theme.palette.error.main
+                    : theme.palette.mode === 'dark'
+                      ? theme.palette.grey.dark
+                      : theme.palette.grey.lighter,
                   cursor: 'pointer',
                   transition: 'all 0.2s ease-in-out',
                   '&:hover': {

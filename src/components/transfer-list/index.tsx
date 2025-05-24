@@ -100,7 +100,7 @@ export default function TransferList<T>({
         mt: 4,
         mb: 2,
         border: '1px solid',
-        borderColor: 'secondary.divider',
+        borderColor: 'divider',
         width: '100%',
         height: 320,
         overflow: 'auto',
@@ -116,7 +116,7 @@ export default function TransferList<T>({
           position: 'sticky',
           top: 0,
           borderBottom: '1px solid',
-          borderColor: 'secondary.divider',
+          borderColor: 'divider',
           display: 'flex',
           gap: 1
         }}

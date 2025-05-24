@@ -104,7 +104,7 @@ export default function Profile() {
         sx={{
           p: 0.25,
           width: '100%',
-          bgcolor: open ? 'secondary.hover' : 'transparent',
+          bgcolor: open ? 'action.hover' : 'transparent',
           borderRadius: 1,
           '&:focus-visible': { outline: `2px solid ${theme.palette.secondary.dark}`, outlineOffset: 2 }
         }}
