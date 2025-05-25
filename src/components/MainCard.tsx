@@ -55,7 +55,7 @@ const MainCard = forwardRef<HTMLDivElement, MainCardProps>(
           border: border ? '1px solid' : 'none',
           borderRadius: 2,
           // @ts-ignore
-          borderColor: theme.palette.secondary.divider,
+          borderColor: theme.palette.divider,
           boxShadow: boxShadow && (!border || theme.palette.mode === 'dark') ? shadow || theme.customShadows.z1 : 'inherit',
           ':hover': {
             boxShadow: boxShadow ? shadow || theme.customShadows.z1 : 'inherit'

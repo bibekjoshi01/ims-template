@@ -21,10 +21,10 @@ export interface PrimaryColorVariants extends ColorVariants {
 
 export interface SecondaryColorVariants extends ColorVariants {
   secondaryText: string; // used for secondary text color can be used as text.secondary
-  divider: string; // used for divider color can be used as secondary.divider
-  paper: string; // used for paper background color can be used as secondary.paper
-  default: string; // used for default background color can be used as secondary.default
-  hover: string; // used for hover color can be used as can be used as secondary.hover
+  divider: string; // used for divider color can be used as secondary.divider or divider
+  paper: string; // used for paper background color can be used as secondary.paper or background.paper
+  default: string; // used for default background color can be used as secondary.default or background.default
+  hover: string; // used for hover color can be used as can be used as secondary.hover or action.hover
 }
 
 // Color value interface for advanced color customization

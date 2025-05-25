@@ -100,7 +100,7 @@ let THEME_PRESETS = [
     dark: {
       primary: {
         main: '#1890ff',
-        primaryText: '#ffffff',
+        primaryText: '#cccccc',
         contrastText: '#f4f4f4'
       },
       secondary: {
@@ -110,7 +110,7 @@ let THEME_PRESETS = [
         paper: '#1e1e1e',
         default: '#121212',
         divider: '#292929ed',
-        hover: '#1a273a'
+        hover: '#292929ed'
       },
       success: {
         main: '#52c41a',
