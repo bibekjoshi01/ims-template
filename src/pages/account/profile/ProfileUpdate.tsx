@@ -7,7 +7,7 @@ import MainCard from '@/components/MainCard';
 
 import { useUpdateProfile } from '../hooks/useUpdateProfile';
 import { personalInfoFields, UpdateProfileFormDataType } from './profile.config';
-import ProfileUploader from './ProfileUploader';
+import ProfileUploader from './profileUploader';
 
 type ProfileUpdateProps = { onCancel: () => void };
 
