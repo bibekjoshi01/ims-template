@@ -1,6 +1,6 @@
 let THEME_PRESETS = [
   {
-    name: 'Mantis',
+    name: 'Default',
     light: {
       primary: {
         primaryText: '#1f1f1f',
@@ -11,7 +11,7 @@ let THEME_PRESETS = [
         200: '#91D5FF',
         light: '#69C0FF',
         400: '#40A9FF',
-        main: '#1890FF',
+        main: '#1677ff',
         dark: '#096DD9',
         700: '#0050B3',
         darker: '#003A8C',
@@ -99,7 +99,7 @@ let THEME_PRESETS = [
     },
     dark: {
       primary: {
-        main: '#1890ff',
+        main: '#1668dc',
         primaryText: '#cccccc',
         contrastText: '#f4f4f4'
       },

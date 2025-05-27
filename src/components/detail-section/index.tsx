@@ -40,12 +40,12 @@ export const InfoField: React.FC<InfoFieldProps> = ({ label, value }) => (
   <InfoItem>
     <Label variant="caption">{label}</Label>
     <Value sx={Array.isArray(value) ? { mt: 1 } : {}}>
-      {Array.isArray(value)
-        ? value.map((v, i) => <Chip label={v} key={i} variant="outlined" />)
-        : typeof value === 'string' || typeof value === 'number'
-          ? value || 'N/A'
-          : (value ??
-            'N/A') // render JSX
+      {
+        Array.isArray(value)
+          ? value.map((v, i) => <Chip label={v} key={i} variant="outlined" />)
+          : typeof value === 'string' || typeof value === 'number'
+            ? value || 'N/A'
+            : (value ?? 'N/A') // render JSX
       }
     </Value>
   </InfoItem>
