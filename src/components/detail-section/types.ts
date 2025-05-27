@@ -1,6 +1,6 @@
 export interface InfoFieldProps {
   label: string;
-  value: any;
+  value: string | number | React.ReactNode | (string | number)[];
 }
 
 export interface DynamicInfoSectionProps {
@@ -8,6 +8,7 @@ export interface DynamicInfoSectionProps {
   columns?: number;
   excludeFields?: string[];
   dateTimeFields?: string[];
+  booleanFields?: string[];
   customLabels?: Record<string, string>;
   fieldOrder?: string[];
 }

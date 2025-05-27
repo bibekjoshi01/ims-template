@@ -1,7 +1,9 @@
 // Mui Imports
 import React from 'react';
-import { Typography, Box, Grid, Divider } from '@mui/material';
+import { Typography, Box, Grid, Divider, Badge, Chip } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 // Utils
 import { camelCaseToNormal } from '@/utils/functions/formatString';
@@ -17,7 +19,6 @@ const InfoItem = styled(Box)(({ theme }) => ({
 }));
 
 const Label = styled(Typography)(({ theme }) => ({
-  fontSize: '0.75rem',
   fontWeight: 500,
   color: theme.palette.text.secondary,
   textTransform: 'uppercase',
@@ -25,18 +26,28 @@ const Label = styled(Typography)(({ theme }) => ({
   marginBottom: theme.spacing(0.5)
 }));
 
-const Value = styled(Typography)(({ theme }) => ({
-  fontSize: '1rem',
-  fontWeight: 400,
+const Value = styled(Box)(({ theme }) => ({
   color: theme.palette.text.primary,
-  lineHeight: 1.5
+  lineHeight: 1.5,
+  '& .MuiChip-root': {
+    marginRight: theme.spacing(0.5),
+    marginBottom: theme.spacing(0.5)
+  }
 }));
 
 // InfoField component
-const InfoField: React.FC<InfoFieldProps> = ({ label, value }) => (
+export const InfoField: React.FC<InfoFieldProps> = ({ label, value }) => (
   <InfoItem>
     <Label variant="caption">{label}</Label>
-    <Value variant="body1">{Array.isArray(value) ? value.join(', ') : String(value || 'N/A')}</Value>
+    <Value sx={Array.isArray(value) ? { mt: 1 } : {}}>
+      {Array.isArray(value)
+        ? value.map((v, i) => <Chip label={v} key={i} variant="outlined" />)
+        : typeof value === 'string' || typeof value === 'number'
+          ? value || 'N/A'
+          : (value ??
+            'N/A') // render JSX
+      }
+    </Value>
   </InfoItem>
 );
 
@@ -45,6 +56,7 @@ const DynamicInfoSection: React.FC<DynamicInfoSectionProps> = ({
   columns = 2,
   excludeFields = [],
   dateTimeFields = [],
+  booleanFields = [],
   customLabels = {},
   fieldOrder = null
 }) => {
@@ -71,9 +83,19 @@ const DynamicInfoSection: React.FC<DynamicInfoSectionProps> = ({
       })
     : orderedEntries;
 
+  // Format boolean fields if provided
+  const formattedBooleanEntries: [string, any][] = booleanFields
+    ? formattedEntries.map(([key, value]) => {
+        if (booleanFields.includes(key)) {
+          return [key, value ? <CheckCircleIcon color="success" fontSize="small" /> : <CancelIcon color="error" fontSize="small" />];
+        }
+        return [key, value];
+      })
+    : formattedEntries;
+
   return (
     <Grid container spacing={2}>
-      {formattedEntries.map(([key, value], index) => {
+      {formattedBooleanEntries.map(([key, value], index) => {
         const label = customLabels[key] || camelCaseToNormal(key);
         return (
           <Grid
@@ -84,8 +106,7 @@ const DynamicInfoSection: React.FC<DynamicInfoSectionProps> = ({
             key={index}
           >
             <InfoField label={label} value={value} />
-            {/* Divider between items except the last one */}
-            {index < formattedEntries.length - 1 && <Divider />}
+            <Divider />
           </Grid>
         );
       })}
