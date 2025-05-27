@@ -51,7 +51,7 @@ export default function ThemeSettings() {
             mr: 0.25
           }}
         >
-          <SettingOutlined />
+          <SettingOutlined className="rotateIcon" />
         </IconButton>
       </Box>
 

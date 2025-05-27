@@ -15,8 +15,8 @@ export const userRoleAPI = 'admin/user-app/roles';
 
 export const userRoleAPISlice = rootAPI.injectEndpoints({
   endpoints: (builder) => ({
-    // Get User Roles
-    getUserRoles: builder.query<UserRoleList, UserRoleListQueryParams>({
+    // Get Roles
+    getRoles: builder.query<UserRoleList, UserRoleListQueryParams>({
       query: ({ search, paginationModel, sortModel, filterModel }) => {
         // build query params
         const { page, pageSize, orderingString, filterString } = getQueryParams({
@@ -120,7 +120,7 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
 });
 
 export const {
-  useGetUserRolesQuery,
+  useGetRolesQuery,
   useRetrieveUserRoleQuery,
   useCreateUserRoleMutation,
   usePatchUserRoleMutation,
