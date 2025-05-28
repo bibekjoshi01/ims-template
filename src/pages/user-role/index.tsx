@@ -3,7 +3,7 @@ import { lazy, useEffect } from 'react';
 
 // PROJECT IMPORTS
 import { useAppDispatch } from '@/libs/hooks';
-import { validatePermissions } from '@/utils/permissions/validate_permissions';
+import { validatePermissions } from '@/utils/permissions/validatePermissions';
 import { setPermissions } from '../common/redux/common.slice';
 import { userRolePermissions } from './constants/permissions';
 

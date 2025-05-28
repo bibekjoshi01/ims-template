@@ -1,7 +1,7 @@
+import Unauthorized from '@/components/Unauthorized';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { authState } from '@/pages/authentication/redux/selector';
 import { setPermissions } from '@/pages/common/redux/common.slice';
-import { Typography } from '@mui/material';
 import { ComponentType, useEffect, useState } from 'react';
 
 interface Props {}
@@ -40,11 +40,7 @@ export const validatePermissions = <P extends Props>(Component: ComponentType<P>
     }, [hasPermission]);
 
     if (openModal) {
-      return (
-        <Typography sx={{ mt: '1rem', mb: '1rem', fontSize: '1.3rem', color: 'red' }}>
-          You do not have permission to access this resource.
-        </Typography>
-      );
+      return <Unauthorized />;
     }
 
     return <Component {...props} />;

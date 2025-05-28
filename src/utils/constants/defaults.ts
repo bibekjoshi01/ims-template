@@ -9,3 +9,4 @@ export type BackendError = {
 };
 
 export const resetPasswordTokenLength = 32;
+export const noPermissionRequired = 'noPermissionRequired';
