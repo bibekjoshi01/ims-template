@@ -1,4 +1,5 @@
 // MUI Imports
+import { CalendarToday, CancelOutlined, CheckCircleOutline, Close, ExpandMore, PersonOutline } from '@mui/icons-material';
 import {
   Accordion,
   AccordionDetails,
@@ -12,14 +13,13 @@ import {
   Paper,
   Typography
 } from '@mui/material';
-import { CheckCircleOutline, Close, PersonOutline, CalendarToday, ExpandMore, CancelOutlined } from '@mui/icons-material';
 
 // Project Imports
-import dayjs from 'dayjs';
-import MainCard from '@/components/MainCard';
-import { UserRoleDetailed } from '../../redux/types';
-import { useGroupedPermissions } from '../../hooks/useGroupedPermissions';
 import InfoCard from '@/components/cards/Infocard';
+import MainCard from '@/components/MainCard';
+import dayjs from 'dayjs';
+import { useGroupedPermissions } from '../../hooks/useGroupedPermissions';
+import { UserRoleDetailed } from '../../redux/types';
 
 interface UserRoleDetailsProps {
   userRoleData?: UserRoleDetailed;
@@ -44,7 +44,7 @@ const UserRoleDetails: React.FC<UserRoleDetailsProps> = ({ userRoleData, onClose
   return (
     <MainCard sx={{ p: 0, overflow: 'hidden', position: 'relative' }}>
       {/* Close Button */}
-      <IconButton onClick={onClose} color="error" size="small" sx={{ position: 'absolute', top: 5, right: 5 }}>
+      <IconButton onClick={onClose} aria-label="close" size="small" sx={{ position: 'absolute', top: 5, right: 5, zIndex: 1 }}>
         <Close />
       </IconButton>
 
