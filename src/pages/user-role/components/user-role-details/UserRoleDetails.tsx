@@ -63,9 +63,9 @@ const UserRoleDetails: React.FC<UserRoleDetailsProps> = ({ userRoleData, onClose
         <Avatar sx={{ width: 72, height: 72, mr: 3 }}>{userRoleData.name.charAt(0)}</Avatar>
         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
           <Typography variant="h5">{userRoleData.name}</Typography>
-          <Typography variant="body2" color="text.secondary">
+          {/* <Typography variant="body2" color="text.secondary">
             ID: {userRoleData.id}
-          </Typography>
+          </Typography> */}
           <Box sx={{ mt: 1 }}>
             <Chip
               size="small"

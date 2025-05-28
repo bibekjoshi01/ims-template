@@ -59,6 +59,8 @@ export default function Header() {
     }
   };
 
+  console.log(theme.zIndex.appBar, theme.zIndex.drawer);
+
   return (
     <>
       {!downLG ? (

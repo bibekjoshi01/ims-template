@@ -3,7 +3,7 @@ import { useState } from 'react';
 // Mui imports
 import { Box, Drawer, IconButton, Typography, useTheme } from '@mui/material';
 
-import { CloseOutlined, SettingOutlined } from '@ant-design/icons';
+import { SettingOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { FormatColorFillOutlined, StyleOutlined } from '@mui/icons-material';
 
 // Project imports
@@ -11,6 +11,7 @@ import TABS from '@/components/CustomTab';
 import { TabItem } from '@/menu-items/types';
 import ColorsTab from './ColorsTab';
 import ThemesTab from './ThemesTab';
+import { fontSize } from '@mui/system';
 
 const TabItems: TabItem[] = [
   {
@@ -50,9 +51,10 @@ export default function ThemeSettings() {
             mr: 0.25
           }}
         >
-          <SettingOutlined />
+          <SettingOutlined className="rotateIcon" />
         </IconButton>
       </Box>
+
       {/* Settings Drawer */}
       <Drawer
         anchor="right"
@@ -60,33 +62,56 @@ export default function ThemeSettings() {
         onClose={toggleDrawer}
         PaperProps={{
           sx: {
-            maxWidth: 340,
-            p: 2,
+            width: 320,
             bgcolor: 'background.paper',
             boxShadow: theme.shadows[16]
           }
         }}
       >
         {/* Drawer Header */}
-        {/* FIXME - this part is not visible sometimes  */}
         <Box
           sx={{
-            mb: 2,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
+            backgroundColor: 'primary.main'
           }}
         >
-          <Typography variant="h6" fontWeight={600} color="text.primary">
-            Theme Customization
-          </Typography>
-          <IconButton onClick={toggleDrawer} size="small">
-            <CloseOutlined />
-          </IconButton>
+          <Box
+            sx={{
+              px: 2,
+              py: 2.5,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}
+          >
+            <Typography variant="h5" fontWeight={600} color={'primary.contrastText'}>
+              Theme Customization
+            </Typography>
+            <IconButton
+              onClick={toggleDrawer}
+              size="small"
+              sx={{
+                borderRadius: '50%',
+                color: 'common.white',
+                '&:hover': {
+                  color: 'primary.main',
+                  bgcolor: 'common.white',
+                  transition: 'all 0.1s ease-in-out'
+                }
+              }}
+            >
+              <CloseCircleOutlined
+                style={{
+                  fontSize: '1.2rem'
+                }}
+              />
+            </IconButton>
+          </Box>
         </Box>
 
         {/* Tabs */}
-        <TABS variant="fullWidth" handleChange={handleTabChange} value={activeTab} tabItems={TabItems} />
+        <Box sx={{ p: 2 }}>
+          <TABS variant="fullWidth" handleChange={handleTabChange} value={activeTab} tabItems={TabItems} />
+        </Box>
       </Drawer>
     </>
   );
