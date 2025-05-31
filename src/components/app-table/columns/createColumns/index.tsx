@@ -1,16 +1,16 @@
 // MUI IMPORTS
-import { GridColDef, GridRowId, GridRowModesModel } from '@mui/x-data-grid';
 import { Theme } from '@mui/material/styles';
+import { GridColDef, GridRowId, GridRowModesModel } from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
-import { createTextColumn } from './TextColumn';
-import { createNumberColumn } from './NumberColumn';
-import { createSelectColumn } from './SelectColumn';
-import { createProgressColumn } from './ProgressColumn';
 import { createActionsColumn } from './ActionColumn';
-import { createImageColumn } from './ImageColumn';
 import { createDateColumn } from './DateColumn';
+import { createImageColumn } from './ImageColumn';
 import { createLinkColumn } from './LinkColumn';
+import { createNumberColumn } from './NumberColumn';
+import { createProgressColumn } from './ProgressColumn';
+import { createSelectColumn } from './SelectColumn';
+import { createTextColumn } from './TextColumn';
 
 // TYPES
 import { ColumnConfig, ColumnHandlers } from '../types';
@@ -31,7 +31,9 @@ const createColumnDefs = <T extends object>(
   theme: Theme,
   handlers?: ColumnHandlers<T>,
   rowModesModel?: GridRowModesModel,
-  savingRows?: Record<GridRowId, boolean>
+  savingRows?: Record<GridRowId, boolean>,
+  allowEditing?: boolean,
+  allowDeleting?: boolean
 ): GridColDef<T>[] => {
   return columnConfig.map((config): GridColDef<T> => {
     const baseCol: GridColDef<T> = {
@@ -63,7 +65,7 @@ const createColumnDefs = <T extends object>(
       case 'boolean':
         return createBooleanColumn<T>(config, baseCol);
       case 'actions':
-        return createActionsColumn<T>(config, theme, baseCol, handlers, rowModesModel, savingRows);
+        return createActionsColumn<T>(config, theme, baseCol, handlers, rowModesModel, savingRows, allowEditing, allowDeleting);
       default:
         return baseCol;
     }

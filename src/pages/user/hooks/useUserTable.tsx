@@ -1,6 +1,7 @@
 import { createTableDataHook } from '@/hooks/createTableDataHook';
 import { useAppDispatch } from '@/libs/hooks';
 import { combineName, splitName } from '@/utils/functions/splitCombineName';
+
 import { TableData } from '../components/listing/config';
 import { UserItem } from '../redux/types';
 import { useArchiveUserMutation, useGetUsersQuery, usePatchUserMutation } from '../redux/user.api';

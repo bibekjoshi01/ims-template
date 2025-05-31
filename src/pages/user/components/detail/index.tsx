@@ -23,8 +23,6 @@ const UserDetailsModal = () => {
     dispatch(clearViewId());
   };
 
-  // If the viewId is not set, we don't need to show the modal
-
   return (
     <AppDialog
       open={!!viewId}

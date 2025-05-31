@@ -29,7 +29,6 @@ export interface ColumnConfig<T extends object> {
   editable?: boolean;
   filterable?: boolean;
   sortable?: boolean;
-  deletable?: boolean; // only for 'actions' type
   valueOptions?: string[];
   renderCell?: GridColDef<T>['renderCell'];
   colorMap?: BadgeColorMap; // only for 'select' type

@@ -1,6 +1,6 @@
-export const userPermissions = [
-  { view_permission: 'view_user' },
-  { edit_permission: 'edit_user' },
-  { add_permission: 'add_user' },
-  { delete_permission: 'delete_user' }
-];
+export const userPermissions = {
+  view: 'view_user',
+  edit: 'edit_user',
+  add: 'add_user',
+  delete: 'delete_user'
+};

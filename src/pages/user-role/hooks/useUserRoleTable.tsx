@@ -1,6 +1,6 @@
 import { createTableDataHook } from '@/hooks/createTableDataHook';
 import { useAppDispatch } from '@/libs/hooks';
-import { TableData } from '../components/userRoleListingTable.config';
+import { TableData } from '../components/listing/config';
 import { useArchiveUserRoleMutation, useGetRolesQuery, usePatchUserRoleMutation } from '../redux/user-role.api';
 import { currentUserRoleId, setEdit, setViewId } from '../redux/user-role.slice';
 

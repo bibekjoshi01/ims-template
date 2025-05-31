@@ -1,9 +1,9 @@
 // MUI IMPORTS
-import { Theme } from '@mui/material/styles';
-import { CircularProgress, Tooltip } from '@mui/material';
 import { BorderColorOutlined, CloseOutlined, DeleteOutlined, SendOutlined } from '@mui/icons-material';
-import { GridActionsColDef, GridActionsCellItem, GridRowId, GridRowModesModel, GridColDef } from '@mui/x-data-grid';
 import ArticleIcon from '@mui/icons-material/Article';
+import { CircularProgress, Tooltip } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import { GridActionsCellItem, GridActionsColDef, GridColDef, GridRowId, GridRowModesModel } from '@mui/x-data-grid';
 
 // TYPES
 import { ColumnConfig, ColumnHandlers } from '../types';
@@ -14,7 +14,9 @@ export const createActionsColumn = <T extends object>(
   baseCol: GridColDef<T>,
   handlers?: ColumnHandlers<T>,
   rowModesModel?: GridRowModesModel,
-  savingRows?: Record<GridRowId, boolean>
+  savingRows?: Record<GridRowId, boolean>,
+  allowEditing: boolean = true,
+  allowDeleting: boolean = true
 ): GridActionsColDef<T> => {
   return {
     ...baseCol,
@@ -26,7 +28,6 @@ export const createActionsColumn = <T extends object>(
     getActions: (params): JSX.Element[] => {
       const mode = rowModesModel?.[params.id]?.mode;
       const isSaving = savingRows?.[params.id] ?? false;
-      const deletable = config.deletable ?? true;
 
       if (mode) {
         return [
@@ -94,21 +95,23 @@ export const createActionsColumn = <T extends object>(
       }
 
       return [
-        <GridActionsCellItem
-          component="button"
-          sx={{
-            ':hover': { backgroundColor: theme.palette.primary.lighter, color: theme.palette.primary.main }
-          }}
-          icon={
-            <Tooltip key="edit-tooltip" title="Edit">
-              <span>
-                <BorderColorOutlined color="primary" sx={{ height: '20px' }} />
-              </span>
-            </Tooltip>
-          }
-          label="Edit"
-          onClick={() => handlers?.editForm?.(params.id)}
-        />,
+        allowEditing && (
+          <GridActionsCellItem
+            component="button"
+            sx={{
+              ':hover': { backgroundColor: theme.palette.primary.lighter, color: theme.palette.primary.main }
+            }}
+            icon={
+              <Tooltip key="edit-tooltip" title="Edit">
+                <span>
+                  <BorderColorOutlined color="primary" sx={{ height: '20px' }} />
+                </span>
+              </Tooltip>
+            }
+            label="Edit"
+            onClick={() => handlers?.editForm?.(params.id)}
+          />
+        ),
         <GridActionsCellItem
           key="viewDetails"
           showInMenu
@@ -119,7 +122,7 @@ export const createActionsColumn = <T extends object>(
           label="View Details"
           onClick={() => handlers?.viewDetails?.(params.id)}
         />,
-        deletable && (
+        allowDeleting && (
           <GridActionsCellItem
             key="delete"
             showInMenu

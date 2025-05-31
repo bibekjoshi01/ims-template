@@ -7,10 +7,10 @@ import { setPermissions } from '@/pages/common/redux/common.slice';
 
 interface Props {}
 interface IRequiredPermission {
-  view_permission?: string;
-  edit_permission?: string;
-  add_permission?: string;
-  delete_permission?: string;
+  view?: string;
+  edit?: string;
+  add?: string;
+  delete?: string;
 }
 
 export function useHasParticularPermissions(permission: string): boolean {
@@ -27,11 +27,11 @@ export function useHasAnyPermissions(requiredPermissions: string[]): boolean {
   return requiredPermissions.some((permission) => permissions?.some((perm) => perm.codename === permission));
 }
 
-const extractPermissionStrings = (permissionsArray: IRequiredPermission[]): string[] => {
-  return permissionsArray.flatMap((obj) => Object.values(obj));
+const extractPermissionStrings = (permissionsObj: IRequiredPermission): string[] => {
+  return Object.values(permissionsObj);
 };
 
-export const validatePermissions = <P extends Props>(Component: ComponentType<P>, requiredPermissions: IRequiredPermission[]) => {
+export const validatePermissions = <P extends Props>(Component: ComponentType<P>, requiredPermissions: IRequiredPermission) => {
   const WrappedComponent: React.FC<P> = (props) => {
     const dispatch = useAppDispatch();
 

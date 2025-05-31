@@ -5,14 +5,14 @@ import { useTheme } from '@mui/material/styles';
 import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, GridRowParams, MuiEvent } from '@mui/x-data-grid';
 
 //  Project Imports
-import { Empty } from 'antd';
 import { useTableHandlers } from '@/hooks/useTableHandlers';
+import { Empty } from 'antd';
 import { useMemo } from 'react';
+import ConfirmationModal from '../app-dialog/ConfirmationDialog';
 import { createColumnDefs } from './columns';
 import { BoxStyles, TableStyles } from './styles';
 import Toolbar, { CustomColumnsPanel, CustomFilterPanel } from './toolbar';
 import { AppTableProps } from './types';
-import ConfirmationModal from '../app-dialog/ConfirmationDialog';
 
 // ===========================|| AppTable - MAIN COMPONENT ||=========================== //
 const AppTable = <T extends object>({
@@ -45,6 +45,7 @@ const AppTable = <T extends object>({
   // Table functionalities
   allowSorting = true,
   allowEditing = false,
+  allowDeleting = true,
   editMode = 'row',
   enableColumnResizing = false,
   enableRowSelection = false,
@@ -104,11 +105,11 @@ const AppTable = <T extends object>({
   } = useTableHandlers<T>(initialRows, onSaveRow, onDeleteRow, onViewDetailsClick, handleEditClick);
 
   // Generate column configuration using provided function and theme
-  const columnConfig = useMemo(() => getColumnConfig(theme), [getColumnConfig, theme]);
+  const columnConfig = useMemo(() => getColumnConfig(theme), [getColumnConfig, theme, allowDeleting]);
 
   // Generate columns using provided createColumns function
   const columns = useMemo(
-    () => createColumnDefs<T>(columnConfig, theme, handlers, rowModesModel, savingRows),
+    () => createColumnDefs<T>(columnConfig, theme, handlers, rowModesModel, savingRows, allowEditing, allowDeleting),
     [columnConfig, theme, handlers, rowModesModel, savingRows]
   );
 
@@ -131,7 +132,9 @@ const AppTable = <T extends object>({
   );
 
   const handleRowDoubleClick = (params: GridRowParams) => {
-    handlers.editInline(params.id);
+    if (allowEditing) {
+      handlers.editInline(params.id);
+    }
   };
 
   const DELETE_MESSAGE = (
@@ -148,11 +151,11 @@ const AppTable = <T extends object>({
           {...dataGridProps}
           // Table metadata
           sx={TableStyles}
-          columns={columns}
+          columns={!allowEditing ? columns.map((col) => ({ ...col, editable: false })) : columns}
           rows={rows}
           loading={loading}
           // Editing functionalities
-          editMode={allowEditing ? editMode : undefined}
+          editMode={'row'}
           rowModesModel={rowModesModel}
           onRowModesModelChange={setRowModesModel}
           processRowUpdate={handlers.processRowUpdate}
