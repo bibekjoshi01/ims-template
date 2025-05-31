@@ -52,9 +52,7 @@ export const useTableHandlers = <T extends TableDataBase>(
 
   // Listen for changes in initialData
   useEffect(() => {
-    if (initialData && initialData.length > 0) {
-      setRows(initialData);
-    }
+    setRows(initialData);
   }, [initialData]);
 
   // ========================= Handlers =========================

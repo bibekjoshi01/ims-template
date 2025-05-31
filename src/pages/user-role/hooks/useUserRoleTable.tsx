@@ -35,7 +35,7 @@ export const useUserRoleTable = () => {
 
     // NOTE - Data transformations api data to table data
     transformResponseToTableData: (apiData) => {
-      return apiData.results;
+      return apiData?.results;
     },
 
     // NOTE - Data transformations table data to api data of inline update

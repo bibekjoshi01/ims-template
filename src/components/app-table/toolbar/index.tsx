@@ -1,153 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 // MUI IMPORTS
-import { Search as SearchIcon } from '@mui/icons-material';
-import { Box, Button, GlobalStyles, IconButton, Menu, MenuItem, styled, Typography } from '@mui/material';
-import {
-  GridColumnsPanel,
-  GridFilterPanel,
-  GridMoreVertIcon,
-  GridPanel,
-  GridToolbarColumnsButton,
-  GridToolbarDensitySelector,
-  GridToolbarFilterButton,
-  useGridApiContext
-} from '@mui/x-data-grid';
-import { GridFilterPanelProps } from '@mui/x-data-grid/components/panel/filterPanel/GridFilterPanel';
+import { Box, Button, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { GridMoreVertIcon, GridToolbarColumnsButton, GridToolbarDensitySelector, GridToolbarFilterButton } from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
 import AppDialog from '@/components/app-dialog';
-import CustomInput from '@/components/app-form/CustomInput';
-import SaveExport from '@/components/export';
-import { debounce } from '@/utils/functions/debounce';
-
-// ==============================
-// Custom Search Bar
-// ==============================
-const CustomSearchBar = ({ handleInputChange, searchText }: { handleInputChange?: (value: string) => void; searchText: string }) => {
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleInputChange?.(event.target.value);
-  };
-
-  return (
-    <CustomInput
-      autoFocus
-      placeholder="Search..."
-      type="text"
-      value={searchText}
-      onChange={onChange}
-      startAdornment={<SearchIcon sx={{ height: '20px' }} color="action" />}
-      sx={{
-        displayPrint: 'none',
-        display: 'flex',
-        flex: 1
-      }}
-    />
-  );
-};
-
-// ==============================
-// Custom Columns Panel
-// ==============================
-export const CustomColumnsPanel = () => {
-  return (
-    <>
-      <GlobalStyles
-        styles={{
-          '& [data-popper-placement="bottom-start"]': {
-            display: 'none !important'
-          }
-        }}
-      />
-      <GridPanel open={true} placement="bottom-end">
-        <GridColumnsPanel />
-      </GridPanel>
-    </>
-  );
-};
-
-// ==============================
-// Custom Filter Panel
-// ==============================
-export const CustomFilterPanel = (props: GridFilterPanelProps) => {
-  return (
-    <>
-      <GlobalStyles
-        styles={{
-          '& [data-popper-placement="bottom-start"]': {
-            display: 'none !important'
-          }
-        }}
-      />
-      <GridPanel open={true} placement="bottom-end">
-        <GridFilterPanel {...props} />
-      </GridPanel>
-    </>
-  );
-};
-
-const TitleStyles = {
-  displayPrint: 'none',
-  px: 2,
-  py: 3,
-  fontWeight: 900
-};
-
-const ContainerStyles = {
-  display: 'flex',
-  justifyContent: 'space-between',
-  flexWrap: 'wrap',
-  alignItems: { xs: 'flex-start', sm: 'center' },
-  pb: { xxs: 1, sm: 0 },
-  px: 1
-};
-
-const MenuItemStyles = {
-  p: 0,
-  '& .MuiButtonBase-root': {
-    px: 2.4,
-    py: 1,
-    gap: 0.5,
-    display: 'grid',
-    gridTemplateColumns: 'auto 1fr',
-    width: '100%'
-  },
-  '& .MuiSvgIcon-root': {
-    fontSize: 'initial',
-    width: 20,
-    height: 20
-  }
-};
-
-const ToolbarStyles = {
-  display: 'flex',
-  gap: 1,
-  flexWrap: 'wrap',
-  alignItems: { xs: 'flex-start', sm: 'center' },
-  width: { xs: '100%', sm: 'auto' },
-  displayPrint: 'none'
-};
+import { ContainerStyles, MenuItemStyles, TitleStyles, ToolbarStyles } from './styles';
+import { CustomSearchBar } from './Slots';
+import { ToolbarProps } from './types';
+import { useToolbarHandlers } from './useToolbarHandlers';
 
 // ==============================
 // Toolbar
 // ==============================
-interface Column {
-  field: string;
-  headerName?: string;
-  [key: string]: any;
-}
-
-interface Row {
-  [key: string]: any;
-}
-
 const Toolbar = ({
   title,
-  columns,
-  rows,
   showSearch,
-  searchText = '',
-  setSearchText = () => {},
   handleSearchChange,
   filterMode,
   showColumnFilter,
@@ -155,65 +24,11 @@ const Toolbar = ({
   showDensitySelector,
   showExport,
   createNewForm,
+  saveExportComponent,
   createButtonTitle
-}: {
-  title?: string;
-  columns?: Column[];
-  rows?: Row[];
-  showSearch: boolean;
-  searchText?: string;
-  setSearchText?: (value: string) => void;
-  handleSearchChange?: (value: string) => void;
-  filterMode: string;
-  showColumnFilter: boolean;
-  showFilter: boolean;
-  showDensitySelector: boolean;
-  showExport: boolean;
-  createNewForm?: (onClose: () => void) => React.ReactNode;
-  createButtonTitle?: string;
-}) => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [showForm, setShowForm] = useState<boolean>(false);
-  const apiRef = useGridApiContext();
-  const openMenu = Boolean(anchorEl);
-
-  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleOpenForm = () => setShowForm(true);
-  const handleCloseForm = () => setShowForm(false);
-
-  useEffect(() => {
-    if (filterMode === 'server' && handleSearchChange) {
-      const debounced = debounce((value: string) => {
-        handleSearchChange(value);
-      }, 300);
-
-      debounced(searchText);
-
-      return () => {
-        debounced.cancel?.();
-      };
-    } else {
-      // For client: apply filter immediately without debounce
-      const searchTerms = searchText
-        .split(',')
-        .map((term) => term.trim())
-        .filter((term) => term !== '');
-      apiRef.current.setQuickFilterValues(searchTerms);
-    }
-  }, [searchText, filterMode, handleSearchChange, apiRef]);
-
-  // Called immediately on input change
-  const handleInputChange = (value: string) => {
-    setSearchText(value);
-  };
-
+}: ToolbarProps) => {
+  const { anchorEl, showForm, openMenu, searchText, handleMenuClick, handleMenuClose, handleOpenForm, handleCloseForm, handleInputChange } =
+    useToolbarHandlers({ filterMode, handleSearchChange });
   return (
     <>
       <Box sx={ContainerStyles}>
@@ -251,7 +66,7 @@ const Toolbar = ({
                 </MenuItem>
               )}
               {showFilter && (
-                <MenuItem sx={MenuItemStyles}>
+                <MenuItem sx={MenuItemStyles} onClick={handleMenuClose}>
                   <GridToolbarFilterButton />
                 </MenuItem>
               )}
@@ -260,11 +75,7 @@ const Toolbar = ({
                   <GridToolbarDensitySelector />
                 </MenuItem>
               )}
-              {showExport && (
-                <MenuItem sx={MenuItemStyles}>
-                  <SaveExport columns={columns} rows={rows} title={title} />
-                </MenuItem>
-              )}
+              {showExport && <MenuItem sx={MenuItemStyles}>{saveExportComponent}</MenuItem>}
             </Menu>
           </Box>
         </Box>
@@ -273,4 +84,4 @@ const Toolbar = ({
   );
 };
 
-export default Toolbar;
+export default React.memo(Toolbar);
