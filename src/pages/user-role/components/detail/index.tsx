@@ -1,8 +1,11 @@
+// PACKAGE IMPORTS
 import { CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-// Components
+// PROJECT IMPORTS
 import AppDialog from '@/components/app-dialog';
+
+// LOCAL IMPORTS
 import { useRetrieveUserRoleQuery } from '../../redux/user-role.api';
 import { userRoleState } from '../../redux/user-role.selector';
 import { clearViewId } from '../../redux/user-role.slice';
@@ -12,18 +15,17 @@ const UserRoleDetailsModal = () => {
   const dispatch = useDispatch();
   const { viewId } = useSelector(userRoleState);
 
-  // Only fetch when we have a valid ID of user-role
-  const { data: userRoleData, isLoading } = useRetrieveUserRoleQuery(viewId!, { skip: !viewId });
-
-  if (!viewId) {
-    return null;
-  }
-
   const handleClose = () => {
     dispatch(clearViewId());
   };
 
-  // If the viewId is not set, we don't need to show the modal
+  // Conditionally fetch user role details if ID is available
+  const { data: userRoleData, isLoading } = useRetrieveUserRoleQuery(viewId!, {
+    skip: !viewId
+  });
+
+  if (!viewId) return null;
+
   return (
     <AppDialog
       open={!!viewId}

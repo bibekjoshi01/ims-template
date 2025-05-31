@@ -1,25 +1,23 @@
+// PACKAGE IMPORTS
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Grid } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-// Custom Hooks
+// PROJECT IMPORTS
+import FormSection from '@/components/FormSection';
+import MainCard from '@/components/MainCard';
+import { useAppDispatch } from '@/libs/hooks';
+import { setMessage } from '@/pages/common/redux/common.slice';
+import { handleClientError } from '@/utils/functions/handleError';
+
+// LOCAL IMPORTS
 import { useMainModules } from '../../hooks/useMainModules';
 import { usePermissions } from '../../hooks/usePermissions';
 import { useSubModules } from '../../hooks/useSubModules';
-
-// UI Components
-import FormSection from '@/components/FormSection';
-import MainCard from '@/components/MainCard';
-
-// Utilities & API
-import { useAppDispatch } from '@/libs/hooks';
-import { setMessage } from '@/pages/common/redux/common.slice';
 import { useCreateUserRoleMutation } from '../../redux/user-role.api';
 
-// Form Schema, Defaults, Types
-import { handleClientError } from '@/utils/functions/handleError';
-import { useSnackbar } from 'notistack';
 import PermissionTransfer, { UserPermission } from '../PermissionTransfer';
 import { defaultValues, UserRoleCreateFormDataType, userRoleCreateFormFields, userRoleCreateFormSchema } from './config';
 
@@ -45,28 +43,21 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
     defaultValues
   });
 
-  // Watches the form fields for reactive data fetching.
   const mainModule = watch('mainModule');
   const subModule = watch('subModule');
   const selectedPermissions = watch('selectedPermissions') || [];
 
-  // Fetch data using custom hooks
   const mainModuleOptions = useMainModules();
   const subModuleOptions = useSubModules(mainModule);
   const allPermissions = usePermissions(selectedPermissions, mainModule, subModule);
 
-  // Memoized formatted permissions
   const formattedPermissions = useMemo(() => allPermissions.map((perm) => ({ id: perm.value, name: perm.label })), [allPermissions]);
 
-  // Convert selectedPermissions IDs to permission objects
   const selectedUserPermissions = useMemo(
     () => formattedPermissions.filter((perm) => selectedPermissions.includes(perm.id as number)),
     [formattedPermissions, selectedPermissions]
   );
 
-  /**
-   * Updates the selected permissions in the form state.
-   */
   const handlePermissionsChange = useCallback(
     (newSelected: UserPermission[]) => {
       const selectedIds = newSelected.map((perm) => perm.id as number);
@@ -75,9 +66,6 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
     [setValue]
   );
 
-  /**
-   * Update form field options for mainModule and subModule.
-   */
   useMemo(() => {
     setFormFields((prev) =>
       prev.map((field) => {
@@ -92,9 +80,6 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
     );
   }, [mainModuleOptions, subModuleOptions]);
 
-  /**
-   * Form submission handler.
-   */
   const onSubmit = async (data: UserRoleCreateFormDataType) => {
     try {
       const payload = {
@@ -124,10 +109,8 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MainCard divider title="Create User Role">
-            {/* Form Section with other fields */}
             <FormSection<UserRoleCreateFormDataType> fields={formFields} control={control} errors={errors} />
 
-            {/* Permission Transfer Component */}
             <PermissionTransfer
               allPermissions={formattedPermissions}
               selectedPermissions={selectedUserPermissions}

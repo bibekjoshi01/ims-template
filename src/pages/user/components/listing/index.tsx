@@ -1,12 +1,13 @@
 import { lazy } from 'react';
 
 import TableContainer from '@/components/app-table/TableContainer';
-import { useUserTable } from '../hooks/useUserTable';
-import { TableData, getColumnConfig } from './userListingTable.config';
 
-const UserCreateForm = lazy(() => import('./create-form'));
+import { useUserTable } from '../../hooks/useUserTable';
+import { TableData, getColumnConfig } from './config';
 
-const UserListing = () => {
+const UserCreateForm = lazy(() => import('../create-form'));
+
+const UserListingSection = () => {
   const tableHooks = useUserTable();
 
   return (
@@ -26,4 +27,4 @@ const UserListing = () => {
   );
 };
 
-export default UserListing;
+export default UserListingSection;

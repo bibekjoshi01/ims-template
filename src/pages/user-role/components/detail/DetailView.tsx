@@ -1,4 +1,4 @@
-// MUI Imports
+// PACKAGE IMPORTS
 import { CalendarToday, CancelOutlined, CheckCircleOutline, Close, ExpandMore, PersonOutline } from '@mui/icons-material';
 import {
   Accordion,
@@ -13,11 +13,13 @@ import {
   Paper,
   Typography
 } from '@mui/material';
+import dayjs from 'dayjs';
 
-// Project Imports
+// PROJECT IMPORTS
 import InfoCard from '@/components/cards/Infocard';
 import MainCard from '@/components/MainCard';
-import dayjs from 'dayjs';
+
+// LOCAL IMPORTS
 import { useGroupedPermissions } from '../../hooks/useGroupedPermissions';
 import { UserRoleDetailed } from '../../redux/types';
 

@@ -18,7 +18,7 @@ import { SelectOption } from '@/components/CustomInput';
 import { handleClientError } from '@/utils/functions/handleError';
 import { useSnackbar } from 'notistack';
 import { UserRole } from '../../redux/types';
-import { defaultValues, userInfoUpdateFields, UserInfoUpdateFormDataType, userInfoUpdateFormSchema } from './userUpdateForm.config';
+import { defaultValues, userInfoUpdateFields, UserInfoUpdateFormDataType, userInfoUpdateFormSchema } from './config';
 
 interface UserFormProps {
   userData?: any;

@@ -10,16 +10,16 @@ import { CalendarToday, CancelOutlined, CheckCircleOutline, Close, EmailOutlined
 // Project Components & Types
 import InfoCard from '@/components/cards/Infocard';
 import MainCard from '@/components/MainCard';
-import { UserDetails as UserDetailsType } from '../../redux/types';
+import { UserDetails as DetailViewType } from '../../redux/types';
 
 // Component Props
-interface UserDetailsProps {
-  userData: UserDetailsType | undefined;
+interface DetailViewProps {
+  userData: DetailViewType | undefined;
   onClose: () => void;
 }
 
 // Component
-const UserDetails: React.FC<UserDetailsProps> = ({ userData, onClose }) => {
+const DetailView: React.FC<DetailViewProps> = ({ userData, onClose }) => {
   const formatDate = (dateString?: string): string => (dateString ? dayjs(dateString).format('MMM D, YYYY h:mm A') : 'N/A');
 
   if (!userData) {
@@ -107,4 +107,4 @@ const UserDetails: React.FC<UserDetailsProps> = ({ userData, onClose }) => {
   );
 };
 
-export default UserDetails;
+export default DetailView;

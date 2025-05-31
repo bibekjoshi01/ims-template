@@ -1,21 +1,24 @@
+// PACKAGE IMPORTS
 import { CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-// Components
+// PROJECT IMPORTS
 import AppDialog from '@/components/app-dialog';
+
+// LOCAL IMPORTS
 import { useRetrieveUserRoleQuery } from '../../redux/user-role.api';
 import { userRoleState } from '../../redux/user-role.selector';
 import { clearUserRoleData, setEdit } from '../../redux/user-role.slice';
 import UserRoleUpdateForm from './Form';
 
-const UserEditModal = () => {
+const UserRoleUpdateModal = () => {
   const dispatch = useDispatch();
   const { edit, currentId } = useSelector(userRoleState);
 
-  // Only fetch when we have a valid ID and are in edit mode
-  const { data: userRoleData, isLoading } = useRetrieveUserRoleQuery(currentId as number, { skip: !currentId || !edit });
+  const { data: userRoleData, isLoading } = useRetrieveUserRoleQuery(currentId as number, {
+    skip: !currentId || !edit
+  });
 
-  // If the either of value is not set, we don't need to show the modal
   if (!currentId || !edit) {
     return null;
   }
@@ -44,4 +47,4 @@ const UserEditModal = () => {
   );
 };
 
-export default UserEditModal;
+export default UserRoleUpdateModal;

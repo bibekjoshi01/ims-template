@@ -1,6 +1,6 @@
 import { ColumnConfig } from '@/components/app-table/columns';
 import { Theme } from '@mui/material/styles';
-import { UserItem } from '../redux/types';
+import { UserItem } from '../../redux/types';
 
 export interface TableData extends Omit<UserItem, 'firstName' | 'middleName' | 'lastName'> {
   name: string;

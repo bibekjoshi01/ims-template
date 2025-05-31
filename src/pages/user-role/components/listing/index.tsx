@@ -1,3 +1,4 @@
+// REACT IMPORTS
 import { lazy } from 'react';
 
 // PROJECT IMPORTS
@@ -5,9 +6,10 @@ import TableContainer from '@/components/app-table/TableContainer';
 import { useUserRoleTable } from '../../hooks/useUserRoleTable';
 import { TableData, getColumnConfig } from './config';
 
-const UserRoleCreateForm = lazy(() => import('../create'));
+// LAZY LOADED COMPONENTS
+const UserRoleCreateForm = lazy(() => import('../create-form'));
 
-const UserRoleListing = () => {
+const UserRoleListingSection = () => {
   const tableHooks = useUserRoleTable();
 
   return (
@@ -27,4 +29,4 @@ const UserRoleListing = () => {
   );
 };
 
-export default UserRoleListing;
+export default UserRoleListingSection;

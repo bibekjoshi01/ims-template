@@ -7,14 +7,14 @@ import { userRolePermissions } from './constants/permissions';
 
 // LAZY COMPONENT IMPORTS
 const UserRoleListingSection = lazy(() => import('./components/listing'));
-const UserRoleEditModal = lazy(() => import('./components/update'));
+const UserRoleUpdateModal = lazy(() => import('./components/update-form'));
 const UserRoleDetailModal = lazy(() => import('./components/detail'));
 
 const UserRolePage = () => {
   return (
     <>
       <UserRoleListingSection />
-      <UserRoleEditModal />
+      <UserRoleUpdateModal />
       <UserRoleDetailModal />
     </>
   );

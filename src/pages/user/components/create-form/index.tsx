@@ -18,7 +18,7 @@ import useUniqueFieldValidation from '@/hooks/useUniqueFieldValidation';
 import { handleClientError } from '@/utils/functions/handleError';
 import { useSnackbar } from 'notistack';
 import { UserCreatePayload, UserRole } from '../../redux/types';
-import { defaultValues, uniqueFieldNames, userInfoFields, UserInfoFormDataType, userInfoFormSchema } from './userCreateForm.config';
+import { defaultValues, uniqueFieldNames, userInfoFields, UserInfoFormDataType, userInfoFormSchema } from './config';
 
 interface UserCreateFormProps {
   onClose?: () => void;
