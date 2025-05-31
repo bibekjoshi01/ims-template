@@ -8,9 +8,9 @@ import ScrollTop from '@/components/ScrollTop';
 import StoreProvider from '@/libs/StoreProvider';
 import { useEffect } from 'react';
 import { ThemeProviderComponent } from './contexts/theme-context';
+import { ErrorBoundary } from './ErrorBoundary';
 import './globals.css';
 import { setSnackbar } from './utils/notifier';
-import { ErrorBoundary } from './ErrorBoundary';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL ||============================== //
 
@@ -31,7 +31,7 @@ export default function App() {
         <ErrorBoundary>
           <ThemeCustomization>
             <ScrollTop>
-              <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
+              <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
                 <SnackbarInitializer />
                 <Routes />
               </SnackbarProvider>

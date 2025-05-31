@@ -1,30 +1,23 @@
 // PACKAGE IMPORTS
-import { lazy, useEffect } from 'react';
+import { lazy } from 'react';
 
 // PROJECT IMPORTS
-import { useAppDispatch } from '@/libs/hooks';
 import { validatePermissions } from '@/utils/permissions/validatePermissions';
-import { setPermissions } from '../common/redux/common.slice';
 import { userRolePermissions } from './constants/permissions';
 
-const UserRoleListing = lazy(() => import('./components/UserRoleListing'));
+// LAZY COMPONENT IMPORTS
+const UserRoleListingSection = lazy(() => import('./components/listing'));
+const UserRoleEditModal = lazy(() => import('./components/update'));
+const UserRoleDetailModal = lazy(() => import('./components/detail'));
 
-const UserRole = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    //set current model permission constants in redux
-    dispatch(setPermissions(userRolePermissions));
-    return () => {
-      dispatch(setPermissions([]));
-    };
-  }, []);
-
+const UserRolePage = () => {
   return (
-    <div>
-      <UserRoleListing />
-    </div>
+    <>
+      <UserRoleListingSection />
+      <UserRoleEditModal />
+      <UserRoleDetailModal />
+    </>
   );
 };
 
-export default validatePermissions(UserRole, userRolePermissions);
+export default validatePermissions(UserRolePage, userRolePermissions);

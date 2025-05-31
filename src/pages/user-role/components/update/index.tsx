@@ -13,7 +13,7 @@ const UserEditModal = () => {
   const { edit, currentId } = useSelector(userRoleState);
 
   // Only fetch when we have a valid ID and are in edit mode
-  const { data: userRoleData, isLoading } = useRetrieveUserRoleQuery(currentId, { skip: !currentId || !edit });
+  const { data: userRoleData, isLoading } = useRetrieveUserRoleQuery(currentId as number, { skip: !currentId || !edit });
 
   // If the either of value is not set, we don't need to show the modal
   if (!currentId || !edit) {

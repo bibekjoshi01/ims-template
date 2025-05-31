@@ -1,6 +1,6 @@
 import { ColumnConfig } from '@/components/app-table/columns';
 import { Theme } from '@mui/material/styles';
-import { UserRole } from '../redux/types';
+import { UserRole } from '../../redux/types';
 
 export interface TableData extends UserRole {
   name: string;

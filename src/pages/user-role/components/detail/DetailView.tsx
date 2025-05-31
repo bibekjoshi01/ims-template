@@ -21,12 +21,12 @@ import dayjs from 'dayjs';
 import { useGroupedPermissions } from '../../hooks/useGroupedPermissions';
 import { UserRoleDetailed } from '../../redux/types';
 
-interface UserRoleDetailsProps {
+interface DetailViewProps {
   userRoleData?: UserRoleDetailed;
   onClose: () => void;
 }
 
-const UserRoleDetails: React.FC<UserRoleDetailsProps> = ({ userRoleData, onClose }) => {
+const DetailView: React.FC<DetailViewProps> = ({ userRoleData, onClose }) => {
   const { groupedPermissions, isLoading } = useGroupedPermissions(userRoleData);
   const formatDate = (date?: string) => (date ? dayjs(date).format('MMM D, YYYY h:mm A') : 'N/A');
 
@@ -159,4 +159,4 @@ const UserRoleDetails: React.FC<UserRoleDetailsProps> = ({ userRoleData, onClose
   );
 };
 
-export default UserRoleDetails;
+export default DetailView;

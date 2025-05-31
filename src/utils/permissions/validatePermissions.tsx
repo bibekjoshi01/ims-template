@@ -1,47 +1,61 @@
+import { ComponentType, useEffect, useState } from 'react';
+
 import Unauthorized from '@/components/Unauthorized';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { authState } from '@/pages/authentication/redux/selector';
 import { setPermissions } from '@/pages/common/redux/common.slice';
-import { ComponentType, useEffect, useState } from 'react';
 
 interface Props {}
-interface Permission {
-  id: string;
-  [key: string]: string;
+interface IRequiredPermission {
+  view_permission?: string;
+  edit_permission?: string;
+  add_permission?: string;
+  delete_permission?: string;
 }
 
-export function useHasRequiredPermissions(requiredPermissions: Permission[]): boolean {
-  const { userPermissions, isSuperuser } = useAppSelector(authState);
+export function useHasParticularPermissions(permission: string): boolean {
+  const { permissions, isSuperuser } = useAppSelector(authState);
 
-  return (
-    isSuperuser ||
-    requiredPermissions.some((permissionObj: Permission) => {
-      Object.values(permissionObj).some((permission: string) => userPermissions?.some((perm) => perm?.codename === permission));
-    })
-  );
+  if (isSuperuser) return true;
+  return permissions?.some((perm) => perm.codename === permission);
 }
 
-export const validatePermissions = <P extends Props>(Component: ComponentType<P>, requiredPermissions: any[]) => {
+export function useHasAnyPermissions(requiredPermissions: string[]): boolean {
+  const { permissions, isSuperuser } = useAppSelector(authState);
+
+  if (isSuperuser) return true;
+  return requiredPermissions.some((permission) => permissions?.some((perm) => perm.codename === permission));
+}
+
+const extractPermissionStrings = (permissionsArray: IRequiredPermission[]): string[] => {
+  return permissionsArray.flatMap((obj) => Object.values(obj));
+};
+
+export const validatePermissions = <P extends Props>(Component: ComponentType<P>, requiredPermissions: IRequiredPermission[]) => {
   const WrappedComponent: React.FC<P> = (props) => {
     const dispatch = useAppDispatch();
-    const hasPermission = useHasRequiredPermissions(requiredPermissions);
-    const [openModal, setOpenModal] = useState(false);
+
+    // Extract permission strings once
+    const permissionsStrings = extractPermissionStrings(requiredPermissions);
+    const hasPermission = useHasAnyPermissions(permissionsStrings);
+    const [showMessage, setShowMessage] = useState(false);
 
     useEffect(() => {
+      //set current component permission constants in redux
+      dispatch(setPermissions(permissionsStrings));
       return () => {
+        // remove permissions on unmount
         dispatch(setPermissions([]));
       };
     }, []);
 
     useEffect(() => {
       if (!hasPermission) {
-        setOpenModal(true);
+        setShowMessage(true);
       }
     }, [hasPermission]);
 
-    if (openModal) {
-      return <Unauthorized />;
-    }
+    if (showMessage) return <Unauthorized />;
 
     return <Component {...props} />;
   };

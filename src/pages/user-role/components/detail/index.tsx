@@ -6,7 +6,7 @@ import AppDialog from '@/components/app-dialog';
 import { useRetrieveUserRoleQuery } from '../../redux/user-role.api';
 import { userRoleState } from '../../redux/user-role.selector';
 import { clearViewId } from '../../redux/user-role.slice';
-import UserRoleDetails from './UserRoleDetails';
+import DetailView from './DetailView';
 
 const UserRoleDetailsModal = () => {
   const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const UserRoleDetailsModal = () => {
             <CircularProgress />
           </div>
         ) : (
-          <UserRoleDetails userRoleData={userRoleData} onClose={handleClose} />
+          <DetailView userRoleData={userRoleData} onClose={handleClose} />
         )
       }
     />
