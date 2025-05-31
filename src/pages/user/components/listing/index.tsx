@@ -2,7 +2,7 @@ import { lazy } from 'react';
 
 import TableContainer from '@/components/app-table/TableContainer';
 
-import { useHasParticularPermissions } from '@/utils/permissions/validatePermissions';
+import { useHasParticularPermissions } from '@/utils/permissions/helpers';
 import { userPermissions } from '../../constants/permissions';
 import { useUserTable } from '../../hooks/useUserTable';
 import { TableData, getColumnConfig } from './config';

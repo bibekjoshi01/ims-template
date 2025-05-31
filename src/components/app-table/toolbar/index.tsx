@@ -10,7 +10,6 @@ import {
   GridPanel,
   GridToolbarColumnsButton,
   GridToolbarDensitySelector,
-  GridToolbarExport,
   GridToolbarFilterButton,
   useGridApiContext
 } from '@mui/x-data-grid';
@@ -19,6 +18,7 @@ import { GridFilterPanelProps } from '@mui/x-data-grid/components/panel/filterPa
 // PROJECT IMPORTS
 import AppDialog from '@/components/app-dialog';
 import CustomInput from '@/components/app-form/CustomInput';
+import SaveExport from '@/components/export';
 import { debounce } from '@/utils/functions/debounce';
 
 // ==============================
@@ -89,8 +89,20 @@ export const CustomFilterPanel = (props: GridFilterPanelProps) => {
 // ==============================
 // Toolbar
 // ==============================
+interface Column {
+  field: string;
+  headerName?: string;
+  [key: string]: any;
+}
+
+interface Row {
+  [key: string]: any;
+}
+
 const Toolbar = ({
   title,
+  columns,
+  rows,
   showSearch,
   handleSearchChange,
   filterMode,
@@ -102,6 +114,8 @@ const Toolbar = ({
   createButtonTitle
 }: {
   title?: string;
+  columns?: Column[];
+  rows?: Row[];
   showSearch: boolean;
   handleSearchChange?: (value: string) => void;
   filterMode: string;
@@ -229,7 +243,7 @@ const Toolbar = ({
               )}
               {showExport && (
                 <MenuItem>
-                  <GridToolbarExport />
+                  <SaveExport columns={columns} rows={rows} title={title} />
                 </MenuItem>
               )}
             </Menu>

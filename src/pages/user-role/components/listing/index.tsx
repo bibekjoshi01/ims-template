@@ -3,8 +3,8 @@ import { lazy } from 'react';
 
 // PROJECT IMPORTS
 import TableContainer from '@/components/app-table/TableContainer';
-import { useHasParticularPermissions } from '@/utils/permissions/validatePermissions';
 
+import { useHasParticularPermissions } from '@/utils/permissions/helpers';
 import { userRolePermissions } from '../../constants/permissions';
 import { useUserRoleTable } from '../../hooks/useUserRoleTable';
 import { TableData, getColumnConfig } from './config';
