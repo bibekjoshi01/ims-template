@@ -7,7 +7,7 @@ import { Box, IconButton } from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 // PROJECT IMPORTS
-import CustomInput from '@/components/CustomInput';
+import CustomInput from '@/components/app-form/CustomInput';
 import DefaultImage from '@/assets/images/users/avatar-1.png';
 import useFocus from '@/hooks/useFocus';
 

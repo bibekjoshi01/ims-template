@@ -6,7 +6,7 @@ import { GridColDef } from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
 import { ColumnConfig } from '../types';
-import CustomInput from '@/components/CustomInput';
+import CustomInput from '@/components/app-form/CustomInput';
 import useFocus from '@/hooks/useFocus';
 
 // Define the createDateColumn function

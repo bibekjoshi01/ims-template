@@ -2,7 +2,7 @@ import { Avatar, Box, Button, CircularProgress, Grid, Typography } from '@mui/ma
 import { InfoField } from '@/components/detail-section';
 
 // project imports
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/cards/MainCard';
 import { useGetProfile } from '../hooks/useGetProfile';
 import DynamicInfoSection from '@/components/detail-section';
 import { viewProfileConfig } from './profile.config';

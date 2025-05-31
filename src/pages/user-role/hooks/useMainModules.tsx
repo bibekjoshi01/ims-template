@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SelectOption } from '@/components/CustomInput';
+import { SelectOption } from '@/components/app-form/CustomInput';
 import { useGetUserRoleMainModulesQuery } from '../redux/user-role.api';
 
 export const useMainModules = () => {

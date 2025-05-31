@@ -8,7 +8,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 // project import
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/cards/MainCard';
 
 // assets
 import FallOutlined from '@ant-design/icons/FallOutlined';

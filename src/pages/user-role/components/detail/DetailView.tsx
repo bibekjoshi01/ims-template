@@ -17,7 +17,7 @@ import dayjs from 'dayjs';
 
 // PROJECT IMPORTS
 import InfoCard from '@/components/cards/Infocard';
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/cards/MainCard';
 
 // LOCAL IMPORTS
 import { useGroupedPermissions } from '../../hooks/useGroupedPermissions';

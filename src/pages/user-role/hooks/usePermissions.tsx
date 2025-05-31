@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SelectOption } from '@/components/CustomInput';
+import { SelectOption } from '@/components/app-form/types';
 import { useLazyGetUserRoleUserPermissionsQuery } from '../redux/user-role.api';
 
 export const usePermissions = (selectedPermissions: number[], mainModule?: string | number, subModule?: string | number) => {
@@ -8,11 +8,6 @@ export const usePermissions = (selectedPermissions: number[], mainModule?: strin
 
   useEffect(() => {
     const fetchAndSetPermissions = async () => {
-      if (!mainModule) {
-        setAllPermissions([]);
-        return;
-      }
-
       try {
         const res = await fetchPermissions({ mainModule, subModule }).unwrap();
 

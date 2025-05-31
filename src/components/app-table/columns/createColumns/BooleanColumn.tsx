@@ -4,7 +4,7 @@ import { Box, Tooltip, Typography } from '@mui/material';
 import { CloseOutlined, DoneOutlined } from '@mui/icons-material';
 
 // PROJECT IMPORTS
-import CustomInput from '@/components/CustomInput';
+import CustomInput from '@/components/app-form/CustomInput';
 import useFocus from '@/hooks/useFocus';
 import { ColumnConfig } from '../types';
 

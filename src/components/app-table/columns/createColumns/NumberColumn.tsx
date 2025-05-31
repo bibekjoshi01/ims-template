@@ -5,7 +5,7 @@ import { Theme } from '@mui/material/styles';
 import { GridColDef } from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
-import CustomInput from '@/components/CustomInput';
+import CustomInput from '@/components/app-form/CustomInput';
 
 // TYPES
 import { ColumnConfig } from '../types';

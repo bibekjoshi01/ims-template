@@ -8,9 +8,9 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 // project import
-import FormSection from '@/components/FormSection';
-import MatchIndicator from '@/components/PasswordMatchIndicator';
-import PasswordStrengthCapsules from '@/components/PasswordStrengthCapsules';
+import FormSection from '@/components/app-form/FormSection';
+import MatchIndicator from '@/components/app-form/PasswordMatchIndicator';
+import PasswordStrengthCapsules from '@/components/app-form/PasswordStrengthCapsules';
 import { resetPasswordTokenLength } from '@/utils/constants/defaults';
 import AuthWrapper from '../components/AuthWrapper';
 import { useResetPassword } from '../hooks/useResetPassword';

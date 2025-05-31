@@ -1,5 +1,5 @@
-import FormSection from '@/components/FormSection';
-import MainCard from '@/components/MainCard';
+import FormSection from '@/components/app-form/FormSection';
+import MainCard from '@/components/cards/MainCard';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';

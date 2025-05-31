@@ -2,8 +2,8 @@ import { Button, Grid } from '@mui/material';
 import { useWatch } from 'react-hook-form';
 
 // project imports
-import FormSection from '@/components/FormSection';
-import MainCard from '@/components/MainCard';
+import FormSection from '@/components/app-form/FormSection';
+import MainCard from '@/components/cards/MainCard';
 
 import { useUpdateProfile } from '../hooks/useUpdateProfile';
 import { personalInfoFields, UpdateProfileFormDataType } from './profile.config';

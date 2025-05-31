@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 // UI Components
-import FormSection from '@/components/FormSection';
-import MainCard from '@/components/MainCard';
+import FormSection from '@/components/app-form/FormSection';
+import MainCard from '@/components/cards/MainCard';
 
 // Utilities & API
 import { useAppDispatch } from '@/libs/hooks';
@@ -14,7 +14,7 @@ import { splitName } from '@/utils/functions/splitCombineName';
 import { useGetUserRolesQuery, usePatchUserMutation } from '../../redux/user.api';
 
 // Form Schema, Defaults, Types
-import { SelectOption } from '@/components/CustomInput';
+import { SelectOption } from '@/components/app-form/CustomInput';
 import { handleClientError } from '@/utils/functions/handleError';
 import { useSnackbar } from 'notistack';
 import { UserRole } from '../../redux/types';
