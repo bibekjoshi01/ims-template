@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 // project import
 import Avatar from '@/components/@extended/Avatar';
 import Transitions from '@/components/@extended/Transitions';
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/cards/MainCard';
 import { useAppDispatch, useAppSelector } from '@/libs/hooks';
 import { useLogoutMutation } from '@/pages/authentication/redux/auth.api';
 import { logoutSuccess } from '@/pages/authentication/redux/auth.slice';

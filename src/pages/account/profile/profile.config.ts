@@ -1,4 +1,4 @@
-import { FormField } from '@/components/FormSection';
+import { FormField } from '@/components/app-form/FormSection';
 import * as z from 'zod';
 import { UserProfile } from '../redux/types';
 import { DynamicInfoSectionProps } from '@/components/detail-section/types';

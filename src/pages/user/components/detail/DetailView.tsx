@@ -9,7 +9,7 @@ import { CalendarToday, CancelOutlined, CheckCircleOutline, Close, EmailOutlined
 
 // Project Components & Types
 import InfoCard from '@/components/cards/Infocard';
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/cards/MainCard';
 import { UserDetails as DetailViewType } from '../../redux/types';
 
 // Component Props

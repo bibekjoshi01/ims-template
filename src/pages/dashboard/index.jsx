@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 // project import
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/cards/MainCard';
 import AnalyticEcommerce from '@/components/cards/statistics/AnalyticEcommerce';
 import MonthlyBarChart from './MonthlyBarChart';
 import UniqueVisitorCard from './UniqueVisitorCard';

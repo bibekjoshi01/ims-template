@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 
 // PROJECT IMPORTS
 
-import FormSection from '@/components/FormSection';
-import MainCard from '@/components/MainCard';
+import FormSection from '@/components/app-form/FormSection';
+import MainCard from '@/components/cards/MainCard';
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
 import { handleClientError } from '@/utils/functions/handleError';

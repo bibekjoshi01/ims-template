@@ -6,7 +6,7 @@ import { Typography } from '@mui/material';
 import { GridColDef, GridSingleSelectColDef } from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
-import CustomInput from '@/components/CustomInput';
+import CustomInput from '@/components/app-form/CustomInput';
 import { ColumnConfig } from '../types';
 import useFocus from '@/hooks/useFocus';
 

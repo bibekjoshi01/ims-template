@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 
 // project import
-import FormSection from '@/components/FormSection';
+import FormSection from '@/components/app-form/FormSection';
 import { useAppSelector } from '@/libs/hooks';
 import AuthWrapper from '../components/AuthWrapper';
 import { useForgetPasswordRequest } from '../hooks/useForgetPasswordRequest';

@@ -1,4 +1,4 @@
-import { FormField } from '@/components/FormSection';
+import { FormField } from '@/components/app-form/FormSection';
 import * as z from 'zod';
 
 export const userRoleUpdateFormSchema = z.object({
@@ -24,7 +24,7 @@ export const defaultValues: UserRoleUpdateFormDataType = {
 };
 
 export const userRoleUpdateFormFields: FormField<UserRoleUpdateFormDataType>[] = [
-  { name: 'name', label: 'Name', sm: 3, type: 'text' },
+  { name: 'name', label: 'Name', sm: 3, type: 'text', required: true },
   { name: 'mainModule', label: 'Main Module', sm: 3.5, type: 'select', options: [], required: false },
   { name: 'subModule', label: 'Sub Module', sm: 3.5, type: 'select', options: [], required: false },
   {

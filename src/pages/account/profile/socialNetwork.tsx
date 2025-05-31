@@ -1,4 +1,4 @@
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/cards/MainCard';
 import { Facebook, LinkedIn, Twitter } from '@mui/icons-material';
 import { Box, Button, Grid, Typography, useTheme } from '@mui/material';
 import { Link } from 'react-router-dom';

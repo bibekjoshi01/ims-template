@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 // Project Imports
-import FormSection from '@/components/FormSection';
+import FormSection from '@/components/app-form/FormSection';
 import { useLogin } from '../hooks/useLogin';
 import { LoginFormDataType } from '../redux/types';
 import { loginFields } from './login.config';

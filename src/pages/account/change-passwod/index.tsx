@@ -5,7 +5,7 @@ import { Grid } from '@mui/material';
 
 // components
 import TABS from '@/components/CustomTab';
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/cards/MainCard';
 
 // project imports
 import { TabItem } from '@/menu-items/types';

@@ -3,17 +3,17 @@ import { Button, Grid } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import FormSection from '@/components/FormSection';
-import MainCard from '@/components/MainCard';
-import MatchIndicator from '@/components/PasswordMatchIndicator';
-import PasswordStrengthCapsules from '@/components/PasswordStrengthCapsules';
+import FormSection from '@/components/app-form/FormSection';
+import MainCard from '@/components/cards/MainCard';
+import MatchIndicator from '@/components/app-form/PasswordMatchIndicator';
+import PasswordStrengthCapsules from '@/components/app-form/PasswordStrengthCapsules';
 
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
 import { splitName } from '@/utils/functions/splitCombineName';
 import { useCreateUserMutation, useGetUserRolesQuery, useLazyGetUsersQuery } from '../../redux/user.api';
 
-import { SelectOption } from '@/components/CustomInput';
+import { SelectOption } from '@/components/app-form/CustomInput';
 import useUniqueFieldValidation from '@/hooks/useUniqueFieldValidation';
 import { handleClientError } from '@/utils/functions/handleError';
 import { useSnackbar } from 'notistack';
