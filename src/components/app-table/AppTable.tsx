@@ -7,7 +7,7 @@ import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, GridRowParams,
 //  Project Imports
 import { useTableHandlers } from '@/hooks/useTableHandlers';
 import { Empty } from 'antd';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import ConfirmationModal from '../app-dialog/ConfirmationDialog';
 import { createColumnDefs } from './columns';
 import { BoxStyles, TableStyles } from './styles';
@@ -114,12 +114,16 @@ const AppTable = <T extends object>({
     [columnConfig, theme, handlers, rowModesModel, savingRows]
   );
 
+  const [searchText, setSearchText] = useState<string>('');
+
   const memoizedToolbar = useMemo(
     () => () => (
       <Toolbar
         title={title}
         columns={columns}
         rows={rows}
+        searchText={searchText}
+        setSearchText={setSearchText}
         showSearch={showSearch}
         filterMode={filterMode}
         handleSearchChange={handleSearchChange}
@@ -142,7 +146,9 @@ const AppTable = <T extends object>({
       showExport,
       createNewForm,
       rows,
-      columns
+      columns,
+      searchText,
+      setSearchText
     ]
   );
 

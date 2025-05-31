@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 // MUI IMPORTS
 import { Search as SearchIcon } from '@mui/icons-material';
-import { Box, Button, GlobalStyles, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { Box, Button, GlobalStyles, IconButton, Menu, MenuItem, styled, Typography } from '@mui/material';
 import {
   GridColumnsPanel,
   GridFilterPanel,
@@ -86,6 +86,48 @@ export const CustomFilterPanel = (props: GridFilterPanelProps) => {
   );
 };
 
+const TitleStyles = {
+  displayPrint: 'none',
+  px: 2,
+  py: 3,
+  fontWeight: 900
+};
+
+const ContainerStyles = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  flexWrap: 'wrap',
+  alignItems: { xs: 'flex-start', sm: 'center' },
+  pb: { xxs: 1, sm: 0 },
+  px: 1
+};
+
+const MenuItemStyles = {
+  p: 0,
+  '& .MuiButtonBase-root': {
+    px: 2.4,
+    py: 1,
+    gap: 0.5,
+    display: 'grid',
+    gridTemplateColumns: 'auto 1fr',
+    width: '100%'
+  },
+  '& .MuiSvgIcon-root': {
+    fontSize: 'initial',
+    width: 20,
+    height: 20
+  }
+};
+
+const ToolbarStyles = {
+  display: 'flex',
+  gap: 1,
+  flexWrap: 'wrap',
+  alignItems: { xs: 'flex-start', sm: 'center' },
+  width: { xs: '100%', sm: 'auto' },
+  displayPrint: 'none'
+};
+
 // ==============================
 // Toolbar
 // ==============================
@@ -104,6 +146,8 @@ const Toolbar = ({
   columns,
   rows,
   showSearch,
+  searchText = '',
+  setSearchText = () => {},
   handleSearchChange,
   filterMode,
   showColumnFilter,
@@ -117,6 +161,8 @@ const Toolbar = ({
   columns?: Column[];
   rows?: Row[];
   showSearch: boolean;
+  searchText?: string;
+  setSearchText?: (value: string) => void;
   handleSearchChange?: (value: string) => void;
   filterMode: string;
   showColumnFilter: boolean;
@@ -127,7 +173,6 @@ const Toolbar = ({
   createButtonTitle?: string;
 }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [searchText, setSearchText] = useState<string>('');
   const [showForm, setShowForm] = useState<boolean>(false);
   const apiRef = useGridApiContext();
   const openMenu = Boolean(anchorEl);
@@ -171,42 +216,16 @@ const Toolbar = ({
 
   return (
     <>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          alignItems: { xs: 'flex-start', sm: 'center' },
-          pb: { xxs: 1, sm: 0 },
-          px: 1
-        }}
-      >
+      <Box sx={ContainerStyles}>
         {/* Title */}
         {title && (
-          <Typography
-            variant="h4"
-            sx={{
-              displayPrint: 'none',
-              px: 2,
-              py: 3,
-              fontWeight: 900
-            }}
-          >
+          <Typography variant="h4" sx={TitleStyles}>
             {title}
           </Typography>
         )}
 
         {/* Toolbar */}
-        <Box
-          sx={{
-            display: 'flex',
-            gap: 1,
-            flexWrap: 'wrap',
-            alignItems: { xs: 'flex-start', sm: 'center' },
-            width: { xs: '100%', sm: 'auto' },
-            displayPrint: 'none'
-          }}
-        >
+        <Box sx={ToolbarStyles}>
           {/* Search Bar */}
           {showSearch && <CustomSearchBar searchText={searchText} handleInputChange={handleInputChange} />}
 
@@ -227,22 +246,22 @@ const Toolbar = ({
             </IconButton>
             <Menu anchorEl={anchorEl} open={openMenu} onClose={handleMenuClose}>
               {showColumnFilter && (
-                <MenuItem>
+                <MenuItem sx={MenuItemStyles}>
                   <GridToolbarColumnsButton />
                 </MenuItem>
               )}
               {showFilter && (
-                <MenuItem onClick={handleMenuClose}>
+                <MenuItem sx={MenuItemStyles}>
                   <GridToolbarFilterButton />
                 </MenuItem>
               )}
               {showDensitySelector && (
-                <MenuItem>
+                <MenuItem sx={MenuItemStyles}>
                   <GridToolbarDensitySelector />
                 </MenuItem>
               )}
               {showExport && (
-                <MenuItem>
+                <MenuItem sx={MenuItemStyles}>
                   <SaveExport columns={columns} rows={rows} title={title} />
                 </MenuItem>
               )}

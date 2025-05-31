@@ -12,7 +12,7 @@ export const getColumnConfig = (theme: Theme): ColumnConfig<TableData>[] => [
   { field: 'username', headerName: 'USER NAME', type: 'text', editable: false },
   { field: 'name', headerName: 'NAME', type: 'text', filterable: false },
   { field: 'phoneNo', headerName: 'PHONE NO.', type: 'text' },
-  { field: 'email', headerName: 'EMAIL', type: 'text', editable: false, minWidth: 200 },
+  { field: 'email', headerName: 'EMAIL', type: 'text', editable: false, minWidth: 180 },
   {
     field: 'isActive',
     headerName: 'ACTIVE STATUS',
