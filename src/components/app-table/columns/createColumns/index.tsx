@@ -29,19 +29,45 @@ import { createBooleanColumn } from './BooleanColumn';
 const createColumnDefs = <T extends object>(
   columnConfig: ColumnConfig<T>[],
   theme: Theme,
+  showIndex: boolean,
   handlers?: ColumnHandlers<T>,
   rowModesModel?: GridRowModesModel,
   savingRows?: Record<GridRowId, boolean>,
   allowEditing?: boolean,
   allowDeleting?: boolean
 ): GridColDef<T>[] => {
+  // adding serial number
+  if (showIndex) {
+    columnConfig = [
+      {
+        field: 'index',
+        headerName: '#',
+        type: 'number',
+        editable: false,
+        maxWidth: 50,
+        minWidth: 50,
+        align: 'center',
+        filterable: false,
+        sortable: false,
+        renderCell: (params) => {
+          const rowIndex = params.api.getRowIndexRelativeToVisibleRows(params.id); // index on current page (0-based)
+          const page = params.api.state.pagination.paginationModel.page;
+          const pageSize = params.api.state.pagination.paginationModel.pageSize;
+          return page * pageSize + rowIndex + 1;
+        }
+      },
+      ...columnConfig
+    ];
+  }
+
   return columnConfig.map((config): GridColDef<T> => {
     const baseCol: GridColDef<T> = {
       field: config?.field as string,
       headerName: config?.headerName,
+      align: config?.align ?? 'left',
       flex: 1, // fill the available space
       maxWidth: config?.maxWidth, // restrict the width if needed
-      minWidth: 140,
+      minWidth: config?.minWidth ?? 150,
       sortable: config?.sortable ?? true,
       editable: config?.editable ?? true,
       filterable: config?.filterable ?? true,

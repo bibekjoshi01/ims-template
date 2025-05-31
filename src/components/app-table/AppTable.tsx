@@ -35,6 +35,7 @@ const AppTable = <T extends object>({
   handleRowUpdateError,
 
   // Display options
+  showIndex = true,
   showCellVerticalBorder = false,
   showSearch = true,
   showColumnFilter = false,
@@ -109,7 +110,7 @@ const AppTable = <T extends object>({
 
   // Generate columns using provided createColumns function
   const columns = useMemo(
-    () => createColumnDefs<T>(columnConfig, theme, handlers, rowModesModel, savingRows, allowEditing, allowDeleting),
+    () => createColumnDefs<T>(columnConfig, theme, showIndex, handlers, rowModesModel, savingRows, allowEditing, allowDeleting),
     [columnConfig, theme, handlers, rowModesModel, savingRows]
   );
 

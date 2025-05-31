@@ -1,23 +1,9 @@
 // MUI imports
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import type { SelectChangeEvent } from '@mui/material/Select';
 
-import {
-  Box,
-  Checkbox,
-  Chip,
-  IconButton,
-  InputAdornment,
-  ListSubheader,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Switch,
-  Typography
-} from '@mui/material';
+import { Box, Checkbox, Chip, IconButton, ListSubheader, MenuItem, OutlinedInput, Select, Switch, Typography } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -99,7 +85,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               variant="outlined"
               name={name}
               value={value ?? ''}
-              onChange={handleSelectChange}
+              onChange={onChange}
               error={error}
               aria-describedby={errorId}
               {...(fullwidth ? { fullWidth: true } : {})}
