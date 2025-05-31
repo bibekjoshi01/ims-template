@@ -1,3 +1,5 @@
+import { PaginationParams } from '@/globals';
+
 export interface BlogCategoryItem {
   id: number;
   name: string;
@@ -12,11 +14,6 @@ export interface BlogCategoryResponse {
   next: string;
   previous: string;
   results?: BlogCategoryItem[] | null;
-}
-
-interface PaginationParams {
-  page: number;
-  pageSize: number;
 }
 
 export interface BlogCategoryQueryParams {

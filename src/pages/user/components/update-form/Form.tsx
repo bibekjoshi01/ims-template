@@ -14,7 +14,7 @@ import { splitName } from '@/utils/functions/splitCombineName';
 import { useGetUserRolesQuery, usePatchUserMutation } from '../../redux/user.api';
 
 // Form Schema, Defaults, Types
-import { SelectOption } from '@/components/app-form/CustomInput';
+import { SelectOption } from '@/components/app-form/types';
 import { handleClientError } from '@/utils/functions/handleError';
 import { useSnackbar } from 'notistack';
 import { UserRole } from '../../redux/types';

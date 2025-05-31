@@ -1,4 +1,4 @@
-import { FormField } from '@/components/app-form/FormSection';
+import { FormField } from '@/components/app-form/types';
 import * as z from 'zod';
 
 export const userRoleCreateFormSchema = z.object({

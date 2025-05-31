@@ -1,35 +1,12 @@
 import { ComponentType, useEffect, useState } from 'react';
 
 import Unauthorized from '@/components/Unauthorized';
-import { useAppDispatch, useAppSelector } from '@/libs/hooks';
-import { authState } from '@/pages/authentication/redux/selector';
+import { IRequiredPermission } from '@/globals';
+import { useAppDispatch } from '@/libs/hooks';
 import { setPermissions } from '@/pages/common/redux/common.slice';
+import { extractPermissionStrings, useHasAnyPermissions } from './helpers';
 
 interface Props {}
-interface IRequiredPermission {
-  view?: string;
-  edit?: string;
-  add?: string;
-  delete?: string;
-}
-
-export function useHasParticularPermissions(permission: string): boolean {
-  const { permissions, isSuperuser } = useAppSelector(authState);
-
-  if (isSuperuser) return true;
-  return permissions?.some((perm) => perm.codename === permission);
-}
-
-export function useHasAnyPermissions(requiredPermissions: string[]): boolean {
-  const { permissions, isSuperuser } = useAppSelector(authState);
-
-  if (isSuperuser) return true;
-  return requiredPermissions.some((permission) => permissions?.some((perm) => perm.codename === permission));
-}
-
-const extractPermissionStrings = (permissionsObj: IRequiredPermission): string[] => {
-  return Object.values(permissionsObj);
-};
 
 export const validatePermissions = <P extends Props>(Component: ComponentType<P>, requiredPermissions: IRequiredPermission) => {
   const WrappedComponent: React.FC<P> = (props) => {
