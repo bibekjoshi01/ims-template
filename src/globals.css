@@ -28,3 +28,15 @@ html {
     transform: rotate(360deg);
   }
 }
+
+@media print {
+  .MuiDataGrid-main {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .MuiDataGrid-virtualScroller {
+    overflow: visible !important;
+    height: auto !important;
+  }
+}

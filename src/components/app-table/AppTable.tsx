@@ -117,6 +117,8 @@ const AppTable = <T extends object>({
     () => () => (
       <Toolbar
         title={title}
+        columns={columns}
+        rows={rows}
         showSearch={showSearch}
         filterMode={filterMode}
         handleSearchChange={handleSearchChange}
@@ -128,7 +130,19 @@ const AppTable = <T extends object>({
         createButtonTitle={createButtonTitle}
       />
     ),
-    [title, showSearch, filterMode, handleSearchChange, showColumnFilter, showFilter, showDensitySelector, showExport, createNewForm]
+    [
+      title,
+      showSearch,
+      filterMode,
+      handleSearchChange,
+      showColumnFilter,
+      showFilter,
+      showDensitySelector,
+      showExport,
+      createNewForm,
+      rows,
+      columns
+    ]
   );
 
   const handleRowDoubleClick = (params: GridRowParams) => {
@@ -189,6 +203,9 @@ const AppTable = <T extends object>({
             noRowsOverlay: CustomNoRowsOverlay,
             noResultsOverlay: CustomNoResultsOverlay,
             exportIcon: SaveAlt
+          }}
+          localeText={{
+            toolbarExportCSV: 'Download CSV'
           }}
           slotProps={{
             // shows skeleton loader when loading
