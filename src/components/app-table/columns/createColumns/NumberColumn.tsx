@@ -14,8 +14,8 @@ import useFocus from '@/hooks/useFocus';
 export const createNumberColumn = <T extends object>(config: ColumnConfig<T>, theme: Theme, baseCol: GridColDef<T>): GridColDef<T> => {
   return {
     ...baseCol,
-    headerAlign: 'right',
-    align: 'right',
+    headerAlign: 'center',
+    align: config.align ?? 'right',
     renderEditCell: (params) => {
       // Use React hooks to manage the input ref and focus
       const NumberCellEdit = () => {

@@ -38,22 +38,22 @@ export const useUserTable = () => {
 
     // NOTE - Data transformations api data to table data
     transformResponseToTableData: (apiData) => {
-      return apiData.results.map((item: UserItem) => ({
+      return apiData?.results.map((item: UserItem) => ({
         ...item,
-        name: combineName(item.firstName, item.middleName, item.lastName)
+        name: combineName(item?.firstName, item?.middleName, item?.lastName)
       }));
     },
 
     // NOTE - Data transformations table data to api data of inline update
     transformTableDataToUpdateInput: (rowData) => {
-      const { firstName, lastName } = splitName(rowData.name);
+      const { firstName, lastName } = splitName(rowData?.name);
 
       return {
         firstName,
         lastName,
-        isActive: rowData.isActive,
-        phoneNo: rowData.phoneNo,
-        photo: rowData.photo
+        isActive: rowData?.isActive,
+        phoneNo: rowData?.phoneNo,
+        photo: rowData?.photo
       };
     }
   });

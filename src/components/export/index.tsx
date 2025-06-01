@@ -1,5 +1,5 @@
 import { CloudDownloadOutlined } from '@ant-design/icons';
-import { IconButton, Menu, MenuItem, Stack, Typography } from '@mui/material';
+import { Button, Menu, MenuItem } from '@mui/material';
 import { GridCsvExportMenuItem } from '@mui/x-data-grid';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -58,14 +58,16 @@ export default function SaveExport({ columns, rows, title }: SaveExportProps) {
 
   return (
     <>
-      <IconButton onClick={handleClick} size="small" color="primary" aria-label="export" sx={{ p: 1 }}>
-        <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
-          <CloudDownloadOutlined color="primary" />
-          <Typography variant="button" color="primary" sx={{ userSelect: 'none' }}>
-            Export
-          </Typography>
-        </Stack>
-      </IconButton>
+      <Button
+        onClick={handleClick}
+        color="primary"
+        variant="text"
+        aria-label="export"
+        sx={{ fontSize: (theme) => theme.typography.body2 }}
+        startIcon={<CloudDownloadOutlined style={{ marginLeft: '4px' }} />}
+      >
+        Export
+      </Button>
 
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <GridCsvExportMenuItem

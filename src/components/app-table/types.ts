@@ -84,6 +84,11 @@ export interface AppTableProps<T extends object> {
   handleRowUpdateError?: (error: any) => void;
 
   /**
+   * Shows serial number in rows.
+   */
+  showIndex: boolean;
+
+  /**
    * Shows vertical borders between cells when true.
    * Default is false.
    */

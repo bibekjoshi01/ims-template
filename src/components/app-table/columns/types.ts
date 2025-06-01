@@ -1,4 +1,4 @@
-import { GridColDef, GridRowId } from '@mui/x-data-grid';
+import { GridAlignment, GridColDef, GridRowId } from '@mui/x-data-grid';
 
 /**
  * BadgeColorMap defines color configurations for badge-style columns.
@@ -22,9 +22,10 @@ export interface ColumnHandlers<T> {
  * ColumnConfig defines the structure of a single column in the data grid.
  */
 export interface ColumnConfig<T extends object> {
-  field: keyof T;
+  field: keyof T | 'index';
   headerName: string;
   maxWidth?: number;
+  minWidth?: number;
   type?: 'text' | 'number' | 'select' | 'actions' | 'progress' | 'image' | 'date' | 'link' | 'boolean';
   editable?: boolean;
   filterable?: boolean;
@@ -35,4 +36,5 @@ export interface ColumnConfig<T extends object> {
   trueLabel?: string; // only for 'boolean' type
   falseLabel?: string; // only for 'boolean' type
   handlers?: ColumnHandlers<T>;
+  align?: GridAlignment; // left | right | center
 }

@@ -14,6 +14,7 @@ function TableContainer<TData extends object>({
   createNewForm,
   createButtonTitle,
   allowEditing = false,
+  showIndex = true,
   showFilter = false,
   showSearch = true,
   showColumnFilter = false,
@@ -63,6 +64,7 @@ function TableContainer<TData extends object>({
       filterModel={filterModel}
       sortModel={sortModel}
       pageSizeOptions={pageSizeOptions}
+      showIndex={showIndex}
       allowEditing={allowEditing}
       showFilter={showFilter}
       showSearch={showSearch}

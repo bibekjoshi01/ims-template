@@ -5,14 +5,16 @@ import { useTheme } from '@mui/material/styles';
 import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, GridRowParams, MuiEvent } from '@mui/x-data-grid';
 
 //  Project Imports
-import { useTableHandlers } from '@/hooks/useTableHandlers';
 import { Empty } from 'antd';
 import { useMemo } from 'react';
-import ConfirmationModal from '../app-dialog/ConfirmationDialog';
+import Toolbar from './toolbar';
+import SaveExport from '../export';
+import { AppTableProps } from './types';
 import { createColumnDefs } from './columns';
 import { BoxStyles, TableStyles } from './styles';
-import Toolbar, { CustomColumnsPanel, CustomFilterPanel } from './toolbar';
-import { AppTableProps } from './types';
+import { useTableHandlers } from '@/hooks/useTableHandlers';
+import ConfirmationModal from '../app-dialog/ConfirmationDialog';
+import { CustomColumnsPanel, CustomFilterPanel } from './toolbar/Slots';
 
 // ===========================|| AppTable - MAIN COMPONENT ||=========================== //
 const AppTable = <T extends object>({
@@ -35,6 +37,7 @@ const AppTable = <T extends object>({
   handleRowUpdateError,
 
   // Display options
+  showIndex = true,
   showCellVerticalBorder = false,
   showSearch = true,
   showColumnFilter = false,
@@ -109,16 +112,16 @@ const AppTable = <T extends object>({
 
   // Generate columns using provided createColumns function
   const columns = useMemo(
-    () => createColumnDefs<T>(columnConfig, theme, handlers, rowModesModel, savingRows, allowEditing, allowDeleting),
+    () => createColumnDefs<T>(columnConfig, theme, showIndex, handlers, rowModesModel, savingRows, allowEditing, allowDeleting),
     [columnConfig, theme, handlers, rowModesModel, savingRows]
   );
+
+  const SaveExportComponent = useMemo(() => <SaveExport columns={columns} rows={rows} title={title} />, [columns, rows, title]);
 
   const memoizedToolbar = useMemo(
     () => () => (
       <Toolbar
         title={title}
-        columns={columns}
-        rows={rows}
         showSearch={showSearch}
         filterMode={filterMode}
         handleSearchChange={handleSearchChange}
@@ -127,22 +130,11 @@ const AppTable = <T extends object>({
         showDensitySelector={showDensitySelector}
         showExport={showExport}
         createNewForm={createNewForm}
+        saveExportComponent={SaveExportComponent}
         createButtonTitle={createButtonTitle}
       />
     ),
-    [
-      title,
-      showSearch,
-      filterMode,
-      handleSearchChange,
-      showColumnFilter,
-      showFilter,
-      showDensitySelector,
-      showExport,
-      createNewForm,
-      rows,
-      columns
-    ]
+    [title, showSearch, filterMode, handleSearchChange, showColumnFilter, showFilter, showDensitySelector, showExport, createNewForm]
   );
 
   const handleRowDoubleClick = (params: GridRowParams) => {
