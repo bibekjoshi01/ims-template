@@ -1,21 +1,26 @@
 // material-ui
+import SearchOutlined from '@ant-design/icons/SearchOutlined';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
-// assets
-import SearchOutlined from '@ant-design/icons/SearchOutlined';
+// project imports
+import { useSearch } from '@/contexts/search-context';
 
-// ==============================|| HEADER CONTENT - SEARCH ||============================== //
+// ==============================|| DRAWER CONTENT - SEARCH ||============================== //
 
 export default function Search() {
+  const { searchTerm, setSearchTerm } = useSearch();
+
   return (
-    <Box sx={{ width: '100%', ml: { xs: 0, md: 1 } }}>
-      <FormControl sx={{ width: { xs: '100%', md: 224 } }}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', pt: 2, mb: 1 }}>
+      <FormControl>
         <OutlinedInput
           size="small"
           id="header-search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target?.value)}
           startAdornment={
             <InputAdornment position="start" sx={{ mr: -0.5 }}>
               <SearchOutlined />

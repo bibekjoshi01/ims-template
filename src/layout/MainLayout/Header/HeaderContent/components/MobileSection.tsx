@@ -15,8 +15,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // project import
 import Transitions from '@/components/@extended/Transitions';
+import Search from '../../../Drawer/DrawerContent/Search';
 import Profile from './profile';
-import Search from './Search';
 
 // assets
 
