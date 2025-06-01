@@ -6,8 +6,8 @@ import { GridMoreVertIcon, GridToolbarColumnsButton, GridToolbarDensitySelector,
 
 // PROJECT IMPORTS
 import AppDialog from '@/components/app-dialog';
-import { ContainerStyles, MenuItemStyles, TitleStyles, ToolbarStyles } from './styles';
 import { CustomSearchBar } from './Slots';
+import { ContainerStyles, MenuItemStyles, TitleStyles, ToolbarStyles } from './styles';
 import { ToolbarProps } from './types';
 import { useToolbarHandlers } from './useToolbarHandlers';
 

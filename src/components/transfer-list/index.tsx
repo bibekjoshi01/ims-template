@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Box, Button, Checkbox, Divider, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import MainCard from '@/components/cards/MainCard';
+import { Box, Button, Checkbox, Divider, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import { useState } from 'react';
 import { TransferListProps } from './types';
 
 /**
@@ -98,13 +98,15 @@ export default function TransferList<T>({
     <MainCard
       sx={{
         mt: 4,
-        mb: 2,
         border: '1px solid',
         borderColor: 'divider',
         width: '100%',
         height: 320,
         overflow: 'auto',
-        position: 'relative'
+        position: 'relative',
+        '& .MuiCardContent-root': {
+          pt: 0
+        }
       }}
     >
       {/* Header with checkbox to select/deselect all items */}

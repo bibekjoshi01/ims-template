@@ -1,6 +1,6 @@
 // MUI IMPORTS
 import { Theme } from '@mui/material/styles';
-import { GridColDef, GridRowId, GridRowModesModel } from '@mui/x-data-grid';
+import { GridColDef, GridColType, GridRowId, GridRowModesModel, GridValidRowModel } from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
 import { createActionsColumn } from './ActionColumn';
@@ -26,7 +26,7 @@ import { createBooleanColumn } from './BooleanColumn';
  * @param savingRows - Sate for rows that are in saving state.
  * @returns Array of GridColDef objects for MUI DataGrid.
  */
-const createColumnDefs = <T extends object>(
+const createColumnDefs = <T extends GridValidRowModel>(
   columnConfig: ColumnConfig<T>[],
   theme: Theme,
   showIndex: boolean,
@@ -61,7 +61,9 @@ const createColumnDefs = <T extends object>(
   }
 
   return columnConfig.map((config): GridColDef<T> => {
-    const baseCol: GridColDef<T> = {
+    // Extend GridColDef to allow custom properties like 'fieldType'
+    type ExtendedGridColDef<T extends GridValidRowModel> = GridColDef<T> & { fieldType?: string };
+    const baseCol: ExtendedGridColDef<T> = {
       field: config?.field as string,
       headerName: config?.headerName,
       align: config?.align ?? 'left',
@@ -71,7 +73,8 @@ const createColumnDefs = <T extends object>(
       sortable: config?.sortable ?? true,
       editable: config?.editable ?? true,
       filterable: config?.filterable ?? true,
-      renderCell: config?.renderCell
+      renderCell: config?.renderCell,
+      fieldType: config?.type || 'text'
     };
     switch (config.type) {
       case 'text':
