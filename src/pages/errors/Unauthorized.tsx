@@ -1,6 +1,6 @@
+import unauthorizedImage from '@/assets/images/error/401.svg';
 import { Box, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import unauthorizedImage from '@/assets/images/error/401.svg';
 
 function Unauthorized() {
   const navigate = useNavigate();

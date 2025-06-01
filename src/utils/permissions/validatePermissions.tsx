@@ -1,9 +1,9 @@
 import { ComponentType, useEffect, useState } from 'react';
 
-import Unauthorized from '@/components/Unauthorized';
 import { IRequiredPermission } from '@/globals';
 import { useAppDispatch } from '@/libs/hooks';
 import { setPermissions } from '@/pages/common/redux/common.slice';
+import Unauthorized from '@/pages/errors/Unauthorized';
 import { extractPermissionStrings, useHasAnyPermissions } from './helpers';
 
 interface Props {}
