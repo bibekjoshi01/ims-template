@@ -1,4 +1,4 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Private](https://img.shields.io/badge/license-private-lightgrey.svg)](#license)
 
 # What is IMS ?
 
@@ -11,22 +11,6 @@ This repository contains a base template for a CMS dashboard, designed to be a r
 </div>
 
 <br />
-
-## Key Features
-
-1. React: Modern, declarative library for building user interfaces.
-2. Material-UI (MUI): Fully customizable component library for consistent, responsive design.
-3. Redux: State management for predictable application behavior.
-4. Axios: Simplified HTTP client for API communication.
-5. React Router: Seamless routing for single-page applications.
-6. Redux Toolkit: Simplified Redux setup and best practices.
-7. Authentication & Authorization: Pre-configured structure for secure user management.
-8. Theme Customization: Light/dark mode and primary/secondary theme configuration.
-9. Responsive Design: Mobile-friendly layout using MUI’s Grid and breakpoints.
-10. Reusable Components: Buttons, modals, tables, and form elements included.
-11. API Integration: Example setup for dynamic API-driven content.
-
-</br>
 
 # Contributing to Project 🔐
 
@@ -54,16 +38,39 @@ yarn
 yarn start
 ```
 
-### Technology stack
+---
 
-- [Material UI V5](https://mui.com/core/)
-- Built with React Hooks API.
-- React context API for state management.
-- SWR.
-- React Router for navigation routing.
-- Support for Vite.
-- Code splitting.
-- CSS-in-JS.
+### Features
+
+- 🧱 Material UI v5 components with full customization.
+- ⚛️ Built with React 19 and Hooks API.
+- 🔁 Global state management via React Context API.
+- 📡 Data fetching with SWR.
+- 🚦 Routing using React Router v7.
+- ⚡ Lightning-fast development experience with Vite.
+- 🎨 CSS-in-JS via Emotion.
+- 📦 Code splitting and optimized build.
+- 📅 Integrated date pickers, charts, tables, and more.
+- 💾 Persistent Redux store with `redux-persist`.
+- 📚 Form handling with `react-hook-form` and `zod`.
+
+---
+
+### 🛠 Tech Stack
+
+- **Framework**: React 19, Vite
+- **UI Kit**: Material UI (MUI v5), Ant Design Icons
+- **Routing**: React Router v7
+- **State Management**: React Context, Redux Toolkit, Redux Persist
+- **Forms**: React Hook Form, Zod
+- **Charts**: ApexCharts
+- **PDF/Excel**: jsPDF, jsPDF AutoTable, SheetJS (xlsx)
+- **Data Grid**: MUI X Data Grid
+- **Utilities**: Day.js, Lodash, File Saver, SWR
+- **Styling**: Emotion, CSS-in-JS, Fontsource
+- **Code Quality**: Prettier, Husky, Lint-Staged
+
+---
 
 ## 2️. Contributing guidelines & more
 
@@ -72,8 +79,8 @@ yarn start
 
 # License 👮
 
-This is Licensed under the <a href="./LICENSE">MIT License</a>. Please go through the License at least once before contributing.
+This is Licensed under the <a href="./LICENSE">Private License</a>. Please go through the License at least once before contributing.
 
 # Support 🙏
 
-**Don't forget to drop a star ⭐.** A heartfelt thank you to those who have contributed to this project. We are really grateful for your contribution. You all are amazing. Opensource for the win 🚀
+**Don't forget to drop a star ⭐.** A heartfelt thank you to those who have contributed to this project. We are really grateful for your contribution. You all are amazing.
