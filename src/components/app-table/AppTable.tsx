@@ -134,7 +134,18 @@ const AppTable = <T extends object>({
         createButtonTitle={createButtonTitle}
       />
     ),
-    [title, showSearch, filterMode, handleSearchChange, showColumnFilter, showFilter, showDensitySelector, showExport, createNewForm]
+    [
+      title,
+      showSearch,
+      filterMode,
+      handleSearchChange,
+      showColumnFilter,
+      showFilter,
+      showDensitySelector,
+      showExport,
+      createNewForm,
+      SaveExportComponent
+    ]
   );
 
   const handleRowDoubleClick = (params: GridRowParams) => {
