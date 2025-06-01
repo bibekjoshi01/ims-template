@@ -104,7 +104,10 @@ export default function TransferList<T>({
         width: '100%',
         height: 320,
         overflow: 'auto',
-        position: 'relative'
+        position: 'relative',
+        '& .MuiCardContent-root': {
+          pt: 0
+        }
       }}
     >
       {/* Header with checkbox to select/deselect all items */}
