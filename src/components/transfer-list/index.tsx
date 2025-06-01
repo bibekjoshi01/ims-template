@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Box, Button, Checkbox, Divider, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import MainCard from '@/components/cards/MainCard';
+import { Box, Button, Checkbox, Divider, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import { useState } from 'react';
 import { TransferListProps } from './types';
 
 /**
@@ -98,7 +98,6 @@ export default function TransferList<T>({
     <MainCard
       sx={{
         mt: 4,
-        mb: 2,
         border: '1px solid',
         borderColor: 'divider',
         width: '100%',
