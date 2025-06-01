@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 // UI Components
-import FormSection from '@/components/FormSection';
-import MainCard from '@/components/MainCard';
+import FormSection from '@/components/app-form/FormSection';
+import MainCard from '@/components/cards/MainCard';
 
 // Utilities & API
 import { useAppDispatch } from '@/libs/hooks';
@@ -14,11 +14,11 @@ import { splitName } from '@/utils/functions/splitCombineName';
 import { useGetUserRolesQuery, usePatchUserMutation } from '../../redux/user.api';
 
 // Form Schema, Defaults, Types
-import { SelectOption } from '@/components/CustomInput';
-import { UserRole } from '../../redux/types';
-import { defaultValues, userInfoUpdateFields, UserInfoUpdateFormDataType, userInfoUpdateFormSchema } from './userUpdateForm.config';
+import { SelectOption } from '@/components/app-form/types';
 import { handleClientError } from '@/utils/functions/handleError';
 import { useSnackbar } from 'notistack';
+import { UserRole } from '../../redux/types';
+import { defaultValues, userInfoUpdateFields, UserInfoUpdateFormDataType, userInfoUpdateFormSchema } from './config';
 
 interface UserFormProps {
   userData?: any;
@@ -120,12 +120,12 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
           </MainCard>
         </Grid>
 
-        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, flexWrap: 'wrap' }}>
           <Button variant="outlined" color="error" onClick={onClose}>
             Cancel
           </Button>
           <Button variant="contained" type="submit">
-            Update User
+            Update
           </Button>
         </Grid>
       </Grid>

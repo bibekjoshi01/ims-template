@@ -32,7 +32,7 @@ const MainCard = forwardRef<HTMLDivElement, MainCardProps>(
       children,
       content = true,
       contentSX = {},
-      darkTitle,
+      darkTitle = true,
       elevation,
       secondary,
       shadow,
@@ -55,7 +55,7 @@ const MainCard = forwardRef<HTMLDivElement, MainCardProps>(
           border: border ? '1px solid' : 'none',
           borderRadius: 2,
           // @ts-ignore
-          borderColor: theme.palette.secondary.divider,
+          borderColor: theme.palette.divider,
           boxShadow: boxShadow && (!border || theme.palette.mode === 'dark') ? shadow || theme.customShadows.z1 : 'inherit',
           ':hover': {
             boxShadow: boxShadow ? shadow || theme.customShadows.z1 : 'inherit'
@@ -73,7 +73,7 @@ const MainCard = forwardRef<HTMLDivElement, MainCardProps>(
         {!darkTitle && title && (
           <CardHeader sx={headerSX} titleTypographyProps={{ variant: 'subtitle1' }} title={title} action={secondary} />
         )}
-        {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />}
+        {darkTitle && title && <CardHeader sx={headerSX} title={<Typography variant="h4">{title}</Typography>} action={secondary} />}
         {/* card divider */}
         {divider && <Divider />}
         {/* card content */}

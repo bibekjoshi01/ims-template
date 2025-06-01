@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import Box from '@mui/material/Box';
 
 // project import
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/cards/MainCard';
 
 interface AuthCardProps {
   children: ReactNode;

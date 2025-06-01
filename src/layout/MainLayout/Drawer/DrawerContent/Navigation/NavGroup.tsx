@@ -9,45 +9,28 @@ import { MenuItem } from '@/menu-items/types';
 import CollapseItem from './CollapseItem';
 import NavItem from './NavItem';
 
-export default function NavGroup({ item }: { item: MenuItem }) {
+export default function NavGroup({ item, isSearching }: { item: MenuItem; isSearching?: boolean }) {
   const { menuMaster } = useGetMenuMaster();
   const drawerOpen = menuMaster?.isDashboardDrawerOpened || false;
-
   const [openCollapse, setOpenCollapse] = useState<Record<string, boolean>>({});
 
-  // Function to toggle collapse
   const handleToggleCollapse = (id: string) => {
     setOpenCollapse((prev) => {
       const isAlreadyOpen = prev[id];
-
-      const newState = { ...prev };
-      // If the collapse is already open, close it; otherwise, open it and close others
-      for (const key in newState) {
-        newState[key] = false;
-      }
-      newState[id] = !newState[id];
-      return {
-        ...newState,
-        [id]: !isAlreadyOpen
-      };
+      const newState: Record<string, boolean> = {};
+      for (const key in prev) newState[key] = false;
+      newState[id] = !isAlreadyOpen;
+      return newState;
     });
   };
 
-  const navCollapse = item.children?.map((menuItem: MenuItem) => {
+  const navCollapse = item?.children?.map((menuItem: MenuItem) => {
     switch (menuItem.type) {
       case 'collapse':
         return (
           <Box key={menuItem.id}>
-            {/* Parent Collapse Item */}
-            <CollapseItem
-              key={menuItem.id}
-              item={menuItem}
-              level={1}
-              handleToggleCollapse={handleToggleCollapse}
-              openCollapse={openCollapse}
-            />
-            {/* Collapsible Children */}
-            <Collapse in={openCollapse[menuItem.id]} timeout="auto" unmountOnExit>
+            <CollapseItem item={menuItem} level={1} handleToggleCollapse={handleToggleCollapse} openCollapse={openCollapse} />
+            <Collapse in={openCollapse[menuItem.id] || isSearching} timeout="auto" unmountOnExit>
               {menuItem?.children?.map((childItem) => <NavItem key={childItem.id} item={childItem} level={2} />)}
             </Collapse>
           </Box>
@@ -66,7 +49,7 @@ export default function NavGroup({ item }: { item: MenuItem }) {
   return (
     <List
       subheader={
-        item.title &&
+        item?.title &&
         drawerOpen && (
           <Box sx={{ pl: 3, mb: 1.5 }}>
             <Typography variant="subtitle2" color="textSecondary">

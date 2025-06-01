@@ -1,6 +1,6 @@
 import { ColumnConfig } from '@/components/app-table/columns';
 import { Theme } from '@mui/material/styles';
-import { UserRole } from '../redux/types';
+import { UserRole } from '../../redux/types';
 
 export interface TableData extends UserRole {
   name: string;
@@ -16,6 +16,6 @@ export const getColumnConfig = (theme: Theme): ColumnConfig<TableData>[] => [
     type: 'boolean',
     filterable: false
   },
-  { field: 'createdAt', headerName: 'CREATED AT', type: 'date', editable: false, filterable: false },
-  { field: 'actions', headerName: '', type: 'actions', deletable: false }
+  { field: 'createdAt', headerName: 'CREATED AT', type: 'date', editable: false, filterable: false, sortable: false },
+  { field: 'actions', headerName: '', type: 'actions' }
 ];

@@ -6,7 +6,7 @@ import AppDialog from '@/components/app-dialog';
 import { useRetrieveUserQuery } from '../../redux/user.api';
 import { userState } from '../../redux/user.selector';
 import { clearViewId } from '../../redux/user.slice';
-import UserDetails from './UserDetails';
+import DetailView from './DetailView';
 
 const UserDetailsModal = () => {
   const dispatch = useDispatch();
@@ -23,8 +23,6 @@ const UserDetailsModal = () => {
     dispatch(clearViewId());
   };
 
-  // If the viewId is not set, we don't need to show the modal
-
   return (
     <AppDialog
       open={!!viewId}
@@ -37,7 +35,7 @@ const UserDetailsModal = () => {
             <CircularProgress />
           </div>
         ) : (
-          <UserDetails userData={userData} onClose={handleClose} />
+          <DetailView userData={userData} onClose={handleClose} />
         )
       }
     />

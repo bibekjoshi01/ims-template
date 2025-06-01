@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 // project import
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/cards/MainCard';
 
 export default function Breadcrumbs({ navigation, title, ...others }) {
   const location = useLocation();

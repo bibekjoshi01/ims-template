@@ -1,28 +1,26 @@
-import React, { useMemo, useCallback, useState, useEffect } from 'react';
-import { Button, Grid } from '@mui/material';
-import { useForm } from 'react-hook-form';
+// PACKAGE IMPORTS
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Grid } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-// Custom Hooks
-import { useMainModules } from '../../hooks/useMainModules';
-import { useSubModules } from '../../hooks/useSubModules';
-import { usePermissions } from '../../hooks/usePermissions';
+// PROJECT IMPORTS
 
-// UI Components
-import FormSection from '@/components/FormSection';
-import MainCard from '@/components/MainCard';
-import PermissionTransfer, { UserPermission } from '../PermissionTransfer';
-
-// Utilities & API
+import FormSection from '@/components/app-form/FormSection';
+import MainCard from '@/components/cards/MainCard';
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
-import { usePatchUserRoleMutation } from '../../redux/user-role.api';
-
-// Form Schema, Defaults, Types
-import { defaultValues, UserRoleUpdateFormDataType, userRoleUpdateFormFields, userRoleUpdateFormSchema } from './userRoleUpdateForm.config';
-import { UserRoleDetailed } from '../../redux/types';
 import { handleClientError } from '@/utils/functions/handleError';
-import { useSnackbar } from 'notistack';
+
+// LOCAL IMPORTS
+import { useMainModules } from '../../hooks/useMainModules';
+import { usePermissions } from '../../hooks/usePermissions';
+import { useSubModules } from '../../hooks/useSubModules';
+import { UserRoleDetailed } from '../../redux/types';
+import { usePatchUserRoleMutation } from '../../redux/user-role.api';
+import PermissionTransfer, { UserPermission } from '../PermissionTransfer';
+import { defaultValues, UserRoleUpdateFormDataType, userRoleUpdateFormFields, userRoleUpdateFormSchema } from './config';
 
 interface UserRoleUpdateFormProps {
   userRoleData?: UserRoleDetailed;
@@ -48,28 +46,21 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
     defaultValues
   });
 
-  // Watches the form fields for reactive data fetching.
   const mainModule = watch('mainModule');
   const subModule = watch('subModule');
   const selectedPermissions = watch('selectedPermissions') || [];
 
-  // Fetch data using custom hooks
   const mainModuleOptions = useMainModules();
   const subModuleOptions = useSubModules(mainModule);
   const allPermissions = usePermissions(selectedPermissions, mainModule, subModule);
 
-  // Memoized formatted permissions
   const formattedPermissions = useMemo(() => allPermissions.map((perm) => ({ id: perm.value, name: perm.label })), [allPermissions]);
 
-  // Convert selectedPermissions IDs to permission objects
   const selectedUserPermissions = useMemo(
     () => formattedPermissions.filter((perm) => selectedPermissions.includes(perm.id as number)),
     [formattedPermissions, selectedPermissions]
   );
 
-  /**
-   * Updates the selected permissions in the form state.
-   */
   const handlePermissionsChange = useCallback(
     (newSelected: UserPermission[]) => {
       const selectedIds = newSelected.map((perm) => perm.id as number);
@@ -78,9 +69,6 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
     [setValue]
   );
 
-  /**
-   * Update form field options for mainModule and subModule.
-   */
   useMemo(() => {
     setFormFields((prev) =>
       prev.map((field) => {
@@ -95,12 +83,6 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
     );
   }, [mainModuleOptions, subModuleOptions]);
 
-  /**
-   * Reset form with user role data when it's available.
-   */
-  /**
-   * Reset form with user role data when it's available.
-   */
   useEffect(() => {
     if (userRoleData) {
       const userRoleFormData: UserRoleUpdateFormDataType = {
@@ -116,9 +98,6 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
     }
   }, [userRoleData, reset]);
 
-  /**
-   * Form submission handler.
-   */
   const onSubmit = async (data: UserRoleUpdateFormDataType) => {
     const { id, ...updateData } = data;
     const values = {
@@ -126,6 +105,7 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
       permissions: updateData.selectedPermissions,
       isActive: updateData.isActive
     };
+
     try {
       const payload = { id, values };
       const res = await updateUserRole(payload).unwrap();
@@ -150,10 +130,8 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MainCard divider title="Update User Role">
-            {/* Form Section with other fields */}
             <FormSection<UserRoleUpdateFormDataType> fields={formFields} control={control} errors={errors} />
 
-            {/* Permission Transfer Component */}
             <PermissionTransfer
               allPermissions={formattedPermissions}
               selectedPermissions={selectedUserPermissions}

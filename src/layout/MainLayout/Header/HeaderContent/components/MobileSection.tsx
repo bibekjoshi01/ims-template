@@ -15,8 +15,8 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // project import
 import Transitions from '@/components/@extended/Transitions';
+import Search from '../../../Drawer/DrawerContent/Search';
 import Profile from './profile';
-import Search from './Search';
 
 // assets
 
@@ -55,7 +55,7 @@ export default function MobileSection() {
       <Box sx={{ flexShrink: 0 }}>
         <IconButton
           sx={{
-            bgcolor: open ? 'secondary.hover' : 'transparent'
+            bgcolor: open ? 'action.hover' : 'transparent'
           }}
           aria-label="open more menu"
           ref={anchorRef}

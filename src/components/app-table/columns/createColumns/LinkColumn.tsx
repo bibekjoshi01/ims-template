@@ -4,7 +4,7 @@ import OpenInNewOutlinedIcon from '@mui/icons-material/OpenInNewOutlined';
 import { Box, Link, Tooltip } from '@mui/material';
 
 // PROJECT IMPORTS
-import CustomInput from '@/components/CustomInput';
+import CustomInput from '@/components/app-form/CustomInput';
 import useFocus from '@/hooks/useFocus';
 import { ColumnConfig } from '../types';
 
@@ -20,7 +20,7 @@ export const createLinkColumn = <T extends object>(
     ...baseCol,
     // Change column maxWidth if any row has mode value set
     maxWidth: hasMode ? 140 : baseCol.maxWidth,
-
+    minWidth: 80,
     renderCell: (params) => (
       <Box
         sx={{

@@ -5,10 +5,10 @@ import { CancelOutlined, CheckCircleOutline } from '@mui/icons-material';
 import { Box, Button, Divider, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 
 // components
-import FormSection from '@/components/FormSection';
-import MainCard from '@/components/MainCard';
-import MatchIndicator from '@/components/PasswordMatchIndicator';
-import PasswordStrengthCapsules from '@/components/PasswordStrengthCapsules';
+import FormSection from '@/components/app-form/FormSection';
+import MainCard from '@/components/cards/MainCard';
+import MatchIndicator from '@/components/app-form/PasswordMatchIndicator';
+import PasswordStrengthCapsules from '@/components/app-form/PasswordStrengthCapsules';
 
 // project imports
 import { useChangePassword } from '../hooks/useChangePassword';

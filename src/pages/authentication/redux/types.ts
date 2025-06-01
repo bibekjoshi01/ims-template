@@ -1,50 +1,29 @@
-export interface permission {
+export interface IPermission {
   id: number;
   name: string;
   codename: string;
 }
 
-export interface group {
-  codename: string;
+export interface IRole {
   id: number;
-  isActive: boolean;
-  isArchived: boolean;
-  isSystemManaged: boolean;
   name: string;
-  permissions: permission[] | [];
-  photo?: string;
+  codename: string;
 }
 
-export interface LoginState {
+export interface IAuthState {
   fullName: string;
   email: string;
   phoneNo: string;
   isEmailVerified: boolean;
   isPhoneVerified: boolean;
-  groups: group[] | [];
+  roles: IRole[] | [];
   isSuperuser: boolean;
   photo?: string;
   tokens?: {
     access: string;
     refresh: string;
   };
-  userPermissions: permission[];
-}
-
-export interface AuthState {
-  fullName: string;
-  email: string;
-  phoneNo: string;
-  isEmailVerified: boolean;
-  isPhoneVerified: boolean;
-  groups: group[] | [];
-  isSuperuser: boolean;
-  photo?: string;
-  tokens?: {
-    access: string;
-    refresh: string;
-  };
-  userPermissions: permission[];
+  permissions: IPermission[];
   isAuthenticated?: boolean;
   authVerificationEmailSent?: boolean;
   forgetPasswordEmailSent?: boolean;

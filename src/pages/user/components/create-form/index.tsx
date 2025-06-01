@@ -1,24 +1,24 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Grid } from '@mui/material';
-import { useEffect, useState, useCallback } from 'react';
+import { useSnackbar } from 'notistack';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-import FormSection from '@/components/FormSection';
-import MainCard from '@/components/MainCard';
-import MatchIndicator from '@/components/PasswordMatchIndicator';
-import PasswordStrengthCapsules from '@/components/PasswordStrengthCapsules';
+import FormSection from '@/components/app-form/FormSection';
+import MatchIndicator from '@/components/app-form/PasswordMatchIndicator';
+import PasswordStrengthCapsules from '@/components/app-form/PasswordStrengthCapsules';
+import MainCard from '@/components/cards/MainCard';
 
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
 import { splitName } from '@/utils/functions/splitCombineName';
 import { useCreateUserMutation, useGetUserRolesQuery, useLazyGetUsersQuery } from '../../redux/user.api';
 
-import { SelectOption } from '@/components/CustomInput';
-import { UserInput, UserRole } from '../../redux/types';
-import { defaultValues, uniqueFieldNames, userInfoFields, UserInfoFormDataType, userInfoFormSchema } from './userCreateForm.config';
+import { SelectOption } from '@/components/app-form/types';
 import useUniqueFieldValidation from '@/hooks/useUniqueFieldValidation';
 import { handleClientError } from '@/utils/functions/handleError';
-import { useSnackbar } from 'notistack';
+import { UserCreatePayload, UserRole } from '../../redux/types';
+import { defaultValues, uniqueFieldNames, userInfoFields, UserInfoFormDataType, userInfoFormSchema } from './config';
 
 interface UserCreateFormProps {
   onClose?: () => void;
@@ -77,7 +77,7 @@ export default function UserCreateForm({ onClose }: UserCreateFormProps) {
     try {
       const { confirmPassword, name, ...rest } = data;
       const { firstName, middleName, lastName } = splitName(name);
-      const payload: UserInput = { firstName, middleName, lastName, ...rest };
+      const payload: UserCreatePayload = { firstName, middleName, lastName, ...rest };
       const res = await createUser(payload).unwrap();
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
@@ -142,12 +142,12 @@ export default function UserCreateForm({ onClose }: UserCreateFormProps) {
           </MainCard>
         </Grid>
 
-        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, flexWrap: 'wrap' }}>
           <Button variant="outlined" color="error" onClick={onClose}>
             Cancel
           </Button>
           <Button variant="contained" type="submit" disabled={Object.keys(errors).length > 0}>
-            Add User
+            Create
           </Button>
         </Grid>
       </Grid>

@@ -1,112 +1,22 @@
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+// MUI imports
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-import {
-  Box,
-  Checkbox,
-  Chip,
-  FormHelperText,
-  IconButton,
-  InputAdornment,
-  ListSubheader,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  Switch,
-  Typography
-} from '@mui/material';
+import { Box, Checkbox, Chip, IconButton, ListSubheader, MenuItem, OutlinedInput, Select, Switch, Typography } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+
+// React imports
 import dayjs from 'dayjs';
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 
-/* ------------------------------------------------------------------
-   Types
------------------------------------------------------------------- */
-type InputType = 'text' | 'select' | 'switch' | 'file' | 'image' | 'password' | 'date' | string;
-
-export interface SelectOption {
-  label: string;
-  value: any;
-  src?: string;
-  sx?: any;
-  groupName?: string;
-}
-
-export interface CustomInputProps {
-  /** Input type: text, email, number, select, switch, file, image, password, etc. */
-  type?: InputType;
-  /** Name attribute for the input element */
-  name: string;
-  /** Label to display above the input */
-  label?: string;
-  /** Controlled value of the input */
-  value: any;
-  /** Change handler */
-  onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | any) => void;
-  /** Change fullwidth */
-  fullwidth?: boolean;
-  /** Options for select inputs */
-  options?: SelectOption[];
-  /** Renders a multiline input if true */
-  multiline?: boolean;
-  /** Number of rows to display if multiline is true */
-  rows?: number;
-  /** Whether the input has an error */
-  error?: boolean;
-  /** Helper text to display error message */
-  helperText?: string;
-  /** Show password visibility toggle */
-  showPassword?: Record<string, boolean>;
-  /** Handle password visibility toggle */
-  handleToggleVisibility?: (field: keyof CustomInputProps['showPassword']) => void;
-  /** Image preview size (for image type) */
-  imageSize?: number;
-  /** To show '*' for required fields */
-  required?: boolean;
-  /** Label for true value of checkbox */
-  trueLabel?: string;
-  /** Label for false value of checkbox */
-  falseLabel?: string;
-  /** Whether the input allows multiple selections (for select type with chips) */
-  multipleChips?: boolean;
-  /** Additional elements to render inside the input container */
-  children?: React.ReactNode;
-  /** Reference to the input element */
-  inputRef?: React.Ref<any>;
-  placeholder?: string;
-  /** Additional props (will be split between container and input) */
-  [key: string]: any;
-}
-
-/* ------------------------------------------------------------------
-   Helper: LabelForInput
------------------------------------------------------------------- */
-const LabelForInput = React.memo(({ name, label, required }: { name: string; label?: string; required?: boolean }) =>
-  label ? (
-    <Typography variant="body1" sx={{ mb: 1, color: 'rgb(89, 89, 89)' }}>
-      <label htmlFor={name}>
-        {label}
-        {required && (
-          <Typography variant="caption" sx={{ display: 'inline' }} color="error.main">
-            *
-          </Typography>
-        )}
-      </label>
-    </Typography>
-  ) : null
-);
-
-/* ------------------------------------------------------------------
-   Helper: ErrorForInput
------------------------------------------------------------------- */
-const ErrorForInput = React.memo(({ error, helperText }: { error?: boolean; helperText?: string }) =>
-  error && helperText ? <FormHelperText error>{helperText}</FormHelperText> : null
-);
+// Project imports
+import { CustomInputProps, SelectOption } from './types';
+import { ErrorForInput, LabelForInput } from './Helpers';
+import { useInputHandlers } from './useInputHandlers';
 
 /* ------------------------------------------------------------------
    CustomInput Component
@@ -140,84 +50,30 @@ const CustomInput = forwardRef<any, CustomInputProps>(
     },
     ref
   ) => {
-    // Internal ref for the input element
-    const internalRef = useRef<any>(null);
-    // This is a workaround to make better ui after selecting a value for multiple chips
-    const valueSelected = multipleChips ? Array.isArray(value) && value.length > 0 : value !== null && value !== undefined;
-
-    // Expose the internal ref to both the external ref and the forwardRef
-    useImperativeHandle(ref, () => internalRef.current);
-
-    // Merge refs to handle both forwardRef and inputRef prop
-    const setRef = (element: any) => {
-      internalRef.current = element;
-
-      // Handle the inputRef prop if provided
-      if (typeof externalRef === 'function') {
-        externalRef(element);
-      } else if (externalRef) {
-        (externalRef as React.MutableRefObject<any>).current = element;
-      }
-    };
-
     // Destructure container-specific props (like sx, style, className)
     // The rest are intended for the actual input component.
     const { sx, style, inputStyle, className, ...inputProps } = rest;
     const errorId = error ? `${name}-error-text` : undefined;
     const theme = useTheme();
 
-    // State for image preview
-    const [imagePreview, setImagePreview] = useState<string | null>(null);
-
-    // Handle image change
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        const imageUrl = URL.createObjectURL(file);
-        setImagePreview(imageUrl);
-
-        // Create a synthetic event with file and URL for the parent component
-        const synthEvent = {
-          target: {
-            name,
-            value: file,
-            files: event.target.files
-          }
-        };
-
-        onChange(synthEvent);
-      }
-    };
-
-    // Handle image removal
-    const handleRemoveImage = () => {
-      setImagePreview(null);
-
-      // Create a synthetic event for the parent component
-      const synthEvent = {
-        target: {
-          name,
-          value: '',
-          files: null
-        }
-      };
-
-      onChange(synthEvent);
-
-      // Reset the file input
-      if (internalRef.current) {
-        internalRef.current.value = '';
-      }
-    };
-
-    const renderPasswordVisibility = (field: keyof typeof showPassword) => ({
-      endAdornment: (
-        <InputAdornment position="end">
-          <IconButton onClick={() => handleToggleVisibility?.(field)} onMouseDown={(e) => e.preventDefault()}>
-            {showPassword && showPassword[field] ? <Visibility sx={{ fontSize: 16 }} /> : <VisibilityOff sx={{ fontSize: 16 }} />}
-          </IconButton>
-        </InputAdornment>
-      )
+    const {
+      setRef,
+      internalRef,
+      valueSelected,
+      imagePreview,
+      handleImageChange,
+      handleRemoveImage,
+      renderPasswordVisibility,
+      handleSelectChange
+    } = useInputHandlers({
+      ref,
+      externalRef,
+      name,
+      value,
+      onChange,
+      multipleChips,
+      showPassword,
+      handleToggleVisibility
     });
 
     switch (type) {
@@ -228,7 +84,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
             <Select
               variant="outlined"
               name={name}
-              value={value}
+              value={value ?? ''}
               onChange={onChange}
               error={error}
               aria-describedby={errorId}
@@ -255,9 +111,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                             ? {
                                 backgroundColor: selectedOption.sx['& .MuiBox-root']?.backgroundColor,
                                 color: selectedOption.sx['& .MuiBox-root']?.color,
-                                // FIXME - Handle Theme properly
-                                //@ts-ignore
-                                fontSize: theme.typography.body2.fontSize,
+                                fontSize: (theme) => theme.typography.body2.fontSize,
                                 borderRadius: '4px',
                                 padding: '2px 10px',
                                 maxWidth: 'fit-content'
@@ -311,7 +165,18 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                   }
                   groupItems.forEach((option) => {
                     items.push(
-                      <MenuItem key={option.value} value={option.value} sx={option?.sx}>
+                      <MenuItem
+                        key={option.value}
+                        value={option.value}
+                        sx={option?.sx}
+                        onClick={(e) => {
+                          if (!multipleChips && value === option.value) {
+                            // to support deselect on re-click
+                            e.stopPropagation();
+                            onChange({ target: { name, value: '' } });
+                          }
+                        }}
+                      >
                         <Box
                           sx={{
                             width: '100%',
@@ -411,7 +276,11 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                   position: 'relative',
                   borderRadius: theme.shape.borderRadius,
                   borderStyle: 'dashed',
-                  borderColor: error ? theme.palette.error.main : theme.palette.divider,
+                  borderColor: error
+                    ? theme.palette.error.main
+                    : theme.palette.mode === 'dark'
+                      ? theme.palette.grey.dark
+                      : theme.palette.grey.lighter,
                   cursor: 'pointer',
                   transition: 'all 0.2s ease-in-out',
                   '&:hover': {
@@ -556,7 +425,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               value={value}
               onChange={onChange}
               autoComplete="password"
-              {...renderPasswordVisibility(name as keyof typeof showPassword)}
+              {...renderPasswordVisibility(name)}
               error={error}
               placeholder={placeholder}
               inputRef={setRef}

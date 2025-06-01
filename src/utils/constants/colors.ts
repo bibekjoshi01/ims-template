@@ -1,109 +1,139 @@
-import { ColorValues, ColorVariants } from '@/contexts/theme-context/types';
+let THEME_PRESETS = [
+  {
+    name: 'Default',
+    light: {
+      primary: {
+        primaryText: '#1f1f1f',
+        contrastText: '#ffffff',
 
-const mantisColorObj = {
-  name: 'Mantis',
-  light: {
-    primary: {
-      main: '#1890ff',
-      primaryText: '#1f1f1f',
-      contrastText: '#ffffff'
+        lighter: '#E6F7FF',
+        100: '#BAE7FF',
+        200: '#91D5FF',
+        light: '#69C0FF',
+        400: '#40A9FF',
+        main: '#1677ff',
+        dark: '#096DD9',
+        700: '#0050B3',
+        darker: '#003A8C',
+        900: '#002766'
+      },
+      secondary: {
+        secondaryText: '#8c8c8c',
+        contrastText: '#ffffff',
+
+        lighter: '#FAFAFA',
+        100: '#F5F5F5',
+        200: '#F0F0F0',
+        light: '#D9D9D9',
+        400: '#BFBFBF',
+        main: '#8C8C8C',
+        dark: '#595959',
+        700: '#262626',
+        darker: '#141414',
+        900: '#000000',
+
+        paper: '#FFFFFF',
+        default: '#fafafb',
+        divider: '#f0f0f0',
+        hover: '#0000000a'
+      },
+      success: {
+        contrastText: '#000000',
+
+        lighter: '#F6FFED',
+        100: '#D9F7BE',
+        200: '#B7EB8F',
+        light: '#95DE64',
+        400: '#73D13D',
+        main: '#52C41A',
+        dark: '#389E0D',
+        700: '#237804',
+        darker: '#135200',
+        900: '#092B00'
+      },
+      info: {
+        contrastText: '#000000',
+
+        lighter: '#E6FFFB',
+        100: '#B5F5EC',
+        200: '#87E8DE',
+        light: '#5CDBD3',
+        400: '#36CFC9',
+        main: '#13C2C2',
+        dark: '#08979C',
+        700: '#006D75',
+        darker: '#00474F',
+        900: '#002329'
+      },
+      error: {
+        contrastText: '#000000',
+
+        lighter: '#FFF1F0',
+        100: '#FFCCC7',
+        200: '#FFA39E',
+        light: '#FF7875',
+        400: '#FF4D4F',
+        main: '#F5222D',
+        dark: '#CF1322',
+        700: '#A8071A',
+        darker: '#820014',
+        900: '#5C0011'
+      },
+      warning: {
+        contrastText: '#000000',
+        lighter: '#FFFBE6',
+        100: '#FFF1B8',
+        200: '#FFE17C',
+        light: '#FFD666',
+        400: '#FFC53D',
+        main: '#FAAD14',
+        dark: '#D48806',
+        700: '#AD6800',
+        darker: '#874D00',
+        900: '#613400'
+      },
+      grey: {
+        main: '#8c8c8c',
+        contrastText: '#e9e7e7'
+      }
     },
-    secondary: {
-      main: '#8c8c8c',
-      secondaryText: '#8c8c8c',
-      contrastText: '#ffffff',
-      paper: '#ffffff',
-      default: '#fafafb',
-      divider: '#e4e4e7',
-      hover: '#0000000a'
-    },
-    success: {
-      main: '#52c41a',
-      contrastText: '#000000'
-    },
-    info: {
-      main: '#00b5ff',
-      contrastText: '#000000'
-    },
-    error: {
-      main: '#f5222d',
-      contrastText: '#000000'
-    },
-    warning: {
-      main: '#faad14',
-      contrastText: '#000000'
-    },
-    grey: {
-      main: '#8c8c8c',
-      contrastText: '#e9e7e7'
+    dark: {
+      primary: {
+        main: '#1668dc',
+        primaryText: '#cccccc',
+        contrastText: '#f4f4f4'
+      },
+      secondary: {
+        main: '#8c8c8c',
+        secondaryText: '#ffffff73',
+        contrastText: '#ffffff73',
+        paper: '#1e1e1e',
+        default: '#121212',
+        divider: '#292929ed',
+        hover: '#292929ed'
+      },
+      success: {
+        main: '#52c41a',
+        contrastText: '#022d14'
+      },
+      info: {
+        main: '#00b6d9',
+        contrastText: '#053344'
+      },
+      error: {
+        main: '#f5222d',
+        contrastText: '#4d0218'
+      },
+      warning: {
+        main: '#faad14',
+        contrastText: '#411e03'
+      },
+      grey: {
+        main: '#8c8c8c',
+        contrastText: '#e9e7e7'
+      }
     }
   },
-  dark: {
-    primary: {
-      main: '#1890ff',
-      primaryText: '#ffffff',
-      contrastText: '#f4f4f4'
-    },
-    secondary: {
-      main: '#8c8c8c',
-      secondaryText: '#ffffff73',
-      contrastText: '#ffffff73',
-      paper: '#1e1e1e',
-      default: '#030712',
-      divider: '#51515c',
-      hover: '#1a273a'
-    },
-    success: {
-      main: '#52c41a',
-      contrastText: '#022d14'
-    },
-    info: {
-      main: '#00b6d9',
-      contrastText: '#053344'
-    },
-    error: {
-      main: '#f5222d',
-      contrastText: '#4d0218'
-    },
-    warning: {
-      main: '#faad14',
-      contrastText: '#411e03'
-    },
-    grey: {
-      main: '#8c8c8c',
-      contrastText: '#e9e7e7'
-    }
-  }
-};
-
-const defaultColor: ColorVariants = {
-  lighter: '#e3f2fd',
-  100: '#bbdefb',
-  200: '#90caf9',
-  light: '#64b5f6',
-  400: '#42a5f5',
-  main: '#2196f3',
-  dark: '#1e88e5',
-  700: '#1976d2',
-  darker: '#1565c0',
-  900: '#0d47a1',
-  secondaryText: '#ffffde',
-  primaryText: '#bfbfbf',
-  divider: '#404040',
-  paper: '#1e1e1e',
-  default: '#141414',
-  hover: '#0000000a',
-  contrastText: '#000000'
-};
-
-interface ITHEME_PRESETS {
-  name: string;
-  light: ColorValues;
-  dark: ColorValues;
-}
-
-let THEME_PRESETS = [
-  mantisColorObj,
   {
     name: 'Harmony',
     light: {
@@ -330,28 +360,6 @@ let THEME_PRESETS = [
     }
   }
 ];
-
-THEME_PRESETS = THEME_PRESETS.map((preset) => ({
-  name: preset.name,
-  light: {
-    primary: { ...defaultColor, ...preset.light.primary },
-    secondary: { ...defaultColor, ...preset.light.secondary },
-    success: { ...defaultColor, ...preset.light.success },
-    info: { ...defaultColor, ...preset.light.info },
-    error: { ...defaultColor, ...preset.light.error },
-    warning: { ...defaultColor, ...preset.light.warning },
-    grey: { ...defaultColor, ...preset.light.grey }
-  },
-  dark: {
-    primary: { ...defaultColor, ...preset.dark.primary },
-    secondary: { ...defaultColor, ...preset.dark.secondary },
-    success: { ...defaultColor, ...preset.dark.success },
-    info: { ...defaultColor, ...preset.dark.info },
-    error: { ...defaultColor, ...preset.dark.error },
-    warning: { ...defaultColor, ...preset.dark.warning },
-    grey: { ...defaultColor, ...preset.dark.grey }
-  }
-})) as ITHEME_PRESETS[];
 
 export { THEME_PRESETS };
 

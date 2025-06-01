@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // project import
-import MainCard from '@/components/MainCard';
+import MainCard from '@/components/cards/MainCard';
 
 // third-party
 import ReactApexChart from 'react-apexcharts';

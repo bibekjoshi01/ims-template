@@ -5,7 +5,7 @@ import { Theme } from '@mui/material/styles';
 import { GridColDef } from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
-import CustomInput from '@/components/CustomInput';
+import CustomInput from '@/components/app-form/CustomInput';
 
 // TYPES
 import { ColumnConfig } from '../types';
@@ -14,7 +14,6 @@ import useFocus from '@/hooks/useFocus';
 export const createTextColumn = <T extends object>(config: ColumnConfig<T>, theme: Theme, baseCol: GridColDef<T>): GridColDef<T> => {
   return {
     ...baseCol,
-    minWidth: 120,
     renderEditCell: (params) => {
       const TextCellEdit = () => {
         const inputRef = useFocus(params);

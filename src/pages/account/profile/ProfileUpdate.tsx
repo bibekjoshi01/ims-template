@@ -2,17 +2,17 @@ import { Button, Grid } from '@mui/material';
 import { useWatch } from 'react-hook-form';
 
 // project imports
-import FormSection from '@/components/FormSection';
-import MainCard from '@/components/MainCard';
+import FormSection from '@/components/app-form/FormSection';
+import MainCard from '@/components/cards/MainCard';
 
 import { useUpdateProfile } from '../hooks/useUpdateProfile';
 import { personalInfoFields, UpdateProfileFormDataType } from './profile.config';
 import ProfileUploader from './profileUploader';
 
-type ProfileUpdateProps = { onCancel: () => void; profile: UpdateProfileFormDataType };
+type ProfileUpdateProps = { onCancel: () => void };
 
-export default function ProfileUpdate({ onCancel, profile }: ProfileUpdateProps) {
-  const { handleSubmit, onSubmit, control, errors, loadingUpdateProfile, setValue } = useUpdateProfile(profile);
+export default function ProfileUpdate({ onCancel }: ProfileUpdateProps) {
+  const { handleSubmit, onSubmit, control, errors, loadingUpdateProfile, setValue } = useUpdateProfile();
 
   const photo = useWatch({ control, name: 'photo' });
   const fileImage = photo ?? null;
@@ -31,7 +31,7 @@ export default function ProfileUpdate({ onCancel, profile }: ProfileUpdateProps)
         <Grid item xs={12} md={6}>
           <MainCard divider title="Update Profile Information">
             <FormSection<UpdateProfileFormDataType> fields={personalInfoFields} control={control} errors={errors}>
-              <ProfileUploader image={fileImage} setImage={handleImageChange} />
+              <ProfileUploader image={fileImage} defaultHovered={true} setImage={handleImageChange} />
             </FormSection>
             <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }}>
               <Button onClick={() => onCancel?.()} variant="outlined" color="error">

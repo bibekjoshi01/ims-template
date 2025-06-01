@@ -36,15 +36,15 @@ export default function Theme(mode: PaletteMode, colorValues: ColorValues): Colo
   const infoColor = colors.info?.main || palettes.cyan[5];
   const greyColor = colors.grey?.main || palettes.grey[5];
 
-  // Generate the color palette based on the main color
+  // Generate the color palette based on the main color, and retain the original colors if it has been set
   const generatedPalette = {
-    primary: { ...colors?.primary, ...createColorVariants(generate(primaryColor), primaryColor) },
-    secondary: { ...colors?.secondary, ...createColorVariants(generate(secondaryColor), secondaryColor) },
-    success: { ...colors?.success, ...createColorVariants(generate(successColor), successColor) },
-    warning: { ...colors?.warning, ...createColorVariants(generate(warningColor), warningColor) },
-    error: { ...colors?.error, ...createColorVariants(generate(errorColor), errorColor) },
-    info: { ...colors?.info, ...createColorVariants(generate(infoColor), infoColor) },
-    grey: { ...colors?.grey, ...createColorVariants(generate(greyColor), greyColor) }
+    primary: { ...createColorVariants(generate(primaryColor), primaryColor), ...colors?.primary },
+    secondary: { ...createColorVariants(generate(secondaryColor), secondaryColor), ...colors?.secondary },
+    success: { ...createColorVariants(generate(successColor), successColor), ...colors?.success },
+    warning: { ...createColorVariants(generate(warningColor), warningColor), ...colors?.warning },
+    error: { ...createColorVariants(generate(errorColor), errorColor), ...colors?.error },
+    info: { ...createColorVariants(generate(infoColor), infoColor), ...colors?.info },
+    grey: { ...createColorVariants(generate(greyColor), greyColor), ...colors?.grey }
   };
 
   return generatedPalette;

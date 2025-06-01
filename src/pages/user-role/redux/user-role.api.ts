@@ -15,8 +15,8 @@ export const userRoleAPI = 'admin/user-app/roles';
 
 export const userRoleAPISlice = rootAPI.injectEndpoints({
   endpoints: (builder) => ({
-    // Get User Roles
-    getUserRoles: builder.query<UserRoleList, UserRoleListQueryParams>({
+    // Get Roles
+    getRoles: builder.query<UserRoleList, UserRoleListQueryParams>({
       query: ({ search, paginationModel, sortModel, filterModel }) => {
         // build query params
         const { page, pageSize, orderingString, filterString } = getQueryParams({
@@ -43,6 +43,7 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
           method: 'GET'
         };
       },
+      keepUnusedDataFor: 0.1,
       providesTags: ['UserRole']
     }),
 
@@ -79,7 +80,8 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
           method: 'GET'
         };
       },
-      providesTags: ['UserRole']
+      providesTags: ['UserRole'],
+      keepUnusedDataFor: 0.1
     }),
 
     // Get Permission Categories OR Sub Modules
@@ -103,12 +105,22 @@ export const userRoleAPISlice = rootAPI.injectEndpoints({
         };
       },
       keepUnusedDataFor: 0.01
+    }),
+    // Archive User Role
+    archiveUserRole: builder.mutation<{ id: number; message: string }, number>({
+      query: (id) => {
+        return {
+          url: `${userRoleAPI}/${id}/archive`,
+          method: 'DELETE'
+        };
+      },
+      invalidatesTags: ['UserRole']
     })
   })
 });
 
 export const {
-  useGetUserRolesQuery,
+  useGetRolesQuery,
   useRetrieveUserRoleQuery,
   useCreateUserRoleMutation,
   usePatchUserRoleMutation,
@@ -116,5 +128,6 @@ export const {
   useGetUserRolePermissionCategoriesQuery,
   useLazyGetUserRolePermissionCategoriesQuery,
   useGetUserRoleUserPermissionsQuery,
-  useLazyGetUserRoleUserPermissionsQuery
+  useLazyGetUserRoleUserPermissionsQuery,
+  useArchiveUserRoleMutation
 } = userRoleAPISlice;

@@ -21,7 +21,7 @@ interface TableDataBase {
  *   setRowModesModel: React.Dispatch<React.SetStateAction<GridRowModesModel>>,
  *   savingRows: Record<GridRowId, boolean>,
  *   handlers: {
- *     delete: (id: GridRowId) => Promise<void>,
+ *     delete: (id: GridRowId) => void,
  *     viewDetails: (id: GridRowId) => void,
  *     editInline: (id: GridRowId) => void,
  *     editForm: (id: GridRowId) => void,
@@ -46,11 +46,13 @@ export const useTableHandlers = <T extends TableDataBase>(
   // state to track saving status of row
   const [savingRows, setSavingRows] = useState<Record<GridRowId, boolean>>({});
 
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [rowToDelete, setRowToDelete] = useState<GridRowId | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
   // Listen for changes in initialData
   useEffect(() => {
-    if (initialData && initialData.length > 0) {
-      setRows(initialData);
-    }
+    setRows(initialData);
   }, [initialData]);
 
   // ========================= Handlers =========================
@@ -103,10 +105,34 @@ export const useTableHandlers = <T extends TableDataBase>(
         console.error(`Delete failed for rowId(${id}):`, error);
         // Revert using captured previous state
         setRows(previousRows);
+      } finally {
+        setIsDeleting(false);
       }
     },
     [onDelete]
   );
+
+  // Trigger the delete modal
+  const requestDelete = useCallback((id: GridRowId) => {
+    setRowToDelete(id);
+    setDeleteDialogOpen(true);
+  }, []);
+
+  // Confirm from modal
+  const confirmDelete = useCallback(async () => {
+    if (rowToDelete !== null) {
+      setIsDeleting(true);
+      await handleDelete(rowToDelete);
+      setDeleteDialogOpen(false);
+      setRowToDelete(null);
+    }
+  }, [rowToDelete, handleDelete]);
+
+  // Cancel from modal
+  const cancelDelete = useCallback(() => {
+    setDeleteDialogOpen(false);
+    setRowToDelete(null);
+  }, []);
 
   const processRowUpdate = useCallback(
     async (updatedRow: T) => {
@@ -144,7 +170,7 @@ export const useTableHandlers = <T extends TableDataBase>(
   // ========================= Return Values =========================
   const handlers = useMemo(
     () => ({
-      delete: handleDelete,
+      delete: requestDelete,
       viewDetails: handleViewDetails,
       editInline: handleEditInline,
       editForm: handleEditForm,
@@ -152,7 +178,7 @@ export const useTableHandlers = <T extends TableDataBase>(
       cancel: handleCancel,
       processRowUpdate
     }),
-    [handleDelete, handleViewDetails, handleEditClick, handleSave, handleCancel, processRowUpdate]
+    [requestDelete, handleViewDetails, handleEditClick, handleSave, handleCancel, processRowUpdate]
   );
 
   return {
@@ -161,6 +187,11 @@ export const useTableHandlers = <T extends TableDataBase>(
     rowModesModel,
     setRowModesModel,
     savingRows,
-    handlers
+    handlers,
+    deleteDialogOpen,
+    confirmDelete,
+    cancelDelete,
+    rowToDelete,
+    isDeleting
   };
 };

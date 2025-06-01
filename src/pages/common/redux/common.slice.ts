@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IInitialState } from './types';
 
-const initialState = {
+const initialState: IInitialState = {
   permissions: [],
   message: '',
   variant: 'error' // Default variant

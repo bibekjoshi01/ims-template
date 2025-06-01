@@ -1,16 +1,16 @@
 // MUI IMPORTS
-import { GridColDef, GridRowId, GridRowModesModel } from '@mui/x-data-grid';
 import { Theme } from '@mui/material/styles';
+import { GridColDef, GridRowId, GridRowModesModel } from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
-import { createTextColumn } from './TextColumn';
-import { createNumberColumn } from './NumberColumn';
-import { createSelectColumn } from './SelectColumn';
-import { createProgressColumn } from './ProgressColumn';
 import { createActionsColumn } from './ActionColumn';
-import { createImageColumn } from './ImageColumn';
 import { createDateColumn } from './DateColumn';
+import { createImageColumn } from './ImageColumn';
 import { createLinkColumn } from './LinkColumn';
+import { createNumberColumn } from './NumberColumn';
+import { createProgressColumn } from './ProgressColumn';
+import { createSelectColumn } from './SelectColumn';
+import { createTextColumn } from './TextColumn';
 
 // TYPES
 import { ColumnConfig, ColumnHandlers } from '../types';
@@ -29,16 +29,46 @@ import { createBooleanColumn } from './BooleanColumn';
 const createColumnDefs = <T extends object>(
   columnConfig: ColumnConfig<T>[],
   theme: Theme,
+  showIndex: boolean,
   handlers?: ColumnHandlers<T>,
   rowModesModel?: GridRowModesModel,
-  savingRows?: Record<GridRowId, boolean>
+  savingRows?: Record<GridRowId, boolean>,
+  allowEditing?: boolean,
+  allowDeleting?: boolean
 ): GridColDef<T>[] => {
+  // adding serial number
+  if (showIndex) {
+    columnConfig = [
+      {
+        field: 'index',
+        headerName: '#',
+        type: 'number',
+        editable: false,
+        maxWidth: 50,
+        minWidth: 50,
+        align: 'center',
+        filterable: false,
+        sortable: false,
+        renderCell: (params) => {
+          const rowIndex = params.api.getRowIndexRelativeToVisibleRows(params.id); // index on current page (0-based)
+          const page = params.api.state.pagination.paginationModel.page;
+          const pageSize = params.api.state.pagination.paginationModel.pageSize;
+          return page * pageSize + rowIndex + 1;
+        }
+      },
+      ...columnConfig
+    ];
+  }
+
   return columnConfig.map((config): GridColDef<T> => {
     const baseCol: GridColDef<T> = {
       field: config?.field as string,
       headerName: config?.headerName,
+      align: config?.align ?? 'left',
       flex: 1, // fill the available space
       maxWidth: config?.maxWidth, // restrict the width if needed
+      minWidth: config?.minWidth ?? 150,
+      sortable: config?.sortable ?? true,
       editable: config?.editable ?? true,
       filterable: config?.filterable ?? true,
       renderCell: config?.renderCell
@@ -61,7 +91,7 @@ const createColumnDefs = <T extends object>(
       case 'boolean':
         return createBooleanColumn<T>(config, baseCol);
       case 'actions':
-        return createActionsColumn<T>(config, theme, baseCol, handlers, rowModesModel, savingRows);
+        return createActionsColumn<T>(config, theme, baseCol, handlers, rowModesModel, savingRows, allowEditing, allowDeleting);
       default:
         return baseCol;
     }

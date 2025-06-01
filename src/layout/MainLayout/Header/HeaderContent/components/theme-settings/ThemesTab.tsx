@@ -55,8 +55,8 @@ export default function ThemesTab() {
                 borderRadius: 1
               }}
             >
-              {Object.values(preset[mode]).map((colorValues) => (
-                <Tooltip title={colorValues.main} key={colorValues.main}>
+              {Object.values(preset[mode]).map((colorValues, i) => (
+                <Tooltip title={colorValues.main} key={colorValues.main + i}>
                   <Box
                     sx={{
                       width: 12,

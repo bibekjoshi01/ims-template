@@ -1,4 +1,4 @@
-import { FormField } from '@/components/FormSection';
+import { FormField } from '@/components/app-form/FormSection';
 import { z } from 'zod';
 import { LoginFormDataType } from '../redux/types';
 

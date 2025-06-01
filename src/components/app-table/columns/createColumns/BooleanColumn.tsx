@@ -4,14 +4,13 @@ import { Box, Tooltip, Typography } from '@mui/material';
 import { CloseOutlined, DoneOutlined } from '@mui/icons-material';
 
 // PROJECT IMPORTS
-import CustomInput from '@/components/CustomInput';
+import CustomInput from '@/components/app-form/CustomInput';
 import useFocus from '@/hooks/useFocus';
 import { ColumnConfig } from '../types';
 
 export const createBooleanColumn = <T extends object>(config: ColumnConfig<T>, baseCol: GridColDef<T>): GridColDef<T> => {
   return {
     ...baseCol,
-    align: 'center',
     renderCell: (params) => (
       <Box
         sx={{
@@ -35,6 +34,7 @@ export const createBooleanColumn = <T extends object>(config: ColumnConfig<T>, b
               name={String(config.field)}
               inputRef={inputRef}
               value={params?.value}
+              sx={{ display: 'grid' }}
               onChange={() =>
                 params.api.setEditCellValue({
                   id: params.id,
@@ -62,14 +62,13 @@ interface RenderValueProps {
 }
 
 const RenderValue: React.FC<RenderValueProps> = ({ params, trueLabel, falseLabel }) => {
-  return params.value ? (
+  return !!params.value ? (
     <Typography
       variant="inherit"
       color="success"
       sx={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
         width: '100%',
         height: '100%'
       }}
@@ -86,7 +85,6 @@ const RenderValue: React.FC<RenderValueProps> = ({ params, trueLabel, falseLabel
       sx={{
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
         height: '100%',
         width: '100%'
       }}

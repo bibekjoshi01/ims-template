@@ -7,7 +7,7 @@ import MainLayout from '@/layout/MainLayout';
 
 // Lazy-loaded components
 const DashboardDefault = Loadable(lazy(() => import('@/pages/dashboard/index')));
-const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/404Page')));
+const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/PageNotFount')));
 const Profile = Loadable(lazy(() => import('@/pages/account/profile')));
 const ChangePassword = Loadable(lazy(() => import('@/pages/account/change-passwod')));
 const Settings = Loadable(lazy(() => import('@/pages/account/settings')));

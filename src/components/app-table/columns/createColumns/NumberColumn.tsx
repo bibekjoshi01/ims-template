@@ -5,7 +5,7 @@ import { Theme } from '@mui/material/styles';
 import { GridColDef } from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
-import CustomInput from '@/components/CustomInput';
+import CustomInput from '@/components/app-form/CustomInput';
 
 // TYPES
 import { ColumnConfig } from '../types';
@@ -14,9 +14,8 @@ import useFocus from '@/hooks/useFocus';
 export const createNumberColumn = <T extends object>(config: ColumnConfig<T>, theme: Theme, baseCol: GridColDef<T>): GridColDef<T> => {
   return {
     ...baseCol,
-    minWidth: 120,
-    headerAlign: 'right',
-    align: 'right',
+    headerAlign: 'center',
+    align: config.align ?? 'right',
     renderEditCell: (params) => {
       // Use React hooks to manage the input ref and focus
       const NumberCellEdit = () => {

@@ -3,9 +3,5 @@ export const defaultPaginationDetail = {
   pageSize: 10
 };
 
-export type BackendError = {
-  status: number;
-  data: Record<string, string>;
-};
-
 export const resetPasswordTokenLength = 32;
+export const noPermissionRequired = 'noPermissionRequired';

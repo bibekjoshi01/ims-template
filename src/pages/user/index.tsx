@@ -1,29 +1,22 @@
 // PACKAGE IMPORTS
-import { lazy, useEffect } from 'react';
+import { lazy } from 'react';
 
 // PROJECT IMPORTS
-import { useAppDispatch } from '@/libs/hooks';
-import { validatePermissions } from '@/utils/permissions/validate_permissions';
-import { setPermissions } from '../common/redux/common.slice';
+import { validatePermissions } from '@/utils/permissions/validatePermissions';
 import { userPermissions } from './constants/permissions';
 
-const UserListing = lazy(() => import('./components/UserListing'));
+// LAZY COMPONENT IMPORTS
+const UserListing = lazy(() => import('./components/listing'));
+const UserDetailsModal = lazy(() => import('./components/detail'));
+const UserEditModal = lazy(() => import('./components/update-form'));
 
 const User = () => {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    //set current model permission constants in redux
-    dispatch(setPermissions(userPermissions));
-    return () => {
-      dispatch(setPermissions([]));
-    };
-  }, []);
-
   return (
-    <div>
+    <>
       <UserListing />
-    </div>
+      <UserEditModal />
+      <UserDetailsModal />
+    </>
   );
 };
 

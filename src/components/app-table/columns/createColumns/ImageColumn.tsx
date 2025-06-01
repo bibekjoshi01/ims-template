@@ -7,7 +7,7 @@ import { Box, IconButton } from '@mui/material';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 
 // PROJECT IMPORTS
-import CustomInput from '@/components/CustomInput';
+import CustomInput from '@/components/app-form/CustomInput';
 import DefaultImage from '@/assets/images/users/avatar-1.png';
 import useFocus from '@/hooks/useFocus';
 
@@ -16,6 +16,8 @@ export const createImageColumn = <T extends object>(theme: Theme, baseCol: GridC
     ...baseCol,
     filterable: false,
     sortable: false,
+    minWidth: 70,
+    flex: 0,
     renderCell: (params) => {
       const value = params.value;
       let imageUrl = value instanceof File || value instanceof Blob ? URL.createObjectURL(value) : value;

@@ -1,9 +1,10 @@
 import { createTableDataHook } from '@/hooks/createTableDataHook';
 import { useAppDispatch } from '@/libs/hooks';
 import { combineName, splitName } from '@/utils/functions/splitCombineName';
-import { TableData } from '../components/userListingTable.config';
+
+import { TableData } from '../components/listing/config';
 import { UserItem } from '../redux/types';
-import { useGetUsersQuery, usePatchUserMutation } from '../redux/user.api';
+import { useArchiveUserMutation, useGetUsersQuery, usePatchUserMutation } from '../redux/user.api';
 import { currentUserId, setEdit, setViewId } from '../redux/user.slice';
 
 /**
@@ -18,6 +19,7 @@ export const useUserTable = () => {
     // RTK Query hooks
     useListQuery: useGetUsersQuery,
     useUpdateMutation: usePatchUserMutation,
+    useDeleteMutation: useArchiveUserMutation,
 
     // Set the id of the user being edited
     setId: (id) => {
@@ -36,22 +38,22 @@ export const useUserTable = () => {
 
     // NOTE - Data transformations api data to table data
     transformResponseToTableData: (apiData) => {
-      return apiData.results.map((item: UserItem) => ({
+      return apiData?.results.map((item: UserItem) => ({
         ...item,
-        name: combineName(item.firstName, item.middleName, item.lastName)
+        name: combineName(item?.firstName, item?.middleName, item?.lastName)
       }));
     },
 
     // NOTE - Data transformations table data to api data of inline update
     transformTableDataToUpdateInput: (rowData) => {
-      const { firstName, lastName } = splitName(rowData.name);
+      const { firstName, lastName } = splitName(rowData?.name);
 
       return {
         firstName,
         lastName,
-        isActive: rowData.isActive,
-        phoneNo: rowData.phoneNo,
-        photo: rowData.photo
+        isActive: rowData?.isActive,
+        phoneNo: rowData?.phoneNo,
+        photo: rowData?.photo
       };
     }
   });

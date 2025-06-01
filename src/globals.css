@@ -15,3 +15,28 @@ html {
 ::-webkit-scrollbar-track {
   background: #eee;
 }
+
+.rotateIcon {
+  animation: rotateIcon 2s ease-in-out 0s infinite forwards alternate;
+}
+
+@keyframes rotateIcon {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media print {
+  .MuiDataGrid-main {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .MuiDataGrid-virtualScroller {
+    overflow: visible !important;
+    height: auto !important;
+  }
+}

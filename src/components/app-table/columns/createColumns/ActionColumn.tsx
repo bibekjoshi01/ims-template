@@ -1,9 +1,9 @@
 // MUI IMPORTS
-import { Theme } from '@mui/material/styles';
-import { CircularProgress, Tooltip } from '@mui/material';
 import { BorderColorOutlined, CloseOutlined, DeleteOutlined, SendOutlined } from '@mui/icons-material';
-import { GridActionsColDef, GridActionsCellItem, GridRowId, GridRowModesModel, GridColDef } from '@mui/x-data-grid';
 import ArticleIcon from '@mui/icons-material/Article';
+import { CircularProgress, Tooltip } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import { GridActionsCellItem, GridActionsColDef, GridColDef, GridRowId, GridRowModesModel } from '@mui/x-data-grid';
 
 // TYPES
 import { ColumnConfig, ColumnHandlers } from '../types';
@@ -14,7 +14,9 @@ export const createActionsColumn = <T extends object>(
   baseCol: GridColDef<T>,
   handlers?: ColumnHandlers<T>,
   rowModesModel?: GridRowModesModel,
-  savingRows?: Record<GridRowId, boolean>
+  savingRows?: Record<GridRowId, boolean>,
+  allowEditing: boolean = true,
+  allowDeleting: boolean = true
 ): GridActionsColDef<T> => {
   return {
     ...baseCol,
@@ -22,6 +24,8 @@ export const createActionsColumn = <T extends object>(
     sortable: false,
     filterable: false,
     editable: false,
+    minWidth: 60,
+    maxWidth: 100,
     getActions: (params): JSX.Element[] => {
       const mode = rowModesModel?.[params.id]?.mode;
       const isSaving = savingRows?.[params.id] ?? false;
@@ -32,7 +36,7 @@ export const createActionsColumn = <T extends object>(
             key="cancel"
             component="button"
             sx={{
-              ':hover': { backgroundColor: theme.palette.error.lighter }
+              ':hover': { backgroundColor: theme.palette.error.lighter, color: theme.palette.error.main }
             }}
             icon={
               <Tooltip key="cancel-tooltip" title="Cancel">
@@ -63,7 +67,7 @@ export const createActionsColumn = <T extends object>(
             key="save"
             component="button"
             sx={{
-              ':hover': { backgroundColor: theme.palette.success.lighter }
+              ':hover': { backgroundColor: theme.palette.success.lighter, color: theme.palette.success.main }
             }}
             icon={
               <Tooltip key="save-tooltip" title={isSaving ? 'Saving...' : 'Save'} arrow>
@@ -92,43 +96,45 @@ export const createActionsColumn = <T extends object>(
       }
 
       return [
-        <GridActionsCellItem
-          component="button"
-          sx={{
-            ':hover': { backgroundColor: theme.palette.primary.lighter }
-          }}
-          icon={
-            <Tooltip key="edit-tooltip" title="Edit">
-              <span>
-                <BorderColorOutlined color="primary" sx={{ height: '20px' }} />
-              </span>
-            </Tooltip>
-          }
-          label="Edit"
-          onClick={() => handlers?.editForm?.(params.id)}
-        />,
-        config.deletable && (
+        allowEditing && (
           <GridActionsCellItem
-            key="delete"
-            showInMenu
+            component="button"
             sx={{
-              ':hover': { backgroundColor: theme.palette.error.lighter }
+              ':hover': { backgroundColor: theme.palette.primary.lighter, color: theme.palette.primary.main }
             }}
-            icon={<DeleteOutlined color="error" sx={{ height: '20px' }} />}
-            label="Delete"
-            onClick={() => handlers?.delete?.(params.id)}
+            icon={
+              <Tooltip key="edit-tooltip" title="Edit">
+                <span>
+                  <BorderColorOutlined color="primary" sx={{ height: '20px' }} />
+                </span>
+              </Tooltip>
+            }
+            label="Edit"
+            onClick={() => handlers?.editForm?.(params.id)}
           />
         ),
         <GridActionsCellItem
           key="viewDetails"
           showInMenu
           sx={{
-            ':hover': { backgroundColor: theme.palette.primary.lighter }
+            ':hover': { backgroundColor: theme.palette.primary.lighter, color: theme.palette.primary.main }
           }}
           icon={<ArticleIcon color="primary" sx={{ height: '20px' }} />}
           label="View Details"
           onClick={() => handlers?.viewDetails?.(params.id)}
-        />
+        />,
+        allowDeleting && (
+          <GridActionsCellItem
+            key="delete"
+            showInMenu
+            sx={{
+              ':hover': { backgroundColor: theme.palette.error.lighter, color: theme.palette.error.main }
+            }}
+            icon={<DeleteOutlined color="error" sx={{ height: '20px' }} />}
+            label="Delete"
+            onClick={() => handlers?.delete?.(params.id)}
+          />
+        )
       ].filter(Boolean) as JSX.Element[];
     }
   };

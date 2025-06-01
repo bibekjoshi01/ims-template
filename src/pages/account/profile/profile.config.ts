@@ -1,5 +1,7 @@
-import { FormField } from '@/components/FormSection';
+import { FormField } from '@/components/app-form/FormSection';
 import * as z from 'zod';
+import { UserProfile } from '../redux/types';
+import { DynamicInfoSectionProps } from '@/components/detail-section/types';
 
 export const updateProfileSchema = z.object({
   photo: z.union([z.instanceof(File), z.string().nullable()]).optional(),
@@ -22,3 +24,35 @@ export const personalInfoFields: FormField<UpdateProfileFormDataType>[] = [
   { name: 'lastName', label: 'Last Name', xs: 12, sm: 6, type: 'text' },
   { name: 'phoneNo', label: 'Phone Number', xs: 12, sm: 6, type: 'text' }
 ];
+
+const excludeFields: (keyof UserProfile)[] = ['id', 'photo', 'firstName', 'lastName', 'roles'];
+const fieldOrder: (keyof UserProfile)[] = [
+  'fullName',
+  'username',
+  'email',
+  'phoneNo',
+  'lastLogin',
+  'dateJoined',
+  'isEmailVerified',
+  'roles'
+];
+const dateTimeFields: (keyof UserProfile)[] = ['lastLogin', 'dateJoined'];
+const booleanFields: (keyof UserProfile)[] = ['isEmailVerified'];
+
+export const viewProfileConfig: Omit<DynamicInfoSectionProps, 'data'> = {
+  excludeFields,
+  fieldOrder,
+  dateTimeFields,
+  booleanFields,
+  customLabels: {
+    fullName: 'Full Name',
+    username: 'Username',
+    email: 'Email Address',
+    phoneNo: 'Phone Number',
+    lastLogin: 'Last Login',
+    dateJoined: 'Date Joined',
+    isEmailVerified: 'Email Verified',
+    roles: 'Roles'
+  },
+  columns: 2
+};

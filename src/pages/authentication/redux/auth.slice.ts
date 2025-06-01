@@ -1,17 +1,18 @@
+import Cookies from 'js-cookie';
+
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import Cookies from 'js-cookie';
-import { AuthState, LoginState } from './types';
+import { IAuthState } from './types';
 
-const initialState: AuthState = {
+const initialState: IAuthState = {
   fullName: '',
   email: '',
   phoneNo: '',
   isEmailVerified: false,
   isPhoneVerified: false,
-  groups: [],
+  roles: [],
   photo: '',
-  userPermissions: [],
+  permissions: [],
   isSuperuser: false,
   isAuthenticated: false,
   authVerificationEmailSent: false,
@@ -22,9 +23,9 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginSuccess: (state, action: PayloadAction<LoginState>) => {
+    loginSuccess: (state, action: PayloadAction<IAuthState>) => {
       const {
-        payload: { fullName, email, photo, phoneNo, tokens, isEmailVerified, isPhoneVerified, isSuperuser, groups, userPermissions }
+        payload: { fullName, email, photo, phoneNo, tokens, isEmailVerified, isPhoneVerified, isSuperuser, roles, permissions }
       } = action;
 
       state.fullName = fullName;
@@ -34,8 +35,8 @@ export const authSlice = createSlice({
       state.isEmailVerified = isEmailVerified;
       state.isPhoneVerified = isPhoneVerified;
       state.isSuperuser = isSuperuser;
-      state.groups = groups;
-      state.userPermissions = userPermissions;
+      state.roles = roles;
+      state.permissions = permissions;
       state.isAuthenticated = true;
       // Save access and refresh tokens in the cookies
       Cookies.set('access', tokens?.access as string, {

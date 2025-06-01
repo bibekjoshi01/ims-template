@@ -105,6 +105,7 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
   return function useTableData(initialQueryParams = {}) {
     // Query parameter state
     const [queryParams, setQueryParams] = useState({
+      ...initialQueryParams,
       search: '',
       paginationModel: {
         page: 0,
@@ -113,8 +114,7 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
       sortModel: [] as GridSortModel,
       filterModel: {
         items: []
-      } as GridFilterModel,
-      ...initialQueryParams
+      } as GridFilterModel
     });
 
     // Get API hooks
@@ -129,13 +129,14 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
 
     // Transform API data to table data
     useEffect(() => {
-      if (data) {
-        const transformedData = transformResponseToTableData(data);
-        setRows(transformedData);
-        setTotalRowsCount(data?.count || 0);
-      } else if (error) {
+      if (error) {
         console.error('Error fetching data:', error);
+        return;
       }
+      if (!data) return;
+      const transformedData = transformResponseToTableData(data) || [];
+      setRows([...transformedData]);
+      setTotalRowsCount(data?.count ?? transformedData?.length ?? 0);
     }, [data, error]);
 
     // Event handlers
@@ -197,7 +198,7 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
           dispatch(setMessage({ message: res.message, variant: 'success' }));
 
           // NOTE - Refetch if needed
-          // refetch();
+          refetch();
         } catch (error) {
           console.error('Failed to update row:', error);
           throw error;
@@ -218,12 +219,12 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
 
         try {
           const res = await deleteItem(id).unwrap();
-          dispatch(setMessage({ message: res.message, variant: 'success' }));
+          dispatch(setMessage({ message: 'Deleted Successfully', variant: 'success' }));
           // NOTE - Refetch if needed
-          // refetch();
+          refetch();
         } catch (error) {
-          console.error('Error deleting user:', error);
-          dispatch(setMessage({ message: 'Failed to delete user', variant: 'error' }));
+          console.error('Error deleting:', error);
+          dispatch(setMessage({ message: 'Failed to delete', variant: 'error' }));
           throw error;
         }
       },
