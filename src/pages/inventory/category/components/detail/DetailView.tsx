@@ -1,25 +1,21 @@
-// React Imports
+// MUI Imports
+import { Close } from '@mui/icons-material';
 import { Avatar, Box, CircularProgress, IconButton, Paper, Typography } from '@mui/material';
 
-// MUI Icons
-import { Close } from '@mui/icons-material';
-
-// Project Components & Types
-import MainCard from '@/components/cards/MainCard';
-import { ICategoryDetails } from '../../redux/types';
+// PROJECT IMPORTS
 import DefaultImage from '@/assets/images/users/avatar-1.png';
-import { DynamicInfoSectionProps } from '@/components/detail-section/types';
-import { viewCategoryConfig } from './config';
+import MainCard from '@/components/cards/MainCard';
 import DynamicInfoSection from '@/components/detail-section';
+import { DynamicInfoSectionProps } from '@/components/detail-section/types';
+import { ICategoryDetails } from '../../redux/types';
+import { viewCategoryConfig } from './config';
 
-// Component Props
-interface DetailViewProps {
+interface IDetailViewProps {
   categoryData: ICategoryDetails | undefined;
   onClose: () => void;
 }
 
-// Component
-const DetailView: React.FC<DetailViewProps> = ({ categoryData, onClose }) => {
+const DetailView: React.FC<IDetailViewProps> = ({ categoryData, onClose }) => {
   if (!categoryData) {
     return (
       <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
@@ -43,7 +39,7 @@ const DetailView: React.FC<DetailViewProps> = ({ categoryData, onClose }) => {
         <Close />
       </IconButton>
 
-      {/* User Header */}
+      {/* Header */}
       <Box
         sx={{
           p: 2,
@@ -65,7 +61,6 @@ const DetailView: React.FC<DetailViewProps> = ({ categoryData, onClose }) => {
 
       {/* Info Content */}
       <Box sx={{ px: { xxs: 0, xs: 2 }, py: 1 }}>
-        {/* Left Column - Basic Info */}
         <DynamicInfoSection {...DynamicInfoSectionProps} />
       </Box>
     </MainCard>

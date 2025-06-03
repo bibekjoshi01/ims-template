@@ -1,8 +1,11 @@
+// PACKAGE IMPORTS
 import { CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-// Components
+// PROJECT IMPORTS
 import AppDialog from '@/components/app-dialog';
+
+// LOCAL IMPORTS
 import { useRetrieveCategoryQuery } from '../../redux/category.api';
 import { productCategoryState } from '../../redux/category.selector';
 import { clearViewId } from '../../redux/category.slice';

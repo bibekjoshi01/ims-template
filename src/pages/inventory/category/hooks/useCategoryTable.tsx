@@ -1,6 +1,6 @@
 import { createTableDataHook } from '@/hooks/createTableDataHook';
 import { useAppDispatch } from '@/libs/hooks';
-import { TableData } from '../components/listing/config';
+import { ITableData } from '../components/listing/config';
 import { useArchiveCategoryMutation, useGetCategoriesQuery, usePatchCategoryMutation } from '../redux/category.api';
 import { currentCategoryId, setEdit, setViewId } from '../redux/category.slice';
 
@@ -12,7 +12,7 @@ import { currentCategoryId, setEdit, setViewId } from '../redux/category.slice';
 export const useCategoryTable = () => {
   const dispatch = useAppDispatch();
 
-  return createTableDataHook<TableData, any>({
+  return createTableDataHook<ITableData, any>({
     // RTK Query hooks
     useListQuery: useGetCategoriesQuery,
     useUpdateMutation: usePatchCategoryMutation,

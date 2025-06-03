@@ -1,12 +1,15 @@
+// PACKAGE IMPORTS
 import { CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-// Components
-import CategoryUpdateForm from './Form';
+// PROJECT IMPORTS
 import AppDialog from '@/components/app-dialog';
-import { clearViewId, setEdit } from '../../redux/category.slice';
-import { productCategoryState } from '../../redux/category.selector';
+
+// LOCAL IMPORTS
 import { useRetrieveCategoryQuery } from '../../redux/category.api';
+import { productCategoryState } from '../../redux/category.selector';
+import { clearViewId, setEdit } from '../../redux/category.slice';
+import CategoryUpdateForm from './Form';
 
 const CategoryEditModal = () => {
   const dispatch = useDispatch();

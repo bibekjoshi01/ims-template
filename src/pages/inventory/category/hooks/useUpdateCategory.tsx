@@ -1,24 +1,27 @@
-import { useSnackbar } from 'notistack';
-import { useForm } from 'react-hook-form';
+// PACKAGE IMPORTS
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSnackbar } from 'notistack';
+import { useCallback, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
+// PROJECT IMPORTS
+import useUniqueFieldValidation from '@/hooks/useUniqueFieldValidation';
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
-import { useLazyGetCategoriesQuery, usePatchCategoryMutation } from '../redux/category.api';
-
-import { useCallback, useEffect } from 'react';
 import { handleClientError } from '@/utils/functions/handleError';
-import { CategoryUpdateFormProps } from '../components/update-form/Form';
-import useUniqueFieldValidation from '@/hooks/useUniqueFieldValidation';
+
+// LOCAL IMPORTS
 import { uniqueFieldNames } from '../components/create-form/config';
 import {
-  defaultValues,
   categoryUpdateFields,
-  CategoryUpdateFormDataType,
-  categoryUpdateFormSchema
+  categoryUpdateFormSchema,
+  defaultValues,
+  TCategoryUpdateFormDataType
 } from '../components/update-form/config';
+import { ICategoryUpdateFormProps } from '../components/update-form/Form';
+import { useLazyGetCategoriesQuery, usePatchCategoryMutation } from '../redux/category.api';
 
-const useUpdateCategory = ({ categoryData, onClose }: CategoryUpdateFormProps) => {
+const useUpdateCategory = ({ categoryData, onClose }: ICategoryUpdateFormProps) => {
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const [updateCategory] = usePatchCategoryMutation();
@@ -32,7 +35,7 @@ const useUpdateCategory = ({ categoryData, onClose }: CategoryUpdateFormProps) =
     watch,
     reset,
     formState: { errors }
-  } = useForm<CategoryUpdateFormDataType>({
+  } = useForm<TCategoryUpdateFormDataType>({
     resolver: zodResolver(categoryUpdateFormSchema),
     defaultValues
   });
@@ -63,7 +66,7 @@ const useUpdateCategory = ({ categoryData, onClose }: CategoryUpdateFormProps) =
   }, [categoryData, reset]);
 
   // This is for form update not for inline update
-  const onSubmit = async (data: CategoryUpdateFormDataType) => {
+  const onSubmit = async (data: TCategoryUpdateFormDataType) => {
     const { id, ...values } = data;
     try {
       const payload = {
@@ -74,7 +77,7 @@ const useUpdateCategory = ({ categoryData, onClose }: CategoryUpdateFormProps) =
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
     } catch (error) {
-      handleClientError<CategoryUpdateFormDataType>({
+      handleClientError<TCategoryUpdateFormDataType>({
         error,
         setError,
         enqueueSnackbar,

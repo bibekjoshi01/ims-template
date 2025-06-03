@@ -23,10 +23,10 @@ export const categoryCreateFormSchema = z.object({
 });
 
 // NOTE - Generate a type from the schema
-export type CategoryCreateFormDataType = z.infer<typeof categoryCreateFormSchema>;
+export type TCategoryCreateFormDataType = z.infer<typeof categoryCreateFormSchema>;
 
 // NOTE -  Define default Values for the Form using the generated type
-export const defaultValues: CategoryCreateFormDataType = {
+export const defaultValues: TCategoryCreateFormDataType = {
   name: '',
   code: '',
   description: '',
@@ -35,7 +35,7 @@ export const defaultValues: CategoryCreateFormDataType = {
 };
 
 // NOTE - Define the form fields
-export const categoryInfoFields: FormField<CategoryCreateFormDataType>[] = [
+export const categoryInfoFields: FormField<TCategoryCreateFormDataType>[] = [
   { name: 'name', label: 'Name', xs: 6, sm: 4, type: 'text' },
   { name: 'code', label: 'Code Name', xs: 6, sm: 4, type: 'text' },
   {
