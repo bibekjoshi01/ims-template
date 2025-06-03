@@ -1,18 +1,18 @@
 import React, { createContext, useContext, useState } from 'react';
 import { ISearchContextType } from './types';
 
-const SearchContext = createContext<ISearchContextType | undefined>(undefined);
+const MenuSearchContext = createContext<ISearchContextType | undefined>(undefined);
 
-export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
+export const MenuSearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  return <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>{children}</SearchContext.Provider>;
+  return <MenuSearchContext.Provider value={{ searchTerm, setSearchTerm }}>{children}</MenuSearchContext.Provider>;
 };
 
-export const useSearch = () => {
-  const context = useContext(SearchContext);
+export const useMenuSearch = () => {
+  const context = useContext(MenuSearchContext);
   if (!context) {
-    throw new Error('useSearch must be used within a SearchProvider');
+    throw new Error('useMenuSearch must be used within a SearchProvider');
   }
   return context;
 };

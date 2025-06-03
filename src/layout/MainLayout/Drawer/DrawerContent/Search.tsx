@@ -6,12 +6,12 @@ import InputAdornment from '@mui/material/InputAdornment';
 import OutlinedInput from '@mui/material/OutlinedInput';
 
 // project imports
-import { useSearch } from '@/contexts/search-context';
+import { useMenuSearch } from '@/contexts/search-context';
 
 // ==============================|| DRAWER CONTENT - SEARCH ||============================== //
 
 export default function Search() {
-  const { searchTerm, setSearchTerm } = useSearch();
+  const { searchTerm, setSearchTerm } = useMenuSearch();
 
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', pt: 2, mb: 1 }}>
