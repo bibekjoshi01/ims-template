@@ -465,6 +465,28 @@ const CustomInput = forwardRef<any, CustomInputProps>(
           </LocalizationProvider>
         );
 
+      case 'number':
+        return (
+          <Box sx={sx} style={style} className={className}>
+            <LabelForInput label={label} name={name} required={required} />
+            <OutlinedInput
+              {...(fullwidth ? { fullWidth: true } : {})}
+              type="number"
+              name={name}
+              onChange={(event) => onChange(+event.target.value)}
+              value={value}
+              error={error}
+              aria-describedby={errorId}
+              placeholder={placeholder}
+              inputRef={setRef}
+              sx={{ ...inputStyle }}
+              {...inputProps}
+            />
+            <ErrorForInput error={error} helperText={helperText} />
+            {children}
+          </Box>
+        );
+
       default:
         return (
           <Box sx={sx} style={style} className={className}>

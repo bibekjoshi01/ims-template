@@ -24,9 +24,9 @@ export interface IProductItem {
   name: string;
   sku: string;
   image: string;
-  category: number;
-  unit: number;
-  sellingPrice: string;
+  category: number | string;
+  unit: number | string;
+  sellingPrice: number;
   stockAlertQty: number;
   isActive: boolean;
 }
@@ -42,7 +42,7 @@ export interface IProductDetails {
   image: string;
   category: IProductCategoryItem;
   unit: IProductUnitItem;
-  sellingPrice: string;
+  sellingPrice: number;
   stockAlertQty: number;
   barcode: string;
   description: string;
@@ -55,23 +55,23 @@ export interface IProductDetails {
 
 export interface IProductCreatePayload {
   name: string;
-  sku: string;
+  sku?: string;
   image?: File | null;
   category: number;
   unit: number;
-  sellingPrice: string;
-  stockAlertQty: number;
-  barcode: string;
-  description: string;
+  sellingPrice: number;
+  stockAlertQty?: number;
+  barcode?: string;
+  description?: string;
 }
 
 export interface IProductUpdatePayload {
   name?: string;
   sku?: string;
-  image?: File | null;
+  image?: File | string | null;
   category?: number;
   unit?: number;
-  sellingPrice?: string;
+  sellingPrice?: number;
   stockAlertQty?: number;
   barcode?: string;
   description?: string;

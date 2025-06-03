@@ -70,9 +70,9 @@ const createColumnDefs = <T extends GridValidRowModel>(
       flex: 1, // fill the available space
       maxWidth: config?.maxWidth, // restrict the width if needed
       minWidth: config?.minWidth ?? 150,
-      sortable: config?.sortable ?? true,
+      sortable: config?.sortable ?? false,
+      filterable: config?.filterable ?? false,
       editable: config?.editable ?? true,
-      filterable: config?.filterable ?? true,
       renderCell: config?.renderCell,
       fieldType: config?.type || 'text'
     };

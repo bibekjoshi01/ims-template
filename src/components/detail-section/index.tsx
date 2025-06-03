@@ -1,18 +1,13 @@
-// Mui Imports
 import React from 'react';
-import { Typography, Box, Grid, Divider, Badge, Chip } from '@mui/material';
+import { Box, Chip, Divider, Grid, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 
-// Utils
 import { camelCaseToNormal } from '@/utils/functions/formatString';
 import { formatReadableDatetime } from '@/utils/functions/date';
+import { DynamicInfoSectionProps } from './types';
 
-// Types
-import { DynamicInfoSectionProps, InfoFieldProps } from './types';
-
-// Styled components
 const InfoItem = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   paddingBottom: theme.spacing(2)
@@ -35,77 +30,62 @@ const Value = styled(Box)(({ theme }) => ({
   }
 }));
 
-// InfoField component
-export const InfoField: React.FC<InfoFieldProps> = ({ label, value }) => (
-  <InfoItem>
-    <Label variant="caption">{label}</Label>
-    <Value sx={Array.isArray(value) ? { mt: 1 } : {}}>
-      {
-        Array.isArray(value)
-          ? value.map((v, i) => <Chip label={v} key={i} variant="outlined" />)
-          : typeof value === 'string' || typeof value === 'number'
-            ? value || 'N/A'
-            : (value ?? 'N/A') // render JSX
-      }
-    </Value>
-  </InfoItem>
-);
+// Utility to safely access nested values
+const getNestedValue = (obj: any, path: string): any =>
+  path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
+
+// Value rendering logic
+const renderValue = (path: string, value: any, dateTimeFields: string[], booleanFields: string[]): React.ReactNode => {
+  if (dateTimeFields.includes(path) && value) {
+    return formatReadableDatetime(value);
+  }
+
+  if (booleanFields.includes(path)) {
+    return value ? <CheckCircleIcon color="success" fontSize="small" /> : <CancelIcon color="error" fontSize="small" />;
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((v, i) => <Chip key={i} label={String(v)} variant="outlined" />);
+  }
+
+  if (typeof value === 'object' && value !== null) {
+    return Object.entries(value).map(([k, v], i) => (
+      <Typography key={i} variant="body2">
+        <strong>{camelCaseToNormal(k)}:</strong> {String(v)}
+      </Typography>
+    ));
+  }
+
+  return value !== null && value !== undefined ? String(value) : 'N/A';
+};
 
 const DynamicInfoSection: React.FC<DynamicInfoSectionProps> = ({
   data,
   columns = 2,
   excludeFields = [],
+  fieldOrder = [],
   dateTimeFields = [],
   booleanFields = [],
-  customLabels = {},
-  fieldOrder = null
+  customLabels = {}
 }) => {
   if (!data || typeof data !== 'object') return null;
 
-  // Filter out excluded fields and get entries
-  const entries: [string, any][] = Object.entries(data).filter(([key]) => !excludeFields.includes(key));
-
-  // Order entries based on fieldOrder if provided
-  const orderedEntries: [string, any][] = fieldOrder
-    ? fieldOrder
-        .filter((key) => data.hasOwnProperty(key) && !excludeFields.includes(key))
-        .map((key) => [key, data[key]] as [string, any])
-        .concat(entries.filter(([key]) => !fieldOrder.includes(key)))
-    : entries;
-
-  // Format date/time fields if provided
-  const formattedEntries: [string, any][] = dateTimeFields
-    ? orderedEntries.map(([key, value]) => {
-        if (dateTimeFields.includes(key) && value) {
-          return [key, formatReadableDatetime(value)];
-        }
-        return [key, value];
-      })
-    : orderedEntries;
-
-  // Format boolean fields if provided
-  const formattedBooleanEntries: [string, any][] = booleanFields
-    ? formattedEntries.map(([key, value]) => {
-        if (booleanFields.includes(key)) {
-          return [key, value ? <CheckCircleIcon color="success" fontSize="small" /> : <CancelIcon color="error" fontSize="small" />];
-        }
-        return [key, value];
-      })
-    : formattedEntries;
+  const fields = fieldOrder || Object.keys(data);
+  const visibleFields = fields.filter((field) => !excludeFields.some((ex) => field === ex || field.startsWith(`${ex}.`)));
 
   return (
     <Grid container spacing={2}>
-      {formattedBooleanEntries.map(([key, value], index) => {
-        const label = customLabels[key] || camelCaseToNormal(key);
+      {visibleFields.map((path) => {
+        const value = getNestedValue(data, path);
+        const label = customLabels[path] || camelCaseToNormal(path.split('.').pop() || path);
+        const content = renderValue(path, value, dateTimeFields, booleanFields);
+
         return (
-          <Grid
-            item
-            xs={12}
-            sm={6} // 2 columns on small+ screens
-            md={12 / columns} // Flexible column count for md+
-            key={index}
-          >
-            <InfoField label={label} value={value} />
+          <Grid item xs={12} sm={6} md={12 / columns} key={path}>
+            <InfoItem>
+              <Label variant="caption">{label}</Label>
+              <Value>{content}</Value>
+            </InfoItem>
             <Divider />
           </Grid>
         );

@@ -35,7 +35,7 @@ export const defaultValues: TCategoryCreateFormDataType = {
 };
 
 // NOTE - Define the form fields
-export const categoryInfoFields: FormField<TCategoryCreateFormDataType>[] = [
+export const categoryCreateFields: FormField<TCategoryCreateFormDataType>[] = [
   { name: 'name', label: 'Name', xs: 6, sm: 4, type: 'text' },
   { name: 'code', label: 'Code Name', xs: 6, sm: 4, type: 'text' },
   {
