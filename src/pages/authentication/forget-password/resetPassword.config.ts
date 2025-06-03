@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { FormField } from '@/components/app-form/FormSection';
+import { FormField } from '@/components/app-form/types';
 import { ResetPasswordRequestFormDataType } from '../redux/types';
 
 export const resetPasswordSchema = z
