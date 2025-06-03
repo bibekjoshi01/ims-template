@@ -40,14 +40,16 @@ const modules: MenuItem = {
       id: 'customer',
       title: 'Customer',
       type: 'item',
-      url: '/customer',
-      icon: icons.Person4Icon
+      url: '/customers',
+      icon: icons.Person4Icon,
+      breadcrumbs: false
     },
     {
       id: 'supplier',
       title: 'Supplier',
       type: 'item',
-      url: '/supplier',
+      url: '/suppliers',
+      breadcrumbs: false,
       icon: icons.Person3Icon
     },
     {

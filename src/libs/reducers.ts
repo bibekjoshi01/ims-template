@@ -8,6 +8,7 @@ import blogReducer from '@/pages/blog/redux/blog.slice';
 import commonReducer from '@/pages/common/redux/common.slice';
 import productCategoryReducer from '@/pages/inventory/category/redux/category.slice';
 import productReducer from '@/pages/inventory/product/redux/product.slice';
+import supplierReducer from '@/pages/supplier/redux/supplier.slice';
 import userRoleReducer from '@/pages/user-role/redux/user-role.slice';
 import userReducer from '@/pages/user/redux/user.slice';
 
@@ -20,6 +21,7 @@ export const rootReducer = combineReducers({
   userRole: userRoleReducer,
   productCategory: productCategoryReducer,
   product: productReducer,
+  supplier: supplierReducer,
   // add reducers here
   [rootAPI.reducerPath]: rootAPI.reducer
 });

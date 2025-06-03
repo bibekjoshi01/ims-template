@@ -83,6 +83,7 @@ export type FormField<T> = {
   falseLabel?: string; // Label for the false value of a checkbox.
   disabled?: boolean;
   placeholder?: string;
+  autoFocus?: boolean;
 };
 
 export interface FormSectionProps<T extends FieldValues> {

@@ -5,16 +5,16 @@ import { useTheme } from '@mui/material/styles';
 import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, GridRowParams, MuiEvent } from '@mui/x-data-grid';
 
 //  Project Imports
+import { useTableHandlers } from '@/hooks/useTableHandlers';
 import { Empty } from 'antd';
 import React, { useCallback, useMemo, useState } from 'react';
-import Toolbar from './toolbar';
+import ConfirmationModal from '../app-dialog/ConfirmationDialog';
 import SaveExport from '../export';
-import { AppTableProps } from './types';
 import { createColumnDefs } from './columns';
 import { BoxStyles, TableStyles } from './styles';
-import { useTableHandlers } from '@/hooks/useTableHandlers';
-import ConfirmationModal from '../app-dialog/ConfirmationDialog';
+import Toolbar from './toolbar';
 import { CustomColumnsPanel, CustomFilterPanel } from './toolbar/Slots';
+import { AppTableProps } from './types';
 
 // ===========================|| AppTable - MAIN COMPONENT ||=========================== //
 const AppTable = <T extends object>({
@@ -170,6 +170,17 @@ const AppTable = <T extends object>({
     </Typography>
   );
 
+  // defines which fields are hidden or visible by default
+  const [columnVisibilityModel, setColumnVisibilityModel] = useState(() => {
+    const initialModel: Record<string, boolean> = {};
+    columnConfig.forEach((col) => {
+      if ('visible' in col) {
+        initialModel[col.field as string] = col.visible !== false;
+      }
+    });
+    return initialModel;
+  });
+
   return (
     <>
       <Box sx={{ ...BoxStyles, ...containerSx }}>
@@ -189,6 +200,8 @@ const AppTable = <T extends object>({
           onProcessRowUpdateError={handleRowUpdateError}
           onRowDoubleClick={handleRowDoubleClick}
           // Display options
+          columnVisibilityModel={columnVisibilityModel}
+          onColumnVisibilityModelChange={setColumnVisibilityModel}
           showCellVerticalBorder={showCellVerticalBorder}
           checkboxSelection={enableRowSelection}
           // Pagination Sorting and filtering

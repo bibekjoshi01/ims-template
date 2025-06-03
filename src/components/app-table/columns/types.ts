@@ -37,4 +37,5 @@ export interface ColumnConfig<T extends object> {
   falseLabel?: string; // only for 'boolean' type
   handlers?: ColumnHandlers<T>;
   align?: GridAlignment; // left | right | center
+  visible?: boolean;
 }

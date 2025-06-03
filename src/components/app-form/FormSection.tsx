@@ -28,6 +28,7 @@ export default function FormSection<T extends Record<string, any>>({
                   {...controllerField}
                   name={field.name as string}
                   type={field.type}
+                  autoFocus={field?.autoFocus || false}
                   label={field.label}
                   placeholder={field?.placeholder}
                   options={field.options}
