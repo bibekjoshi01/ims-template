@@ -44,10 +44,10 @@ const useCreateSupplier = ({ onClose }: ISupplierCreateFormProps) => {
   // Gather current values of unique fields for validation
   const uniqueFieldValues = uniqueFieldNames.reduce(
     (acc, fieldName) => {
-      acc[fieldName] = watch(fieldName as keyof TSupplierCreateFormDataType);
+      acc[fieldName] = watch(fieldName);
       return acc;
     },
-    {} as Record<string, any>
+    {} as Record<keyof TSupplierCreateFormDataType, any>
   );
 
   // Function to fetch suppliers for uniqueness check
@@ -88,11 +88,16 @@ const useCreateSupplier = ({ onClose }: ISupplierCreateFormProps) => {
         enqueueSnackbar,
         fieldKeyMap: {
           name: 'name',
+          contactPerson: 'contactPerson',
           email: 'email',
           phoneNo: 'phoneNo',
           altPhoneNo: 'altPhoneNo',
+          address: 'address',
+          country: 'country',
           website: 'website',
-          isActive: 'isActive'
+          taxId: 'taxId',
+          isActive: 'isActive',
+          notes: 'notes'
         }
       });
     }

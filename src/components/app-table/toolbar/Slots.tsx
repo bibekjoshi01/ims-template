@@ -14,7 +14,6 @@ export const CustomSearchBar = ({ handleInputChange, searchText }: { handleInput
 
   return (
     <CustomInput
-      autoFocus
       placeholder="Search..."
       type="text"
       value={searchText}

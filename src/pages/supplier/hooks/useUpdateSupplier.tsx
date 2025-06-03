@@ -11,12 +11,12 @@ import { setMessage } from '@/pages/common/redux/common.slice';
 import { handleClientError } from '@/utils/functions/handleError';
 
 // LOCAL IMPORTS
-import { uniqueFieldNames } from '../components/create-form/config';
 import {
   defaultValues,
   supplierUpdateFields,
   supplierUpdateFormSchema,
-  TSupplierUpdateFormDataType
+  TSupplierUpdateFormDataType,
+  uniqueFieldNames
 } from '../components/update-form/config';
 import { ISupplierUpdateFormProps } from '../components/update-form/Form';
 import { useLazyGetSuppliersQuery, usePatchSupplierMutation } from '../redux/supplier.api';
@@ -41,14 +41,14 @@ const useUpdateSupplier = ({ supplierData, onClose }: ISupplierUpdateFormProps) 
     defaultValues
   });
 
-  // Unique field values to validate (email, phoneNo, etc.)
-  const uniqueFieldValues = {
-    name: watch('name'),
-    email: watch('email'),
-    phoneNo: watch('phoneNo'),
-    altPhoneNo: watch('altPhoneNo'),
-    website: watch('website')
-  };
+  // Gather current values of unique fields for validation
+  const uniqueFieldValues = uniqueFieldNames.reduce(
+    (acc, fieldName) => {
+      acc[fieldName] = watch(fieldName);
+      return acc;
+    },
+    {} as Record<keyof TSupplierUpdateFormDataType, any>
+  );
 
   const fetchSupplier = useCallback((args: any) => triggerGetSupplier(args).unwrap(), [triggerGetSupplier]);
 
@@ -61,7 +61,7 @@ const useUpdateSupplier = ({ supplierData, onClose }: ISupplierUpdateFormProps) 
       if (message) setError(field, { type: 'manual', message });
       else clearErrors(field);
     },
-    debounceDelay: 300
+    debounceDelay: 100
   });
 
   useEffect(() => {
@@ -108,7 +108,8 @@ const useUpdateSupplier = ({ supplierData, onClose }: ISupplierUpdateFormProps) 
           country: 'country',
           website: 'website',
           taxId: 'taxId',
-          isActive: 'isActive'
+          isActive: 'isActive',
+          notes: 'notes'
         }
       });
     }
