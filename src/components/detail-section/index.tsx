@@ -8,6 +8,9 @@ import { camelCaseToNormal } from '@/utils/functions/formatString';
 import { formatReadableDatetime } from '@/utils/functions/date';
 import { DynamicInfoSectionProps } from './types';
 
+// ------------------------
+// Styled Components
+// ------------------------
 const InfoItem = styled(Box)(({ theme }) => ({
   paddingTop: theme.spacing(2),
   paddingBottom: theme.spacing(2)
@@ -30,11 +33,12 @@ const Value = styled(Box)(({ theme }) => ({
   }
 }));
 
-// Utility to safely access nested values
+// ------------------------
+// Utility Functions
+// ------------------------
 const getNestedValue = (obj: any, path: string): any =>
   path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
 
-// Value rendering logic
 const renderValue = (path: string, value: any, dateTimeFields: string[], booleanFields: string[]): React.ReactNode => {
   if (dateTimeFields.includes(path) && value) {
     return formatReadableDatetime(value);
@@ -59,6 +63,35 @@ const renderValue = (path: string, value: any, dateTimeFields: string[], boolean
   return value !== null && value !== undefined ? String(value) : 'N/A';
 };
 
+// ------------------------
+// InfoField Component
+// ------------------------
+type InfoFieldProps = {
+  label: string;
+  value: React.ReactNode;
+};
+
+export const InfoField: React.FC<InfoFieldProps> = ({ label, value }) => (
+  <>
+    <InfoItem>
+      <Label variant="caption">{label}</Label>
+      <Value sx={Array.isArray(value) ? { mt: 1 } : {}}>
+        {
+          Array.isArray(value)
+            ? value.map((v, i) => <Chip label={v} key={i} variant="outlined" />)
+            : typeof value === 'string' || typeof value === 'number'
+              ? value || 'N/A'
+              : (value ?? 'N/A') // render JSX
+        }
+      </Value>
+    </InfoItem>
+    <Divider />
+  </>
+);
+
+// ------------------------
+// Main Component
+// ------------------------
 const DynamicInfoSection: React.FC<DynamicInfoSectionProps> = ({
   data,
   columns = 2,
@@ -70,23 +103,19 @@ const DynamicInfoSection: React.FC<DynamicInfoSectionProps> = ({
 }) => {
   if (!data || typeof data !== 'object') return null;
 
-  const fields = fieldOrder || Object.keys(data);
+  const fields = fieldOrder.length > 0 ? fieldOrder : Object.keys(data);
   const visibleFields = fields.filter((field) => !excludeFields.some((ex) => field === ex || field.startsWith(`${ex}.`)));
 
   return (
     <Grid container spacing={2}>
       {visibleFields.map((path) => {
-        const value = getNestedValue(data, path);
+        const rawValue = getNestedValue(data, path);
         const label = customLabels[path] || camelCaseToNormal(path.split('.').pop() || path);
-        const content = renderValue(path, value, dateTimeFields, booleanFields);
+        const content = renderValue(path, rawValue, dateTimeFields, booleanFields);
 
         return (
           <Grid item xs={12} sm={6} md={12 / columns} key={path}>
-            <InfoItem>
-              <Label variant="caption">{label}</Label>
-              <Value>{content}</Value>
-            </InfoItem>
-            <Divider />
+            <InfoField label={label} value={content} />
           </Grid>
         );
       })}
