@@ -1,25 +1,25 @@
-import { useForm } from 'react-hook-form';
-import { useSnackbar } from 'notistack';
-import { ICategoryCreatePayload } from '../redux/types';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useSnackbar } from 'notistack';
+import { useForm } from 'react-hook-form';
+import { ICategoryCreatePayload } from '../redux/types';
 
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
 import { useCreateCategoryMutation, useLazyGetCategoriesQuery } from '../redux/category.api';
 
-import { useCallback } from 'react';
-import { handleClientError } from '@/utils/functions/handleError';
-import { CategoryCreateFormProps } from '../components/create-form';
 import useUniqueFieldValidation from '@/hooks/useUniqueFieldValidation';
+import { handleClientError } from '@/utils/functions/handleError';
+import { useCallback } from 'react';
+import { ICategoryCreateFormProps } from '../components/create-form';
 import {
-  defaultValues,
-  categoryInfoFields,
-  CategoryCreateFormDataType,
   categoryCreateFormSchema,
+  categoryInfoFields,
+  defaultValues,
+  TCategoryCreateFormDataType,
   uniqueFieldNames
 } from '../components/create-form/config';
 
-const useCreateCategory = ({ onClose }: CategoryCreateFormProps) => {
+const useCreateCategory = ({ onClose }: ICategoryCreateFormProps) => {
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const [createCategory] = useCreateCategoryMutation();
@@ -32,7 +32,7 @@ const useCreateCategory = ({ onClose }: CategoryCreateFormProps) => {
     setError,
     clearErrors,
     formState: { errors }
-  } = useForm<CategoryCreateFormDataType>({
+  } = useForm<TCategoryCreateFormDataType>({
     resolver: zodResolver(categoryCreateFormSchema),
     defaultValues
   });
@@ -56,14 +56,14 @@ const useCreateCategory = ({ onClose }: CategoryCreateFormProps) => {
   });
 
   // NOTE - Form submit handler
-  const onSubmit = async (data: CategoryCreateFormDataType) => {
+  const onSubmit = async (data: TCategoryCreateFormDataType) => {
     try {
       const payload: ICategoryCreatePayload = { ...data };
       const res = await createCategory(payload).unwrap();
       dispatch(setMessage({ message: res.message, variant: 'success' }));
       onClose?.();
     } catch (error) {
-      handleClientError<CategoryCreateFormDataType>({
+      handleClientError<TCategoryCreateFormDataType>({
         error,
         setError,
         enqueueSnackbar,

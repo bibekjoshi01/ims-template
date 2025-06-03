@@ -1,19 +1,19 @@
 import { Button, Grid } from '@mui/material';
 
 // UI Components
-import MainCard from '@/components/cards/MainCard';
 import FormSection from '@/components/app-form/FormSection';
+import MainCard from '@/components/cards/MainCard';
 
-import { ICategoryDetails } from '../../redux/types';
-import { CategoryUpdateFormDataType } from './config';
 import useUpdateCategory from '../../hooks/useUpdateCategory';
+import { ICategoryDetails } from '../../redux/types';
+import { TCategoryUpdateFormDataType } from './config';
 
-export interface CategoryUpdateFormProps {
+export interface ICategoryUpdateFormProps {
   categoryData?: ICategoryDetails;
   onClose?: () => void;
 }
 
-export default function CategoryUpdateForm({ categoryData, onClose }: CategoryUpdateFormProps) {
+export default function CategoryUpdateForm({ categoryData, onClose }: ICategoryUpdateFormProps) {
   const { control, errors, categoryUpdateFields, handleSubmit } = useUpdateCategory({ categoryData, onClose });
 
   return (
@@ -21,7 +21,7 @@ export default function CategoryUpdateForm({ categoryData, onClose }: CategoryUp
       <Grid container spacing={3} sx={{ pt: 1 }}>
         <Grid item xs={12}>
           <MainCard divider title={'Update Category'}>
-            <FormSection<CategoryUpdateFormDataType> fields={categoryUpdateFields} control={control} errors={errors} />
+            <FormSection<TCategoryUpdateFormDataType> fields={categoryUpdateFields} control={control} errors={errors} />
           </MainCard>
         </Grid>
 
