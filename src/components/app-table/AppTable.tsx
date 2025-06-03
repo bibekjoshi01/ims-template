@@ -6,7 +6,7 @@ import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, GridRowParams,
 
 //  Project Imports
 import { Empty } from 'antd';
-import { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import Toolbar from './toolbar';
 import SaveExport from '../export';
 import { AppTableProps } from './types';
@@ -118,11 +118,18 @@ const AppTable = <T extends object>({
 
   const SaveExportComponent = useMemo(() => <SaveExport columns={columns} rows={rows} title={title} />, [columns, rows, title]);
 
+  const [searchText, setSearchText] = useState('');
+  const handleInputChange = useCallback((value: string) => {
+    setSearchText(value);
+  }, []);
+
   const memoizedToolbar = useMemo(
     () => () => (
       <Toolbar
         title={title}
         showSearch={showSearch}
+        handleTextChange={handleInputChange}
+        searchText={searchText}
         filterMode={filterMode}
         handleSearchChange={handleSearchChange}
         showColumnFilter={showColumnFilter}
@@ -138,13 +145,16 @@ const AppTable = <T extends object>({
       title,
       showSearch,
       filterMode,
+      searchText,
+      handleInputChange,
       handleSearchChange,
       showColumnFilter,
       showFilter,
       showDensitySelector,
       showExport,
       createNewForm,
-      SaveExportComponent
+      SaveExportComponent,
+      createButtonTitle
     ]
   );
 
@@ -291,7 +301,7 @@ const AppTable = <T extends object>({
   );
 };
 
-export default AppTable;
+export default React.memo(AppTable);
 
 function CustomNoRowsOverlay() {
   return (

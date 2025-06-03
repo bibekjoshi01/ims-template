@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { FormField } from '@/components/app-form/FormSection';
+import { FormField } from '@/components/app-form/types';
 
 // 1. Define Schema and Types
 export const settingsSchema = z.object({

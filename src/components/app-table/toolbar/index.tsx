@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // MUI IMPORTS
 import { Box, Button, IconButton, Menu, MenuItem, Typography } from '@mui/material';
@@ -18,6 +18,8 @@ const Toolbar = ({
   title,
   showSearch,
   handleSearchChange,
+  handleTextChange,
+  searchText,
   filterMode,
   showColumnFilter,
   showFilter,
@@ -27,8 +29,11 @@ const Toolbar = ({
   saveExportComponent,
   createButtonTitle
 }: ToolbarProps) => {
-  const { anchorEl, showForm, openMenu, searchText, handleMenuClick, handleMenuClose, handleOpenForm, handleCloseForm, handleInputChange } =
-    useToolbarHandlers({ filterMode, handleSearchChange });
+  const { anchorEl, showForm, openMenu, handleMenuClick, handleMenuClose, handleOpenForm, handleCloseForm } = useToolbarHandlers({
+    filterMode,
+    handleSearchChange,
+    searchText
+  });
   return (
     <>
       <Box sx={ContainerStyles}>
@@ -42,7 +47,7 @@ const Toolbar = ({
         {/* Toolbar */}
         <Box sx={ToolbarStyles}>
           {/* Search Bar */}
-          {showSearch && <CustomSearchBar searchText={searchText} handleInputChange={handleInputChange} />}
+          {showSearch && <CustomSearchBar searchText={searchText} handleInputChange={handleTextChange} />}
 
           {/* Create New User Button */}
           {createNewForm && (

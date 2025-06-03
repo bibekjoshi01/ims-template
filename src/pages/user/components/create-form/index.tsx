@@ -42,10 +42,10 @@ export default function UserCreateForm({ onClose }: UserCreateFormProps) {
 
   const {
     control,
-    handleSubmit,
     watch,
     setError,
     clearErrors,
+    handleSubmit,
     formState: { errors }
   } = useForm<UserInfoFormDataType>({
     resolver: zodResolver(userInfoFormSchema),

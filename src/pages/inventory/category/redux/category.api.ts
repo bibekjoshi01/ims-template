@@ -28,7 +28,7 @@ export const categoryAPISlice = rootAPI.injectEndpoints({
     }),
 
     // Retrieve Category
-    retrieveCategory: builder.query<ICategoryDetails, number>({
+    retrieveCategory: builder.query<ICategoryDetails, number | null>({
       query: (id) => {
         return {
           url: `${categoryAPI}/${id}`,

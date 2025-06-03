@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 // project imports
-import { FormField } from '@/components/app-form/FormSection';
+import { FormField } from '@/components/app-form/types';
 import { ForgetPasswordRequestFormDataType } from '../redux/types';
 
 export const forgetPasswordRequestSchema = z.object({

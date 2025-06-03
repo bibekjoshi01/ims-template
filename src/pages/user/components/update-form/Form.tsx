@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Grid } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 // UI Components
@@ -11,14 +11,15 @@ import MainCard from '@/components/cards/MainCard';
 import { useAppDispatch } from '@/libs/hooks';
 import { setMessage } from '@/pages/common/redux/common.slice';
 import { splitName } from '@/utils/functions/splitCombineName';
-import { useGetUserRolesQuery, usePatchUserMutation } from '../../redux/user.api';
+import { useGetUserRolesQuery, useLazyGetUsersQuery, usePatchUserMutation } from '../../redux/user.api';
 
 // Form Schema, Defaults, Types
 import { SelectOption } from '@/components/app-form/types';
 import { handleClientError } from '@/utils/functions/handleError';
 import { useSnackbar } from 'notistack';
 import { UserRole } from '../../redux/types';
-import { defaultValues, userInfoUpdateFields, UserInfoUpdateFormDataType, userInfoUpdateFormSchema } from './config';
+import { defaultValues, uniqueFieldNames, userInfoUpdateFields, UserInfoUpdateFormDataType, userInfoUpdateFormSchema } from './config';
+import useUniqueFieldValidation from '@/hooks/useUniqueFieldValidation';
 
 interface UserFormProps {
   userData?: any;
@@ -29,6 +30,8 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const [updateUser] = usePatchUserMutation();
+  const [triggerGetUsers] = useLazyGetUsersQuery();
+
   const { data: rolesData } = useGetUserRolesQuery({
     search: '',
     paginationModel: { page: 0, pageSize: 100 },
@@ -37,8 +40,10 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
   const [formFields, setFormFields] = useState(userInfoUpdateFields);
   const {
     control,
-    handleSubmit,
+    watch,
     setError,
+    clearErrors,
+    handleSubmit,
     formState: { errors },
     reset
   } = useForm<UserInfoUpdateFormDataType>({
@@ -61,6 +66,25 @@ export default function UserUpdateForm({ userData, onClose }: UserFormProps) {
       reset(userFormData);
     }
   }, [userData, reset]);
+
+  // NOTE - For Unique field validation
+  const uniqueFieldValues = {
+    phoneNo: watch('phoneNo')
+  };
+
+  const fetchUser = useCallback((args: any) => triggerGetUsers(args).unwrap(), [triggerGetUsers]);
+
+  useUniqueFieldValidation({
+    id: userData?.id || null,
+    fields: [...uniqueFieldNames],
+    values: uniqueFieldValues,
+    triggerFunc: fetchUser,
+    setError: (field, message) => {
+      if (message) setError(field, { type: 'manual', message });
+      else clearErrors(field);
+    },
+    debounceDelay: 300
+  });
 
   // This is for form update not for inline update
   const onSubmit = async (data: UserInfoUpdateFormDataType) => {
