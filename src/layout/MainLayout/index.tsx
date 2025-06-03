@@ -14,6 +14,7 @@ import Drawer from './Drawer';
 import Header from './Header';
 
 import { handlerDrawerOpen, useGetMenuMaster } from '@/api/menu';
+import { MenuSearchProvider } from '@/contexts/search-context';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 
@@ -28,16 +29,18 @@ export default function MainLayout() {
   if (menuMasterLoading) return <Loader />;
 
   return (
-    <Box sx={{ display: 'flex', width: '100%' }}>
-      <Header />
-      <Drawer />
-      <Box component="main" sx={{ width: 'calc(100% - 260px)', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
-        <Toolbar />
-        <Box sx={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <Breadcrumbs navigation={navigation} title />
-          <Outlet />
+    <MenuSearchProvider>
+      <Box sx={{ display: 'flex', width: '100%' }}>
+        <Header />
+        <Drawer />
+        <Box component="main" sx={{ width: 'calc(100% - 260px)', flexGrow: 1, p: { xs: 2, sm: 3 } }}>
+          <Toolbar />
+          <Box sx={{ maxWidth: '1400px', margin: '0 auto' }}>
+            <Breadcrumbs navigation={navigation} title />
+            <Outlet />
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </MenuSearchProvider>
   );
 }

@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 // project import
-import { useSearch } from '@/contexts/search-context';
+import { useMenuSearch } from '@/contexts/search-context';
 import menuItems from '@/menu-items';
 import { MenuItem } from '@/menu-items/types';
 import NavGroup from './NavGroup';
@@ -10,7 +10,7 @@ import NavGroup from './NavGroup';
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 
 export default function Navigation() {
-  const { searchTerm } = useSearch();
+  const { searchTerm } = useMenuSearch();
 
   const isSearching = !!searchTerm.trim();
 

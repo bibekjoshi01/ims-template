@@ -1,7 +1,7 @@
+import { FormField } from '@/components/app-form/types';
+import { DynamicInfoSectionProps } from '@/components/detail-section/types';
 import * as z from 'zod';
 import { UserProfile } from '../redux/types';
-import { DynamicInfoSectionProps } from '@/components/detail-section/types';
-import { FormField } from '@/components/app-form/types';
 
 export const updateProfileSchema = z.object({
   photo: z.union([z.instanceof(File), z.string().nullable()]).optional(),
