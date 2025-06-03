@@ -1,12 +1,11 @@
-// ==============================
-// Custom Search Bar
-
 import CustomInput from '@/components/app-form/CustomInput';
+import { Search as SearchIcon } from '@mui/icons-material';
 import { GlobalStyles } from '@mui/material';
 import { GridColumnsPanel, GridPanel } from '@mui/x-data-grid';
-import { Search as SearchIcon } from '@mui/icons-material';
 import { GridFilterPanel, GridFilterPanelProps } from '@mui/x-data-grid/components/panel/filterPanel/GridFilterPanel';
 
+// ==============================
+// Custom Search Bar
 // ==============================
 export const CustomSearchBar = ({ handleInputChange, searchText }: { handleInputChange?: (value: string) => void; searchText: string }) => {
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

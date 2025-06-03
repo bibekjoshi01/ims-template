@@ -1,45 +1,29 @@
-import React from 'react';
-import { CloudDownloadOutlined } from '@ant-design/icons';
-import { Button, Menu, MenuItem } from '@mui/material';
-import Papa from 'papaparse';
+import dayjs from 'dayjs';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { useSnackbar } from 'notistack';
-import dayjs from 'dayjs';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat';
-import { showErrorToast } from '@/utils/notifier';
+import Papa from 'papaparse';
+import React from 'react';
 import * as XLSX from 'xlsx';
 
-interface Column {
-  field: string;
-  headerName?: string;
-  fieldType?: string;
-  [key: string]: any;
-}
+import { CloudDownloadOutlined } from '@ant-design/icons';
+import { Button, Menu, MenuItem } from '@mui/material';
 
-interface Row {
-  [key: string]: any;
-}
-
-interface SaveExportProps {
-  columns?: Column[];
-  rows?: Row[];
-  title?: string;
-}
+import { showErrorToast } from '@/utils/notifier';
+import { IColumn, IRow, ISaveExportProps } from './types';
 
 dayjs.extend(LocalizedFormat);
 
-const formatValue = (col: Column, val: any, index: number) => {
+const formatValue = (col: IColumn, val: any, index: number) => {
   if (col.headerName === '#' || col.field === 'index') return index + 1;
   if (col.fieldType === 'date') return val ? dayjs(val).format('ll') : '';
   if (col.fieldType === 'boolean') return val ? 'TRUE' : 'FALSE';
-
-  // FIXME - handle image
-  // if (col.fieldType === 'image') return ''; //
+  // FIXME - handle image type
   return val ?? '';
 };
 
-const buildData = (rows: Row[], columns: Column[]) =>
+const buildData = (rows: IRow[], columns: IColumn[]) =>
   rows?.map((row, idx) =>
     columns!.slice(0, -1).reduce(
       (acc, col) => {
@@ -51,7 +35,7 @@ const buildData = (rows: Row[], columns: Column[]) =>
     )
   ) ?? [];
 
-export default function SaveExport({ columns, rows, title }: SaveExportProps) {
+export default function SaveExport({ columns, rows, title }: ISaveExportProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { enqueueSnackbar } = useSnackbar();
@@ -117,7 +101,7 @@ export default function SaveExport({ columns, rows, title }: SaveExportProps) {
   );
 }
 
-export const handlePrintPDF = (columns?: Column[], rows?: Row[], title = 'Exported Table') => {
+export const handlePrintPDF = (columns?: IColumn[], rows?: IRow[], title = 'Exported Table') => {
   if (!columns?.length || !rows?.length) {
     showErrorToast('No Data Available');
     return;
@@ -130,14 +114,6 @@ export const handlePrintPDF = (columns?: Column[], rows?: Row[], title = 'Export
   const headers = columns.slice(0, -1).map((col) => col.headerName || col.field);
   const data = rows.map((row, index) => columns.slice(0, -1).map((col) => formatValue(col, row[col.field], index)));
 
-  // to limit width of image columns
-  // const columnStyles = columns.reduce((acc, col, index) => {
-  //   if (col.fieldType === 'image') {
-  //     acc[index] = { cellWidth: 20 };
-  //   }
-  //   return acc;
-  // }, {} as Record<string, { cellWidth: number }>);
-
   autoTable(doc, {
     startY: 30,
     head: [headers],
@@ -145,13 +121,12 @@ export const handlePrintPDF = (columns?: Column[], rows?: Row[], title = 'Export
     styles: { fontSize: 10 },
     headStyles: { fillColor: [240, 240, 240], textColor: 0, fontStyle: 'bold' },
     theme: 'striped'
-    // columnStyles,
   });
 
   doc.save(`${title}.pdf`);
 };
 
-export const handleCsvExport = (columns?: Column[], rows?: Row[], title = 'Exported Table') => {
+export const handleCsvExport = (columns?: IColumn[], rows?: IRow[], title = 'Exported Table') => {
   if (!columns?.length || !rows?.length) {
     showErrorToast('No Data Available');
     return;

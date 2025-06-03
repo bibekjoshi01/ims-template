@@ -1,7 +1,7 @@
 import { showErrorToast } from '@/utils/notifier';
 import axios, { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
-import { noAuthRoutes } from './routes';
+import { noAuthRoutes } from '../utils/constants/routes';
 
 // Constructing the base URL dynamically using environment variables.
 export const baseURL = `${import.meta.env.VITE_PUBLIC_APP_HTTP_SCHEME}${import.meta.env.VITE_PUBLIC_APP_BASE_URL}${import.meta.env.VITE_PUBLIC_APP_API_VERSION}/`;
