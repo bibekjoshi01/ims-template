@@ -1,6 +1,11 @@
 // mui-icons
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import CategoryIcon from '@mui/icons-material/Category';
 import FeedIcon from '@mui/icons-material/Feed';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import Person3Icon from '@mui/icons-material/Person3';
+import StoreIcon from '@mui/icons-material/Store';
 import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 
 // project-imports
@@ -10,7 +15,12 @@ import { MenuItem } from './types';
 const icons = {
   FeedIcon,
   InventoryIcon,
-  SupervisedUserCircleIcon
+  SupervisedUserCircleIcon,
+  AddShoppingCartIcon,
+  ManageAccountsIcon,
+  Person3Icon,
+  CategoryIcon,
+  StoreIcon
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -58,6 +68,7 @@ const modules: MenuItem = {
         {
           id: 'users',
           title: 'Users',
+          icon: icons.Person3Icon,
           type: 'item',
           url: '/user-setup/users',
           breadcrumbs: false
@@ -66,6 +77,7 @@ const modules: MenuItem = {
           id: 'user-roles',
           title: 'User Roles',
           type: 'item',
+          icon: icons.ManageAccountsIcon,
           url: '/user-setup/user-roles',
           breadcrumbs: false
         }
@@ -78,24 +90,35 @@ const modules: MenuItem = {
       icon: icons.InventoryIcon,
       children: [
         {
-          id: 'item',
-          title: 'Item Setup',
+          id: 'store',
+          title: 'Stores',
+          icon: icons.StoreIcon,
           type: 'item',
-          url: '/inventory/item',
+          url: '/inventory/stores',
           breadcrumbs: false
         },
         {
-          id: 'purchase',
-          title: 'Purchases',
+          id: 'category',
+          title: 'Categories',
           type: 'item',
-          url: '/inventory/purchase',
+          icon: icons.CategoryIcon,
+          url: '/inventory/categories',
           breadcrumbs: false
         },
         {
-          id: 'sales',
-          title: 'Sales',
+          id: 'product',
+          title: 'Products',
           type: 'item',
-          url: '/inventory/sales',
+          url: '/inventory/products',
+          icon: icons.AddShoppingCartIcon,
+          breadcrumbs: false
+        },
+        {
+          id: 'stock',
+          title: 'Stocks',
+          type: 'item',
+          icon: icons.InventoryIcon,
+          url: '/inventory/stocks',
           breadcrumbs: false
         }
       ]
