@@ -6,7 +6,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 
 import { camelCaseToNormal } from '@/utils/functions/formatString';
 import { formatReadableDatetime } from '@/utils/functions/date';
-import { DynamicInfoSectionProps } from './types';
+import { DynamicInfoSectionProps, InfoFieldProps } from './types';
 
 // ------------------------
 // Styled Components
@@ -66,10 +66,6 @@ const renderValue = (path: string, value: any, dateTimeFields: string[], boolean
 // ------------------------
 // InfoField Component
 // ------------------------
-type InfoFieldProps = {
-  label: string;
-  value: React.ReactNode;
-};
 
 export const InfoField: React.FC<InfoFieldProps> = ({ label, value }) => (
   <>
