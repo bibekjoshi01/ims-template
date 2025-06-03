@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 // project imports
 import { useGetMenuMaster } from '@/api/menu';
 import { MenuItem } from '@/menu-items/types';
+import { useTheme } from '@mui/material';
 
 export default function CollapseItem({
   item,
@@ -23,12 +24,12 @@ export default function CollapseItem({
 }) {
   const { menuMaster } = useGetMenuMaster();
   const drawerOpen = menuMaster?.isDashboardDrawerOpened;
-
+  const theme = useTheme();
   const Icon = item.icon;
   const itemIcon = Icon ? <Icon style={{ fontSize: drawerOpen ? '1rem' : '1.25rem' }} /> : null;
 
   const selectedColor = openCollapse?.[item.id] ? 'primary.main' : 'inherit';
-
+  const bgColor = theme.palette.mode == 'dark' ? 'action.hover' : 'primary.lighter';
   return (
     <ListItemButton
       disabled={item?.disabled || false}
@@ -38,7 +39,7 @@ export default function CollapseItem({
         pl: drawerOpen ? `${level * 28}px` : 1.5,
         py: !drawerOpen && level === 1 ? 1.25 : 1,
         '&:hover': {
-          backgroundColor: 'action.hover'
+          backgroundColor: bgColor
         }
       }}
     >
