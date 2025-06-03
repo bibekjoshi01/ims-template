@@ -20,7 +20,7 @@ export const defaultValues: CategoryUpdateFormDataType = {
   name: '',
   code: '',
   description: '',
-  isActive: false,
+  isActive: true,
   icon: undefined
 };
 

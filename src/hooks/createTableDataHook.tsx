@@ -168,9 +168,7 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
     const handleSearchChange = useCallback((value: string) => {
       setQueryParams((prev) => ({
         ...prev,
-        search: value,
-        // Reset to first page when search changes
-        paginationModel: { ...prev.paginationModel, page: 0 }
+        search: value
       }));
     }, []);
 

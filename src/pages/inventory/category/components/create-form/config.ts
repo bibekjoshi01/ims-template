@@ -30,7 +30,7 @@ export const defaultValues: CategoryCreateFormDataType = {
   name: '',
   code: '',
   description: '',
-  isActive: false,
+  isActive: true,
   icon: undefined
 };
 
