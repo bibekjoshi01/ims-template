@@ -39,5 +39,5 @@ export const rootAPI = createApi({
   endpoints: (builder) => ({
     // Define your endpoints here
   }),
-  tagTypes: ['BlogCategory', 'User', 'UserRole', 'Account']
+  tagTypes: ['BlogCategory', 'User', 'UserRole', 'Account', 'ProductCategory', 'Product']
 });

@@ -1,5 +1,5 @@
+import { FormField } from '@/components/app-form/types';
 import * as z from 'zod';
-import { FormField } from '@/components/app-form/FormSection';
 
 // 1. Define Schema and Types
 export const settingsSchema = z.object({
@@ -21,6 +21,7 @@ export type SettingsGroup = {
   cardDescription: string;
   fields: FormField<SettingsFormDataType>[];
 };
+
 // 2. Define the form fields with group names and types
 export const settings: SettingsGroup[] = [
   {

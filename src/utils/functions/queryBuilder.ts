@@ -1,14 +1,14 @@
 import { GridFilterModel, GridPaginationModel, GridSortModel } from '@mui/x-data-grid';
 import { camelCaseToSnakeCase } from './formatString';
 
-export interface QueryParams {
+export interface IQueryParams {
   search: string;
   paginationModel?: GridPaginationModel;
   sortModel?: GridSortModel;
   filterModel?: GridFilterModel;
 }
 
-export const getQueryParams = ({ search, paginationModel, sortModel, filterModel }: QueryParams) => {
+export const getQueryParams = ({ search, paginationModel, sortModel, filterModel }: IQueryParams) => {
   const { page, pageSize } = paginationModel!;
   // ordering
   const ordering = sortModel?.[0]?.field;
