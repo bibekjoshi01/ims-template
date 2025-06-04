@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useGridApiContext } from '@mui/x-data-grid';
 import { debounce } from '@/utils/functions/debounce';
+import { useGridApiContext } from '@mui/x-data-grid';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 interface UseToolbarHandlersProps {
   filterMode: 'server' | 'client';
@@ -53,6 +53,7 @@ export function useToolbarHandlers({ filterMode, handleSearchChange, searchText 
     anchorEl,
     showForm,
     openMenu,
+    setAnchorEl,
     handleMenuClick,
     handleMenuClose,
     handleOpenForm,

@@ -1,8 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 // MUI IMPORTS
 import { Box, Button, IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import { GridMoreVertIcon, GridToolbarColumnsButton, GridToolbarDensitySelector, GridToolbarFilterButton } from '@mui/x-data-grid';
+import {
+  GridMoreVertIcon,
+  GridToolbarColumnsButton,
+  GridToolbarDensitySelector,
+  GridToolbarFilterButton,
+  useGridApiContext
+} from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
 import AppDialog from '@/components/app-dialog';
@@ -34,6 +40,10 @@ const Toolbar = ({
     handleSearchChange,
     searchText
   });
+
+  const apiRef = useGridApiContext();
+  const hasRows = apiRef.current.getRowsCount() > 0;
+
   return (
     <>
       <Box sx={ContainerStyles}>
@@ -60,29 +70,34 @@ const Toolbar = ({
           )}
 
           {/* Menu icon */}
-          <Box>
-            <IconButton onClick={handleMenuClick}>
-              <GridMoreVertIcon />
-            </IconButton>
-            <Menu anchorEl={anchorEl} open={openMenu} onClose={handleMenuClose}>
-              {showColumnFilter && (
+          {hasRows && (
+            <Box>
+              <IconButton onClick={handleMenuClick}>
+                <GridMoreVertIcon />
+              </IconButton>
+              <Menu anchorEl={anchorEl} open={openMenu} onClose={handleMenuClose}>
+                {showColumnFilter && (
+                  <MenuItem sx={MenuItemStyles}>
+                    <GridToolbarColumnsButton />
+                  </MenuItem>
+                )}
+                {showFilter && (
+                  <MenuItem sx={MenuItemStyles} onClick={handleMenuClose}>
+                    <GridToolbarFilterButton />
+                  </MenuItem>
+                )}
+                {showDensitySelector && (
+                  <MenuItem sx={MenuItemStyles}>
+                    <GridToolbarDensitySelector />
+                  </MenuItem>
+                )}
                 <MenuItem sx={MenuItemStyles}>
                   <GridToolbarColumnsButton />
                 </MenuItem>
-              )}
-              {showFilter && (
-                <MenuItem sx={MenuItemStyles} onClick={handleMenuClose}>
-                  <GridToolbarFilterButton />
-                </MenuItem>
-              )}
-              {showDensitySelector && (
-                <MenuItem sx={MenuItemStyles}>
-                  <GridToolbarDensitySelector />
-                </MenuItem>
-              )}
-              {showExport && <MenuItem sx={MenuItemStyles}>{saveExportComponent}</MenuItem>}
-            </Menu>
-          </Box>
+                {showExport && <MenuItem sx={MenuItemStyles}>{saveExportComponent}</MenuItem>}
+              </Menu>
+            </Box>
+          )}
         </Box>
       </Box>
     </>

@@ -209,6 +209,7 @@ const AppTable = <T extends object>({
           paginationMode={paginationMode}
           sortingMode={sortingMode}
           filterMode={filterMode}
+          disableColumnMenu
           // Models
           paginationModel={paginationMode === 'server' ? paginationModel : undefined}
           filterModel={filterMode === 'server' ? filterModel : undefined}
