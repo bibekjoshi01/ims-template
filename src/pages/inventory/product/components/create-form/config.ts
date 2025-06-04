@@ -33,8 +33,6 @@ export type TProductCreateFormDataType = z.infer<typeof productCreateFormSchema>
 export const defaultValues: Partial<TProductCreateFormDataType> = {
   name: '',
   sku: '',
-  // category: 0,
-  // unit: 0,
   sellingPrice: 0,
   stockAlertQty: 0,
   barcode: '',
@@ -44,17 +42,17 @@ export const defaultValues: Partial<TProductCreateFormDataType> = {
 
 // NOTE - Define the form fields
 export const productCreateFields: FormField<TProductCreateFormDataType>[] = [
-  { name: 'name', label: 'Name', xs: 6, sm: 3, type: 'text', required: true },
+  { name: 'name', label: 'Name', xs: 8, sm: 6, type: 'text', multiline: true, rows: 2, required: true },
   { name: 'sku', label: 'SKU', xs: 6, sm: 3, type: 'text' },
   { name: 'category', label: 'Category', xs: 6, sm: 3, type: 'select', options: [], required: true },
-  { name: 'unit', label: 'Unit', xs: 6, sm: 3, type: 'select', options: [], required: true },
-  { name: 'sellingPrice', label: 'Selling Price', xs: 6, sm: 3, type: 'number', required: true },
-  { name: 'stockAlertQty', label: 'Stock Alert Qty', xs: 6, sm: 3, type: 'number' },
+  { name: 'unit', label: 'Unit', xs: 4, sm: 2, type: 'select', options: [], required: true },
+  { name: 'sellingPrice', label: 'Selling Price', xs: 4, sm: 2, type: 'number', required: true },
+  { name: 'stockAlertQty', label: 'Stock Alert Qty', xs: 3, sm: 2, type: 'number' },
   { name: 'barcode', label: 'Barcode', xs: 6, sm: 4, type: 'text' },
   {
     name: 'image',
     label: 'Product Image',
-    xs: 3,
+    xs: 4,
     sm: 2,
     type: 'image',
     imageSize: 120
