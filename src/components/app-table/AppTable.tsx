@@ -5,16 +5,16 @@ import { useTheme } from '@mui/material/styles';
 import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, GridRowParams, MuiEvent } from '@mui/x-data-grid';
 
 //  Project Imports
+import { useTableHandlers } from '@/hooks/useTableHandlers';
 import { Empty } from 'antd';
-import { useMemo } from 'react';
-import Toolbar from './toolbar';
+import React, { useCallback, useMemo, useState } from 'react';
+import ConfirmationModal from '../app-dialog/ConfirmationDialog';
 import SaveExport from '../export';
-import { AppTableProps } from './types';
 import { createColumnDefs } from './columns';
 import { BoxStyles, TableStyles } from './styles';
-import { useTableHandlers } from '@/hooks/useTableHandlers';
-import ConfirmationModal from '../app-dialog/ConfirmationDialog';
+import Toolbar from './toolbar';
 import { CustomColumnsPanel, CustomFilterPanel } from './toolbar/Slots';
+import { AppTableProps } from './types';
 
 // ===========================|| AppTable - MAIN COMPONENT ||=========================== //
 const AppTable = <T extends object>({
@@ -40,7 +40,7 @@ const AppTable = <T extends object>({
   showIndex = true,
   showCellVerticalBorder = false,
   showSearch = true,
-  showColumnFilter = false,
+  showColumnFilter = true,
   showFilter = false,
   showDensitySelector = false,
   showExport = false,
@@ -118,11 +118,18 @@ const AppTable = <T extends object>({
 
   const SaveExportComponent = useMemo(() => <SaveExport columns={columns} rows={rows} title={title} />, [columns, rows, title]);
 
+  const [searchText, setSearchText] = useState('');
+  const handleInputChange = useCallback((value: string) => {
+    setSearchText(value);
+  }, []);
+
   const memoizedToolbar = useMemo(
     () => () => (
       <Toolbar
         title={title}
         showSearch={showSearch}
+        handleTextChange={handleInputChange}
+        searchText={searchText}
         filterMode={filterMode}
         handleSearchChange={handleSearchChange}
         showColumnFilter={showColumnFilter}
@@ -138,13 +145,16 @@ const AppTable = <T extends object>({
       title,
       showSearch,
       filterMode,
+      searchText,
+      handleInputChange,
       handleSearchChange,
       showColumnFilter,
       showFilter,
       showDensitySelector,
       showExport,
       createNewForm,
-      SaveExportComponent
+      SaveExportComponent,
+      createButtonTitle
     ]
   );
 
@@ -159,6 +169,17 @@ const AppTable = <T extends object>({
       By deleting the {title} <strong>"{rowToDelete}"</strong>, all the associated data will also be deleted.
     </Typography>
   );
+
+  // defines which fields are hidden or visible by default
+  const [columnVisibilityModel, setColumnVisibilityModel] = useState(() => {
+    const initialModel: Record<string, boolean> = {};
+    columnConfig.forEach((col) => {
+      if ('visible' in col) {
+        initialModel[col.field as string] = col.visible !== false;
+      }
+    });
+    return initialModel;
+  });
 
   return (
     <>
@@ -179,6 +200,8 @@ const AppTable = <T extends object>({
           onProcessRowUpdateError={handleRowUpdateError}
           onRowDoubleClick={handleRowDoubleClick}
           // Display options
+          columnVisibilityModel={columnVisibilityModel}
+          onColumnVisibilityModelChange={setColumnVisibilityModel}
           showCellVerticalBorder={showCellVerticalBorder}
           checkboxSelection={enableRowSelection}
           // Pagination Sorting and filtering
@@ -291,7 +314,7 @@ const AppTable = <T extends object>({
   );
 };
 
-export default AppTable;
+export default React.memo(AppTable);
 
 function CustomNoRowsOverlay() {
   return (

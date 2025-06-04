@@ -1,64 +1,61 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useGridApiContext } from '@mui/x-data-grid';
 import { debounce } from '@/utils/functions/debounce';
 
-interface useToolbarHandlersProps {
+interface UseToolbarHandlersProps {
   filterMode: 'server' | 'client';
   handleSearchChange?: (value: string) => void;
+  searchText: string;
 }
 
-export function useToolbarHandlers({ filterMode, handleSearchChange }: useToolbarHandlersProps) {
+export function useToolbarHandlers({ filterMode, handleSearchChange, searchText }: UseToolbarHandlersProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [showForm, setShowForm] = useState(false);
-  const [searchText, setSearchText] = useState('');
   const apiRef = useGridApiContext();
+
   const openMenu = Boolean(anchorEl);
 
-  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMenuClick = useCallback((event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-  };
+  }, []);
 
-  const handleMenuClose = () => {
+  const handleMenuClose = useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
 
-  const handleOpenForm = () => setShowForm(true);
-  const handleCloseForm = () => setShowForm(false);
+  const handleOpenForm = useCallback(() => setShowForm(true), []);
+  const handleCloseForm = useCallback(() => setShowForm(false), []);
 
-  const handleInputChange = (value: string) => {
-    setSearchText(value);
-  };
+  // Memoize the debounced handler
+  const debouncedSearchChange = useMemo(() => {
+    if (filterMode !== 'server' || !handleSearchChange) return null;
+    return debounce(handleSearchChange, 300);
+  }, [filterMode, handleSearchChange]);
 
   useEffect(() => {
-    if (filterMode === 'server' && handleSearchChange) {
-      const debounced = debounce((value: string) => {
-        handleSearchChange(value);
-      }, 300);
-
-      debounced(searchText);
+    if (filterMode === 'server' && debouncedSearchChange) {
+      debouncedSearchChange(searchText);
 
       return () => {
-        debounced.cancel?.();
+        debouncedSearchChange.cancel?.();
       };
     } else {
+      // client filtering logic
       const searchTerms = searchText
         .split(',')
         .map((term) => term.trim())
         .filter((term) => term !== '');
       apiRef.current.setQuickFilterValues(searchTerms);
     }
-  }, [searchText, filterMode, handleSearchChange, apiRef]);
+  }, [searchText, filterMode, debouncedSearchChange, apiRef]);
 
   return {
     anchorEl,
-    setAnchorEl,
     showForm,
     openMenu,
-    searchText,
     handleMenuClick,
     handleMenuClose,
     handleOpenForm,
-    handleCloseForm,
-    handleInputChange
+    handleCloseForm
   };
 }

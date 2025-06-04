@@ -59,8 +59,9 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
   }, [pathname]);
 
   const textColor = 'text.primary';
-  const textSelectedColor = theme.palette.mode === 'dark' ? 'common.white' : 'common.black';
   const iconSelectedColor = 'primary.main';
+  const textSelectedColor = theme.palette.mode === 'dark' ? 'common.white' : iconSelectedColor;
+  const bgColor = theme.palette.mode == 'dark' ? 'action.hover' : 'primary.lighter';
 
   return (
     <ListItemButton
@@ -73,16 +74,16 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
         pl: drawerOpen ? `${level * 28}px` : 1.5,
         py: !drawerOpen && level === 1 ? 1.25 : 1,
         '&:hover': {
-          bgcolor: 'action.hover'
+          bgcolor: bgColor
         },
         ...(drawerOpen && {
           '&.Mui-selected': {
-            bgcolor: 'action.hover',
+            bgcolor: bgColor,
             borderRight: `2px solid ${theme.palette.primary.main}`,
             color: textSelectedColor,
             '&:hover': {
               color: textSelectedColor,
-              bgcolor: 'action.hover'
+              bgcolor: bgColor
             }
           }
         })
@@ -101,7 +102,7 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
       {(drawerOpen || (!drawerOpen && level !== 1)) && (
         <ListItemText
           primary={
-            <Typography variant="h6" sx={{ color: textColor }}>
+            <Typography variant="h6" sx={{ color: isSelected ? textSelectedColor : textColor }}>
               {item.title}
             </Typography>
           }

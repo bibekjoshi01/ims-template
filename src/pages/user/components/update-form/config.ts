@@ -40,3 +40,5 @@ export const userInfoUpdateFields: FormField<UserInfoUpdateFormDataType>[] = [
   },
   { name: 'photo', label: 'Profile Photo', xs: 6, sm: 3, type: 'image', imageSize: 120 }
 ];
+
+export const uniqueFieldNames = ['phoneNo'] as const;

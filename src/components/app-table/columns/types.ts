@@ -27,9 +27,9 @@ export interface ColumnConfig<T extends object> {
   maxWidth?: number;
   minWidth?: number;
   type?: 'text' | 'number' | 'select' | 'actions' | 'progress' | 'image' | 'date' | 'link' | 'boolean';
-  editable?: boolean;
-  filterable?: boolean;
-  sortable?: boolean;
+  editable?: boolean; // default true
+  filterable?: boolean; // default false
+  sortable?: boolean; // default false
   valueOptions?: string[];
   renderCell?: GridColDef<T>['renderCell'];
   colorMap?: BadgeColorMap; // only for 'select' type
@@ -37,4 +37,5 @@ export interface ColumnConfig<T extends object> {
   falseLabel?: string; // only for 'boolean' type
   handlers?: ColumnHandlers<T>;
   align?: GridAlignment; // left | right | center
+  visible?: boolean;
 }

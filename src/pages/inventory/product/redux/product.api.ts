@@ -35,7 +35,7 @@ export const productAPISlice = rootAPI.injectEndpoints({
     }),
 
     // Retrieve Product
-    retrieveProduct: builder.query<IProductDetails, number>({
+    retrieveProduct: builder.query<IProductDetails, number | null>({
       query: (id) => {
         return {
           url: `${productAPI}/${id}`,

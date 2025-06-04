@@ -2,6 +2,8 @@ export interface ToolbarProps {
   title?: string;
   showSearch: boolean;
   handleSearchChange?: (value: string) => void;
+  handleTextChange?: (value: string) => void;
+  searchText: string;
   filterMode: 'server' | 'client';
   showColumnFilter: boolean;
   showFilter: boolean;

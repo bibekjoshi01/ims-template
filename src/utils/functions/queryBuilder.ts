@@ -10,16 +10,25 @@ export interface IQueryParams {
 
 export const getQueryParams = ({ search, paginationModel, sortModel, filterModel }: IQueryParams) => {
   const { page, pageSize } = paginationModel!;
-  // ordering
-  const ordering = sortModel?.[0]?.field;
-  const direction = sortModel?.[0]?.sort === 'asc' ? '-' : '';
+
+  // Ordering
+  const orderingField = sortModel?.[0]?.field;
+  const ordering = orderingField ? camelCaseToSnakeCase(orderingField) : '';
+  const direction = sortModel?.[0]?.sort === 'asc' ? '' : '-';
   const orderingString = ordering ? `${direction}${ordering}` : '';
 
-  // filtering
-  const filterField = filterModel?.items?.[0]?.field;
-  const filterFieldNameInSnakeCase = filterField && camelCaseToSnakeCase(filterField);
-  const filterValue = filterModel?.items?.[0]?.value;
-  const filterString = filterField && filterValue ? `${filterFieldNameInSnakeCase}=${filterValue}` : '';
+  // Filtering
+  const filterItem = filterModel?.items?.[0];
+  const filterField = filterItem?.field;
+  const filterFieldSnake = filterField ? camelCaseToSnakeCase(filterField) : '';
+  const filterValue = filterItem?.value;
+  const filterString = filterField && filterValue ? `${filterFieldSnake}=${filterValue}` : '';
 
-  return { page, pageSize, orderingString, filterString, search };
+  return {
+    page,
+    pageSize,
+    orderingString,
+    filterString,
+    search
+  };
 };

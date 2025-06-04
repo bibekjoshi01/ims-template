@@ -4,7 +4,7 @@ import { Control, FieldErrors, FieldValues } from 'react-hook-form';
 /* ------------------------------------------------------------------
    Types
 ------------------------------------------------------------------ */
-export type InputType = 'text' | 'select' | 'switch' | 'file' | 'image' | 'password' | 'date' | string;
+export type InputType = 'text' | 'number' | 'select' | 'switch' | 'file' | 'image' | 'password' | 'date' | string;
 
 export interface SelectOption {
   label: string;
@@ -83,6 +83,7 @@ export type FormField<T> = {
   falseLabel?: string; // Label for the false value of a checkbox.
   disabled?: boolean;
   placeholder?: string;
+  autoFocus?: boolean;
 };
 
 export interface FormSectionProps<T extends FieldValues> {

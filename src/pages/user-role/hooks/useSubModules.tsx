@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SelectOption } from '@/components/app-form/CustomInput';
+import { SelectOption } from '@/components/app-form/types';
 import { useLazyGetUserRolePermissionCategoriesQuery } from '../redux/user-role.api';
 
 export const useSubModules = (mainModule: number | string | undefined) => {

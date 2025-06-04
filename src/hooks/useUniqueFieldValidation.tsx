@@ -3,10 +3,16 @@ import { debounce } from '@/utils/functions/debounce';
 import { useEffect, useRef, useCallback } from 'react';
 import { camelCaseToNormal } from '@/utils/functions/formatString';
 
+interface Results {
+  id?: number;
+  [key: string]: any;
+}
+
 interface UseUniqueFieldValidationProps<T> {
   fields: (keyof T)[];
   values: Partial<T>;
-  triggerFunc: (args: any) => Promise<{ count: number; results: any[] }>;
+  id?: number | null;
+  triggerFunc: (args: any) => Promise<{ count: number; results: Results[] }>;
   setError: (field: keyof T, message: string) => void;
   debounceDelay?: number;
 }
@@ -14,6 +20,7 @@ interface UseUniqueFieldValidationProps<T> {
 export default function useUniqueFieldValidation<T>({
   fields,
   values,
+  id = null,
   triggerFunc,
   setError,
   debounceDelay = 500
@@ -37,7 +44,13 @@ export default function useUniqueFieldValidation<T>({
         });
 
         // NOTE - if response.count === 0, the field is unique
-        const isValid = response.count === 0;
+        let isValid = response.count === 0;
+
+        // If response.count is 1, check if the id matches the current id
+        if (response.count === 1 && id) {
+          isValid = response.results[0]?.id == id;
+        }
+
         const errorMsg = isValid ? '' : `${camelCaseToNormal(String(field))} already exists`;
 
         // if current error message is same as previous error message, do not set error

@@ -23,6 +23,7 @@ export interface ICategoryCreatePayload {
   code?: string;
   icon?: File | null;
   isActive?: boolean;
+  description?: string;
 }
 
 export interface ICategoryUpdatePayload {
@@ -36,10 +37,11 @@ export interface ICategoryDetails {
   id: number;
   name?: string;
   code?: string;
-  icon?: File | null;
+  icon?: string;
   createdBy: string;
   updatedBy: string;
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
   isActive: boolean;
+  description?: string;
 }
