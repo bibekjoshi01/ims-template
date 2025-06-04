@@ -1,7 +1,7 @@
 import React from 'react';
 
 // MUI IMPORTS
-import { Box, Button, IconButton, Menu, MenuItem, Typography } from '@mui/material';
+import { Box, Button, GlobalStyles, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import {
   GridMoreVertIcon,
   GridToolbarColumnsButton,
@@ -45,62 +45,67 @@ const Toolbar = ({
   const hasRows = apiRef.current.getRowsCount() > 0;
 
   return (
-    <>
-      <Box sx={ContainerStyles}>
-        {/* Title */}
-        {title && (
-          <Typography variant="h4" sx={TitleStyles}>
-            {title}
-          </Typography>
+    <Box sx={ContainerStyles}>
+      <GlobalStyles
+        styles={{
+          '.MuiDataGrid-columnsManagementSearchInput': {
+            display: 'none !important'
+          }
+        }}
+      />
+      {/* Title */}
+      {title && (
+        <Typography variant="h4" sx={TitleStyles}>
+          {title}
+        </Typography>
+      )}
+
+      {/* Toolbar */}
+      <Box sx={ToolbarStyles}>
+        {/* Search Bar */}
+        {showSearch && <CustomSearchBar searchText={searchText} handleInputChange={handleTextChange} />}
+
+        {/* Create New User Button */}
+        {createNewForm && (
+          <>
+            <Button onClick={handleOpenForm} variant="contained" sx={{ mx: 1 }}>
+              {createButtonTitle ?? 'Create New'}
+            </Button>
+            <AppDialog open={showForm} onClose={handleCloseForm} content={createNewForm(handleCloseForm)} fullWidth maxWidth="lg" />
+          </>
         )}
 
-        {/* Toolbar */}
-        <Box sx={ToolbarStyles}>
-          {/* Search Bar */}
-          {showSearch && <CustomSearchBar searchText={searchText} handleInputChange={handleTextChange} />}
-
-          {/* Create New User Button */}
-          {createNewForm && (
-            <>
-              <Button onClick={handleOpenForm} variant="contained" sx={{ mx: 1 }}>
-                {createButtonTitle ?? 'Create New'}
-              </Button>
-              <AppDialog open={showForm} onClose={handleCloseForm} content={createNewForm(handleCloseForm)} fullWidth maxWidth="lg" />
-            </>
-          )}
-
-          {/* Menu icon */}
-          {hasRows && (
-            <Box>
-              <IconButton onClick={handleMenuClick}>
-                <GridMoreVertIcon />
-              </IconButton>
-              <Menu anchorEl={anchorEl} open={openMenu} onClose={handleMenuClose}>
-                {showColumnFilter && (
-                  <MenuItem sx={MenuItemStyles}>
-                    <GridToolbarColumnsButton />
-                  </MenuItem>
-                )}
-                {showFilter && (
-                  <MenuItem sx={MenuItemStyles} onClick={handleMenuClose}>
-                    <GridToolbarFilterButton />
-                  </MenuItem>
-                )}
-                {showDensitySelector && (
-                  <MenuItem sx={MenuItemStyles}>
-                    <GridToolbarDensitySelector />
-                  </MenuItem>
-                )}
+        {/* Menu icon */}
+        {hasRows && (
+          <Box>
+            <IconButton onClick={handleMenuClick}>
+              <GridMoreVertIcon />
+            </IconButton>
+            <Menu anchorEl={anchorEl} open={openMenu} onClose={handleMenuClose}>
+              {showColumnFilter && (
                 <MenuItem sx={MenuItemStyles}>
                   <GridToolbarColumnsButton />
                 </MenuItem>
-                {showExport && <MenuItem sx={MenuItemStyles}>{saveExportComponent}</MenuItem>}
-              </Menu>
-            </Box>
-          )}
-        </Box>
+              )}
+              {showFilter && (
+                <MenuItem sx={MenuItemStyles} onClick={handleMenuClose}>
+                  <GridToolbarFilterButton />
+                </MenuItem>
+              )}
+              {showDensitySelector && (
+                <MenuItem sx={MenuItemStyles}>
+                  <GridToolbarDensitySelector />
+                </MenuItem>
+              )}
+              <MenuItem sx={MenuItemStyles}>
+                <GridToolbarColumnsButton />
+              </MenuItem>
+              {showExport && <MenuItem sx={MenuItemStyles}>{saveExportComponent}</MenuItem>}
+            </Menu>
+          </Box>
+        )}
       </Box>
-    </>
+    </Box>
   );
 };
 
