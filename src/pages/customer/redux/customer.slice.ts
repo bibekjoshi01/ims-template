@@ -1,23 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ISupplierSliceState } from './types';
+import { ICustomerSliceState } from './types';
 
-const initialState: ISupplierSliceState = {
+const initialState: ICustomerSliceState = {
   edit: false,
   currentId: null,
   viewId: null
 };
 
-export const supplierSlice = createSlice({
-  name: 'Supplier',
+export const customerSlice = createSlice({
+  name: 'Customer',
   initialState,
   reducers: {
     setEdit: (state, { payload }) => {
       state.edit = payload;
     },
-    setCurrentSupplierId: (state, { payload }) => {
+    setCurrentCustomerId: (state, { payload }) => {
       state.currentId = payload;
     },
-    clearSupplierData: (state) => {
+    clearCustomerData: (state) => {
       state.edit = false;
       state.currentId = null;
     },
@@ -30,6 +30,6 @@ export const supplierSlice = createSlice({
   }
 });
 
-export const { setEdit, setCurrentSupplierId, clearSupplierData, setViewId, clearViewId } = supplierSlice.actions;
+export const { setEdit, setCurrentCustomerId, clearCustomerData, setViewId, clearViewId } = customerSlice.actions;
 
-export default supplierSlice.reducer;
+export default customerSlice.reducer;
