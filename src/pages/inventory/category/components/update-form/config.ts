@@ -20,7 +20,7 @@ export const defaultValues: TCategoryUpdateFormDataType = {
   name: '',
   code: '',
   description: '',
-  isActive: false,
+  isActive: true,
   icon: undefined
 };
 

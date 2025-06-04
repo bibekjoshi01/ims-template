@@ -23,6 +23,12 @@ export default function FormSection<T extends Record<string, any>>({
             <Controller
               name={field.name as Path<T>}
               control={control}
+              rules={{
+                ...(field.type === 'number' && {
+                  valueAsNumber: true,
+                  validate: (v: any) => (isNaN(v) ? 'Must be a number' : true)
+                })
+              }}
               render={({ field: controllerField }) => (
                 <CustomInput
                   {...controllerField}

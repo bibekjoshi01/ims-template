@@ -8,14 +8,12 @@ export interface ITableData extends ICategoryItem {
 
 export const getColumnConfig = (theme: Theme): ColumnConfig<ITableData>[] => [
   { field: 'icon', headerName: 'ICON', type: 'image' },
-  { field: 'name', headerName: 'NAME', type: 'text', filterable: false },
-  { field: 'code', headerName: 'CODE NAME', type: 'text' },
+  { field: 'name', headerName: 'NAME', type: 'text', filterable: true, sortable: true },
+  { field: 'code', headerName: 'CODE NAME', type: 'text', filterable: true, sortable: true },
   {
     field: 'isActive',
     headerName: 'ACTIVE STATUS',
-    type: 'boolean',
-    filterable: false,
-    sortable: false
+    type: 'boolean'
   },
   { field: 'actions', headerName: '', type: 'actions' }
 ];

@@ -4,7 +4,7 @@ import { Control, FieldErrors, FieldValues } from 'react-hook-form';
 /* ------------------------------------------------------------------
    Types
 ------------------------------------------------------------------ */
-export type InputType = 'text' | 'select' | 'switch' | 'file' | 'image' | 'password' | 'date' | string;
+export type InputType = 'text' | 'number' | 'select' | 'switch' | 'file' | 'image' | 'password' | 'date' | string;
 
 export interface SelectOption {
   label: string;

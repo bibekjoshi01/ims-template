@@ -13,7 +13,7 @@ import { useCallback } from 'react';
 import { ICategoryCreateFormProps } from '../components/create-form';
 import {
   categoryCreateFormSchema,
-  categoryInfoFields,
+  categoryCreateFields,
   defaultValues,
   TCategoryCreateFormDataType,
   uniqueFieldNames
@@ -81,7 +81,7 @@ const useCreateCategory = ({ onClose }: ICategoryCreateFormProps) => {
     handleSubmit: () => handleSubmit(onSubmit),
     control,
     errors,
-    categoryInfoFields
+    categoryCreateFields
   };
 };
 
