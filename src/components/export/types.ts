@@ -1,16 +1,9 @@
-export interface IColumn {
+import { GridStateColDef } from '@mui/x-data-grid/internals';
+
+export type IColumn = GridStateColDef & {
   field: string;
   headerName?: string;
   fieldType?: string;
+  visible?: boolean;
   [key: string]: any;
-}
-
-export interface IRow {
-  [key: string]: any;
-}
-
-export interface ISaveExportProps {
-  columns?: IColumn[];
-  rows?: IRow[];
-  title?: string;
-}
+};

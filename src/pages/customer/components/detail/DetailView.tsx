@@ -6,20 +6,20 @@ import { Avatar, Box, CircularProgress, IconButton, Paper, Typography } from '@m
 import DefaultImage from '@/assets/images/users/avatar-1.png';
 import MainCard from '@/components/cards/MainCard';
 import DynamicInfoSection from '@/components/detail-section';
-import { IProductDetails } from '../../redux/types';
-import { viewProductConfig } from './config';
+import { ICustomerDetails } from '../../redux/types';
+import { getViewCustomerConfig } from './config';
 
 interface IDetailViewProps {
-  productData: IProductDetails | undefined;
+  customerData: ICustomerDetails | undefined;
   onClose: () => void;
 }
 
-const DetailView: React.FC<IDetailViewProps> = ({ productData, onClose }) => {
-  if (!productData) {
+const DetailView: React.FC<IDetailViewProps> = ({ customerData, onClose }) => {
+  if (!customerData) {
     return (
       <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
         <Typography variant="h5" mb={3}>
-          Product Details Not Found
+          Customer Details Not Found
         </Typography>
         <CircularProgress />
       </Paper>
@@ -27,8 +27,8 @@ const DetailView: React.FC<IDetailViewProps> = ({ productData, onClose }) => {
   }
 
   const DynamicInfoSectionProps = {
-    ...viewProductConfig,
-    data: productData
+    ...getViewCustomerConfig(customerData),
+    data: customerData
   };
 
   return (
@@ -50,11 +50,11 @@ const DetailView: React.FC<IDetailViewProps> = ({ productData, onClose }) => {
           borderColor: 'divider'
         }}
       >
-        <Avatar src={productData?.image ?? DefaultImage} alt={productData?.name} sx={{ width: 72, height: 72, mr: 3 }}>
-          {productData?.name?.charAt(0) || 'P'}
+        <Avatar src={customerData?.photo ?? DefaultImage} alt={customerData?.fullName} sx={{ width: 72, height: 72, mr: 3 }}>
+          {customerData?.fullName?.charAt(0) || 'C'}
         </Avatar>
         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-          <Typography variant="h4">{productData?.name || 'Unknown Product'}</Typography>
+          <Typography variant="h4">{customerData?.fullName || 'Unknown Customer'}</Typography>
         </Box>
       </Box>
 

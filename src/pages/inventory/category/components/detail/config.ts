@@ -1,18 +1,14 @@
 import { DynamicInfoSectionProps } from '@/components/detail-section/types';
 import { ICategoryDetails } from '../../redux/types';
 
-const excludeFields: (keyof ICategoryDetails)[] = ['id', 'icon', 'createdAt', 'updatedAt', 'createdBy', 'updatedBy'];
-const fieldOrder: (keyof ICategoryDetails)[] = ['name', 'code', 'isActive'];
-const booleanFields: (keyof ICategoryDetails)[] = ['isActive'];
-
-export const viewCategoryConfig: Omit<DynamicInfoSectionProps, 'data'> = {
-  excludeFields,
-  fieldOrder,
-  booleanFields,
+export const viewCategoryConfig: Omit<DynamicInfoSectionProps<ICategoryDetails>, 'data'> = {
+  excludeFields: ['id', 'icon', 'createdAt', 'updatedAt', 'createdBy', 'updatedBy'],
+  fieldOrder: ['name', 'code', 'isActive'],
+  booleanFields: ['isActive'],
+  columns: 3,
   customLabels: {
     name: ' Name',
     code: 'Code',
     isActive: 'Active Status'
-  } as Record<keyof ICategoryDetails, string>,
-  columns: 3
+  }
 };

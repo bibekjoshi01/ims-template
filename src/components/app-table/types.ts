@@ -1,5 +1,5 @@
 import { Theme } from '@mui/material/styles';
-import { GridFilterModel, GridPaginationModel, GridRowId, GridSortModel } from '@mui/x-data-grid';
+import { GridFilterModel, GridPaginationModel, GridRowId, GridSortModel, GridValidRowModel } from '@mui/x-data-grid';
 import { ColumnConfig } from './columns';
 
 /**
@@ -13,15 +13,22 @@ import { ColumnConfig } from './columns';
 export interface AppTableProps<T extends object> {
   /**
    * Title displayed at the top of the table.
-   * Default is undefined.
+   * @default undefined.
    */
   title?: string;
 
   /**
    * Array of rows to be displayed in the table.
-   * Default is [].
+   * @default [].
    */
   initialRows?: T[];
+
+  /**
+   * Total number of rows for server-side pagination.
+   * Required when paginationMode is 'server'.
+   * @default 0.
+   */
+  totalRows?: number;
 
   /**
    * Function that returns column configuration based on the current theme.
@@ -35,7 +42,7 @@ export interface AppTableProps<T extends object> {
   /**
    * Function to handle saving an updated row.
    * Called when a row edit is committed.
-   * Default is undefined.
+   * @default undefined.
    *
    * @param updatedRow - The row data after edits
    * @returns Promise that resolves when the save operation completes
@@ -45,7 +52,7 @@ export interface AppTableProps<T extends object> {
   /**
    * Function to handle deleting a row.
    * Called when a row deletion is requested.
-   * Default is undefined.
+   * @default undefined.
    *
    * @param id - The ID of the row to delete
    * @returns Promise that resolves when the delete operation completes
@@ -54,15 +61,15 @@ export interface AppTableProps<T extends object> {
 
   /**
    * Function to handle row edit button click.
-   * Default is undefined.
+   * @default undefined.
    *
    * @param id - The ID of the row to edit
    */
-  handleEditClick: ((id: number | string | GridRowId) => void) | undefined;
+  handleEditClick: ((id: GridRowId) => void) | undefined;
 
   /**
    * Function to handle row view details button click.
-   * Default is undefined.
+   * @default undefined.
    *
    * @param id - The ID of the row to view details
    */
@@ -71,13 +78,13 @@ export interface AppTableProps<T extends object> {
   /**
    * Indicates if the table is in a loading state.
    * When true, displays a skeleton loader.
-   * Default is false.
+   * @default false.
    */
   loading?: boolean;
 
   /**
    * Function to handle errors during row update operations.
-   * Default is undefined.
+   * @default undefined.
    *
    * @param error - The error that occurred during the update
    */
@@ -85,116 +92,121 @@ export interface AppTableProps<T extends object> {
 
   /**
    * Shows serial number in rows.
+   * @default true.
    */
-  showIndex: boolean;
-
-  /**
-   * Shows vertical borders between cells when true.
-   * Default is false.
-   */
-  showCellVerticalBorder?: boolean;
+  showIndex?: boolean;
 
   /**
    * Shows the search input in the toolbar when true.
-   * Default is true.
+   * @default true.
    */
   showSearch?: boolean;
 
   /**
-   * Shows the column selector button in the toolbar when true.
-   * Default is false.
-   */
-  showColumnFilter?: boolean;
-
-  /**
    * Shows the filter button in the toolbar when true.
-   * Default is false.
+   * @default true.
    */
   showFilter?: boolean;
 
   /**
-   * Shows the density selector in the toolbar when true.
-   * Default is false.
-   */
-  showDensitySelector?: boolean;
-
-  /**
    * Shows the export button in the toolbar when true.
-   * Default is false.
+   * @default true.
    */
   showExport?: boolean;
 
   /**
+   * Shows the column selector button in the toolbar when true.
+   * @default true.
+   */
+  showColumnFilter?: boolean;
+
+  /**
+   * Shows the density selector in the toolbar when true.
+   * @default true.
+   */
+  showDensitySelector?: boolean;
+
+  /**
+   * Shows vertical borders between cells when true.
+   * @default false.
+   */
+  showCellVerticalBorder?: boolean;
+
+  /**
    * Enables column sorting functionality when true.
-   * Default is true.
+   * @default true.
    */
   allowSorting?: boolean;
 
   /**
    * Enables row editing functionality when true.
-   * Default is false.
+   * @default false.
    */
   allowEditing?: boolean;
+  /**
+   * Enables row deletion functionality when true.
+   * @default true.
+   */
   allowDeleting?: boolean;
 
   /**
    * Specifies the edit mode of the table: 'row' or 'cell'.
    * Only applicable when allowEditing is true.
-   * Default is 'row'.
+   * @default 'row'.
    */
   editMode?: 'row' | 'cell';
 
   /**
    * Enables column resizing functionality when true.
-   * Default is false.
+   * @default false.
    */
   enableColumnResizing?: boolean;
 
   /**
    * Enables row selection (checkboxes) when true.
-   * Default is false.
+   * @default true.
    */
   enableRowSelection?: boolean;
 
   /**
    * Specifies the pagination mode: 'client' or 'server'.
-   * Default is 'server'.
+   * @default 'server'.
    */
   paginationMode?: 'client' | 'server';
 
   /**
    * Specifies the sorting mode: 'client' or 'server'.
-   * Default is 'server'.
+   * @default 'server'.
    */
   sortingMode?: 'client' | 'server';
 
   /**
    * Specifies the filtering mode: 'client' or 'server'.
-   * Default is 'server'.
+   * @default 'server'.
    */
   filterMode?: 'client' | 'server';
 
   /**
    * Current pagination state of the table.
-   * Default is { page: 0, pageSize: 10 }.
+   * @default '{ page: 0, pageSize: 10 }''.
    */
   paginationModel?: GridPaginationModel;
 
   /**
    * Current filter state of the table.
-   * Default is { items: [] }.
+   * @default '{ items: [] }''.
    */
   filterModel?: GridFilterModel;
 
   /**
    * Current sort state of the table.
-   * Default is [].
+   * @default [].
    */
   sortModel?: GridSortModel;
 
   /**
    * Available page size options for the pagination dropdown.
-   * Default is [3, 5, 10, 20, 50, 100].
+   * @default '[3, 5, 10, 20, 50, 100]''.
    */
   pageSizeOptions?: number[];
 
@@ -223,49 +235,35 @@ export interface AppTableProps<T extends object> {
   handlePaginationChange?: (paginationModel: GridPaginationModel) => void;
 
   /**
-   * Function called when search input changes.
-   *
-   * @param searchText - The current search text
-   */
-  handleSearchChange?: (searchText: string) => void;
-
-  /**
-   * Total number of rows for server-side pagination.
-   * Required when paginationMode is 'server'.
-   * Default is 0.
-   */
-  totalRows?: number;
-
-  /**
-   * Default filename when exporting table data.
-   * Default is 'table_data'.
+   * @default filename when exporting table data.
+   * @default undefined.
    */
   exportFileName?: string;
 
   /**
    * Function to extract row ID from row data.
-   * Default uses row.id if not provided.
+   * @default row.id if not provided.
    *
    * @param row - The row data
    * @returns Unique identifier for the row
    */
-  getRowId?: (row: T) => string | number;
+  getRowId?: (row: T) => GridRowId;
 
   /**
-   * Form to be displayed when creating a new row.
-   *
+   * Form to be displayed for creating a new row.
+   * @param onClose - Function to call when the form is closed
    */
   createNewForm?: (onClose: () => void) => React.ReactNode;
 
   /**
    * Title of the button to create a new row.
-   * Default is 'Create New'.
+   * @default 'Create New'.
    */
   createButtonTitle?: string;
 
   /**
    * Additional styles to apply to the container Box component.
-   * Default is undefined.
+   * @default undefined.
    */
   containerSx?: object;
 
@@ -281,7 +279,7 @@ export interface AppTableProps<T extends object> {
  *
  * @template TData - The type of data in the table rows
  */
-export interface TableContainerProps<TData extends object> {
+export interface TableContainerProps<TData extends object> extends Partial<AppTableProps<TData>> {
   /**
    * The title of the table
    */
@@ -294,15 +292,15 @@ export interface TableContainerProps<TData extends object> {
     rows: TData[];
     totalRowsCount: number;
     loading: boolean;
+    searchText: string;
     handleSave: (updatedRow: TData) => Promise<void>;
-    handleDelete?: (id: string | number) => Promise<void>;
-    handleEditClick?: (id: number | string | GridRowId) => void;
-    handleviewDetailsClick?: (id: number | string | GridRowId) => Promise<void>;
+    handleDelete?: (id: GridRowId) => Promise<void>;
+    handleEditClick?: (id: GridRowId) => void;
+    handleviewDetailsClick?: (id: GridRowId) => Promise<void>;
     handleRowUpdateError: (error: any) => void;
     handlePaginationChange: (model: any) => void;
     handleSortChange: (model: any) => void;
     handleFilterChange: (model: any) => void;
-    handleSearchChange: (searchText: string) => void;
     paginationModel: any;
     filterModel: any;
     sortModel: any;
@@ -316,12 +314,13 @@ export interface TableContainerProps<TData extends object> {
 
   /**
    * Create new form component to be displayed when creating a new row
+   * @param onClose - Function to call when the form is closed
    */
   createNewForm?: (onClose: () => void) => React.ReactNode;
 
   /**
    * Title for the create button
-   * @default 'Create New'
+   * @@default 'Create New'
    */
   createButtonTitle?: string;
 
@@ -330,47 +329,44 @@ export interface TableContainerProps<TData extends object> {
    * @default false
    */
   allowEditing?: boolean;
+
+  /**
+   * Whether to enable editing features
+   */
   allowDeleting?: boolean;
 
   /**
    * Whether to show the filter panel
-   * @default false
    */
   showFilter?: boolean;
 
   /**
    * Whether to show the search input
-   * @default true
    */
   showSearch?: boolean;
 
   /**
    * Whether to show the column selector
-   * @default false
    */
   showColumnFilter?: boolean;
 
   /**
    * Whether to show the density selector
-   * @default false
    */
   showDensitySelector?: boolean;
 
   /**
    * Whether to show the export button
-   * @default false
    */
   showExport?: boolean;
 
   /**
    * Whether to show vertical cell borders
-   * @default false
    */
   showCellVerticalBorder?: boolean;
 
   /**
    * Whether to enable row selection
-   * @default false
    */
   enableRowSelection?: boolean;
 

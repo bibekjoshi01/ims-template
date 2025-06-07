@@ -13,15 +13,15 @@ function TableContainer<TData extends object>({
   getColumnConfig,
   createNewForm,
   createButtonTitle,
-  allowEditing = false,
-  showIndex = true,
-  showFilter = false,
-  showSearch = true,
-  showColumnFilter = false,
-  showDensitySelector = false,
-  showExport = false,
-  showCellVerticalBorder = false,
-  enableRowSelection = false,
+  allowEditing,
+  showIndex,
+  showFilter,
+  showSearch,
+  showColumnFilter,
+  showDensitySelector,
+  showExport,
+  showCellVerticalBorder,
+  enableRowSelection,
   ...otherProps
 }: TableContainerProps<TData>) {
   // Use the provided hook to get table data and handlers
@@ -37,7 +37,6 @@ function TableContainer<TData extends object>({
     handlePaginationChange,
     handleSortChange,
     handleFilterChange,
-    handleSearchChange,
     paginationModel,
     filterModel,
     sortModel,
@@ -45,7 +44,7 @@ function TableContainer<TData extends object>({
   } = useTableHook();
 
   return (
-    <AppTable
+    <AppTable<TData>
       title={title}
       initialRows={rows}
       totalRows={totalRowsCount}
@@ -59,7 +58,6 @@ function TableContainer<TData extends object>({
       handlePaginationChange={handlePaginationChange}
       handleSortChange={handleSortChange}
       handleFilterChange={handleFilterChange}
-      handleSearchChange={handleSearchChange}
       paginationModel={paginationModel}
       filterModel={filterModel}
       sortModel={sortModel}

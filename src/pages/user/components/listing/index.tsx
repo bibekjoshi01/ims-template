@@ -1,7 +1,5 @@
-import { lazy } from 'react';
-
+import { lazy, useMemo, useRef } from 'react';
 import TableContainer from '@/components/app-table/TableContainer';
-
 import { useHasParticularPermissions } from '@/utils/permissions/helpers';
 import { userPermissions } from '../../constants/permissions';
 import { useUserTable } from '../../hooks/useUserTable';
@@ -11,6 +9,7 @@ const UserCreateForm = lazy(() => import('../create-form'));
 
 const UserListingSection = () => {
   const tableHooks = useUserTable();
+
   const canCreate = useHasParticularPermissions(userPermissions.add);
   const canEdit = useHasParticularPermissions(userPermissions.edit);
   const canDelete = useHasParticularPermissions(userPermissions.delete);
@@ -24,11 +23,6 @@ const UserListingSection = () => {
       createNewForm={canCreate ? (onClose) => <UserCreateForm onClose={onClose} /> : undefined}
       allowEditing={canEdit}
       allowDeleting={canDelete}
-      showFilter
-      showSearch
-      showExport
-      showDensitySelector
-      enableRowSelection
     />
   );
 };

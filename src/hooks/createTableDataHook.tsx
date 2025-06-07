@@ -57,7 +57,7 @@ export interface CreateTableHookOptions<TData, TApiResponse, TUpdateInput = Part
   /**
    * Function to set the ID of the row being edited
    */
-  setId?: (id: number | GridRowId | string) => void;
+  setId?: (id: GridRowId) => void;
 
   /**
    * Function to set the edit state
@@ -67,7 +67,7 @@ export interface CreateTableHookOptions<TData, TApiResponse, TUpdateInput = Part
   /**
    * Function to set the ID of the row being viewed
    */
-  setViewId?: (id: number | GridRowId | string) => void;
+  setViewId?: (id: GridRowId) => void;
 }
 
 /**
@@ -113,7 +113,8 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
       } as GridPaginationModel,
       sortModel: [] as GridSortModel,
       filterModel: {
-        items: []
+        items: [],
+        quickFilterValues: []
       } as GridFilterModel
     });
 
@@ -150,28 +151,17 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
     const handleSortChange = useCallback((model: GridSortModel) => {
       setQueryParams((prev) => ({
         ...prev,
-        sortModel: model,
-        // Reset to first page when sorting changes
-        paginationModel: { ...prev.paginationModel, page: 0 }
+        sortModel: model
       }));
     }, []);
 
     const handleFilterChange = useCallback((model: GridFilterModel) => {
       setQueryParams((prev) => ({
         ...prev,
-        filterModel: model,
-        // Reset to first page when filter changes
-        paginationModel: { ...prev.paginationModel, page: 0 }
+        search: model.quickFilterValues?.[0] || '',
+        filterModel: model
       }));
     }, []);
-
-    const handleSearchChange = useCallback((value: string) => {
-      setQueryParams((prev) => ({
-        ...prev,
-        search: value
-      }));
-    }, []);
-
     /**
      * Handle row updates of inline editing.
      */
@@ -234,7 +224,7 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
      * This will be attached to each row's edit action
      */
     const handleEditClick = useCallback(
-      (id: number | string | GridRowId) => {
+      (id: GridRowId) => {
         if (setId) {
           setId(id);
         } else {
@@ -274,7 +264,7 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
       rows,
       totalRowsCount,
       loading: isFetching,
-
+      searchText: queryParams.search,
       // Models
       paginationModel: queryParams.paginationModel,
       filterModel: queryParams.filterModel,
@@ -290,7 +280,6 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
       handlePaginationChange,
       handleSortChange,
       handleFilterChange,
-      handleSearchChange,
 
       // Raw access
       refetch,

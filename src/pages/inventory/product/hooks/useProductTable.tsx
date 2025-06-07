@@ -15,10 +15,10 @@ import React from 'react';
  */
 export const useCategoryTable = () => {
   const dispatch = useAppDispatch();
-  const productCategoriesOptions = useProductCategories();
-  const productUnitsOptions = useProductUnits();
+  const { productCategoriesOptions, isLoading: isLoadingCategories } = useProductCategories();
+  const { productUnitsOptions, isLoading: isLoadingUnits } = useProductUnits();
 
-  const isOptionsLoaded = productCategoriesOptions.length > 0 && productUnitsOptions.length > 0;
+  const isOptionsLoaded = !isLoadingCategories && !isLoadingUnits;
 
   // Call the hook once
   const tableDataHook = createTableDataHook<ITableData, IProductList, IProductCreatePayload>({

@@ -11,7 +11,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 // React imports
 import dayjs from 'dayjs';
-import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
+import React, { forwardRef } from 'react';
 
 // Project imports
 import { CustomInputProps, SelectOption } from './types';
@@ -325,7 +325,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                     >
                       <Box sx={{ display: 'flex', gap: 2 }}>
                         <IconButton
-                          size="medium"
+                          size="small"
                           onClick={(e) => {
                             e.stopPropagation();
                             internalRef.current?.click();
@@ -340,7 +340,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                         </IconButton>
 
                         <IconButton
-                          size="medium"
+                          size="small"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleRemoveImage();
@@ -369,9 +369,11 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                     }}
                   >
                     <AddPhotoAlternateIcon sx={{ fontSize: 28, mb: 1, color: theme.palette.text.secondary }} />
-                    <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
-                      Click to upload photo
-                    </Typography>
+                    {imageSize >= 80 && (
+                      <Typography variant="body2" sx={{ color: theme.palette.text.secondary }}>
+                        Upload photo
+                      </Typography>
+                    )}
                   </Box>
                 )}
               </Box>

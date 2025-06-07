@@ -6,6 +6,7 @@ export const TitleStyles = {
 };
 
 export const ContainerStyles = {
+  width: '100%',
   display: 'flex',
   justifyContent: 'space-between',
   flexWrap: 'wrap',

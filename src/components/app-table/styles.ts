@@ -5,11 +5,27 @@ import { SxProps, Theme } from '@mui/material/styles';
  */
 export const TableStyles: SxProps<Theme> = {
   // Sorting icon visibility
-  // '& .MuiDataGrid-sortIcon': {
-  //   opacity: '1 !important'
-  // },
+  '& .MuiDataGrid-sortIcon': {
+    opacity: '1 !important',
+    visibility: 'visible'
+  },
 
   border: 'none',
+
+  // scrollbar styles
+  '& .MuiDataGrid-scrollbar--horizontal::-webkit-scrollbar': {
+    scrollbarWidth: 'thin'
+  },
+  '& .MuiDataGrid-scrollbar--horizontal::-webkit-scrollbar-track': {
+    background: '#eee'
+  },
+  '& .MuiDataGrid-scrollbar--horizontal::-webkit-scrollbar-thumb': {
+    backgroundColor: '#ccc'
+  },
+  '& .MuiDataGrid-scrollbar--horizontal::-webkit-scrollbar-thumb:hover': {
+    background: '#aaa'
+  },
+
   // Column header styles
   '& .MuiDataGrid-columnHeaders': (theme) => ({
     '--unstable_DataGrid-headWeight': 900,
@@ -54,6 +70,11 @@ export const TableStyles: SxProps<Theme> = {
           outline: 'none'
         }
       }
+    },
+
+    '& .MuiDataGrid-cellEmpty': {
+      paddingInline: '0px',
+      mr: 0
     },
 
     '&.MuiDataGrid-row--editing': {
