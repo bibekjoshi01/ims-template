@@ -1,6 +1,6 @@
 // MUI IMPORTS
 import { Theme } from '@mui/material/styles';
-import { GridColDef, GridColType, GridRowId, GridRowModesModel, GridValidRowModel } from '@mui/x-data-grid';
+import { GridColDef, GridRowId, GridRowModesModel, GridValidRowModel } from '@mui/x-data-grid';
 
 // PROJECT IMPORTS
 import { createActionsColumn } from './ActionColumn';
@@ -26,7 +26,7 @@ import { createBooleanColumn } from './BooleanColumn';
  * @param savingRows - Sate for rows that are in saving state.
  * @returns Array of GridColDef objects for MUI DataGrid.
  */
-const createColumnDefs = <T extends GridValidRowModel>(
+const createColumnDefs = <T extends object>(
   columnConfig: ColumnConfig<T>[],
   theme: Theme,
   showIndex: boolean,

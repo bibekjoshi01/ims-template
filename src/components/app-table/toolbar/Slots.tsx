@@ -1,37 +1,12 @@
-import CustomInput from '@/components/app-form/CustomInput';
-import { Search as SearchIcon } from '@mui/icons-material';
+import React from 'react';
 import { GlobalStyles } from '@mui/material';
 import { GridColumnsPanel, GridPanel } from '@mui/x-data-grid';
 import { GridFilterPanel, GridFilterPanelProps } from '@mui/x-data-grid/components/panel/filterPanel/GridFilterPanel';
 
 // ==============================
-// Custom Search Bar
-// ==============================
-export const CustomSearchBar = ({ handleInputChange, searchText }: { handleInputChange?: (value: string) => void; searchText: string }) => {
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleInputChange?.(event.target.value);
-  };
-
-  return (
-    <CustomInput
-      placeholder="Search..."
-      type="text"
-      value={searchText}
-      onChange={onChange}
-      startAdornment={<SearchIcon sx={{ height: '20px' }} color="action" />}
-      sx={{
-        displayPrint: 'none',
-        display: 'flex',
-        flex: 1
-      }}
-    />
-  );
-};
-
-// ==============================
 // Custom Columns Panel
 // ==============================
-export const CustomColumnsPanel = () => {
+export const CustomColumnsPanel = React.memo(() => {
   return (
     <>
       <GlobalStyles
@@ -46,12 +21,12 @@ export const CustomColumnsPanel = () => {
       </GridPanel>
     </>
   );
-};
+});
 
 // ==============================
 // Custom Filter Panel
 // ==============================
-export const CustomFilterPanel = (props: GridFilterPanelProps) => {
+export const CustomFilterPanel = React.memo((props: GridFilterPanelProps) => {
   return (
     <>
       <GlobalStyles
@@ -66,4 +41,4 @@ export const CustomFilterPanel = (props: GridFilterPanelProps) => {
       </GridPanel>
     </>
   );
-};
+});

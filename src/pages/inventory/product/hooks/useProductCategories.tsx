@@ -10,7 +10,7 @@ export const useProductCategories = () => {
     filterModel: { items: [] }
   };
 
-  const { data: productCategoriesData } = useGetProductCategoriesQuery(args);
+  const { data: productCategoriesData, isLoading } = useGetProductCategoriesQuery(args);
 
   const productCategoriesOptions = useMemo<SelectOption[]>(() => {
     return (
@@ -21,5 +21,5 @@ export const useProductCategories = () => {
     );
   }, [productCategoriesData]);
 
-  return productCategoriesOptions;
+  return { productCategoriesOptions, isLoading };
 };

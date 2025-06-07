@@ -1,22 +1,29 @@
 import FormSection from '@/components/app-form/FormSection';
 import MainCard from '@/components/cards/MainCard';
 import { Button, Grid } from '@mui/material';
-import useCreateCategory from '../../hooks/useCreateCategory';
-import { TCategoryCreateFormDataType } from './config';
+import useCreateCustomer from '../../hooks/useCreateCustomer';
+import { TCustomerCreateFormDataType } from './config';
 
-export interface ICategoryCreateFormProps {
+export interface ICustomerCreateFormProps {
   onClose?: () => void;
 }
 
-export default function CategoryCreateForm({ onClose }: ICategoryCreateFormProps) {
-  const { control, errors, categoryCreateFields, handleSubmit } = useCreateCategory({ onClose });
+export default function CustomerCreateForm({ onClose }: ICustomerCreateFormProps) {
+  const { control, errors, watch, customerCreateFields, handleSubmit } = useCreateCustomer({ onClose });
+
+  const formValues = watch();
 
   return (
     <form onSubmit={handleSubmit()} noValidate>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <MainCard divider title="Create New Category">
-            <FormSection<TCategoryCreateFormDataType> fields={categoryCreateFields} control={control} errors={errors} />
+          <MainCard divider title="Create New Customer">
+            <FormSection<TCustomerCreateFormDataType>
+              fields={customerCreateFields}
+              control={control}
+              errors={errors}
+              formValues={formValues}
+            />
           </MainCard>
         </Grid>
 

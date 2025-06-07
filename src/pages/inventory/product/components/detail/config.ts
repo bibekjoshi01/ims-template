@@ -1,7 +1,7 @@
 import { DynamicInfoSectionProps } from '@/components/detail-section/types';
 import { IProductDetails } from '../../redux/types';
 
-export const viewProductConfig: Omit<DynamicInfoSectionProps, 'data'> = {
+export const viewProductConfig: Omit<DynamicInfoSectionProps<IProductDetails>, 'data'> = {
   excludeFields: ['id', 'image', 'createdAt', 'updatedAt', 'createdBy', 'updatedBy'],
   fieldOrder: ['name', 'sku', 'sellingPrice', 'stockAlertQty', 'barcode', 'isActive', 'category.name', 'unit.name', 'description'],
   booleanFields: ['isActive'],

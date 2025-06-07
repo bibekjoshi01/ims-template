@@ -6,11 +6,24 @@ export interface ICustomerSliceState {
   viewId: number | null;
 }
 
+export enum GenderEnum {
+  MALE = 'MALE',
+  FEMALE = 'FEMALE',
+  NA = 'NA'
+}
+
+export enum AddressLabelEnum {
+  DEFAULT = 'DEFAULT',
+  HOME = 'HOME',
+  OFFICE = 'OFFICE'
+}
+
 export interface ICustomerItem {
   id: number;
   fullName: string;
   customerNo: string;
   email: string;
+  gender?: GenderEnum;
   phoneNo: string;
   altPhoneNo: string;
   isPerson: boolean;
@@ -19,8 +32,8 @@ export interface ICustomerItem {
 }
 
 export interface ICustomerAddressItem {
-  id: number;
-  label: string;
+  id?: number;
+  label: AddressLabelEnum;
   address: string;
 }
 
@@ -34,9 +47,10 @@ export interface ICustomerCreatePayload {
   phoneNo: string;
   altPhoneNo?: string;
   isPerson: boolean;
+  gender?: GenderEnum;
   notes?: string;
   isActive: boolean;
-  photo?: File | null;
+  photo?: File | null | undefined;
   addresses?: ICustomerAddressItem[] | [];
 }
 
@@ -46,9 +60,10 @@ export interface ICustomerUpdatePayload {
   phoneNo?: string;
   altPhoneNo?: string;
   isPerson?: boolean;
+  gender?: GenderEnum;
   isActive?: boolean;
   notes?: string;
-  photo?: File | null;
+  photo?: File | null | undefined;
   addresses?: ICustomerAddressItem[] | [];
 }
 

@@ -1,15 +1,14 @@
-export interface ToolbarProps {
+import { GridFilterModel, GridRowModel, GridToolbarContainer } from '@mui/x-data-grid';
+import React from 'react';
+
+export type ToolbarProps = React.ComponentPropsWithRef<typeof GridToolbarContainer> & {
   title?: string;
   showSearch: boolean;
-  handleSearchChange?: (value: string) => void;
-  handleTextChange?: (value: string) => void;
-  searchText: string;
-  filterMode: 'server' | 'client';
   showColumnFilter: boolean;
   showFilter: boolean;
   showDensitySelector: boolean;
   showExport: boolean;
+  exportFileName?: string;
   createNewForm?: (onClose: () => void) => React.ReactNode;
-  saveExportComponent?: React.ReactNode;
   createButtonTitle?: string;
-}
+};

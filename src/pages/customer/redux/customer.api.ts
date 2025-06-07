@@ -42,10 +42,35 @@ export const customerAPISlice = rootAPI.injectEndpoints({
     // Create Customer
     createCustomer: builder.mutation<IMutationSuccessResponse, ICustomerCreatePayload>({
       query: (values) => {
+        const { photo, addresses, ...rest } = values;
+        const body = new FormData();
+
+        for (const [key, value] of Object.entries(rest)) {
+          if (value !== undefined && value !== null) {
+            body.append(key, value as string | Blob);
+          }
+        }
+
+        // Append nested addresses
+        if (Array.isArray(addresses)) {
+          addresses.forEach((addr, index) => {
+            Object.entries(addr).forEach(([addrKey, addrValue]) => {
+              if (addrValue !== undefined && addrValue !== null) {
+                body.append(`addresses[${index}][${addrKey}]`, addrValue);
+              }
+            });
+          });
+        }
+
+        // Append photo if it's a valid File
+        if (photo instanceof File) {
+          body.append('photo', photo);
+        }
+
         return {
           url: `${customerAPI}`,
           method: 'POST',
-          data: values
+          data: body
         };
       },
       invalidatesTags: ['Customer']
@@ -54,10 +79,37 @@ export const customerAPISlice = rootAPI.injectEndpoints({
     // Update Customer
     patchCustomer: builder.mutation<IMutationSuccessResponse, { id: number; values: ICustomerUpdatePayload }>({
       query: ({ id, values }) => {
+        const { photo, addresses, ...rest } = values;
+        const body = new FormData();
+
+        // Append flat fields
+        for (const [key, value] of Object.entries(rest)) {
+          if (value !== undefined && value !== null) {
+            // @ts-ignore
+            body.append(key, value);
+          }
+        }
+
+        // Append nested addresses
+        if (Array.isArray(addresses)) {
+          addresses.forEach((addr, index) => {
+            Object.entries(addr).forEach(([addrKey, addrValue]) => {
+              if (addrValue !== undefined && addrValue !== null) {
+                body.append(`addresses[${index}][${addrKey}]`, addrValue);
+              }
+            });
+          });
+        }
+
+        // Append photo if it's a valid File
+        if (photo instanceof File) {
+          body.append('photo', photo);
+        }
+
         return {
           url: `${customerAPI}/${id}`,
           method: 'PATCH',
-          data: values
+          data: body
         };
       },
       invalidatesTags: ['Customer']
@@ -68,6 +120,17 @@ export const customerAPISlice = rootAPI.injectEndpoints({
       query: (id) => {
         return {
           url: `${customerAPI}/${id}`,
+          method: 'DELETE'
+        };
+      },
+      invalidatesTags: ['Customer']
+    }),
+
+    // Archive Customer Address
+    archiveCustomerAddress: builder.mutation<IMutationSuccessResponse, { id: number; address_id: number }>({
+      query: ({ id, address_id }) => {
+        return {
+          url: `${customerAPI}/${id}/address/${address_id}/delete`,
           method: 'DELETE'
         };
       },
@@ -83,5 +146,6 @@ export const {
   useLazyRetrieveCustomerQuery,
   useCreateCustomerMutation,
   usePatchCustomerMutation,
-  useArchiveCustomerMutation
+  useArchiveCustomerMutation,
+  useArchiveCustomerAddressMutation
 } = customerAPISlice;

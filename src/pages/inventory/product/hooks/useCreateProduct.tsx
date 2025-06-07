@@ -27,8 +27,8 @@ const useCreateProduct = ({ onClose }: IProductCreateFormProps) => {
   const [createProduct] = useCreateProductMutation();
   const [triggerGetProduct] = useLazyGetProductsQuery();
   const [formFields, setFormFields] = useState(productCreateFields);
-  const productCategoriesOptions = useProductCategories();
-  const productUnitsOptions = useProductUnits();
+  const { productCategoriesOptions } = useProductCategories();
+  const { productUnitsOptions } = useProductUnits();
 
   const {
     control,

@@ -4,17 +4,16 @@ import { Box, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { DataGrid, GridRowEditStopParams, GridRowEditStopReasons, GridRowParams, MuiEvent } from '@mui/x-data-grid';
 
-//  Project Imports
-import { useTableHandlers } from '@/hooks/useTableHandlers';
+// Project Imports
 import { Empty } from 'antd';
-import React, { useCallback, useMemo, useState } from 'react';
-import ConfirmationModal from '../app-dialog/ConfirmationDialog';
-import SaveExport from '../export';
-import { createColumnDefs } from './columns';
-import { BoxStyles, TableStyles } from './styles';
 import Toolbar from './toolbar';
-import { CustomColumnsPanel, CustomFilterPanel } from './toolbar/Slots';
+import { BoxStyles, TableStyles } from './styles';
 import { AppTableProps } from './types';
+import { createColumnDefs } from './columns';
+import { useTableHandlers } from '@/hooks/useTableHandlers';
+import ConfirmationModal from '../app-dialog/ConfirmationDialog';
+import { useCallback, useMemo, useState } from 'react';
+import { CustomColumnsPanel, CustomFilterPanel } from './toolbar/Slots';
 
 // ===========================|| AppTable - MAIN COMPONENT ||=========================== //
 const AppTable = <T extends object>({
@@ -38,12 +37,12 @@ const AppTable = <T extends object>({
 
   // Display options
   showIndex = true,
-  showCellVerticalBorder = false,
   showSearch = true,
+  showFilter = true,
+  showExport = true,
   showColumnFilter = true,
-  showFilter = false,
-  showDensitySelector = false,
-  showExport = false,
+  showDensitySelector = true,
+  showCellVerticalBorder = false,
 
   // Table functionalities
   allowSorting = true,
@@ -51,7 +50,7 @@ const AppTable = <T extends object>({
   allowDeleting = true,
   editMode = 'row',
   enableColumnResizing = false,
-  enableRowSelection = false,
+  enableRowSelection = true,
 
   // Pagination, Sorting and filtering
   paginationMode = 'server',
@@ -73,11 +72,8 @@ const AppTable = <T extends object>({
   handleFilterChange,
   handlePaginationChange,
 
-  // Search
-  handleSearchChange,
-
   // Exporting
-  exportFileName = 'table_data',
+  exportFileName,
 
   // Row identification
   getRowId,
@@ -116,46 +112,22 @@ const AppTable = <T extends object>({
     [columnConfig, theme, handlers, rowModesModel, savingRows]
   );
 
-  const SaveExportComponent = useMemo(() => <SaveExport columns={columns} rows={rows} title={title} />, [columns, rows, title]);
-
-  const [searchText, setSearchText] = useState('');
-  const handleInputChange = useCallback((value: string) => {
-    setSearchText(value);
-  }, []);
-
-  const memoizedToolbar = useMemo(
-    () => () => (
+  const ToolbarComponent = useCallback(
+    (props: any) => (
       <Toolbar
+        {...props}
         title={title}
         showSearch={showSearch}
-        handleTextChange={handleInputChange}
-        searchText={searchText}
-        filterMode={filterMode}
-        handleSearchChange={handleSearchChange}
         showColumnFilter={showColumnFilter}
         showFilter={showFilter}
         showDensitySelector={showDensitySelector}
         showExport={showExport}
+        exportFileName={exportFileName}
         createNewForm={createNewForm}
-        saveExportComponent={SaveExportComponent}
         createButtonTitle={createButtonTitle}
       />
     ),
-    [
-      title,
-      showSearch,
-      filterMode,
-      searchText,
-      handleInputChange,
-      handleSearchChange,
-      showColumnFilter,
-      showFilter,
-      showDensitySelector,
-      showExport,
-      createNewForm,
-      SaveExportComponent,
-      createButtonTitle
-    ]
+    [title, showSearch, showColumnFilter, showFilter, showDensitySelector, showExport, exportFileName, createNewForm, createButtonTitle]
   );
 
   const handleRowDoubleClick = (params: GridRowParams) => {
@@ -212,7 +184,14 @@ const AppTable = <T extends object>({
           disableColumnMenu
           // Models
           paginationModel={paginationMode === 'server' ? paginationModel : undefined}
-          filterModel={filterMode === 'server' ? filterModel : undefined}
+          filterModel={
+            filterMode === 'server'
+              ? {
+                  items: filterModel.items,
+                  quickFilterValues: filterModel?.quickFilterValues ?? []
+                }
+              : undefined
+          }
           sortModel={sortingMode === 'server' ? sortModel : undefined}
           // Handlers
           onSortModelChange={handleSortChange}
@@ -224,7 +203,7 @@ const AppTable = <T extends object>({
           getRowId={getRowId || ((row: T) => (row as any).id)}
           // Toolbar
           slots={{
-            toolbar: memoizedToolbar,
+            toolbar: ToolbarComponent,
             filterPanel: CustomFilterPanel,
             columnsPanel: CustomColumnsPanel,
             noRowsOverlay: CustomNoRowsOverlay,
@@ -275,8 +254,7 @@ const AppTable = <T extends object>({
           initialState={{
             ...dataGridProps.initialState,
             filter: {
-              ...dataGridProps.initialState?.filter,
-              quickFilterValues: []
+              ...dataGridProps.initialState?.filter
             },
             density: 'comfortable'
           }}
@@ -315,7 +293,7 @@ const AppTable = <T extends object>({
   );
 };
 
-export default React.memo(AppTable);
+export default AppTable;
 
 function CustomNoRowsOverlay() {
   return (
