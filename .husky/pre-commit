@@ -1,1 +1,5 @@
+echo '🤨🤨Brace yourself for a wild error ride! ✨😜'
+
+# Execute lint-staged
 yarn format
+echo '✅No errors, just Git-ting it right! 😎✨✨'

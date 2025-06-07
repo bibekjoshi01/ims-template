@@ -7,7 +7,8 @@ import MainLayout from '@/layout/MainLayout';
 
 // Lazy-loaded components
 const DashboardDefault = Loadable(lazy(() => import('@/pages/dashboard/index')));
-const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/PageNotFount')));
+const UnderConstruction = Loadable(lazy(() => import('@/pages/errors/UnderConstruction')));
+const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/PageNotFound')));
 const Profile = Loadable(lazy(() => import('@/pages/account/profile')));
 const ChangePassword = Loadable(lazy(() => import('@/pages/account/change-passwod')));
 const Settings = Loadable(lazy(() => import('@/pages/account/settings')));
@@ -52,6 +53,9 @@ const PrivateRoutes = () => (
           <Route path="categories" element={<ProductCategory />} />
         </Route>
       </Route>
+      <Route path="reports" element={<UnderConstruction />} />
+      <Route path="app-settings" element={<UnderConstruction />} />
+      <Route path="help" element={<UnderConstruction />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </>

@@ -2,10 +2,12 @@
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import CategoryIcon from '@mui/icons-material/Category';
 import FeedIcon from '@mui/icons-material/Feed';
+import HeadphonesIcon from '@mui/icons-material/Headphones';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Person3Icon from '@mui/icons-material/Person3';
 import Person4Icon from '@mui/icons-material/Person4';
+import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import StoreIcon from '@mui/icons-material/Store';
 import StorefrontIcon from '@mui/icons-material/Storefront';
@@ -23,7 +25,9 @@ const icons = {
   ManageAccountsIcon,
   Person4Icon,
   StorefrontIcon,
+  HeadphonesIcon,
   Person3Icon,
+  PrecisionManufacturingIcon,
   ReceiptIcon,
   CategoryIcon,
   StoreIcon
@@ -41,7 +45,7 @@ const modules: MenuItem = {
       title: 'Customer',
       type: 'item',
       url: '/customers',
-      icon: icons.Person4Icon,
+      icon: icons.HeadphonesIcon,
       breadcrumbs: false
     },
     {
@@ -50,7 +54,7 @@ const modules: MenuItem = {
       type: 'item',
       url: '/suppliers',
       breadcrumbs: false,
-      icon: icons.Person3Icon
+      icon: icons.PrecisionManufacturingIcon
     },
     {
       id: 'inventory',
