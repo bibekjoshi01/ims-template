@@ -28,11 +28,6 @@ const CategoryListingSection = () => {
       createNewForm={canCreate ? (onClose) => <CategoryCreateForm onClose={onClose} /> : undefined}
       allowEditing={canEdit}
       allowDeleting={canDelete}
-      showFilter
-      showSearch
-      showExport
-      showDensitySelector
-      enableRowSelection
     />
   );
 };

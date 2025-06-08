@@ -7,13 +7,15 @@ import MainLayout from '@/layout/MainLayout';
 
 // Lazy-loaded components
 const DashboardDefault = Loadable(lazy(() => import('@/pages/dashboard/index')));
-const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/PageNotFount')));
+const UnderConstruction = Loadable(lazy(() => import('@/pages/errors/UnderConstruction')));
+const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/PageNotFound')));
 const Profile = Loadable(lazy(() => import('@/pages/account/profile')));
 const ChangePassword = Loadable(lazy(() => import('@/pages/account/change-passwod')));
 const Settings = Loadable(lazy(() => import('@/pages/account/settings')));
 // User Setup Pages
 const User = Loadable(lazy(() => import('@/pages/user')));
 const Supplier = Loadable(lazy(() => import('@/pages/supplier')));
+const Customer = Loadable(lazy(() => import('@/pages/customer')));
 const UserRole = Loadable(lazy(() => import('@/pages/user-role')));
 // Blog Pages
 const BlogCategory = Loadable(lazy(() => import('@/pages/blog/category')));
@@ -41,6 +43,7 @@ const PrivateRoutes = () => (
           <Route path="category" element={<BlogCategory />} />
         </Route>
         <Route path="suppliers" element={<Supplier />} />
+        <Route path="customers" element={<Customer />} />
         <Route path="user-setup">
           <Route path="users" element={<User />} />
           <Route path="user-roles" element={<UserRole />} />
@@ -50,6 +53,9 @@ const PrivateRoutes = () => (
           <Route path="categories" element={<ProductCategory />} />
         </Route>
       </Route>
+      <Route path="reports" element={<UnderConstruction />} />
+      <Route path="app-settings" element={<UnderConstruction />} />
+      <Route path="help" element={<UnderConstruction />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </>

@@ -4,6 +4,7 @@ import { Button, Grid } from '@mui/material';
 import FormSection from '@/components/app-form/FormSection';
 import MainCard from '@/components/cards/MainCard';
 
+// PROJECT IMPORTS
 import useUpdateCategory from '../../hooks/useUpdateCategory';
 import { ICategoryDetails } from '../../redux/types';
 import { TCategoryUpdateFormDataType } from './config';

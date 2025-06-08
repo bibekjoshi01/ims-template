@@ -27,11 +27,6 @@ const UserRoleListingSection = () => {
       createNewForm={canCreate ? (onClose) => <UserRoleCreateForm onClose={onClose} /> : undefined}
       allowEditing={canEdit}
       allowDeleting={canDelete}
-      showFilter
-      showSearch
-      showExport
-      showDensitySelector
-      enableRowSelection
     />
   );
 };

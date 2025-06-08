@@ -4,7 +4,7 @@ import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import PageNotFoundImage from '../../assets/images/error/404ErrorPage.svg';
 
-const NotFoundPage = () => (
+const PageNotFound = () => (
   <div style={{ textAlign: 'center' }}>
     <PageImage src={PageNotFoundImage} alt="404 page not found image" />
     <h1>404 - Page Not Found</h1>
@@ -17,4 +17,4 @@ const NotFoundPage = () => (
   </div>
 );
 
-export default NotFoundPage;
+export default PageNotFound;

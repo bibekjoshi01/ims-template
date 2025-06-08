@@ -9,7 +9,7 @@ const AuthLogin = Loadable(lazy(() => import('@/pages/authentication/login')));
 const VerifyAccount = Loadable(lazy(() => import('@/pages/authentication/login/VerifyAccount')));
 const ForgetPasswordReqeust = Loadable(lazy(() => import('@/pages/authentication/forget-password/ForgetPasswordReqeust')));
 const ResetPassword = Loadable(lazy(() => import('@/pages/authentication/forget-password/ResetPassword')));
-const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/PageNotFount')));
+const NotFoundPage = Loadable(lazy(() => import('@/pages/errors/PageNotFound')));
 const PrivacyPolicy = Loadable(lazy(() => import('@/pages/legal/PrivacyPolicies')));
 const TermsAndConditions = Loadable(lazy(() => import('@/pages/legal/TermsAndConditions')));
 

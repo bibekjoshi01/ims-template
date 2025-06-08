@@ -11,7 +11,8 @@ import { CloudDownloadOutlined } from '@ant-design/icons';
 import { Button, Menu, MenuItem } from '@mui/material';
 
 import { showErrorToast } from '@/utils/notifier';
-import { IColumn, IRow, ISaveExportProps } from './types';
+import { IColumn } from './types';
+import { GridRowModel, useGridApiContext } from '@mui/x-data-grid';
 
 dayjs.extend(LocalizedFormat);
 
@@ -23,7 +24,7 @@ const formatValue = (col: IColumn, val: any, index: number) => {
   return val ?? '';
 };
 
-const buildData = (rows: IRow[], columns: IColumn[]) =>
+const buildData = (rows: GridRowModel[], columns: IColumn[]) =>
   rows?.map((row, idx) =>
     columns!.slice(0, -1).reduce(
       (acc, col) => {
@@ -35,10 +36,14 @@ const buildData = (rows: IRow[], columns: IColumn[]) =>
     )
   ) ?? [];
 
-export default function SaveExport({ columns, rows, title }: ISaveExportProps) {
+export default function SaveExport({ title }: { title?: string }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { enqueueSnackbar } = useSnackbar();
+  const apiRef = useGridApiContext();
+  const allColumns = apiRef.current.getAllColumns() as IColumn[];
+  const columns = allColumns.filter((col) => col.visible !== false && col.field !== '__check__');
+  const rows = Array.from(apiRef.current.getRowModels().values());
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -101,7 +106,7 @@ export default function SaveExport({ columns, rows, title }: ISaveExportProps) {
   );
 }
 
-export const handlePrintPDF = (columns?: IColumn[], rows?: IRow[], title = 'Exported Table') => {
+export const handlePrintPDF = (columns?: IColumn[], rows?: GridRowModel[], title = 'Exported Table') => {
   if (!columns?.length || !rows?.length) {
     showErrorToast('No Data Available');
     return;
@@ -126,7 +131,7 @@ export const handlePrintPDF = (columns?: IColumn[], rows?: IRow[], title = 'Expo
   doc.save(`${title}.pdf`);
 };
 
-export const handleCsvExport = (columns?: IColumn[], rows?: IRow[], title = 'Exported Table') => {
+export const handleCsvExport = (columns?: IColumn[], rows?: GridRowModel[], title = 'Exported Table') => {
   if (!columns?.length || !rows?.length) {
     showErrorToast('No Data Available');
     return;

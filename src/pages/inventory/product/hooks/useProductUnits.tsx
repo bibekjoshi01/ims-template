@@ -10,7 +10,7 @@ export const useProductUnits = () => {
     filterModel: { items: [] }
   };
 
-  const { data: productUnitsData } = useGetProductUnitsQuery(args);
+  const { data: productUnitsData, isLoading } = useGetProductUnitsQuery(args);
 
   const productUnitsOptions = useMemo<SelectOption[]>(() => {
     return (
@@ -21,5 +21,5 @@ export const useProductUnits = () => {
     );
   }, [productUnitsData]);
 
-  return productUnitsOptions;
+  return { productUnitsOptions, isLoading };
 };

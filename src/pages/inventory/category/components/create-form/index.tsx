@@ -9,14 +9,14 @@ export interface ICategoryCreateFormProps {
 }
 
 export default function CategoryCreateForm({ onClose }: ICategoryCreateFormProps) {
-  const { control, errors, categoryInfoFields, handleSubmit } = useCreateCategory({ onClose });
+  const { control, errors, categoryCreateFields, handleSubmit } = useCreateCategory({ onClose });
 
   return (
     <form onSubmit={handleSubmit()} noValidate>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <MainCard divider title="Create New Category">
-            <FormSection<TCategoryCreateFormDataType> fields={categoryInfoFields} control={control} errors={errors} />
+            <FormSection<TCategoryCreateFormDataType> fields={categoryCreateFields} control={control} errors={errors} />
           </MainCard>
         </Grid>
 

@@ -24,7 +24,7 @@ export const createActionsColumn = <T extends object>(
     sortable: false,
     filterable: false,
     editable: false,
-    minWidth: 60,
+    minWidth: 100,
     maxWidth: 100,
     getActions: (params): JSX.Element[] => {
       const mode = rowModesModel?.[params.id]?.mode;

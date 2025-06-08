@@ -6,7 +6,6 @@ import { Avatar, Box, CircularProgress, IconButton, Paper, Typography } from '@m
 import DefaultImage from '@/assets/images/users/avatar-1.png';
 import MainCard from '@/components/cards/MainCard';
 import DynamicInfoSection from '@/components/detail-section';
-import { DynamicInfoSectionProps } from '@/components/detail-section/types';
 import { IProductDetails } from '../../redux/types';
 import { viewProductConfig } from './config';
 
@@ -27,7 +26,7 @@ const DetailView: React.FC<IDetailViewProps> = ({ productData, onClose }) => {
     );
   }
 
-  const DynamicInfoSectionProps: DynamicInfoSectionProps = {
+  const DynamicInfoSectionProps = {
     ...viewProductConfig,
     data: productData
   };

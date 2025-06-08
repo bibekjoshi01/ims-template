@@ -1,41 +1,58 @@
-import React, { useEffect } from 'react';
-
-// MUI IMPORTS
+import React, { useCallback, useEffect, useState } from 'react';
 import { Box, Button, IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import { GridMoreVertIcon, GridToolbarColumnsButton, GridToolbarDensitySelector, GridToolbarFilterButton } from '@mui/x-data-grid';
+import {
+  GridMoreVertIcon,
+  GridToolbarColumnsButton,
+  GridToolbarDensitySelector,
+  GridToolbarFilterButton,
+  GridToolbarQuickFilter,
+  useGridApiContext,
+  GridToolbarContainer
+} from '@mui/x-data-grid';
 
-// PROJECT IMPORTS
 import AppDialog from '@/components/app-dialog';
-import { CustomSearchBar } from './Slots';
+import SaveExport from '@/components/export';
 import { ContainerStyles, MenuItemStyles, TitleStyles, ToolbarStyles } from './styles';
 import { ToolbarProps } from './types';
-import { useToolbarHandlers } from './useToolbarHandlers';
 
-// ==============================
-// Toolbar
-// ==============================
-const Toolbar = ({
-  title,
-  showSearch,
-  handleSearchChange,
-  handleTextChange,
-  searchText,
-  filterMode,
-  showColumnFilter,
-  showFilter,
-  showDensitySelector,
-  showExport,
-  createNewForm,
-  saveExportComponent,
-  createButtonTitle
-}: ToolbarProps) => {
-  const { anchorEl, showForm, openMenu, handleMenuClick, handleMenuClose, handleOpenForm, handleCloseForm } = useToolbarHandlers({
-    filterMode,
-    handleSearchChange,
-    searchText
-  });
+const CombinedToolbar = React.forwardRef<HTMLDivElement, ToolbarProps>((props, ref) => {
+  const {
+    title,
+    showSearch,
+    createNewForm,
+    createButtonTitle,
+    showColumnFilter,
+    showFilter,
+    showDensitySelector,
+    showExport,
+    exportFileName,
+    ...gridToolbarProps
+  } = props;
+
+  const apiRef = useGridApiContext();
+  const [showForm, setShowForm] = useState(false);
+  const [hasRows, setHasRows] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const openMenu = Boolean(anchorEl);
+
+  // Menu open/close handlers
+  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+  const handleMenuClose = () => setAnchorEl(null);
+
+  // Dialog handlers
+  const handleOpenForm = useCallback(() => setShowForm(true), []);
+  const handleCloseForm = useCallback(() => setShowForm(false), []);
+
+  // Check for rows
+  useEffect(() => {
+    const checkRows = () => setHasRows(apiRef.current.getRowsCount() > 0);
+    checkRows();
+    const unsubscribe = apiRef.current.subscribeEvent('rowsSet', checkRows);
+    return () => unsubscribe();
+  }, [apiRef]);
+
   return (
-    <>
+    <GridToolbarContainer ref={ref} {...gridToolbarProps}>
       <Box sx={ContainerStyles}>
         {/* Title */}
         {title && (
@@ -44,12 +61,20 @@ const Toolbar = ({
           </Typography>
         )}
 
-        {/* Toolbar */}
+        {/* Controls */}
         <Box sx={ToolbarStyles}>
-          {/* Search Bar */}
-          {showSearch && <CustomSearchBar searchText={searchText} handleInputChange={handleTextChange} />}
-
-          {/* Create New User Button */}
+          {/* Searchbar */}
+          <GridToolbarQuickFilter
+            variant="outlined"
+            placeholder="Search..."
+            sx={{
+              minWidth: 200,
+              '& .MuiInputBase-root': {
+                backgroundColor: 'background.paper'
+              }
+            }}
+          />
+          {/* Create New Button */}
           {createNewForm && (
             <>
               <Button onClick={handleOpenForm} variant="contained" sx={{ mx: 1 }}>
@@ -80,13 +105,24 @@ const Toolbar = ({
                   <GridToolbarDensitySelector />
                 </MenuItem>
               )}
-              {showExport && <MenuItem sx={MenuItemStyles}>{saveExportComponent}</MenuItem>}
+              {showExport && hasRows && (
+                <MenuItem sx={MenuItemStyles}>
+                  <SaveExport title={exportFileName ?? title} />
+                </MenuItem>
+              )}
             </Menu>
           </Box>
         </Box>
       </Box>
-    </>
-  );
-};
 
-export default React.memo(Toolbar);
+      {/* Create New Form Dialog */}
+      {createNewForm && (
+        <AppDialog open={showForm} onClose={handleCloseForm} content={createNewForm(handleCloseForm)} fullWidth maxWidth="lg" />
+      )}
+    </GridToolbarContainer>
+  );
+});
+
+CombinedToolbar.displayName = 'CombinedToolbar';
+
+export default React.memo(CombinedToolbar);

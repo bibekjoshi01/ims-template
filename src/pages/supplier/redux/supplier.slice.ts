@@ -8,7 +8,7 @@ const initialState: ISupplierSliceState = {
 };
 
 export const supplierSlice = createSlice({
-  name: 'ProductSupplier',
+  name: 'Supplier',
   initialState,
   reducers: {
     setEdit: (state, { payload }) => {
