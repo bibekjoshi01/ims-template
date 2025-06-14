@@ -75,7 +75,7 @@ export default function DynamicFieldArraySection<T extends Record<string, any>>(
                     remove(index);
                   }}
                 >
-                  <DeleteOutlined />
+                  <DeleteOutlined style={{ color: 'red' }} />
                 </IconButton>
               </Grid>
             )}

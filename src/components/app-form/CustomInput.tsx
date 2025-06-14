@@ -3,7 +3,21 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { Box, Checkbox, Chip, IconButton, ListSubheader, MenuItem, OutlinedInput, Select, Switch, Typography } from '@mui/material';
+import {
+  Box,
+  Checkbox,
+  Chip,
+  FormControlLabel,
+  IconButton,
+  ListSubheader,
+  MenuItem,
+  OutlinedInput,
+  Radio,
+  RadioGroup,
+  Select,
+  Switch,
+  Typography
+} from '@mui/material';
 import { useTheme } from '@mui/system';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -210,6 +224,32 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                 return items;
               })()}
             </Select>
+            <ErrorForInput error={error} helperText={helperText} />
+            {children}
+          </Box>
+        );
+
+      case 'radio':
+        return (
+          <Box sx={sx} style={style} className={className}>
+            <LabelForInput label={label} name={name} required={required} />
+            <RadioGroup
+              name={name}
+              value={value}
+              onChange={(e) => {
+                const rawValue = e.target.value;
+                if (rawValue === 'true') return onChange(true);
+                if (rawValue === 'false') return onChange(false);
+                return onChange(rawValue);
+              }}
+              ref={setRef}
+              aria-describedby={errorId}
+              sx={{ ...inputStyle }}
+            >
+              {options?.map((option: SelectOption) => (
+                <FormControlLabel key={option.value} value={option.value} control={<Radio {...inputProps} />} label={option.label} />
+              ))}
+            </RadioGroup>
             <ErrorForInput error={error} helperText={helperText} />
             {children}
           </Box>

@@ -72,6 +72,7 @@ export default function FormSection<T extends Record<string, any>>({
                       falseLabel={field?.falseLabel}
                       multipleChips={field?.multipleChips}
                       sx={sx}
+                      inputStyle={field?.inputStyle}
                       disabled={field?.disabled}
                     >
                       {/* Render the specific component for specific field */}

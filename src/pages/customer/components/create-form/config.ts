@@ -15,7 +15,7 @@ export type Address = z.infer<typeof customerAddressSchema>;
 // NOTE - Schema definition of customer create form
 export const customerCreateFormSchema = z.object({
   fullName: z.string().min(1, 'Full Name is required'),
-  email: z.string().email('Invalid email').optional(),
+  email: z.string().optional(),
   phoneNo: z.string(),
   altPhoneNo: z.string().optional(),
   isPerson: z.boolean(),
@@ -59,15 +59,19 @@ export const customerCreateFields: FormField<TCustomerCreateFormDataType>[] = [
   { name: 'fullName', label: 'Full Name', xs: 6, sm: 3, type: 'text', required: true },
   { name: 'email', label: 'Email', xs: 6, sm: 3, type: 'email' },
   { name: 'phoneNo', label: 'Phone No', xs: 6, sm: 3, type: 'text' },
-  { name: 'altPhoneNo', label: 'Alt. Phone No', xs: 6, sm: 3, type: 'text' },
+  { name: 'altPhoneNo', label: 'Alternate Phone No', xs: 6, sm: 3, type: 'text' },
   {
     name: 'isPerson',
-    label: 'Person Type',
+    label: 'Customer Type',
     xs: 3,
     sm: 3,
-    type: 'checkbox',
-    trueLabel: 'Individual',
-    falseLabel: 'Company'
+    type: 'radio',
+    options: [
+      { label: 'Individual', value: true },
+      { label: 'Business', value: false }
+    ],
+    inputStyle: { display: 'flex', flexDirection: 'row' },
+    required: true
   },
   {
     name: 'gender',
