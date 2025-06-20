@@ -7,18 +7,10 @@ export interface ITableData extends ICustomerItem {
 }
 
 export const getColumnConfig = (theme: Theme): ColumnConfig<ITableData>[] => [
-  { field: 'photo', headerName: 'PHOTO', type: 'image' },
-  { field: 'fullName', headerName: 'FULL NAME', type: 'text', sortable: true },
   { field: 'customerNo', headerName: 'CUSTOMER NO.', type: 'text', filterable: true },
-  { field: 'email', headerName: 'EMAIL', type: 'text', filterable: true },
+  { field: 'fullName', headerName: 'FULL NAME', type: 'text', sortable: true },
+  { field: 'email', headerName: 'EMAIL', type: 'text', minWidth: 200, filterable: true },
   { field: 'phoneNo', headerName: 'PHONE NO.', type: 'text', filterable: true },
-  // { field: 'altPhoneNo', headerName: 'ALT PHONE NO.', type: 'text', filterable: true },
-  {
-    field: 'isPerson',
-    headerName: 'IS PERSON',
-    type: 'boolean',
-    filterable: true
-  },
   {
     field: 'isActive',
     headerName: 'ACTIVE STATUS',

@@ -1,7 +1,7 @@
-import * as z from 'zod';
 import { FormField } from '@/components/app-form/types';
 import { enumToOptions } from '@/utils/functions/formatString';
-import { GenderEnum, AddressLabelEnum } from '../../redux/types';
+import * as z from 'zod';
+import { AddressLabelEnum, GenderEnum } from '../../redux/types';
 
 // NOTE - Schema definition for customer address
 export const customerAddressSchema = z.object({
