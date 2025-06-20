@@ -1,14 +1,14 @@
-import React, { useCallback, useEffect, useState } from 'react';
 import { Box, Button, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import {
   GridMoreVertIcon,
   GridToolbarColumnsButton,
+  GridToolbarContainer,
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
   GridToolbarQuickFilter,
-  useGridApiContext,
-  GridToolbarContainer
+  useGridApiContext
 } from '@mui/x-data-grid';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import AppDialog from '@/components/app-dialog';
 import SaveExport from '@/components/export';
@@ -69,6 +69,7 @@ const CombinedToolbar = React.forwardRef<HTMLDivElement, ToolbarProps>((props, r
             placeholder="Search..."
             sx={{
               minWidth: 200,
+              paddingBottom: 0,
               '& .MuiInputBase-root': {
                 backgroundColor: 'background.paper'
               }
