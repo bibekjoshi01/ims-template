@@ -23,7 +23,7 @@ export function capitalizeFirst(str: string) {
 // enum GenderEnum {
 //   MALE = 'MALE',
 //   FEMALE = 'FEMALE',
-//   NOT_AVAILABLE = 'NA'
+//   NA = 'NA'
 // }
 
 // converts this to
@@ -31,11 +31,11 @@ export function capitalizeFirst(str: string) {
 // [
 //   { label: 'Male', value: 'MALE' },
 //   { label: 'Female', value: 'FEMALE' },
-//   { label: 'Not available', value: 'NA' }
+//   { label: 'NA', value: 'NA' }
 // ]
 export function enumToOptions(e: Record<string, string>): SelectOption[] {
   return Object.entries(e).map(([key, value]) => ({
-    label: capitalizeFirst(key.toLowerCase()),
+    label: key === 'NA' ? 'NA' : capitalizeFirst(key.toLowerCase()),
     value
   }));
 }

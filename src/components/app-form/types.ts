@@ -1,4 +1,5 @@
 import { SxProps } from '@mui/system';
+import React from 'react';
 import { ArrayPath, Control, FieldArrayWithId, FieldErrors, FieldValues } from 'react-hook-form';
 
 /* ------------------------------------------------------------------
@@ -60,7 +61,10 @@ export interface CustomInputProps {
   children?: React.ReactNode;
   /** Reference to the input element */
   inputRef?: React.Ref<any>;
+  /** Placeholder text for the input */
   placeholder?: string;
+  /** Input styles */
+  inputStyle: SxProps;
   /** Additional props (will be split between container and input) */
   [key: string]: any;
 }
@@ -98,6 +102,7 @@ export type FormField<T extends FieldValues> = {
   itemFields?: unknown;
   onDelete?: (index: number, field: TField<T>) => void; // Function to handle deletion of an item in an array field.
   showIf?: (values: T) => boolean; // Function to conditionally show the field based on form values.
+  inputStyle?: SxProps; // Style object for the input element.
 };
 
 /* ------------------------------------------------------------------
