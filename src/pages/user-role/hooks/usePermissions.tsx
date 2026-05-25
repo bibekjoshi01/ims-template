@@ -11,9 +11,9 @@ export const usePermissions = (selectedPermissions: number[], mainModule?: strin
       try {
         const res = await fetchPermissions({ mainModule, subModule }).unwrap();
 
-        const newPermissions = res.results.map((perm) => ({
+        const newPermissions: SelectOption[] = res.results.map((perm) => ({
           label: perm.name,
-          value: perm.id,
+          value: perm.id as string | number,
           groupName: `${perm.mainModuleName} - ${perm.permissionCategoryName}`
         }));
 

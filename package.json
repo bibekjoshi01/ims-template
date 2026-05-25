@@ -10,13 +10,19 @@
   },
   "type": "module",
   "scripts": {
-    "start": "vite",
+    "dev": "vite",
+    "start": "vite start",
     "build": "vite build",
     "preview": "vite preview",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write .",
-    "check-format": "prettier --check .",
-    "prepare": "husky"
+    "typecheck": "tsc --noEmit"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@ant-design/colors": "^7.2.0",
@@ -26,15 +32,37 @@
     "@emotion/styled": "^11.11.0",
     "@fontsource/public-sans": "^5.0.17",
     "@hookform/resolvers": "^4.0.0",
-    "@mui/base": "^5.0.0-beta.38",
-    "@mui/icons-material": "^6.4.3",
-    "@mui/lab": "^5.0.0-alpha.167",
-    "@mui/material": "^5.15.12",
-    "@mui/system": "^5.15.12",
+    "@mui/icons-material": "^9",
+    "@mui/material": "^9",
+    "@mui/system": "^9",
+    "@mui/utils": "^9",
     "@mui/x-data-grid": "^7.23.5",
     "@mui/x-date-pickers": "^7.27.3",
     "@reduxjs/toolkit": "^2.5.0",
     "@svgr/webpack": "^8.1.0",
+    "@tiptap/core": "^3.23.6",
+    "@tiptap/extension-bullet-list": "^3.23.6",
+    "@tiptap/extension-color": "^3.23.6",
+    "@tiptap/extension-font-family": "^3.23.6",
+    "@tiptap/extension-hard-break": "^3.23.6",
+    "@tiptap/extension-heading": "^3.23.6",
+    "@tiptap/extension-highlight": "^3.23.6",
+    "@tiptap/extension-image": "^3.23.6",
+    "@tiptap/extension-link": "^3.23.6",
+    "@tiptap/extension-list-item": "^3.23.6",
+    "@tiptap/extension-ordered-list": "^3.23.6",
+    "@tiptap/extension-placeholder": "^3.23.6",
+    "@tiptap/extension-subscript": "^3.23.6",
+    "@tiptap/extension-superscript": "^3.23.6",
+    "@tiptap/extension-table": "^3.23.6",
+    "@tiptap/extension-task-item": "^3.23.6",
+    "@tiptap/extension-task-list": "^3.23.6",
+    "@tiptap/extension-text-align": "^3.23.6",
+    "@tiptap/extension-text-style": "^3.23.6",
+    "@tiptap/extension-underline": "^3.23.6",
+    "@tiptap/pm": "^3.23.6",
+    "@tiptap/react": "^3.23.6",
+    "@tiptap/starter-kit": "^3.23.6",
     "@types/culori": "^2.1.1",
     "@types/file-saver": "^2.0.7",
     "@types/react-color": "^3.0.13",
@@ -55,6 +83,7 @@
     "jspdf": "^3.0.1",
     "jspdf-autotable": "^5.0.2",
     "lodash": "^4.17.21",
+    "mui-tiptap": "^1.30.0",
     "notistack": "^3.0.2",
     "papaparse": "^5.5.3",
     "process": "^0.11.10",
@@ -101,20 +130,21 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
+    "@eslint/js": "^10.0.1",
     "@types/js-cookie": "^3.0.6",
     "@types/papaparse": "^5.3.16",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "eslint": "^10.4.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^15.14.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
     "prettier": "3.3.3",
-    "typescript": "~5.6.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.59.4"
   }
 }

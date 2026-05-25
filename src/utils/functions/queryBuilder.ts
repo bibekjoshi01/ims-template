@@ -21,8 +21,8 @@ export const getQueryParams = ({ search, paginationModel, sortModel, filterModel
   const filterItem = filterModel?.items?.[0];
   const filterField = filterItem?.field;
   const filterFieldSnake = filterField ? camelCaseToSnakeCase(filterField) : '';
-  const filterValue = filterItem?.value;
-  const filterString = filterField && filterValue ? `${filterFieldSnake}=${filterValue}` : '';
+  const filterValue = filterItem?.value || '';
+  const filterString = filterField ? `${filterFieldSnake}=${filterValue}` : '';
 
   return {
     page,

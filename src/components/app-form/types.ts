@@ -6,13 +6,13 @@ import { ArrayPath, Control, FieldArrayWithId, FieldErrors, FieldValues } from '
    Input Types & Option Types
 ------------------------------------------------------------------ */
 
-export type InputType = 'text' | 'number' | 'select' | 'switch' | 'file' | 'image' | 'password' | 'date' | string;
+export type InputType = 'text' | 'number' | 'select' | 'switch' | 'file' | 'image' | 'password' | 'date' | 'editor' | string;
 
 export interface SelectOption {
   label: string;
-  value: any;
+  value: string | number | boolean;
   src?: string;
-  sx?: any;
+  sx?: SxProps;
   groupName?: string;
 }
 
@@ -28,7 +28,7 @@ export interface CustomInputProps {
   /** Label to display above the input */
   label?: string;
   /** Controlled value of the input */
-  value: any;
+  value: unknown;
   /** Change handler */
   onChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | any) => void;
   /** Change fullwidth */
@@ -46,9 +46,11 @@ export interface CustomInputProps {
   /** Show password visibility toggle */
   showPassword?: Record<string, boolean>;
   /** Handle password visibility toggle */
-  handleToggleVisibility?: (field: keyof CustomInputProps['showPassword']) => void;
+  handleToggleVisibility?: (field: any) => void;
   /** Image preview size (for image type) */
   imageSize?: number;
+  /** Accepts the specified files only for type 'file' */
+  accpetFileTypes?: 'image/*' | 'application/*' | 'image/*,application/*';
   /** To show '*' for required fields */
   required?: boolean;
   /** Label for true value of checkbox */
@@ -60,11 +62,11 @@ export interface CustomInputProps {
   /** Additional elements to render inside the input container */
   children?: React.ReactNode;
   /** Reference to the input element */
-  inputRef?: React.Ref<any>;
+  inputRef?: React.Ref<unknown>;
   /** Placeholder text for the input */
   placeholder?: string;
   /** Input styles */
-  inputStyle: SxProps;
+  inputStyle?: SxProps;
   /** Additional props (will be split between container and input) */
   [key: string]: any;
 }
@@ -89,10 +91,11 @@ export type FormField<T extends FieldValues> = {
   xxs?: number; // Grid size for extra extra small screens.
   xs?: number; // Grid size for extra small screens.
   sm?: number; // Grid size for small screens.
-  defaultValue?: any; // Default value for the field.
-  sx?: any; // Style object for the field.
+  defaultValue?: unknown; // Default value for the field.
+  sx?: SxProps; // Style object for the field.
   imageSize?: number; // Size of the image for image inputs.
-  required?: boolean; // Whether the field is required. default is true.
+  accpetFileTypes?: 'image/*' | 'application/*' | 'image/*,application/*'; // Accepted file types for file inputs. default is 'image/*,application/*'.
+  required?: boolean; // Whether the field is required. default is false.
   trueLabel?: string; // Label for the true value of a checkbox.
   multipleChips?: boolean; // Whether the field allows multiple chip selections.
   falseLabel?: string; // Label for the false value of a checkbox.
@@ -102,6 +105,8 @@ export type FormField<T extends FieldValues> = {
   itemFields?: unknown;
   onDelete?: (index: number, field: TField<T>) => void; // Function to handle deletion of an item in an array field.
   showIf?: (values: T) => boolean; // Function to conditionally show the field based on form values.
+  allowDuplicates?: boolean; // Whether the field allows duplicate values in select options in array field. default is false.
+  maxSelectable?: number; // Maximum number of dynamic filelds that can be added in array filed. default is inifinty.
   inputStyle?: SxProps; // Style object for the input element.
 };
 
@@ -132,13 +137,13 @@ export interface FormSectionProps<T extends FieldValues> {
   showPassword?: Record<string, boolean>;
 
   /** Handle password visibility toggle. */
-  handleToggleVisibility?: (field: keyof FormSectionProps<T>['showPassword']) => void;
+  handleToggleVisibility?: (field: keyof T | any) => void;
 
   /** Default value for the field. */
-  defaultValue?: any;
+  defaultValue?: unknown;
 
   /** sx . */
-  sx?: any;
+  sx?: SxProps;
 }
 
 /* ------------------------------------------------------------------
@@ -156,4 +161,5 @@ export interface DynamicFieldArraySectionProps<T extends FieldValues> {
   errors: FieldErrors<T>;
   itemFields: FormField<T>[];
   onDelete?: (index: number, field: TField<T>) => void;
+  maxSelectable?: number; // Maximum number of dynamic fields that can be added in array field. default is inifinty.
 }

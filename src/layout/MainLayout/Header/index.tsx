@@ -24,8 +24,7 @@ export default function Header() {
   const downLG = useMediaQuery(theme.breakpoints.down('lg'));
 
   const { menuMaster } = useGetMenuMaster();
-  // @ts-ignore
-  const drawerOpen = menuMaster.isDashboardDrawerOpened;
+  const drawerOpen = menuMaster?.isDashboardDrawerOpened ?? false;
 
   // header content
   const headerContent = useMemo(() => <HeaderContent />, []);

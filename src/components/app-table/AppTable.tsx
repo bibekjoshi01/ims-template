@@ -224,11 +224,9 @@ const AppTable = <T extends object>({
             filterPanel: {
               filterFormProps: {
                 valueInputProps: {
-                  InputComponentProps: {
-                    variant: 'outlined',
-                    size: 'small',
-                    sx: { width: 180 }
-                  }
+                  variant: 'outlined',
+                  size: 'small',
+                  sx: { width: 180 }
                 },
                 columnInputProps: {
                   variant: 'outlined',

@@ -1,5 +1,5 @@
 // material-ui imports
-import { LockOutlined, PersonOutline, SettingsOutlined } from '@mui/icons-material';
+import { LockOutlined, PersonOutlined, SettingsOutlined } from '@mui/icons-material';
 
 // project imports
 import { TabItem } from '@/menu-items/types';
@@ -8,7 +8,7 @@ export const TabItems: TabItem[] = [
   {
     id: 'profile',
     title: 'Profile',
-    icon: PersonOutline,
+    icon: PersonOutlined,
     url: '/account/profile'
   },
   {

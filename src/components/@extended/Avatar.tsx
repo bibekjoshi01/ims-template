@@ -1,6 +1,6 @@
 // material-ui
 import MuiAvatar, { AvatarProps as MuiAvatarProps } from '@mui/material/Avatar';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 // project import
 import getColors from '@/utils/functions/getColors';
@@ -107,10 +107,8 @@ const AvatarStyle = styled(MuiAvatar, {
 }));
 
 export default function Avatar({ children, color = 'primary', type = 'filled', size = 'md', ...others }: AvatarProps) {
-  const theme = useTheme();
-
   return (
-    <AvatarStyle theme={theme} color={color} type={type} size={size} {...others}>
+    <AvatarStyle color={color} type={type} size={size} {...others}>
       {children}
     </AvatarStyle>
   );

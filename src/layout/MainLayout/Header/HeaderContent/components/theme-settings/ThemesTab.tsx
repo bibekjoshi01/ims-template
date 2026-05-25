@@ -1,5 +1,6 @@
 // MUI Imports
-import { Box, Button, Grid, Tooltip, Typography } from '@mui/material';
+import { Box, Button, Tooltip, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
 // Project Imports
 import { useThemeMode } from '@/contexts/theme-context';
@@ -19,16 +20,27 @@ export default function ThemesTab() {
     <Box sx={{ mt: 2 }}>
       {/* Theme mode changer(Dark/Light) */}
       <ThemeModeChanger />
-      <Typography variant="subtitle1" fontWeight={500} gutterBottom>
+      <Typography
+        variant="subtitle1"
+        gutterBottom
+        sx={{
+          fontWeight: 500
+        }}
+      >
         Theme Presets
       </Typography>
-      <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+      <Typography
+        variant="body2"
+        sx={{
+          color: 'text.secondary',
+          mb: 2
+        }}
+      >
         Select a predefined theme with harmonized colors
       </Typography>
-
       <Grid container spacing={2}>
         {THEME_PRESETS.map((preset, index) => (
-          <Grid item xs={6} key={preset.name}>
+          <Grid key={preset.name} size={{ xs: 6 }}>
             <Button
               fullWidth
               variant={selectedTheme === index ? 'contained' : 'outlined'}

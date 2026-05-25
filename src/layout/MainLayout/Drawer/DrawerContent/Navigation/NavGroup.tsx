@@ -30,7 +30,7 @@ export default function NavGroup({ item, isSearching }: { item: MenuItem; isSear
         return (
           <Box key={menuItem.id}>
             <CollapseItem item={menuItem} level={1} handleToggleCollapse={handleToggleCollapse} openCollapse={openCollapse} />
-            <Collapse in={openCollapse[menuItem.id] || isSearching} timeout="auto" unmountOnExit>
+            <Collapse in={(openCollapse[menuItem.id] || isSearching) && drawerOpen} timeout="auto" unmountOnExit>
               {menuItem?.children?.map((childItem) => <NavItem key={childItem.id} item={childItem} level={2} />)}
             </Collapse>
           </Box>

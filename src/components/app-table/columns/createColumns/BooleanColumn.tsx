@@ -34,7 +34,7 @@ export const createBooleanColumn = <T extends object>(config: ColumnConfig<T>, b
               name={String(config.field)}
               inputRef={inputRef}
               value={params?.value}
-              sx={{ display: 'grid' }}
+              sx={{ display: 'grid', width: '100%' }}
               onChange={() =>
                 params.api.setEditCellValue({
                   id: params.id,
@@ -43,7 +43,12 @@ export const createBooleanColumn = <T extends object>(config: ColumnConfig<T>, b
                 })
               }
             />
-            <Typography variant="inherit" color="text.secondary">
+            <Typography
+              variant="inherit"
+              sx={{
+                color: 'text.secondary'
+              }}
+            >
               {params.value ? config.trueLabel : config.falseLabel}
             </Typography>
           </Box>
@@ -62,7 +67,7 @@ interface RenderValueProps {
 }
 
 const RenderValue: React.FC<RenderValueProps> = ({ params, trueLabel, falseLabel }) => {
-  return !!params.value ? (
+  return params.value ? (
     <Typography
       variant="inherit"
       color="success"

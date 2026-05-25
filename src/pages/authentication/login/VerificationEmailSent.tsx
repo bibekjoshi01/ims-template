@@ -12,16 +12,30 @@ const AuthVerificationEmailSentSuccess = () => {
     <AuthWrapper>
       <Grid container spacing={2} sx={{ p: 1 }}>
         {/* Title */}
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Typography variant="h3">Hi, Check Your Mail</Typography>
         </Grid>
 
         {/* Description */}
-        <Grid item xs={12}>
-          <Typography variant="body1" fontSize="14px" sx={{ marginBottom: '22px', opacity: 0.5 }}>
+        <Grid size={{ xs: 12 }}>
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: '14px',
+              marginBottom: '22px',
+              opacity: 0.5
+            }}
+          >
             We have sent account verification link to your email.
           </Typography>
-          <Typography variant="body1" fontSize="14px" sx={{ marginBottom: '22px', opacity: 0.5 }}>
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: '14px',
+              marginBottom: '22px',
+              opacity: 0.5
+            }}
+          >
             Please click SignIn if you have verified your account.
           </Typography>
 

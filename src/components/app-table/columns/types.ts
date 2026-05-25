@@ -1,4 +1,4 @@
-import { GridAlignment, GridColDef, GridRowId } from '@mui/x-data-grid';
+import { GridAlignment, GridColDef, GridRowId, GridRowParams } from '@mui/x-data-grid';
 
 /**
  * BadgeColorMap defines color configurations for badge-style columns.
@@ -26,11 +26,11 @@ export interface ColumnConfig<T extends object> {
   headerName: string;
   maxWidth?: number;
   minWidth?: number;
-  type?: 'text' | 'number' | 'select' | 'actions' | 'progress' | 'image' | 'date' | 'link' | 'boolean';
+  type?: 'text' | 'richText' | 'number' | 'select' | 'actions' | 'progress' | 'image' | 'date' | 'link' | 'boolean'; // richText and actions are always non-editable
   editable?: boolean; // default true
   filterable?: boolean; // default false
   sortable?: boolean; // default false
-  valueOptions?: string[];
+  valueOptions?: { label: string; value: string | number | boolean }[]; // only for 'select' type
   renderCell?: GridColDef<T>['renderCell'];
   colorMap?: BadgeColorMap; // only for 'select' type
   trueLabel?: string; // only for 'boolean' type
@@ -38,4 +38,6 @@ export interface ColumnConfig<T extends object> {
   handlers?: ColumnHandlers<T>;
   align?: GridAlignment; // left | right | center
   visible?: boolean;
+  handleChange?: (id: GridRowId, value: T[keyof T]) => void;
+  customActions?: ((params: GridRowParams<T>) => JSX.Element)[];
 }

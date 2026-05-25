@@ -1,4 +1,4 @@
-import { CheckCircleOutline, DeleteOutline, InfoOutlined, WarningAmber } from '@mui/icons-material';
+import { CheckCircleOutlined, DeleteOutlined, InfoOutlined, WarningAmber } from '@mui/icons-material';
 import { Avatar, Button, CircularProgress, Dialog, DialogActions, DialogContent, Typography } from '@mui/material';
 import React from 'react';
 
@@ -30,7 +30,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
     switch (variant) {
       case 'error':
         return {
-          icon: <DeleteOutline sx={{ fontSize: 32 }} />
+          icon: <DeleteOutlined sx={{ fontSize: 32 }} />
         };
       case 'warning':
         return {
@@ -38,7 +38,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
         };
       case 'success':
         return {
-          icon: <CheckCircleOutline sx={{ fontSize: 32 }} />
+          icon: <CheckCircleOutlined sx={{ fontSize: 32 }} />
         };
       case 'info':
       default:
@@ -56,9 +56,11 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
       onClose={loading ? undefined : onCancel}
       maxWidth="xs"
       fullWidth
-      PaperProps={{
-        sx: {
-          borderRadius: 3
+      slotProps={{
+        paper: {
+          sx: {
+            borderRadius: 3
+          }
         }
       }}
     >

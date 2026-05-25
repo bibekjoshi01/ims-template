@@ -14,13 +14,13 @@ export default function CategoryCreateForm({ onClose }: ICategoryCreateFormProps
   return (
     <form onSubmit={handleSubmit()} noValidate>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <MainCard divider title="Create New Category">
             <FormSection<TCategoryCreateFormDataType> fields={categoryCreateFields} control={control} errors={errors} />
           </MainCard>
         </Grid>
 
-        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, flexWrap: 'wrap' }}>
+        <Grid sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, flexWrap: 'wrap' }} size={{ xs: 12 }}>
           <Button variant="outlined" color="error" onClick={onClose}>
             Cancel
           </Button>

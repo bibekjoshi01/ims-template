@@ -18,15 +18,24 @@ export const ContainerStyles = {
 export const MenuItemStyles = {
   p: 0,
   '& .MuiButtonBase-root': {
-    px: 2.4,
+    px: 2,
     py: 1,
-    gap: 0.5,
-    display: 'grid',
-    gridTemplateColumns: 'auto 1fr',
-    width: '100%'
+    gap: 1,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    width: '100%',
+    textAlign: 'left',
+    textTransform: 'none',
+    color: 'text.primary',
+    '& .MuiButton-startIcon': {
+      mr: 1,
+      ml: 0
+    }
   },
   '& .MuiSvgIcon-root': {
-    fontSize: 'initial',
+    fontSize: '1.25rem',
     width: 20,
     height: 20
   }

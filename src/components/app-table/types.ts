@@ -65,7 +65,7 @@ export interface AppTableProps<T extends object> {
    *
    * @param id - The ID of the row to edit
    */
-  handleEditClick: ((id: GridRowId) => void) | undefined;
+  handleEditClick?: (id: GridRowId) => void;
 
   /**
    * Function to handle row view details button click.

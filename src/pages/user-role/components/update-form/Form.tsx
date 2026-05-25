@@ -1,6 +1,7 @@
 // PACKAGE IMPORTS
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, Grid } from '@mui/material';
+import { Button } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { useSnackbar } from 'notistack';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -54,7 +55,10 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
   const subModuleOptions = useSubModules(mainModule);
   const allPermissions = usePermissions(selectedPermissions, mainModule, subModule);
 
-  const formattedPermissions = useMemo(() => allPermissions.map((perm) => ({ id: perm.value, name: perm.label })), [allPermissions]);
+  const formattedPermissions = useMemo(
+    () => allPermissions.map((perm) => ({ id: perm.value as string | number, name: perm.label })),
+    [allPermissions]
+  );
 
   const selectedUserPermissions = useMemo(
     () => formattedPermissions.filter((perm) => selectedPermissions.includes(perm.id as number)),
@@ -128,7 +132,7 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <MainCard divider title="Update User Role">
             <FormSection<UserRoleUpdateFormDataType> fields={formFields} control={control} errors={errors} />
 
@@ -140,7 +144,7 @@ export default function UserRoleUpdateForm({ userRoleData, onClose }: UserRoleUp
           </MainCard>
         </Grid>
 
-        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+        <Grid sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }} size={{ xs: 12 }}>
           <Button variant="outlined" color="error" onClick={onClose}>
             Cancel
           </Button>

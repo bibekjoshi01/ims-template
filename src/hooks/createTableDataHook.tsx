@@ -156,12 +156,21 @@ export function createTableDataHook<TData extends object, TApiResponse, TUpdateI
     }, []);
 
     const handleFilterChange = useCallback((model: GridFilterModel) => {
+      const serializedModel: GridFilterModel = {
+        ...model,
+        items: model.items.map((item) => ({
+          ...item,
+          value: item.value instanceof Date ? item.value.toISOString() : item.value
+        }))
+      };
+
       setQueryParams((prev) => ({
         ...prev,
         search: model.quickFilterValues?.[0] || '',
-        filterModel: model
+        filterModel: serializedModel
       }));
     }, []);
+
     /**
      * Handle row updates of inline editing.
      */

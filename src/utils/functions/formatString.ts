@@ -35,7 +35,7 @@ export function capitalizeFirst(str: string) {
 // ]
 export function enumToOptions(e: Record<string, string>): SelectOption[] {
   return Object.entries(e).map(([key, value]) => ({
-    label: key === 'NA' ? 'NA' : capitalizeFirst(key.toLowerCase()),
+    label: key === 'NA' ? 'NA' : capitalizeFirst(key.toLowerCase()).replaceAll('_', ' '),
     value
   }));
 }

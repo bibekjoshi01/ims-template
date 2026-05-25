@@ -1,6 +1,7 @@
 // MUI imports
 import { DarkModeOutlined, LightModeOutlined } from '@mui/icons-material';
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
 // Project imports
 import { useThemeMode } from '@/contexts/theme-context';
@@ -10,11 +11,17 @@ export default function ThemeModeChanger() {
 
   return (
     <Box sx={{ mb: 2, pb: 2, borderBottom: 1, borderColor: 'divider' }}>
-      <Typography variant="subtitle1" fontWeight={500} gutterBottom>
+      <Typography
+        variant="subtitle1"
+        gutterBottom
+        sx={{
+          fontWeight: 500
+        }}
+      >
         Theme Mode
       </Typography>
       <Grid container spacing={2}>
-        <Grid item xs={6}>
+        <Grid size={{ xs: 6 }}>
           <Button
             fullWidth
             variant={mode === 'light' ? 'contained' : 'outlined'}
@@ -29,7 +36,7 @@ export default function ThemeModeChanger() {
             Light
           </Button>
         </Grid>
-        <Grid item xs={6}>
+        <Grid size={{ xs: 6 }}>
           <Button
             fullWidth
             variant={mode === 'dark' ? 'contained' : 'outlined'}

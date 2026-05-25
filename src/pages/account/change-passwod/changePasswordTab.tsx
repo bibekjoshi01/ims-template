@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 // material-ui imports
-import { CancelOutlined, CheckCircleOutline } from '@mui/icons-material';
+import { CancelOutlined, CheckCircleOutlined } from '@mui/icons-material';
 import { Box, Button, Divider, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 
 // components
 import FormSection from '@/components/app-form/FormSection';
-import MainCard from '@/components/cards/MainCard';
 import MatchIndicator from '@/components/app-form/PasswordMatchIndicator';
 import PasswordStrengthCapsules from '@/components/app-form/PasswordStrengthCapsules';
+import MainCard from '@/components/cards/MainCard';
 
 // project imports
 import { useChangePassword } from '../hooks/useChangePassword';
@@ -43,12 +43,18 @@ export default function ChangePasswordTab() {
 
   return (
     <Grid container spacing={2} sx={{ my: 1 }}>
-      <Grid item xs={12}>
+      <Grid size={{ xs: 12 }}>
         <MainCard divider title="Change Password">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={6}>
-              <Grid item xs={12} md={6}>
-                <Box display="flex" flexDirection="column" gap={3}>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 3
+                  }}
+                >
                   <FormSection<ChangePasswordFormDataType>
                     fields={passwordFields}
                     control={control}
@@ -58,15 +64,21 @@ export default function ChangePasswordTab() {
                     handleToggleVisibility={handleToggleVisibility}
                   />
                 </Box>
-                <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }}>
+                <Grid sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }} size={{ xs: 12 }}>
                   <Button variant="contained" type="submit" disabled={loadingChangePassword}>
                     Update Password
                   </Button>
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} md={6}>
-                <Typography variant="h5" fontWeight="bold" mb={1}>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: 'bold',
+                    mb: 1
+                  }}
+                >
                   New Password must contain:
                 </Typography>
                 <List dense sx={{ pl: 0 }}>
@@ -75,7 +87,7 @@ export default function ChangePasswordTab() {
                       <ListItem disableGutters>
                         <ListItemIcon sx={{ mr: 1 }}>
                           {test(newPasswordValue) ? (
-                            <CheckCircleOutline sx={{ color: 'success.main' }} />
+                            <CheckCircleOutlined sx={{ color: 'success.main' }} />
                           ) : (
                             <CancelOutlined sx={{ color: 'text.disabled' }} />
                           )}

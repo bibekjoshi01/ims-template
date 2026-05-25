@@ -1,5 +1,6 @@
 // MUI IMPORTS
-import { Button, Grid, IconButton, Typography } from '@mui/material';
+import { Button, IconButton, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { DeleteOutlined } from '@ant-design/icons';
 
 // REACT HOOK FORM IMPORTS
@@ -7,7 +8,7 @@ import { Controller, useFieldArray, FieldArray, ArrayPath, Path, FieldErrors, Fi
 
 // PROJECT IMPORTS
 import CustomInput from './CustomInput';
-import { LabelForInput } from './Helpers';
+import { LabelForDynamicSection } from './Helpers';
 import { DynamicFieldArraySectionProps, FormField, TField } from './types';
 
 export default function DynamicFieldArraySection<T extends Record<string, any>>({
@@ -18,11 +19,15 @@ export default function DynamicFieldArraySection<T extends Record<string, any>>(
   errors,
   formValues,
   itemFields,
-  onDelete
+  onDelete,
+  maxSelectable = Infinity
 }: DynamicFieldArraySectionProps<T>) {
   const { fields, append, remove } = useFieldArray({ control, name, keyName: 'uid' });
   const currentNoOfFileds = fields.length;
-  const totalOptions = itemFields.find((item) => item.type === 'select')?.options?.length || 0;
+
+  const selectField = itemFields.find((item) => item.type === 'select');
+  const resolvedMaxSelectable =
+    maxSelectable ?? selectField?.maxSelectable ?? (selectField?.allowDuplicates ? Infinity : selectField?.options?.length || 0);
 
   const errorAtIndex = (index: number, fieldName: FormField<T>['name']) => {
     return (errors[name] as FieldErrors<any>[] | undefined)?.[index]?.[fieldName] as FieldError | undefined;
@@ -32,6 +37,7 @@ export default function DynamicFieldArraySection<T extends Record<string, any>>(
 
   const getFilteredOptions = (item: FormField<T>, index: number) => {
     if (item.type !== 'select') return item.options;
+    if (item.allowDuplicates) return item.options; // allow all options, no filtering
 
     const selectedValues = currentValues.map((row: any, i: number) => (i !== index ? row[item.name] : null)).filter((v: any) => v !== null);
 
@@ -41,14 +47,14 @@ export default function DynamicFieldArraySection<T extends Record<string, any>>(
   return (
     <>
       {/* Label */}
-      <LabelForInput name={name} label={label} required={required} />
+      <LabelForDynamicSection name={name} label={label} required={required} />
       {fields.length > 0 ? (
         (fields as TField<T>[]).map((field, index) => (
           <Grid container spacing={2} key={field.uid} sx={{ mb: 2 }}>
             {itemFields.map((item) => {
               const fieldName = `${name}.${index}.${String(item.name)}` as Path<T>;
               return (
-                <Grid item key={fieldName} xxs={item.xxs || 11} xs={item.xs || 11} sm={item.sm || 11}>
+                <Grid key={fieldName} size={{ xxs: item.xxs || 11, xs: item.xs || 11, sm: item.sm || 11 }}>
                   <Controller
                     name={fieldName}
                     control={control}
@@ -60,14 +66,20 @@ export default function DynamicFieldArraySection<T extends Record<string, any>>(
                         options={getFilteredOptions(item, index) ?? item.options}
                         error={!!errorAtIndex(index, item.name)}
                         helperText={errorAtIndex(index, item.name)?.message}
+                        required={item.required}
+                        accpetFileTypes={item?.accpetFileTypes}
+                        defaultValue={item?.defaultValue}
                       />
                     )}
                   />
                 </Grid>
               );
             })}
-            {fields.length > 1 && (
-              <Grid item xxs={1} xs={1} sm={1} alignSelf="flex-end">
+
+            {/* Delete Button */}
+            {/* if it is required, ensure at least one field remains else allow deletion all */}
+            {fields.length > (required ? 1 : 0) && (
+              <Grid sx={{ alignSelf: 'center' }} size={{ xxs: 1, xs: 1, sm: 1 }}>
                 <IconButton
                   color="error"
                   onClick={() => {
@@ -84,11 +96,10 @@ export default function DynamicFieldArraySection<T extends Record<string, any>>(
       ) : (
         <Typography sx={{ mb: 2, color: 'text.secondary' }}>No {label?.toLowerCase() ?? 'fields'} added yet. Click "Add More".</Typography>
       )}
-
       {/* Add More Button */}
       <Button
         variant="outlined"
-        disabled={currentNoOfFileds >= totalOptions}
+        disabled={currentNoOfFileds >= resolvedMaxSelectable}
         onClick={() =>
           append(
             itemFields.reduce(
@@ -100,7 +111,7 @@ export default function DynamicFieldArraySection<T extends Record<string, any>>(
             ) as FieldArray<T, ArrayPath<T>>
           )
         }
-        sx={{ alignSelf: 'flex-end' }}
+        sx={{ my: 4 }}
       >
         Add More
       </Button>

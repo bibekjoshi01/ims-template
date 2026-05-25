@@ -8,7 +8,13 @@ const ServerErrorPage = () => (
     <PageImage src={SeverIssueImage} alt="Server error 500 page image" />
     <h1>Internal Sever Error</h1>
     <p>Server error 500. We are fixing the problem, please try again at a later stage</p>
-    <Box display="flex" justifyContent="center" alignItems="center">
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
       <Button variant="contained" color="primary" component={Link} to="/">
         Back Home
       </Button>

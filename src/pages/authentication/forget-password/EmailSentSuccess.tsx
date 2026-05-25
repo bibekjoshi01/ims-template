@@ -21,13 +21,20 @@ const ForgetPasswordEmailSentSuccess = ({ message }: { message: string }) => {
     <AuthWrapper>
       <Grid container spacing={2} sx={{ p: 1 }}>
         {/* Title */}
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Typography variant="h3">Hi, Check Your Mail</Typography>
         </Grid>
 
         {/* Description */}
-        <Grid item xs={12}>
-          <Typography variant="body1" fontSize="14px" sx={{ marginBottom: '22px', opacity: 0.5 }}>
+        <Grid size={{ xs: 12 }}>
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: '14px',
+              marginBottom: '22px',
+              opacity: 0.5
+            }}
+          >
             {message}
           </Typography>
 

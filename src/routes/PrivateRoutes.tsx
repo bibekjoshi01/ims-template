@@ -30,8 +30,8 @@ const PrivateRoutes = () => (
     <Routes>
       <Route path="/" element={<MainLayout />}>
         {/* Dashboard */}
-        <Route index element={<Navigate to="dashboard/default" replace />} /> // Redirect to dashboard/default page
-        <Route path="dashboard/default" element={<DashboardDefault />} />
+        <Route index element={<Navigate to="dashboard" replace />} /> // Redirect to dashboard page
+        <Route path="dashboard" element={<DashboardDefault />} />
         {/* Account Profile */}
         <Route path="account">
           <Route index element={<Navigate to="profile" replace />} /> // Redirect to personal page

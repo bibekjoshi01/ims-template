@@ -30,8 +30,15 @@ const ForgetPasswordRequest = () => {
       ) : (
         <AuthWrapper>
           <Grid container spacing={4} sx={{ p: 1 }}>
-            <Grid item xs={12}>
-              <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>
+            <Grid size={{ xs: 12 }}>
+              <Stack
+                direction="row"
+                sx={{
+                  justifyContent: 'space-between',
+                  alignItems: 'baseline',
+                  mb: { xs: -0.5, sm: 0.5 }
+                }}
+              >
                 <Typography variant="h3">Forgot Password</Typography>
                 <Link
                   variant="inherit"
@@ -44,18 +51,25 @@ const ForgetPasswordRequest = () => {
                 </Link>
               </Stack>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid container spacing={3}>
-                  <Grid item xs={12}>
+                  <Grid size={{ xs: 12 }}>
                     <FormSection<ForgetPasswordRequestFormDataType>
                       fields={forgetPasswordRequestFields}
                       control={control}
                       errors={errors}
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="body1" fontSize="14px" sx={{ marginBottom: '10px', opacity: 0.8 }}>
+                  <Grid size={{ xs: 12 }}>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontSize: '14px',
+                        marginBottom: '10px',
+                        opacity: 0.8
+                      }}
+                    >
                       Do not forget to check SPAM box .
                     </Typography>
 

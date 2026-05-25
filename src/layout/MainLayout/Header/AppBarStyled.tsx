@@ -12,14 +12,15 @@ interface AppBarStyledProps extends AppBarProps {
 }
 
 const AppBarStyled = styled(AppBar, { shouldForwardProp: (prop) => prop !== 'open' })<AppBarStyledProps>(({ theme, open }) => ({
-  // zIndex: theme.zIndex.drawer + 1,
+  zIndex: theme.zIndex.drawer + 1,
   left: 0,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen
   }),
   ...(!open && {
-    width: `calc(100%)`
+    width: `calc(100% - ${theme.spacing(7.5)})`,
+    marginLeft: theme.spacing(7.5)
   }),
   ...(open && {
     marginLeft: drawerWidth,

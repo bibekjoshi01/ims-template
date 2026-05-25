@@ -1,4 +1,5 @@
-import { Button, Grid } from '@mui/material';
+import { Button } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { useWatch } from 'react-hook-form';
 
 // project imports
@@ -28,12 +29,12 @@ export default function ProfileUpdate({ onCancel }: ProfileUpdateProps) {
   return (
     <form onSubmit={handleSubmit(onFormSubmit)}>
       <Grid container spacing={2} sx={{ my: 1 }}>
-        <Grid item xs={12} md={6}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <MainCard divider title="Update Profile Information">
             <FormSection<UpdateProfileFormDataType> fields={personalInfoFields} control={control} errors={errors}>
               <ProfileUploader image={fileImage} defaultHovered={true} setImage={handleImageChange} />
             </FormSection>
-            <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }}>
+            <Grid sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }} size={{ xs: 12 }}>
               <Button onClick={() => onCancel?.()} variant="outlined" color="error">
                 Cancel
               </Button>

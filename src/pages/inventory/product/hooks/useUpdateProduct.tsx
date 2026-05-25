@@ -24,8 +24,8 @@ const useUpdateProduct = ({ productData, onClose }: IProductUpdateFormProps) => 
   const [updateProduct] = usePatchProductMutation();
   const [triggerGetProduct] = useLazyGetProductsQuery();
   const [formFields, setFormFields] = useState(productUpdateFields);
-  const productCategoriesOptions = useProductCategories();
-  const productUnitsOptions = useProductUnits();
+  const { productCategoriesOptions } = useProductCategories();
+  const { productUnitsOptions } = useProductUnits();
 
   const {
     control,

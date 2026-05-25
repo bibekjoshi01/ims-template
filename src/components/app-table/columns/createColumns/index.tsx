@@ -15,6 +15,7 @@ import { createTextColumn } from './TextColumn';
 // TYPES
 import { ColumnConfig, ColumnHandlers } from '../types';
 import { createBooleanColumn } from './BooleanColumn';
+import { createRichTextColumn } from './RichTextColumn';
 
 /**
  * Generates column definitions for MUI DataGrid based on the provided configuration.
@@ -93,6 +94,8 @@ const createColumnDefs = <T extends object>(
         return createLinkColumn<T>(config, baseCol, rowModesModel);
       case 'boolean':
         return createBooleanColumn<T>(config, baseCol);
+      case 'richText':
+        return createRichTextColumn<T>(config, baseCol);
       case 'actions':
         return createActionsColumn<T>(config, theme, baseCol, handlers, rowModesModel, savingRows, allowEditing, allowDeleting);
       default:

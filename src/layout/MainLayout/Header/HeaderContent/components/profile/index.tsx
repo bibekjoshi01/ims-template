@@ -30,7 +30,7 @@ import { authState } from '@/pages/authentication/redux/selector';
 // assets
 import avatar1 from '@/assets/images/users/avatar-1.png';
 import LogoutOutlined from '@ant-design/icons/LogoutOutlined';
-import { PersonOutline, SettingsOutlined } from '@mui/icons-material';
+import { PersonOutlined, SettingsOutlined } from '@mui/icons-material';
 
 // tabs
 import TABS from '@/components/CustomTab';
@@ -42,7 +42,7 @@ const TabItems: TabItem[] = [
   {
     id: 'profile',
     title: 'Profile',
-    icon: PersonOutline,
+    icon: PersonOutlined,
     tabPanel: ProfileTab
   },
   {
@@ -114,7 +114,14 @@ export default function Profile() {
         aria-haspopup="true"
         onClick={handleToggle}
       >
-        <Stack direction="row" spacing={1.25} alignItems="center" sx={{ p: 0.5 }}>
+        <Stack
+          direction="row"
+          spacing={1.25}
+          sx={{
+            alignItems: 'center',
+            p: 0.5
+          }}
+        >
           <Avatar alt="profile user" src={photo || avatar1} size="sm" />
           <Typography variant="subtitle1" sx={{ textTransform: 'capitalize' }}>
             {fullName || 'Hello !'}
@@ -145,19 +152,36 @@ export default function Profile() {
               <ClickAwayListener onClickAway={handleClose}>
                 <MainCard elevation={0} border={false} content={false}>
                   <CardContent sx={{ px: 2.5, pt: 3 }}>
-                    <Grid container justifyContent="space-between" alignItems="center">
-                      <Grid item>
-                        <Stack direction="row" spacing={1.25} alignItems="center">
+                    <Grid
+                      container
+                      sx={{
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <Grid>
+                        <Stack
+                          direction="row"
+                          spacing={1.25}
+                          sx={{
+                            alignItems: 'center'
+                          }}
+                        >
                           <Avatar alt="profile user" src={photo || avatar1} sx={{ width: 32, height: 32 }} />
                           <Stack>
                             <Typography variant="h6">{fullName || 'Hello !'}</Typography>
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                color: 'text.secondary'
+                              }}
+                            >
                               {email}
                             </Typography>
                           </Stack>
                         </Stack>
                       </Grid>
-                      <Grid item>
+                      <Grid>
                         <Tooltip title="Logout">
                           <IconButton onClick={handleLogOut} size="large" sx={{ color: 'error.main' }}>
                             <LogoutOutlined />

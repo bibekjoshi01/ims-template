@@ -1,122 +1,92 @@
-import React from 'react';
-import { Box, Chip, Divider, Grid, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
+// Package Imports
+import { useState } from 'react';
 
-import { camelCaseToNormal } from '@/utils/functions/formatString';
-import { formatReadableDatetime } from '@/utils/functions/date';
-import { DynamicInfoSectionProps, InfoFieldProps } from './types';
+// MUI Core Imports
+import MainCard from '@/components/cards/MainCard';
+import { Box, CircularProgress, Paper, Typography } from '@mui/material';
 
-// ------------------------
-// Styled Components
-// ------------------------
-const InfoItem = styled(Box)(({ theme }) => ({
-  paddingTop: theme.spacing(2),
-  paddingBottom: theme.spacing(2)
-}));
+// Project Components & Types
+import CloseButton from '@/components/app-dialog/CloseButton';
+import FilePreviewDialog from '@/components/app-dialog/FilePreviewDialog';
+import DynamicInfoSection from '@/components/detail-section/sections/dynamic-info';
+import { DetailViewProps } from './types';
 
-const Label = styled(Typography)(({ theme }) => ({
-  fontWeight: 500,
-  color: theme.palette.text.secondary,
-  textTransform: 'uppercase',
-  letterSpacing: '0.08em',
-  marginBottom: theme.spacing(0.5)
-}));
+// --------------------
+// Sub-Components
+// --------------------
+import { FilesSection } from './sections/files';
+import { Header } from './sections/header';
+import { HtmlSection } from './sections/html';
+import { MembersSection } from './sections/members';
 
-const Value = styled(Box)(({ theme }) => ({
-  color: theme.palette.text.primary,
-  lineHeight: 1.5,
-  '& .MuiChip-root': {
-    marginRight: theme.spacing(0.5),
-    marginBottom: theme.spacing(0.5)
-  }
-}));
-
-// ------------------------
-// Utility Functions
-// ------------------------
-const getNestedValue = (obj: any, path: string): any =>
-  path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
-
-const renderValue = (path: string, value: any, dateTimeFields: string[], booleanFields: string[]): React.ReactNode => {
-  if (dateTimeFields.includes(path) && value) {
-    return formatReadableDatetime(value);
-  }
-
-  if (booleanFields.includes(path)) {
-    return value ? <CheckCircleIcon color="success" fontSize="small" /> : <CancelIcon color="error" fontSize="small" />;
-  }
-
-  if (Array.isArray(value)) {
-    return value.map((v, i) => <Chip key={i} label={String(v)} variant="outlined" />);
-  }
-
-  if (typeof value === 'object' && value !== null) {
-    return Object.entries(value).map(([k, v], i) => (
-      <Typography key={i} variant="body2">
-        <strong>{camelCaseToNormal(k)}:</strong> {String(v)}
-      </Typography>
-    ));
-  }
-
-  return value !== null && value !== undefined ? String(value) : 'N/A';
-};
-
-// ------------------------
-// InfoField Component
-// ------------------------
-
-export const InfoField: React.FC<InfoFieldProps> = ({ label, value }) => (
-  <>
-    <InfoItem>
-      <Label variant="caption">{label}</Label>
-      <Value sx={Array.isArray(value) ? { mt: 1 } : {}}>
-        {
-          Array.isArray(value)
-            ? value.map((v, i) => <Chip label={v} key={i} variant="outlined" />)
-            : typeof value === 'string' || typeof value === 'number'
-              ? value || 'N/A'
-              : (value ?? 'N/A') // render JSX
-        }
-      </Value>
-    </InfoItem>
-    <Divider />
-  </>
-);
-
-// ------------------------
+// --------------------
 // Main Component
-// ------------------------
-const DynamicInfoSection: React.FC<DynamicInfoSectionProps> = ({
-  data,
-  columns = 2,
-  excludeFields = [],
-  fieldOrder = [],
-  dateTimeFields = [],
-  booleanFields = [],
-  customLabels = {}
-}) => {
-  if (!data || typeof data !== 'object') return null;
+// --------------------
+const DetailView: React.FC<DetailViewProps> = ({ title, avatar, status, sections, onClose }) => {
+  const [isFileModalOpen, setIsFileModalOpen] = useState(false);
+  const [fileModalUrl, setFileModalUrl] = useState<string | null>(null);
+  const [isCurrentFilePdf, setIsCurrentFilePdf] = useState(false);
 
-  const fields = fieldOrder.length > 0 ? fieldOrder : Object.keys(data);
-  const visibleFields = fields.filter((field) => !excludeFields.some((ex) => field === ex || field.startsWith(`${ex}.`)));
+  const handleOpenFileModal = (url: string, isPdf: boolean = false) => {
+    setFileModalUrl(url);
+    setIsCurrentFilePdf(isPdf);
+    setIsFileModalOpen(true);
+  };
+
+  const handleCloseFileModal = () => {
+    setFileModalUrl(null);
+    setIsCurrentFilePdf(false);
+    setIsFileModalOpen(false);
+  };
+
+  if (!sections || sections.length === 0) {
+    return (
+      <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
+        <Typography
+          variant="h5"
+          sx={{
+            mb: 3
+          }}
+        >
+          No details found
+        </Typography>
+        <CircularProgress />
+      </Paper>
+    );
+  }
 
   return (
-    <Grid container spacing={2}>
-      {visibleFields.map((path) => {
-        const rawValue = getNestedValue(data, path);
-        const label = customLabels[path] || camelCaseToNormal(path.split('.').pop() || path);
-        const content = renderValue(path, rawValue, dateTimeFields, booleanFields);
+    <MainCard sx={{ p: 0, overflow: 'hidden', position: 'relative' }}>
+      <CloseButton onClose={onClose} />
 
-        return (
-          <Grid item xs={12} sm={6} md={12 / columns} key={path}>
-            <InfoField label={label} value={content} />
-          </Grid>
-        );
-      })}
-    </Grid>
+      <Header title={title} avatar={avatar} status={status} />
+
+      <Box sx={{ px: 2, py: 2 }}>
+        {sections.map((section, idx) => {
+          switch (section.type) {
+            case 'dynamic-info':
+              return <DynamicInfoSection key={idx} {...section.dynamicInfoProps} />;
+            case 'html':
+              return <HtmlSection key={idx} title={section.title || ''} html={section.html || ''} />;
+            case 'files':
+              return <FilesSection key={idx} files={section.files || []} onFileClick={handleOpenFileModal} />;
+            case 'members':
+              return <MembersSection key={idx} members={section.members || []} onFileClick={handleOpenFileModal} />;
+            case 'custom':
+              return (
+                <Box key={idx} sx={{ mt: 3 }}>
+                  {section.render?.()}
+                </Box>
+              );
+            default:
+              return null;
+          }
+        })}
+      </Box>
+
+      <FilePreviewDialog open={isFileModalOpen} onClose={handleCloseFileModal} fileUrl={fileModalUrl} isPdf={isCurrentFilePdf} />
+    </MainCard>
   );
 };
 
-export default DynamicInfoSection;
+export default DetailView;

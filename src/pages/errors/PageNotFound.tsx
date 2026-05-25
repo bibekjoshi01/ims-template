@@ -9,7 +9,13 @@ const PageNotFound = () => (
     <PageImage src={PageNotFoundImage} alt="404 page not found image" />
     <h1>404 - Page Not Found</h1>
     <p>The page you&apos;re looking for was moved, removed, renamed, or might never exist!</p>
-    <Box display="flex" justifyContent="center" alignItems="center">
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
       <Button variant="contained" color="primary" component={Link} to="/">
         Back Home
       </Button>

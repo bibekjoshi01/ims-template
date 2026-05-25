@@ -64,13 +64,13 @@ const ResetPassword = () => {
   return (
     <AuthWrapper>
       <Grid container spacing={4} sx={{ p: 1 }}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Typography variant="h3">Reset Password</Typography>
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <form noValidate onSubmit={handleSubmit(handleFormSubmit)}>
             <Grid container spacing={3}>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <FormSection<ResetPasswordRequestFormDataType>
                   fields={resetPasswordFields}
                   control={control}
@@ -80,7 +80,7 @@ const ResetPassword = () => {
                   handleToggleVisibility={handleToggleVisibility}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid size={{ xs: 12 }}>
                 <Button
                   disableElevation
                   disabled={loadingResetPassword}

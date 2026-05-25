@@ -14,7 +14,8 @@ export const TableStyles: SxProps<Theme> = {
 
   // scrollbar styles
   '& .MuiDataGrid-scrollbar--horizontal::-webkit-scrollbar': {
-    scrollbarWidth: 'thin'
+    scrollbarWidth: 'thin',
+    height: '6px'
   },
   '& .MuiDataGrid-scrollbar--horizontal::-webkit-scrollbar-track': {
     background: '#eee'

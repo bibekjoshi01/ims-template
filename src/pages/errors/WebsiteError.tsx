@@ -8,7 +8,14 @@ const ErrorFallback = () => (
     <PageImage src={SeverIssueImage} alt="Server error fallback image" />
     <Typography variant="body1">We encountered an unexpected error. Please try again later.</Typography>
     <Typography variant="body2">If the problem persists, please contact support.</Typography>
-    <Box display="flex" justifyContent="center" alignItems="center" mt={2}>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        mt: 2
+      }}
+    >
       <Button variant="contained" color="primary" component={Link} to="/">
         Back Home
       </Button>

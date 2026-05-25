@@ -1,12 +1,13 @@
-import { Avatar, Box, Button, CircularProgress, Grid, Typography } from '@mui/material';
-import { InfoField } from '@/components/detail-section';
+import DynamicInfoSection, { InfoField } from '@/components/detail-section/sections/dynamic-info';
+import { Avatar, Box, Button, CircularProgress, Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
 // project imports
 import MainCard from '@/components/cards/MainCard';
-import { useGetProfile } from '../hooks/useGetProfile';
-import DynamicInfoSection from '@/components/detail-section';
-import { viewProfileConfig } from './profile.config';
 import { DynamicInfoSectionProps } from '@/components/detail-section/types';
+import { useGetProfile } from '../hooks/useGetProfile';
+import { UserProfile } from '../redux/types';
+import { viewProfileConfig } from './profile.config';
 
 export default function ProfileView({ setEdit }: { setEdit: () => void }) {
   const { profileData: profile, isLoading } = useGetProfile();
@@ -14,14 +15,14 @@ export default function ProfileView({ setEdit }: { setEdit: () => void }) {
   if (isLoading) return <CircularProgress />;
   if (!profile) return <Typography variant="h6">Profile not found</Typography>;
 
-  const DynamicInfoSectionProps: DynamicInfoSectionProps = {
+  const DynamicInfoSectionProps: DynamicInfoSectionProps<UserProfile> = {
     ...viewProfileConfig,
     data: profile
   };
 
   return (
     <Grid container spacing={2} sx={{ my: 1 }}>
-      <Grid item xs={12} md={6}>
+      <Grid size={{ xs: 12, md: 6 }}>
         <MainCard divider title="Personal Information">
           <Box sx={{ display: 'flex', gap: 4, mb: 2 }}>
             <Avatar
@@ -32,7 +33,7 @@ export default function ProfileView({ setEdit }: { setEdit: () => void }) {
             <InfoField label="Roles" value={profile.roles} />
           </Box>
           <DynamicInfoSection {...DynamicInfoSectionProps} />
-          <Grid item xs={12} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }}>
+          <Grid size={{ xs: 12 }} sx={{ display: 'flex', gap: 2, justifyContent: 'flex-end', mt: 2 }}>
             <Button onClick={() => setEdit()} variant="outlined" sx={{ mt: 2 }}>
               Edit Profile
             </Button>

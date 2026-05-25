@@ -1,5 +1,17 @@
 import MainCard from '@/components/cards/MainCard';
-import { Box, Button, Checkbox, Divider, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Divider,
+  Grid,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography
+} from '@mui/material';
 import { useState } from 'react';
 import { TransferListProps } from './types';
 
@@ -142,11 +154,21 @@ export default function TransferList<T>({
       {/* List of items with checkboxes */}
       <List dense>
         {loading ? (
-          <Typography textAlign="center" mt={2}>
+          <Typography
+            sx={{
+              textAlign: 'center',
+              mt: 2
+            }}
+          >
             Loading...
           </Typography>
         ) : items.length === 0 ? (
-          <Typography textAlign="center" mt={2}>
+          <Typography
+            sx={{
+              textAlign: 'center',
+              mt: 2
+            }}
+          >
             No items
           </Typography>
         ) : (
@@ -155,11 +177,13 @@ export default function TransferList<T>({
             const label = renderLabel ? renderLabel(item) : itemId;
 
             return (
-              <ListItem key={itemId} button onClick={handleToggle(item)}>
-                <ListItemIcon>
-                  <Checkbox checked={checked.some((c) => c[pk] === itemId)} />
-                </ListItemIcon>
-                <ListItemText primary={label} />
+              <ListItem key={itemId}>
+                <ListItemButton onClick={handleToggle(item)}>
+                  <ListItemIcon>
+                    <Checkbox checked={checked.some((c) => c[pk] === itemId)} />
+                  </ListItemIcon>
+                  <ListItemText primary={label} />
+                </ListItemButton>
               </ListItem>
             );
           })
@@ -169,14 +193,25 @@ export default function TransferList<T>({
   );
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center">
-      <Grid item xs={12} sm={5}>
-        {renderList(titleLeft, availableItems)}
-      </Grid>
-
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
+      <Grid size={{ xs: 12, sm: 5 }}>{renderList(titleLeft, availableItems)}</Grid>
       {/* Transfer Buttons */}
-      <Grid item sm={2}>
-        <Box display="flex" flexDirection="column" alignItems="center" gap={2}>
+      <Grid size={{ sm: 2 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 2
+          }}
+        >
           <Button variant="outlined" size="small" onClick={handleCheckedRight} disabled={leftChecked.length === 0}>
             <Typography variant="body2" sx={{ rotate: { xxs: '90deg', sm: '0deg' } }}>
               {' '}
@@ -191,10 +226,7 @@ export default function TransferList<T>({
           </Button>
         </Box>
       </Grid>
-
-      <Grid item xs={12} sm={5}>
-        {renderList(titleRight, selectedItems)}
-      </Grid>
+      <Grid size={{ xs: 12, sm: 5 }}>{renderList(titleRight, selectedItems)}</Grid>
     </Grid>
   );
 }

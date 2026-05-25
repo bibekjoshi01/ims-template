@@ -48,8 +48,15 @@ const VerifyAccount = () => {
   }, [token, verify, navigate]);
 
   return (
-    <Grid container justifyContent="center" alignItems="center" minHeight="60vh">
-      <Grid item xs={12} sm={10} md={8} lg={6}>
+    <Grid
+      container
+      sx={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '60vh'
+      }}
+    >
+      <Grid size={{ xs: 12, sm: 10, md: 8, lg: 6 }}>
         <Paper
           elevation={3}
           sx={{
@@ -65,7 +72,12 @@ const VerifyAccount = () => {
           {isLoading ? (
             <Box>
               <CircularProgress size={80} />
-              <Typography variant="h5" mt={10}>
+              <Typography
+                variant="h5"
+                sx={{
+                  mt: 10
+                }}
+              >
                 Verifying your account...
               </Typography>
             </Box>
@@ -82,7 +94,7 @@ const VerifyAccount = () => {
               </Alert>
             </Stack>
           ) : null}
-          <Grid item xs={12}>
+          <Grid size={{ xs: 12 }}>
             <Button
               disableElevation
               disabled={isLoading}

@@ -4,7 +4,7 @@ import { createTheme } from '@mui/material/styles';
 
 // project import
 import { ColorValues } from '@/contexts/theme-context/types';
-import { Theme } from '@mui/material/styles/createTheme';
+import { Theme } from '@mui/material/styles';
 import ThemeOption from './colors';
 
 export default function Palette(mode: PaletteMode, colorValues: ColorValues): [Theme, ColorValues] {

@@ -35,6 +35,7 @@ export const createNumberColumn = <T extends object>(config: ColumnConfig<T>, th
                 value: e.target.value
               })
             }
+            sx={{ width: '100%' }}
             inputStyle={{
               height: '2.4rem',
               '& .MuiOutlinedInput-root': {

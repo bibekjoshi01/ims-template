@@ -5,7 +5,15 @@ import dayjs from 'dayjs';
 import { Avatar, Box, Chip, CircularProgress, Grid, IconButton, Paper, Typography } from '@mui/material';
 
 // MUI Icons
-import { CalendarToday, CancelOutlined, CheckCircleOutline, Close, EmailOutlined, PersonOutline, PhoneOutlined } from '@mui/icons-material';
+import {
+  CalendarToday,
+  CancelOutlined,
+  CheckCircleOutlined,
+  Close,
+  EmailOutlined,
+  PersonOutlined,
+  PhoneOutlined
+} from '@mui/icons-material';
 
 // Project Components & Types
 import InfoCard from '@/components/cards/Infocard';
@@ -25,7 +33,12 @@ const DetailView: React.FC<DetailViewProps> = ({ userData, onClose }) => {
   if (!userData) {
     return (
       <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
-        <Typography variant="h5" mb={3}>
+        <Typography
+          variant="h5"
+          sx={{
+            mb: 3
+          }}
+        >
           User Details
         </Typography>
         <CircularProgress />
@@ -65,7 +78,7 @@ const DetailView: React.FC<DetailViewProps> = ({ userData, onClose }) => {
               variant="outlined"
               color={userData.isActive ? 'success' : 'error'}
               label={userData.isActive ? 'Active' : 'Inactive'}
-              icon={userData.isActive ? <CheckCircleOutline fontSize="small" /> : <CancelOutlined fontSize="small" />}
+              icon={userData.isActive ? <CheckCircleOutlined fontSize="small" /> : <CancelOutlined fontSize="small" />}
               sx={{
                 mr: 1,
                 p: 1.5,
@@ -82,21 +95,21 @@ const DetailView: React.FC<DetailViewProps> = ({ userData, onClose }) => {
       <Box sx={{ px: { xxs: 0, xs: 2 }, py: 1 }}>
         <Grid container spacing={3}>
           {/* Left Column - Basic Info */}
-          <Grid item xxs={12}>
+          <Grid size={{ xxs: 12 }}>
             <Typography variant="subtitle1" sx={{ mb: 2, fontWeight: 'medium' }}>
               Basic Information
             </Typography>
             <Grid container spacing={2}>
-              <Grid item xxs={12} sm={6} md={3}>
-                <InfoCard icon={<PersonOutline />} title="Username" value={userData.username || ''} />
+              <Grid size={{ xxs: 12, sm: 6, md: 3 }}>
+                <InfoCard icon={<PersonOutlined />} title="Username" value={userData.username || ''} />
               </Grid>
-              <Grid item xxs={12} sm={6} md={3}>
+              <Grid size={{ xxs: 12, sm: 6, md: 3 }}>
                 <InfoCard icon={<EmailOutlined />} title="Email" value={userData.email || ''} verified={userData.isEmailVerified} />
               </Grid>
-              <Grid item xxs={12} sm={6} md={3}>
+              <Grid size={{ xxs: 12, sm: 6, md: 3 }}>
                 <InfoCard icon={<PhoneOutlined />} title="Phone No" value={userData.phoneNo || ''} verified={userData.isPhoneVerified} />
               </Grid>
-              <Grid item xxs={12} sm={6} md={3}>
+              <Grid size={{ xxs: 12, sm: 6, md: 3 }}>
                 <InfoCard icon={<CalendarToday />} title="Last Login" value={formatDate(userData.lastLogin)} />
               </Grid>
             </Grid>

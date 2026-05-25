@@ -30,6 +30,7 @@ export const createTextColumn = <T extends object>(config: ColumnConfig<T>, them
                 value: e.target.value
               })
             }
+            sx={{ width: '100%' }}
             inputStyle={{
               height: '2.4rem',
               marginRight: '20px',

@@ -1,8 +1,6 @@
-import { TypographyOptions } from '@mui/material/styles/createTypography';
-
 // ==============================|| DEFAULT THEME - TYPOGRAPHY ||============================== //
 
-export default function Typography(fontFamily: string): TypographyOptions {
+export default function Typography(fontFamily: string) {
   return {
     htmlFontSize: 16,
     fontFamily,

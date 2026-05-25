@@ -9,7 +9,13 @@ const UnderConstruction = () => (
     <PageImage src={UnderConstructionImage} alt="Under construction page image" />
     <h1>Under Construction</h1>
     <p>Hey! Please check out this site page latewr. We are doing some maintenace on it right now</p>
-    <Box display="flex" justifyContent="center" alignItems="center">
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
       <Button variant="contained" color="primary" component={Link} to="/">
         Back Home
       </Button>

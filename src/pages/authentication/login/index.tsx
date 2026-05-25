@@ -22,12 +22,19 @@ export default function Login() {
       {!authVerificationEmailSent ? (
         <AuthWrapper>
           <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Stack direction="row" justifyContent="space-between" alignItems="baseline" sx={{ mb: { xs: -0.5, sm: 0.5 } }}>
+            <Grid size={{ xs: 12 }}>
+              <Stack
+                direction="row"
+                sx={{
+                  justifyContent: 'space-between',
+                  alignItems: 'baseline',
+                  mb: { xs: -0.5, sm: 0.5 }
+                }}
+              >
                 <Typography variant="h3">Login</Typography>
               </Stack>
             </Grid>
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <AuthLogin />
             </Grid>
           </Grid>

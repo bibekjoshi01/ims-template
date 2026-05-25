@@ -28,6 +28,7 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
   const { menuMaster } = useGetMenuMaster();
   const drawerOpen = menuMaster?.isDashboardDrawerOpened;
   const openItem = menuMaster?.openedItem;
+  const itemUrl = item.url ?? '';
 
   let itemTarget = '_self';
   if (item.target) {
@@ -37,11 +38,11 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
   let listItemProps: ListItemProps;
 
   if (item?.external) {
-    listItemProps = { component: 'a', href: item.url!, target: itemTarget };
+    listItemProps = { component: 'a', href: itemUrl, target: itemTarget };
   } else {
     listItemProps = {
       component: forwardRef<HTMLAnchorElement, Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'ref'>>((props, ref) => (
-        <Link ref={ref} {...props} to={item?.url!} target={itemTarget} />
+        <Link ref={ref} {...props} to={itemUrl} target={itemTarget} />
       ))
     };
   }
@@ -55,7 +56,6 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
   // active menu item on page load
   useEffect(() => {
     if (pathname === item.url) handlerActiveItem(item.id);
-    // eslint-disable-next-line
   }, [pathname]);
 
   const textColor = 'text.primary';
@@ -71,8 +71,10 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
       selected={isSelected}
       sx={{
         zIndex: 1201,
-        pl: drawerOpen ? `${level * 28}px` : 1.5,
+        pl: drawerOpen ? `${level * 28}px` : 0,
+        pr: drawerOpen ? 2 : 0,
         py: !drawerOpen && level === 1 ? 1.25 : 1,
+        justifyContent: drawerOpen ? 'initial' : 'center',
         '&:hover': {
           bgcolor: bgColor
         },
@@ -92,14 +94,15 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
       {itemIcon && (
         <ListItemIcon
           sx={{
-            minWidth: 28,
+            minWidth: drawerOpen ? 28 : 0,
+            justifyContent: drawerOpen ? 'flex-start' : 'center',
             color: isSelected ? iconSelectedColor : textColor
           }}
         >
           {itemIcon}
         </ListItemIcon>
       )}
-      {(drawerOpen || (!drawerOpen && level !== 1)) && (
+      {drawerOpen && (
         <ListItemText
           primary={
             <Typography variant="h6" sx={{ color: isSelected ? textSelectedColor : textColor }}>
@@ -108,7 +111,7 @@ export default function NavItem({ item, level }: { item: MenuItem; level: number
           }
         />
       )}
-      {(drawerOpen || (!drawerOpen && level !== 1)) && item?.chip && (
+      {drawerOpen && item?.chip && (
         <Chip
           color={item?.chip.color}
           variant={item?.chip.variant}

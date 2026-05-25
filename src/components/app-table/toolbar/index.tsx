@@ -71,7 +71,8 @@ const CombinedToolbar = React.forwardRef<HTMLDivElement, ToolbarProps>((props, r
               minWidth: 200,
               paddingBottom: 0,
               '& .MuiInputBase-root': {
-                backgroundColor: 'background.paper'
+                backgroundColor: 'background.paper',
+                marginTop: '4px'
               }
             }}
           />
@@ -117,9 +118,7 @@ const CombinedToolbar = React.forwardRef<HTMLDivElement, ToolbarProps>((props, r
       </Box>
 
       {/* Create New Form Dialog */}
-      {createNewForm && (
-        <AppDialog open={showForm} onClose={handleCloseForm} content={createNewForm(handleCloseForm)} fullWidth maxWidth="lg" />
-      )}
+      {createNewForm && <AppDialog open={showForm} onClose={handleCloseForm} content={createNewForm(handleCloseForm)} fullWidth />}
     </GridToolbarContainer>
   );
 });

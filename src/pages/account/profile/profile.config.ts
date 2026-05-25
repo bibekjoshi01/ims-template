@@ -39,7 +39,7 @@ const fieldOrder: (keyof UserProfile)[] = [
 const dateTimeFields: (keyof UserProfile)[] = ['lastLogin', 'dateJoined'];
 const booleanFields: (keyof UserProfile)[] = ['isEmailVerified'];
 
-export const viewProfileConfig: Omit<DynamicInfoSectionProps, 'data'> = {
+export const viewProfileConfig: Omit<DynamicInfoSectionProps<UserProfile>, 'data'> = {
   excludeFields,
   fieldOrder,
   dateTimeFields,

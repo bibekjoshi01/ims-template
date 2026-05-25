@@ -20,7 +20,7 @@ interface MainDrawerProps {
 
 export default function MainDrawer({ window }: MainDrawerProps) {
   const { menuMaster } = useGetMenuMaster();
-  const drawerOpen = menuMaster.isDashboardDrawerOpened;
+  const drawerOpen = menuMaster?.isDashboardDrawerOpened ?? false;
   const matchDownMD = useMediaQuery((theme) => theme.breakpoints.down('lg'));
 
   // responsive drawer container

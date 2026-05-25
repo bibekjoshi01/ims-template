@@ -26,7 +26,7 @@ export default function ChangePassword() {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item sx={{ width: '100%' }}>
+        <Grid sx={{ width: '100%' }}>
           <MainCard sx={{ marginTop: 1 }}>
             <TABS tabItems={updatedTabItems} value={value} handleChange={handleChange} />
           </MainCard>

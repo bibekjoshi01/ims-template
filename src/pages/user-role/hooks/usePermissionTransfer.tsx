@@ -16,7 +16,10 @@ export function usePermissionTransfer({ mainModuleId, subModuleId, selectedPermi
   const permissions = usePermissions(selectedPermissionIds, mainModuleId, subModuleId);
 
   // NOTE - Converts SelectOption[] to IUserPermission[] for the PermissionTransferList.
-  const allPermissions: UserPermission[] = useMemo(() => permissions.map((perm) => ({ id: perm.value, name: perm.label })), [permissions]);
+  const allPermissions: UserPermission[] = useMemo(
+    () => permissions.map((perm) => ({ id: perm.value as string | number, name: perm.label })),
+    [permissions]
+  );
 
   // NOTE - Extracts the selected permissions to pass to the PermissionTransferList.
   const selectedPermissions: UserPermission[] = useMemo(

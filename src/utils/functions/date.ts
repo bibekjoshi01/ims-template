@@ -8,3 +8,15 @@ export const formatReadableDatetime = (dateStr?: string, format: string = 'MMM D
   if (!dateStr) return '';
   return dayjs(dateStr).format(format);
 };
+
+// if date is a number, interpret it as a year and returns it
+// if date is a string, parse it as an ISO date string and returns its year
+// if date is a Date object, returns its year
+export const parseToYear = (year: string | number | Date): number => {
+  if (typeof year === 'number') return year;
+  if (typeof year === 'string' || year instanceof Date) {
+    const parsed = new Date(year).getFullYear();
+    return isNaN(parsed) ? 0 : parsed;
+  }
+  return 0;
+};

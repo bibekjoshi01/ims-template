@@ -6,8 +6,18 @@ const PasswordStrengthCapsules = ({ password }: { password: string }) => {
   const passStrengthData = strengthColor(passStrength);
 
   return (
-    <Box mt={1}>
-      <Box display="flex" gap={1} mb={1}>
+    <Box
+      sx={{
+        mt: 1
+      }}
+    >
+      <Box
+        sx={{
+          display: 'flex',
+          gap: 1,
+          mb: 1
+        }}
+      >
         {Array.from({ length: 5 }).map((_, i) => (
           <Box
             key={i}

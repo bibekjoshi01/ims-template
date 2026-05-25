@@ -58,7 +58,7 @@ export const settings: SettingsGroup[] = [
 // 3. Define the default values for the form
 export const defaultValues: SettingsFormDataType = settings.reduce<SettingsFormDataType>((acc, setting) => {
   setting.fields.forEach((field) => {
-    acc[field.name as keyof SettingsFormDataType] = field.defaultValue;
+    acc[field.name as keyof SettingsFormDataType] = field.defaultValue as any;
   });
   return acc;
 }, {} as SettingsFormDataType);

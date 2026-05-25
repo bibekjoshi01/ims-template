@@ -2,6 +2,8 @@ import isEqual from 'fast-deep-equal';
 import { useEffect, useMemo } from 'react';
 
 // material-ui
+import createCache from '@emotion/cache';
+import { CacheProvider } from '@emotion/react';
 import { CssBaseline, StyledEngineProvider, ThemeOptions } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -65,12 +67,16 @@ export default function ThemeCustomization({ children }: ThemeCustomizationProps
     return createdTheme;
   }, [themeOptions]);
 
+  const cache = useMemo(() => createCache({ key: 'css', prepend: true }), []);
+
   return (
     <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={themes}>
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
+      <CacheProvider value={cache}>
+        <ThemeProvider theme={themes}>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
+      </CacheProvider>
     </StyledEngineProvider>
   );
 }

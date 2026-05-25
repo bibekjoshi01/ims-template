@@ -1,5 +1,30 @@
-echo '🤨🤨Brace yourself for a wild error ride! ✨😜'
+echo "🧪 Running pre-commit checks..."
+echo "-------------------------------"
+echo
 
-# Execute lint-staged
-yarn format
-echo '✅No errors, just Git-ting it right! 😎✨✨'
+error=0
+
+yarn typecheck
+if [ $? -ne 0 ]; then
+  echo
+  echo "❌ Error: TypeScript type errors detected."
+  error=1
+fi
+
+yarn lint-staged
+if [ $? -ne 0 ]; then
+  echo
+  echo "❌ Error: Linting issues found."
+  error=1
+fi
+
+if [ $error -eq 0 ]; then
+  echo
+  echo "✅ All checks passed. Committing your changes."
+  echo
+else
+  echo
+  echo "❌ Fix errors before committing."
+  echo
+  exit 1
+fi

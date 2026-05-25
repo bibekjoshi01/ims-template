@@ -1,7 +1,9 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
 
 // project import
+import { useGetMenuMaster } from '@/api/menu';
 import { useMenuSearch } from '@/contexts/search-context';
 import menuItems from '@/menu-items';
 import { MenuItem } from '@/menu-items/types';
@@ -10,6 +12,8 @@ import NavGroup from './NavGroup';
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 
 export default function Navigation() {
+  const { menuMaster } = useGetMenuMaster();
+  const drawerOpen = menuMaster?.isDashboardDrawerOpened;
   const { searchTerm } = useMenuSearch();
 
   const isSearching = !!searchTerm.trim();
@@ -25,10 +29,15 @@ export default function Navigation() {
     );
   }
 
-  const navGroups = filteredGroups?.map((item) => {
+  const navGroups = filteredGroups?.map((item, index) => {
     switch (item.type) {
       case 'group':
-        return <NavGroup key={item.id} item={item} isSearching={isSearching} />;
+        return (
+          <Box key={item.id}>
+            <NavGroup item={item} isSearching={isSearching} />
+            {!drawerOpen && index < filteredGroups.length - 1 && <Divider sx={{ my: 1, mx: 1.5 }} />}
+          </Box>
+        );
       default:
         return (
           <Typography key={item.id} variant="h6" color="error" align="center">

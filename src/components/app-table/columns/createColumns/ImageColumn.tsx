@@ -33,7 +33,7 @@ export const createImageColumn = <T extends object>(theme: Theme, baseCol: GridC
         >
           <img
             src={imageUrl || DefaultImage}
-            alt="Product"
+            alt="Preview"
             style={{
               width: 40,
               height: 40,

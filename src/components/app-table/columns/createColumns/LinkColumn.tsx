@@ -52,6 +52,7 @@ export const createLinkColumn = <T extends object>(
               name={String(config.field)}
               inputRef={inputRef}
               value={params.value || ''}
+              sx={{ width: '100%' }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 params.api.setEditCellValue({
                   id: params.id,

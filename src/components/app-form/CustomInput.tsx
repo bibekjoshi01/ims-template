@@ -1,10 +1,10 @@
 // MUI imports
+import { CloudUploadOutlined, DeleteOutlined, EditOutlined } from '@mui/icons-material';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 
 import {
   Box,
+  Button,
   Checkbox,
   Chip,
   FormControlLabel,
@@ -18,19 +18,26 @@ import {
   Switch,
   Typography
 } from '@mui/material';
-import { useTheme } from '@mui/system';
+import { alpha, Theme, useTheme } from '@mui/material/styles';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 // React imports
 import dayjs from 'dayjs';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 
 // Project imports
-import { CustomInputProps, SelectOption } from './types';
+import PdfImage from '@/assets/images/pdf.png';
 import { ErrorForInput, LabelForInput } from './Helpers';
+import { CustomInputProps, SelectOption } from './types';
 import { useInputHandlers } from './useInputHandlers';
+
+// Import RichTextEditor and any required subcomponents or extensions
+import { RichTextEditor, RichTextEditorRef } from 'mui-tiptap';
+import FilePreviewDialog from '../app-dialog/FilePreviewDialog';
+import EditorMenuControls from './EditorMenuControls';
+import useExtensions from './useExtensions';
 
 /* ------------------------------------------------------------------
    CustomInput Component
@@ -44,6 +51,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
       value,
       onChange,
       options,
+      accpetFileTypes = 'image/*,application/*',
       multiline = false,
       rows = 1,
       fullwidth = true,
@@ -66,9 +74,10 @@ const CustomInput = forwardRef<any, CustomInputProps>(
   ) => {
     // Destructure container-specific props (like sx, style, className)
     // The rest are intended for the actual input component.
-    const { sx, style, inputStyle, className, ...inputProps } = rest;
+    const { sx, style, inputStyle, className, InputProps, onBlur, ...inputProps } = rest;
     const errorId = error ? `${name}-error-text` : undefined;
     const theme = useTheme();
+    const extensions = useExtensions({ placeholder: 'Write something awesome...' });
 
     const {
       setRef,
@@ -77,6 +86,12 @@ const CustomInput = forwardRef<any, CustomInputProps>(
       imagePreview,
       handleImageChange,
       handleRemoveImage,
+      isFileModalOpen,
+      fileModalUrl,
+      isCurrentFilePdf,
+      handleOpenFileModal,
+      handleCloseFileModal,
+      handleFileChange,
       renderPasswordVisibility,
       handleSelectChange
     } = useInputHandlers({
@@ -103,7 +118,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               error={error}
               aria-describedby={errorId}
               {...(fullwidth ? { fullWidth: true } : {})}
-              inputRef={setRef}
+              ref={setRef as any}
               multiple={multipleChips}
               renderValue={(selected) => {
                 const selectedOption = multipleChips
@@ -125,7 +140,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                             ? {
                                 backgroundColor: selectedOption.sx['& .MuiBox-root']?.backgroundColor,
                                 color: selectedOption.sx['& .MuiBox-root']?.color,
-                                fontSize: (theme) => theme.typography.body2.fontSize,
+                                fontSize: (theme: Theme) => theme.typography.body2.fontSize,
                                 borderRadius: '4px',
                                 padding: '2px 10px',
                                 maxWidth: 'fit-content'
@@ -150,7 +165,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               }}
               sx={{
                 maxHeight: 300,
-                overflowY: 'auto',
+                overflowY: 'hidden',
                 '& .MuiSelect-select': {
                   display: 'flex',
                   alignItems: 'center',
@@ -180,8 +195,8 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                   groupItems.forEach((option) => {
                     items.push(
                       <MenuItem
-                        key={option.value}
-                        value={option.value}
+                        key={String(option.value)}
+                        value={option.value as any}
                         sx={option?.sx}
                         onClick={(e) => {
                           if (!multipleChips && value === option.value) {
@@ -196,8 +211,8 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                             width: '100%',
                             ...(option?.sx
                               ? {
-                                  backgroundColor: option.sx['& .MuiBox-root']?.backgroundColor,
-                                  color: option.sx['& .MuiBox-root']?.color
+                                  backgroundColor: (option.sx as any)['& .MuiBox-root']?.backgroundColor,
+                                  color: (option.sx as any)['& .MuiBox-root']?.color
                                 }
                               : {}),
                             maxWidth: 'fit-content',
@@ -247,7 +262,12 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               sx={{ ...inputStyle }}
             >
               {options?.map((option: SelectOption) => (
-                <FormControlLabel key={option.value} value={option.value} control={<Radio {...inputProps} />} label={option.label} />
+                <FormControlLabel
+                  key={String(option.value)}
+                  value={option.value}
+                  control={<Radio {...inputProps} />}
+                  label={option.label}
+                />
               ))}
             </RadioGroup>
             <ErrorForInput error={error} helperText={helperText} />
@@ -265,7 +285,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               onChange={onChange}
               aria-describedby={errorId}
               sx={{ ...inputStyle }}
-              inputRef={setRef}
+              ref={setRef as any}
               {...inputProps}
             />
             <ErrorForInput error={error} helperText={helperText} />
@@ -273,23 +293,78 @@ const CustomInput = forwardRef<any, CustomInputProps>(
           </Box>
         );
 
-      case 'file':
+      case 'file': {
+        // Determine currentDisplayedUrl and initial file type flags
+        let currentDisplayedUrl;
+        let isImage;
+        let isPdf;
+        const isCurrentlyAFileObject = value instanceof File;
+
+        if (isCurrentlyAFileObject) {
+          currentDisplayedUrl = fileModalUrl;
+          isImage = value.type.startsWith('image/');
+          isPdf = value.type === 'application/pdf';
+        } else {
+          // 'value' is an existing URL string (from API)
+          currentDisplayedUrl = value;
+          isImage =
+            currentDisplayedUrl &&
+            (currentDisplayedUrl.endsWith('.png') ||
+              currentDisplayedUrl.endsWith('.jpg') ||
+              currentDisplayedUrl.endsWith('.jpeg') ||
+              currentDisplayedUrl.endsWith('.gif'));
+          isPdf = currentDisplayedUrl && currentDisplayedUrl.endsWith('.pdf');
+        }
+
+        const ButtonLabel = currentDisplayedUrl ? (isPdf ? 'Change PDF' : isImage ? 'Change Image' : 'Change File') : 'Upload File';
+
         return (
           <Box sx={sx} style={style} className={className}>
             <LabelForInput label={label} name={name} required={required} />
-            <input
-              type="file"
-              name={name}
-              onChange={onChange}
-              style={{ ...inputStyle }}
-              ref={setRef}
-              {...inputProps}
-              aria-describedby={errorId}
-            />
+            {/* Display existing file or newly selected file preview */}
+            <Box sx={{ display: 'flex', gap: 3, alignItems: 'flex-start' }}>
+              {currentDisplayedUrl && (
+                <Typography variant="body2">
+                  <span
+                    onClick={() => handleOpenFileModal(currentDisplayedUrl, isPdf)}
+                    style={{ cursor: 'pointer', color: theme.palette.primary.main, textDecoration: 'underline' }}
+                  >
+                    {isPdf ? (
+                      <>
+                        <img src={PdfImage} alt="PDF Icon" style={{ width: 60, height: 60, objectFit: 'cover' }} />
+                      </>
+                    ) : isImage ? (
+                      <>
+                        <img src={currentDisplayedUrl} alt="Existing File" style={{ width: 60, height: 60, objectFit: 'cover' }} />
+                      </>
+                    ) : (
+                      'View Existing File'
+                    )}
+                  </span>
+                </Typography>
+              )}
+              <Button component="label" variant="outlined" size="small" startIcon={<CloudUploadOutlined />} sx={{ mt: 1 }}>
+                {ButtonLabel}
+                <input
+                  type="file"
+                  accept={accpetFileTypes}
+                  name={name}
+                  hidden
+                  onChange={handleFileChange}
+                  ref={setRef}
+                  {...inputProps}
+                  aria-describedby={errorId}
+                />
+              </Button>
+            </Box>
             <ErrorForInput error={error} helperText={helperText} />
             {children}
+
+            {/* --- File Preview Dialog --- */}
+            <FilePreviewDialog open={isFileModalOpen} onClose={handleCloseFileModal} fileUrl={fileModalUrl} isPdf={isCurrentFilePdf} />
           </Box>
         );
+      }
 
       case 'image':
         return (
@@ -319,8 +394,8 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                   borderColor: error
                     ? theme.palette.error.main
                     : theme.palette.mode === 'dark'
-                      ? theme.palette.grey.dark
-                      : theme.palette.grey.lighter,
+                      ? theme.palette.grey[700]
+                      : theme.palette.grey[100],
                   cursor: 'pointer',
                   transition: 'all 0.2s ease-in-out',
                   '&:hover': {
@@ -371,12 +446,12 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                             internalRef.current?.click();
                           }}
                           sx={{
-                            color: 'white',
-                            backgroundColor: 'rgba(255,255,255,0.2)',
-                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.3)' }
+                            color: 'primary.main',
+                            backgroundColor: 'primary.lighter',
+                            '&:hover': { backgroundColor: alpha(theme.palette.primary.light, 0.4) }
                           }}
                         >
-                          <EditIcon />
+                          <EditOutlined />
                         </IconButton>
 
                         <IconButton
@@ -386,12 +461,12 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                             handleRemoveImage();
                           }}
                           sx={{
-                            color: 'white',
-                            backgroundColor: 'rgba(255,255,255,0.2)',
-                            '&:hover': { backgroundColor: 'rgba(255,255,255,0.3)' }
+                            color: 'error.main',
+                            backgroundColor: 'error.lighter',
+                            '&:hover': { backgroundColor: alpha(theme.palette.error.light, 0.4) }
                           }}
                         >
-                          <DeleteIcon />
+                          <DeleteOutlined />
                         </IconButton>
                       </Box>
                     </Box>
@@ -445,7 +520,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               onChange={onChange}
               aria-describedby={errorId}
               sx={{ ...inputStyle, scale: 0.85 }}
-              inputRef={setRef}
+              ref={setRef as any}
               {...inputProps}
             />
             <Typography variant="body1" sx={{ ml: 1, display: 'inline-flex' }}>
@@ -470,7 +545,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               {...renderPasswordVisibility(name)}
               error={error}
               placeholder={placeholder}
-              inputRef={setRef}
+              ref={setRef as any}
               sx={{ ...inputStyle }}
               {...inputProps}
             />
@@ -485,7 +560,13 @@ const CustomInput = forwardRef<any, CustomInputProps>(
             <Box sx={sx} style={style} className={className}>
               <LabelForInput label={label} name={name} required={required} />
               <DatePicker
-                value={value ? dayjs(value) : null} // Convert the value to a dayjs object or null
+                value={
+                  value
+                    ? typeof value === 'number'
+                      ? dayjs().year(value).startOf('year') // handle year like 2025
+                      : dayjs(value)
+                    : null
+                } // Convert the value to a dayjs object or null
                 onChange={(newValue: dayjs.Dayjs | null) => {
                   if (onChange) {
                     const event = {
@@ -498,8 +579,8 @@ const CustomInput = forwardRef<any, CustomInputProps>(
                   }
                 }}
                 aria-describedby={errorId}
-                inputRef={setRef}
-                {...(fullwidth ? { fullWidth: true, error } : {})}
+                ref={setRef as any}
+                sx={{ ...(fullwidth ? { width: '100%' } : {}) }}
               />
               <ErrorForInput error={error} helperText={helperText} />
               {children}
@@ -520,7 +601,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               error={error}
               aria-describedby={errorId}
               placeholder={placeholder}
-              inputRef={setRef}
+              ref={setRef as any}
               sx={{ ...inputStyle }}
               {...inputProps}
             />
@@ -528,6 +609,56 @@ const CustomInput = forwardRef<any, CustomInputProps>(
             {children}
           </Box>
         );
+
+      case 'editor': {
+        const rteRef = useRef<RichTextEditorRef>(null);
+
+        // Sync external value into TipTap editor
+        useEffect(() => {
+          if (rteRef.current?.editor && value !== rteRef.current.editor.getHTML()) {
+            rteRef.current.editor.commands.setContent(value || '');
+          }
+        }, [value]);
+
+        return (
+          <Box sx={sx} style={style} className={className}>
+            <LabelForInput label={label} name={name} required={required} />
+            <Box sx={{ minHeight: 220, ...inputStyle }}>
+              <RichTextEditor
+                ref={rteRef}
+                extensions={extensions}
+                content={value}
+                sx={{
+                  width: '100%',
+                  minHeight: 220,
+                  overflowY: 'auto',
+                  resize: 'vertical',
+                  border: (theme: Theme) => `1px solid ${theme.palette.grey[300]}`,
+                  '& .MuiTiptap-FieldContainer-notchedOutline': {
+                    border: 'none'
+                  },
+                  '&:focus': {
+                    border: `1px solid ${theme.palette.primary.light}`
+                  },
+                  '&:hover': {
+                    border: `1px solid ${theme.palette.primary.light}`
+                  }
+                }}
+                onUpdate={({ editor }) => {
+                  const html = editor.getHTML();
+                  if (html !== value) {
+                    onChange({ target: { name, value: html } });
+                  }
+                }}
+                renderControls={() => <EditorMenuControls />}
+                {...inputProps}
+              />
+            </Box>
+            <ErrorForInput error={error} helperText={helperText} />
+            {children}
+          </Box>
+        );
+      }
 
       default:
         return (
@@ -544,7 +675,7 @@ const CustomInput = forwardRef<any, CustomInputProps>(
               error={error}
               aria-describedby={errorId}
               placeholder={placeholder}
-              inputRef={setRef}
+              ref={setRef as any}
               sx={{ ...inputStyle }}
               {...inputProps}
             />

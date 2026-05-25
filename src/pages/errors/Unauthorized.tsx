@@ -7,26 +7,46 @@ function Unauthorized() {
 
   return (
     <Box
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      justifyContent="space-between"
-      width="100%"
-      gap={1}
-      px={{ xs: 3, md: 6 }}
-      py={4}
-      textAlign="center"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        width: '100%',
+        gap: 1,
+        px: { xs: 3, md: 6 },
+        py: 4,
+        textAlign: 'center'
+      }}
     >
       {/* Top Text Section */}
       <Box>
-        <Typography variant="h2" sx={{ fontWeight: 900 }} color="primary.main" mb={2}>
+        <Typography
+          variant="h2"
+          sx={{
+            color: 'primary.main',
+            mb: 2,
+            fontWeight: 900
+          }}
+        >
           Access Denied!
         </Typography>
-        <Typography variant="h5" fontWeight="normal" mb={1}>
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: 'normal',
+            mb: 1
+          }}
+        >
           Sorry, you don’t have permission to view this page.
         </Typography>
 
-        <Typography variant="h5" fontWeight="normal">
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: 'normal'
+          }}
+        >
           You can go to{' '}
           <Box
             component="span"
@@ -38,7 +58,6 @@ function Unauthorized() {
           </Box>
         </Typography>
       </Box>
-
       {/* Bottom Image Section */}
       <Box
         component="img"

@@ -163,7 +163,6 @@ export const useTableHandlers = <T extends TableDataBase>(
   );
 
   const handleViewDetails = useCallback(async (id: GridRowId) => {
-    console.log(`View details for rowId(${id})`);
     await onViewDetailsClick?.(id);
   }, []);
 

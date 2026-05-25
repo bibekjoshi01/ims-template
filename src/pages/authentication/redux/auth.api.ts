@@ -5,7 +5,7 @@ export const authAPI = 'admin/user-app/auth';
 
 export const authAPISlice = rootAPI.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation<IAuthState, { values: LoginFormDataType }>({
+    login: builder.mutation<any, { values: LoginFormDataType }>({
       query: ({ values }) => {
         return {
           url: `${authAPI}/login`,

@@ -1,4 +1,5 @@
-import { Button, Grid } from '@mui/material';
+import { Button } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
 // UI Components
 import MainCard from '@/components/cards/MainCard';
@@ -22,13 +23,13 @@ export default function CustomerUpdateForm({ customerData, onClose }: ICustomerU
   return (
     <form onSubmit={handleSubmit()} noValidate>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <MainCard divider title="Update Customer">
             <FormSection<TCustomerUpdateFormDataType> fields={formFields} control={control} errors={errors} formValues={formValues} />
           </MainCard>
         </Grid>
 
-        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, flexWrap: 'wrap' }}>
+        <Grid sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, flexWrap: 'wrap' }} size={{ xs: 12 }}>
           <Button variant="outlined" color="error" onClick={onClose}>
             Cancel
           </Button>

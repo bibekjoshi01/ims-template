@@ -3,7 +3,8 @@ import { ColorValues } from '@/contexts/theme-context/types';
 import { COLOR_SCHEMES } from '@/utils/constants/colors';
 import { getFirstLetterCapital } from '@/utils/functions/getFirstLetterCapital';
 import { CheckOutlined, PaletteOutlined } from '@mui/icons-material';
-import { Box, FormControlLabel, Grid, List, ListItem, ListItemText, Popover, Switch, Tooltip, Typography, useTheme } from '@mui/material';
+import { Box, FormControlLabel, List, ListItem, ListItemText, Popover, Switch, Tooltip, Typography, useTheme } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { useState } from 'react';
 import { ChromePicker } from 'react-color';
 import ThemeModeChanger from './ThemeModeChanger';
@@ -42,7 +43,6 @@ export default function ColorsTab() {
     <Box sx={{ mt: 2 }}>
       {/* Theme mode changer(Dark/Light) */}
       <ThemeModeChanger />
-
       {/* Toggle switch for advanced color customization */}
       <FormControlLabel
         control={<Switch checked={customizeAllColors} onChange={(e) => setCustomizeAllColors(e.target.checked)} color="primary" />}
@@ -52,15 +52,27 @@ export default function ColorsTab() {
       {!customizeAllColors ? (
         <>
           {/* Simple primary color selection */}
-          <Typography variant="subtitle1" fontWeight={500} gutterBottom>
+          <Typography
+            variant="subtitle1"
+            gutterBottom
+            sx={{
+              fontWeight: 500
+            }}
+          >
             Primary Color
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: 'text.secondary',
+              mb: 2
+            }}
+          >
             Choose your primary theme color
           </Typography>
           <Grid container spacing={1.5} sx={{ mb: 3 }}>
             {COLOR_SCHEMES.map(({ name, [mode]: { main } }) => (
-              <Grid item key={name}>
+              <Grid key={name}>
                 <Tooltip title={name}>
                   <Box
                     sx={{
@@ -82,7 +94,7 @@ export default function ColorsTab() {
                 </Tooltip>
               </Grid>
             ))}
-            <Grid item>
+            <Grid>
               {/* Custom color picker button */}
               <Tooltip title="Custom Color">
                 <Box
@@ -110,16 +122,34 @@ export default function ColorsTab() {
       ) : (
         <>
           {/* Advanced color customization section */}
-          <Typography variant="subtitle1" fontWeight={500} gutterBottom>
+          <Typography
+            variant="subtitle1"
+            gutterBottom
+            sx={{
+              fontWeight: 500
+            }}
+          >
             Advanced Color Customization
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              color: 'text.secondary',
+              mb: 2
+            }}
+          >
             Customize each color individually
           </Typography>
           <List dense>
             {COLOR_TYPES.map((type) => (
               <ListItem key={type}>
-                <ListItemText primary={getFirstLetterCapital(type)} primaryTypographyProps={{ variant: 'body2', fontWeight: 500 }} />
+                <ListItemText
+                  primary={
+                    <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                      {getFirstLetterCapital(type)}
+                    </Typography>
+                  }
+                />
                 <Box
                   sx={{
                     width: 24,
@@ -139,7 +169,6 @@ export default function ColorsTab() {
           </List>
         </>
       )}
-
       {/* Popover containing ChromePicker for custom color selection */}
       <Popover
         open={Boolean(colorPickerAnchor)}

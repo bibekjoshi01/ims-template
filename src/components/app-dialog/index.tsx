@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -6,6 +5,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
+import * as React from 'react';
 
 interface AppDialogProps {
   // Dialog props
@@ -39,7 +39,7 @@ export default function AppDialog({
   open,
   keepMounted = true,
   fullWidth = false,
-  maxWidth = 'sm',
+  maxWidth = false,
 
   // Callbacks
   onClose = () => {},
@@ -64,14 +64,7 @@ export default function AppDialog({
 
   return (
     <React.Fragment>
-      <Dialog
-        open={open}
-        onClose={onClose}
-        TransitionComponent={CustomTransition}
-        keepMounted={keepMounted}
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
-      >
+      <Dialog open={open} onClose={onClose} keepMounted={keepMounted} fullScreen={fullWidth} maxWidth={maxWidth}>
         {title && <DialogTitle>{title}</DialogTitle>}
         <DialogContent>
           {contentText && <DialogContentText>{contentText}</DialogContentText>}

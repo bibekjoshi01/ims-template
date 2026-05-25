@@ -29,7 +29,7 @@ export default function AuthLogin() {
   return (
     <form noValidate onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <FormSection<LoginFormDataType>
             fields={loginFields}
             control={control}
@@ -38,8 +38,14 @@ export default function AuthLogin() {
             handleToggleVisibility={handleClickShowPassword}
           />
         </Grid>
-        <Grid item xs={12} sx={{ mt: -1 }}>
-          <Stack direction="row" justifyContent="space-between" alignItems="center">
+        <Grid sx={{ mt: -1 }} size={{ xs: 12 }}>
+          <Stack
+            direction="row"
+            sx={{
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}
+          >
             <FormControlLabel
               control={
                 <Checkbox
@@ -57,7 +63,7 @@ export default function AuthLogin() {
             </Link>
           </Stack>
         </Grid>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <Button disableElevation disabled={loadingLogin} fullWidth size="large" type="submit" variant="contained" color="primary">
             Login
           </Button>

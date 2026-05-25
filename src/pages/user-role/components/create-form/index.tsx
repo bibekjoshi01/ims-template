@@ -51,7 +51,10 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
   const subModuleOptions = useSubModules(mainModule);
   const allPermissions = usePermissions(selectedPermissions, mainModule, subModule);
 
-  const formattedPermissions = useMemo(() => allPermissions.map((perm) => ({ id: perm.value, name: perm.label })), [allPermissions]);
+  const formattedPermissions = useMemo(
+    () => allPermissions.map((perm) => ({ id: perm.value as string | number, name: perm.label })),
+    [allPermissions]
+  );
 
   const selectedUserPermissions = useMemo(
     () => formattedPermissions.filter((perm) => selectedPermissions.includes(perm.id as number)),
@@ -107,7 +110,7 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid size={{ xs: 12 }}>
           <MainCard divider title="Create User Role">
             <FormSection<UserRoleCreateFormDataType> fields={formFields} control={control} errors={errors} />
 
@@ -119,7 +122,7 @@ export default function UserRoleCreateForm({ onClose }: UserRoleCreateFormProps)
           </MainCard>
         </Grid>
 
-        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
+        <Grid sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }} size={{ xs: 12 }}>
           <Button variant="outlined" color="error" onClick={onClose}>
             Cancel
           </Button>

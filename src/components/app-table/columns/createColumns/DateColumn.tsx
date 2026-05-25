@@ -9,22 +9,41 @@ import { ColumnConfig } from '../types';
 import CustomInput from '@/components/app-form/CustomInput';
 import useFocus from '@/hooks/useFocus';
 
-// Define the createDateColumn function
+dayjs.extend(LocalizedFormat);
+
 export const createDateColumn = <T extends object>(config: ColumnConfig<T>, baseCol: GridColDef<T>): GridColDef<T> => ({
   ...baseCol,
-  // Use valueGetter to convert and format the value before rendering
+  type: 'date',
+
   valueGetter: (value) => {
-    dayjs.extend(LocalizedFormat);
-    return dayjs(value).format('ll');
+    // convert from raw value (number/string) → Date
+    const raw = value;
+    if (!raw) return null;
+
+    const parsed =
+      typeof raw === 'number'
+        ? dayjs().year(raw).startOf('year') // interpret number as year
+        : dayjs(raw); // parse ISO date string
+
+    return parsed.isValid() ? parsed.toDate() : null;
   },
+  valueFormatter: (value) => {
+    if (!value) return '';
+
+    const rawDate = dayjs(value);
+    return rawDate.isValid() ? rawDate.format('ll') : '';
+  },
+
   renderEditCell: (params) => {
     const DateCellEdit = () => {
       const inputRef = useFocus(params);
+      const parsed = dayjs(params.value);
+
       return (
         <CustomInput
           type="date"
           name={String(config.field)}
-          value={dayjs(params.value).format('YYYY-MM-DD')}
+          value={parsed.isValid() ? parsed.format('YYYY-MM-DD') : ''}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             params.api.setEditCellValue({
               id: params.id,

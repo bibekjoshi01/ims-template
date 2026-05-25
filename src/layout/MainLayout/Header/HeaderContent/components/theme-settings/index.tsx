@@ -3,7 +3,7 @@ import { useState } from 'react';
 // Mui imports
 import { Box, Drawer, IconButton, Typography, useTheme } from '@mui/material';
 
-import { SettingOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, SettingOutlined } from '@ant-design/icons';
 import { FormatColorFillOutlined, StyleOutlined } from '@mui/icons-material';
 
 // Project imports
@@ -11,7 +11,6 @@ import TABS from '@/components/CustomTab';
 import { TabItem } from '@/menu-items/types';
 import ColorsTab from './ColorsTab';
 import ThemesTab from './ThemesTab';
-import { fontSize } from '@mui/system';
 
 const TabItems: TabItem[] = [
   {
@@ -54,19 +53,13 @@ export default function ThemeSettings() {
           <SettingOutlined className="rotateIcon" />
         </IconButton>
       </Box>
-
       {/* Settings Drawer */}
       <Drawer
         anchor="right"
         open={openDrawer}
         onClose={toggleDrawer}
-        PaperProps={{
-          sx: {
-            width: 320,
-            bgcolor: 'background.paper',
-            boxShadow: theme.shadows[16]
-          }
-        }}
+        sx={{ zIndex: (muiTheme) => muiTheme.zIndex.drawer + 2 }}
+        {...({ PaperProps: { sx: { width: 280, bgcolor: 'background.paper', boxShadow: 'rgba(15, 15, 15, 0.2) 0px 8px 24px' } } } as any)}
       >
         {/* Drawer Header */}
         <Box
@@ -83,7 +76,13 @@ export default function ThemeSettings() {
               alignItems: 'center'
             }}
           >
-            <Typography variant="h5" fontWeight={600} color={'primary.contrastText'}>
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: 600,
+                color: 'primary.contrastText'
+              }}
+            >
               Theme Customization
             </Typography>
             <IconButton

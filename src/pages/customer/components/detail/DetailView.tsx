@@ -5,7 +5,7 @@ import { Avatar, Box, CircularProgress, IconButton, Paper, Typography } from '@m
 // PROJECT IMPORTS
 import DefaultImage from '@/assets/images/users/avatar-1.png';
 import MainCard from '@/components/cards/MainCard';
-import DynamicInfoSection from '@/components/detail-section';
+import DynamicInfoSection from '@/components/detail-section/sections/dynamic-info';
 import { ICustomerDetails } from '../../redux/types';
 import { getViewCustomerConfig } from './config';
 
@@ -18,7 +18,12 @@ const DetailView: React.FC<IDetailViewProps> = ({ customerData, onClose }) => {
   if (!customerData) {
     return (
       <Paper elevation={3} sx={{ p: 4, textAlign: 'center' }}>
-        <Typography variant="h5" mb={3}>
+        <Typography
+          variant="h5"
+          sx={{
+            mb: 3
+          }}
+        >
           Customer Details Not Found
         </Typography>
         <CircularProgress />
